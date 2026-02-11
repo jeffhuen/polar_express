@@ -1,0 +1,47 @@
+# The directory Mix will write compiled artifacts to.
+/_build/
+
+# If you run "mix test --cover", coverage assets end up here.
+/cover/
+
+# The directory Mix downloads your dependencies sources to.
+/deps/
+
+# Where third-party dependencies like ExDoc output generated docs.
+/doc/
+
+# Ignore .fetch files in case you like using `mix deps.get --resolve`
+.fetch
+
+# If the VM crashes, it generates a dump, let's ignore it too.
+erl_crash.dump
+
+# Also ignore archive artifacts (built via "mix archive.build").
+*.ez
+
+# Ignore package tarball (built via "mix hex.build").
+polar_express-*.tar
+
+# Temporary files, for example, from tests.
+/tmp/
+
+# Dialyzer PLTs
+/priv/plts/*.plt
+/priv/plts/*.plt.hash
+
+# IDE / editor
+/.elixir_ls/
+/.vscode/
+*.swp
+*.swo
+*~
+.idea/
+
+# Reference SDK repos (used for development, not part of this project)
+/priv/polar-js-main/
+/priv/polar-php-main/
+/priv/stripe-ruby-master/
+
+# OS
+.DS_Store
+Thumbs.db
