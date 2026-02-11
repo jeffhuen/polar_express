@@ -68,10 +68,10 @@ defmodule PolarExpress.MixProject do
     [
       name: "polar_express",
       description:
-        "🚂 Comprehensive Polar SDK for Elixir with 1:1 feature parity to the official " <>
-          "JavaScript SDK. Full API coverage (31 services, 30 resources, 85 typed params). " <>
-          "Fully typed per-event modules. Modern stack: Finch HTTP/2, RustyJSON, connection pooling, " <>
-          "automatic retries, OAuth, webhooks, telemetry, per-client config, streaming pagination.",
+        "🚂 Complete Polar SDK for Elixir with 1:1 feature parity to the official " <>
+          "JavaScript SDK. Full API coverage. Fully typed per-event modules. Modern stack: " <>
+          "Finch HTTP/2, RustyJSON, connection pooling, automatic retries, OAuth, webhooks, " <>
+          "telemetry, per-client config, streaming pagination.",
       maintainers: ["Jeff Huen"],
       licenses: ["MIT"],
       links: %{
@@ -79,7 +79,7 @@ defmodule PolarExpress.MixProject do
         "Changelog" => "#{@source_url}/blob/main/CHANGELOG.md"
       },
       files:
-        ~w(lib guides .formatter.exs mix.exs README.md LICENSE CHANGELOG.md usage-rules.md)
+        ~w(lib guides mix.exs README.md LICENSE CHANGELOG.md usage-rules.md)
     ]
   end
 
