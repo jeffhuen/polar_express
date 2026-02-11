@@ -26,7 +26,7 @@ defmodule PolarExpress.Webhook do
   of this automatically.
   """
 
-  alias PolarExpress.{Deserializer, Error, Resources}
+  alias PolarExpress.{Deserializer, Error, EventTypes, Resources}
 
   @typedoc """
   Standard Webhooks headers sent by Polar with every webhook request.
@@ -43,46 +43,6 @@ defmodule PolarExpress.Webhook do
   @type verify_opts :: [tolerance: pos_integer()]
 
   @default_tolerance 300
-
-  # Mapping from webhook event type to data schema module.
-  # Derived from the OpenAPI spec's webhooks section — 35 event types.
-  @event_data_schemas %{
-    "benefit.created" => PolarExpress.Schemas.Benefit,
-    "benefit.updated" => PolarExpress.Schemas.Benefit,
-    "benefit_grant.created" => PolarExpress.Schemas.BenefitGrantWebhook,
-    "benefit_grant.cycled" => PolarExpress.Schemas.BenefitGrantWebhook,
-    "benefit_grant.revoked" => PolarExpress.Schemas.BenefitGrantWebhook,
-    "benefit_grant.updated" => PolarExpress.Schemas.BenefitGrantWebhook,
-    "checkout.created" => PolarExpress.Schemas.Checkout,
-    "checkout.expired" => PolarExpress.Schemas.Checkout,
-    "checkout.updated" => PolarExpress.Schemas.Checkout,
-    "customer.created" => PolarExpress.Schemas.Customer,
-    "customer.deleted" => PolarExpress.Schemas.Customer,
-    "customer.state_changed" => PolarExpress.Schemas.CustomerState,
-    "customer.updated" => PolarExpress.Schemas.Customer,
-    "customer_seat.assigned" => PolarExpress.Schemas.CustomerSeat,
-    "customer_seat.claimed" => PolarExpress.Schemas.CustomerSeat,
-    "customer_seat.revoked" => PolarExpress.Schemas.CustomerSeat,
-    "member.created" => PolarExpress.Schemas.Member,
-    "member.deleted" => PolarExpress.Schemas.Member,
-    "member.updated" => PolarExpress.Schemas.Member,
-    "order.created" => PolarExpress.Schemas.Order,
-    "order.paid" => PolarExpress.Schemas.Order,
-    "order.refunded" => PolarExpress.Schemas.Order,
-    "order.updated" => PolarExpress.Schemas.Order,
-    "organization.updated" => PolarExpress.Schemas.Organization,
-    "product.created" => PolarExpress.Schemas.Product,
-    "product.updated" => PolarExpress.Schemas.Product,
-    "refund.created" => PolarExpress.Schemas.Refund,
-    "refund.updated" => PolarExpress.Schemas.Refund,
-    "subscription.active" => PolarExpress.Schemas.Subscription,
-    "subscription.canceled" => PolarExpress.Schemas.Subscription,
-    "subscription.created" => PolarExpress.Schemas.Subscription,
-    "subscription.past_due" => PolarExpress.Schemas.Subscription,
-    "subscription.revoked" => PolarExpress.Schemas.Subscription,
-    "subscription.uncanceled" => PolarExpress.Schemas.Subscription,
-    "subscription.updated" => PolarExpress.Schemas.Subscription
-  }
 
   @doc """
   Verify a webhook signature and construct a typed event struct.
@@ -121,7 +81,7 @@ defmodule PolarExpress.Webhook do
     with :ok <- verify_headers(payload, headers, secret, opts),
          {:ok, data} <- decode_payload(payload) do
       event_type = data["type"]
-      schema_mod = Map.get(@event_data_schemas, event_type)
+      schema_mod = Map.get(EventTypes.event_type_to_schema(), event_type)
 
       typed_data =
         if schema_mod do

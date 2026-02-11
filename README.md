@@ -46,7 +46,7 @@ Add `polar_express` to your dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:polar_express, "~> 0.1.0"}
+    {:polar_express, "~> 0.1.1"}
   ]
 end
 ```

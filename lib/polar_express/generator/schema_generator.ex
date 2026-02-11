@@ -87,8 +87,9 @@ defmodule PolarExpress.Generator.SchemaGenerator do
       |> Enum.uniq()
 
     webhook_refs =
-      (spec[:webhook_data_schemas] || %{})
-      |> Map.values()
+      spec.event_types
+      |> Enum.map(fn {_type, meta} -> meta.data_ref end)
+      |> Enum.reject(&is_nil/1)
       |> Enum.uniq()
 
     Enum.uniq(api_response_refs ++ webhook_refs)

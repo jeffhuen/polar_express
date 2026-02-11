@@ -31,7 +31,6 @@ defmodule Mix.Tasks.PolarExpress.Generate do
   ]
 
   @generated_files [
-    "lib/polar_express/object_types.ex",
     "lib/polar_express/event_types.ex",
     "lib/polar_express/events.ex"
   ]

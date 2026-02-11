@@ -41,24 +41,14 @@ defmodule PolarExpress.Generator.Naming do
   @doc """
   Build an event module name from a lookup_type string.
 
-      iex> event_module("v1.billing.meter.error_report_triggered")
-      PolarExpress.Events.V1BillingMeterErrorReportTriggeredEvent
+      iex> event_module("checkout.created")
+      PolarExpress.Events.CheckoutCreated
   """
   def event_module(lookup_type) do
-    parts = String.split(lookup_type, ".")
-
     class_name =
-      if length(parts) <= 3 do
-        # Polar-style: "checkout.created" → "CheckoutCreated" (no "Event" suffix)
-        Enum.map_join(parts, &Macro.camelize/1)
-      else
-        # Stripe-style: "v1.billing.meter.error_report_triggered" → "V1BillingMeterErrorReportTriggeredEvent"
-        lookup_type
-        |> String.replace(~r/\[([^\]]+)\]/, ".including.\\1")
-        |> String.split(".")
-        |> Enum.map_join(&Macro.camelize/1)
-        |> Kernel.<>("Event")
-      end
+      lookup_type
+      |> String.split(".")
+      |> Enum.map_join(&Macro.camelize/1)
 
     Module.concat(PolarExpress.Events, class_name)
   end
@@ -67,7 +57,7 @@ defmodule PolarExpress.Generator.Naming do
   Convert a module atom to a file path.
 
       iex> module_to_path(PolarExpress.Services.PaymentIntentService)
-      "lib/stripe/services/payment_intent_service.ex"
+      "lib/polar_express/services/payment_intent_service.ex"
   """
   def module_to_path(module) do
     module

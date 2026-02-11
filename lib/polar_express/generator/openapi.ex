@@ -20,15 +20,14 @@ defmodule PolarExpress.Generator.OpenAPI do
 
     schema_index = build_schema_index(schemas)
 
-    # For Polar, we build resources from paths and their tags, not from x-stripeResource
     resources =
       paths
       |> extract_polar_resources(schema_index)
       |> Enum.sort_by(& &1.schema_id)
 
     path_specs = parse_paths(paths)
-
-    event_types = parse_event_types(schemas, raw)
+    webhook_data_schemas = parse_webhook_data_schemas(raw)
+    event_types = parse_event_types(raw, webhook_data_schemas)
 
     resource_docs =
       resources
@@ -37,16 +36,13 @@ defmodule PolarExpress.Generator.OpenAPI do
         {{r.package, r.class_name}, %{title: r.title, description: r.description}}
       end)
 
-    webhook_data_schemas = parse_webhook_data_schemas(raw)
-
     %{
       api_version: get_in(raw, ["info", "version"]),
       resources: resources,
       path_specs: path_specs,
       event_types: event_types,
       resource_docs: resource_docs,
-      schema_index: schema_index,
-      webhook_data_schemas: webhook_data_schemas
+      schema_index: schema_index
     }
   end
 
@@ -596,40 +592,13 @@ defmodule PolarExpress.Generator.OpenAPI do
 
   # -- Event Type Parsing -----------------------------------------------------
 
-  defp parse_event_types(schemas, raw) do
-    # Try Stripe-style x-stripeEvent annotations first
-    stripe_events =
-      schemas
-      |> Enum.filter(fn {_k, v} -> is_map(v) && Map.has_key?(v, "x-stripeEvent") end)
-      |> Enum.map(fn {_k, v} ->
-        event_type = get_in(v, ["x-stripeEvent", "type"])
-        kind = get_in(v, ["x-stripeEvent", "kind"])
-        data_schema_raw = v["properties"]["object"] || %{}
-        props = v["properties"] || %{}
-
-        {event_type,
-         %{
-           data_ref: data_schema_raw["$ref"],
-           kind: kind,
-           description: v["description"],
-           data_schema: props["data"],
-           has_related_object: Map.has_key?(props, "related_object"),
-           schema_fields: props |> Map.keys() |> Enum.sort()
-         }}
-      end)
-      |> Enum.filter(fn {type, _} -> type != nil end)
-      |> Map.new()
-
-    if map_size(stripe_events) > 0 do
-      stripe_events
-    else
-      # Fall back to Polar-style: extract event types from webhooks section
-      parse_event_types_from_webhooks(raw)
-    end
+  defp parse_event_types(raw, webhook_data_schemas) do
+    parse_event_types_from_webhooks(raw, webhook_data_schemas)
   end
 
-  defp parse_event_types_from_webhooks(raw) do
+  defp parse_event_types_from_webhooks(raw, webhook_data_schemas) do
     webhooks = raw["webhooks"] || %{}
+    schema_index = build_schema_index(raw["components"]["schemas"] || %{})
 
     webhooks
     |> Enum.flat_map(fn {webhook_key, methods} ->
@@ -640,15 +609,13 @@ defmodule PolarExpress.Generator.OpenAPI do
         case body_schema do
           %{"$ref" => ref} ->
             schema_name = ref_to_name(ref)
-            schema_index = build_schema_index(raw["components"]["schemas"] || %{})
             schema = Map.get(schema_index, schema_name, %{})
-
-            # Use the webhook key as the event type (e.g. "checkout.created")
             event_type = webhook_key
+            data_schema_name = Map.get(webhook_data_schemas, event_type)
 
             [{event_type,
               %{
-                data_ref: nil,
+                data_ref: data_schema_name,
                 kind: "webhook",
                 description: schema["description"],
                 data_schema: nil,

@@ -12,10 +12,24 @@ defmodule PolarExpress.Events.CustomerStateChanged do
   * A benefit is granted or revoked.
 
   **Discord & Slack support:** Basic
+
+  The `data` field contains a `PolarExpress.Schemas.CustomerState` struct.
   """
+
+  @typedoc """
+  * `type` - Always `"customer.state_changed"`.
+  * `data` - The event payload. See `PolarExpress.Schemas.CustomerState`.
+  * `timestamp` - ISO 8601 timestamp of when the event occurred.
+  """
+  @type t :: %__MODULE__{
+          type: String.t(),
+          data: PolarExpress.Schemas.CustomerState.t(),
+          timestamp: String.t()
+        }
 
   defstruct [:type, :data, :timestamp]
 
+  @doc "Returns the event type string."
+  @spec event_type() :: String.t()
   def event_type, do: "customer.state_changed"
-  def lookup_type, do: "customer.state_changed"
 end

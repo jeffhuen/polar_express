@@ -11,10 +11,24 @@ defmodule PolarExpress.Events.OrderUpdated do
   * It's refunded, partially or fully.
 
   **Discord & Slack support:** Full
+
+  The `data` field contains a `PolarExpress.Schemas.Order` struct.
   """
+
+  @typedoc """
+  * `type` - Always `"order.updated"`.
+  * `data` - The event payload. See `PolarExpress.Schemas.Order`.
+  * `timestamp` - ISO 8601 timestamp of when the event occurred.
+  """
+  @type t :: %__MODULE__{
+          type: String.t(),
+          data: PolarExpress.Schemas.Order.t(),
+          timestamp: String.t()
+        }
 
   defstruct [:type, :data, :timestamp]
 
+  @doc "Returns the event type string."
+  @spec event_type() :: String.t()
   def event_type, do: "order.updated"
-  def lookup_type, do: "order.updated"
 end

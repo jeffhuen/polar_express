@@ -11,8 +11,8 @@ defmodule PolarExpress.Generator.EventGenerator do
 
   Produces:
     - `events.ex` — flat list of all known event type strings
-    - Per-event typed modules for thin events (matching JavaScript SDK's 21 event files)
-    - `unknown_event_notification.ex` — fallback for unrecognized thin events
+    - Per-event typed modules for webhook events
+    - `unknown_event.ex` — fallback for unrecognized events
 
   Returns `[{file_path, content}]`.
   """
@@ -42,9 +42,11 @@ defmodule PolarExpress.Generator.EventGenerator do
       ]
 
       @doc "List of all known PolarExpress event types."
+      @spec event_types() :: [String.t()]
       def event_types, do: @event_types
 
       @doc "Check if a string is a known event type."
+      @spec valid_event_type?(String.t()) :: boolean()
       def valid_event_type?(type), do: type in @event_types
     end
     """
@@ -56,7 +58,7 @@ defmodule PolarExpress.Generator.EventGenerator do
 
   defp generate_per_event_modules(event_types) do
     event_types
-    |> Enum.filter(fn {_type, meta} -> meta.kind in ["thin", "webhook"] end)
+    |> Enum.filter(fn {_type, meta} -> meta.kind == "webhook" end)
     |> Enum.sort_by(fn {type, _} -> type end)
     |> Enum.map(&generate_event_module/1)
   end
@@ -66,66 +68,21 @@ defmodule PolarExpress.Generator.EventGenerator do
     file_path = Naming.module_to_path(module)
     module_name = inspect(module)
 
-    # For Polar webhook events, use simple struct with type/data/timestamp
-    # For Stripe thin events, use schema-declared fields
-    {fields, data_module_code, inner_types_code, fetch_fn} =
-      if meta.kind == "webhook" do
-        {":type, :data, :timestamp", "", "", ""}
+    data_schema_mod =
+      if meta.data_ref do
+        "PolarExpress.Schemas.#{meta.data_ref}"
       else
-        fields = meta.schema_fields |> Enum.map_join(", ", fn f -> ":#{f}" end)
-        data_tree = build_data_type_tree(meta.data_schema)
-        data_module_code = if data_tree, do: render_data_module(data_tree, "Data"), else: ""
-
-        inner_types_code =
-          if data_tree do
-            ~s(def __inner_types__, do: %{"data" => Data})
-          else
-            ""
-          end
-
-        fetch_fn =
-          if meta.has_related_object do
-            """
-            def fetch_related_object(%__MODULE__{related_object: %{"url" => url}} = event, client) do
-              opts = case Map.get(event, :context) do
-                nil -> []
-                ctx -> [polar_context: ctx]
-              end
-              PolarExpress.Client.request(client, :get, url, opts)
-            end
-            """
-          else
-            ""
-          end
-
-        {fields, data_module_code, inner_types_code, fetch_fn}
+        nil
       end
 
-    moduledoc =
-      case meta.description do
-        nil ->
-          "Webhook event for `#{event_type}`."
-
-        "" ->
-          "Webhook event for `#{event_type}`."
-
-        desc ->
-          case DocFormatter.html_to_markdown(desc) do
-            nil ->
-              "Webhook event for `#{event_type}`."
-
-            md ->
-              # Ensure the moduledoc mentions "webhook" for discoverability
-              md_with_webhook =
-                if String.match?(md, ~r/webhook/i) do
-                  md
-                else
-                  "Webhook event for `#{event_type}`.\n\n#{md}"
-                end
-
-              DocFormatter.escape_for_heredoc(md_with_webhook)
-          end
+    data_type =
+      if data_schema_mod do
+        "#{data_schema_mod}.t()"
+      else
+        "map()"
       end
+
+    moduledoc = build_moduledoc(event_type, meta, data_schema_mod)
 
     content = """
     #{@file_header}
@@ -134,16 +91,22 @@ defmodule PolarExpress.Generator.EventGenerator do
       #{moduledoc}
       \"\"\"
 
-    #{data_module_code}
+      @typedoc \"\"\"
+      * `type` - Always `"#{event_type}"`.
+      * `data` - The event payload. See `#{data_schema_mod || "map"}`.
+      * `timestamp` - ISO 8601 timestamp of when the event occurred.
+      \"\"\"
+      @type t :: %__MODULE__{
+              type: String.t(),
+              data: #{data_type},
+              timestamp: String.t()
+            }
 
-      defstruct [#{fields}]
+      defstruct [:type, :data, :timestamp]
 
+      @doc "Returns the event type string."
+      @spec event_type() :: String.t()
       def event_type, do: "#{event_type}"
-      def lookup_type, do: "#{event_type}"
-
-      #{inner_types_code}
-
-      #{fetch_fn}
     end
     """
 
@@ -158,6 +121,17 @@ defmodule PolarExpress.Generator.EventGenerator do
     defmodule PolarExpress.Events.UnknownEvent do
       @moduledoc "Fallback for unrecognized webhook events."
 
+      @typedoc \"\"\"
+      * `type` - The unrecognized event type string.
+      * `data` - Raw event payload as a map.
+      * `timestamp` - ISO 8601 timestamp of when the event occurred.
+      \"\"\"
+      @type t :: %__MODULE__{
+              type: String.t(),
+              data: map(),
+              timestamp: String.t()
+            }
+
       defstruct [:type, :data, :timestamp]
     end
     """
@@ -165,100 +139,38 @@ defmodule PolarExpress.Generator.EventGenerator do
     {"lib/polar_express/events/unknown_event.ex", content}
   end
 
-  # -- Nested Data Type Tree --------------------------------------------------
+  # -- Helpers ----------------------------------------------------------------
 
-  defp build_data_type_tree(nil), do: nil
-  defp build_data_type_tree(%{"properties" => props}) when map_size(props) == 0, do: nil
-
-  defp build_data_type_tree(%{"properties" => props}) when is_map(props) do
-    fields = props |> Map.keys() |> Enum.sort()
-
-    field_descriptions =
-      Map.new(props, fn {name, schema} ->
-        {name, %{name: name, description: schema["description"]}}
-      end)
-
-    children =
-      for {name, prop_schema} <- props,
-          child_schema = nested_object_schema(prop_schema),
-          child_schema != nil do
-        child_tree = build_data_type_tree(child_schema)
-        if child_tree, do: {name, Macro.camelize(name), child_tree}, else: nil
+  defp build_moduledoc(event_type, meta, data_schema_mod) do
+    base =
+      case meta.description do
+        nil -> nil
+        "" -> nil
+        desc -> DocFormatter.html_to_markdown(desc)
       end
-      |> Enum.reject(&is_nil/1)
 
-    %{fields: fields, children: children, field_descriptions: field_descriptions}
-  end
+    header = "Webhook event for `#{event_type}`."
 
-  defp build_data_type_tree(_), do: nil
+    doc =
+      case base do
+        nil ->
+          header
 
-  # Extract nested object schema from a property definition
-  defp nested_object_schema(%{"type" => "object", "properties" => props})
-       when is_map(props) and map_size(props) > 0,
-       do: %{"properties" => props}
-
-  defp nested_object_schema(%{
-         "type" => "array",
-         "items" => %{"type" => "object", "properties" => props}
-       })
-       when is_map(props) and map_size(props) > 0,
-       do: %{"properties" => props}
-
-  defp nested_object_schema(_), do: nil
-
-  # -- Code Rendering ---------------------------------------------------------
-
-  defp render_data_module(%{fields: fields, children: children} = tree, module_name) do
-    child_code =
-      children
-      |> Enum.sort_by(fn {_, mod_name, _} -> mod_name end)
-      |> Enum.map_join("\n", fn {_field, mod_name, subtree} ->
-        render_data_module(subtree, mod_name)
-      end)
-
-    fields_str = fields |> Enum.map_join(", ", fn f -> ":#{f}" end)
-
-    type_fields =
-      fields
-      |> Enum.map_join(",\n", fn f -> "        #{f}: term()" end)
-
-    typedoc =
-      case Map.get(tree, :field_descriptions) do
-        descs when is_map(descs) and map_size(descs) > 0 ->
-          props = descs |> Map.values() |> Enum.sort_by(& &1[:name])
-
-          case DocFormatter.build_typedoc_table(props) do
-            nil -> ""
-            table -> "  @typedoc \"\"\"\n#{table}\n  \"\"\"\n"
+        md ->
+          if String.match?(md, ~r/webhook/i) do
+            md
+          else
+            "#{header}\n\n#{md}"
           end
-
-        _ ->
-          ""
       end
 
-    inner_types_code =
-      if children != [] do
-        entries =
-          children
-          |> Enum.sort_by(fn {_, mod, _} -> mod end)
-          |> Enum.map_join(", ", fn {field, mod, _} -> ~s("#{field}" => #{mod}) end)
-
-        "def __inner_types__, do: %{#{entries}}"
+    doc =
+      if data_schema_mod do
+        "#{doc}\n\nThe `data` field contains a `#{data_schema_mod}` struct."
       else
-        ""
+        doc
       end
 
-    """
-    defmodule #{module_name} do
-      @moduledoc false
-      #{child_code}
-    #{typedoc}  @type t :: %__MODULE__{
-    #{type_fields}
-        }
-
-      defstruct [#{fields_str}]
-      #{inner_types_code}
-    end
-    """
+    DocFormatter.escape_for_heredoc(doc)
   end
 end

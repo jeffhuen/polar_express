@@ -6,10 +6,24 @@ defmodule PolarExpress.Events.BenefitGrantCreated do
   Sent when a new benefit grant is created.
 
   **Discord & Slack support:** Basic
+
+  The `data` field contains a `PolarExpress.Schemas.BenefitGrantWebhook` struct.
   """
+
+  @typedoc """
+  * `type` - Always `"benefit_grant.created"`.
+  * `data` - The event payload. See `PolarExpress.Schemas.BenefitGrantWebhook`.
+  * `timestamp` - ISO 8601 timestamp of when the event occurred.
+  """
+  @type t :: %__MODULE__{
+          type: String.t(),
+          data: PolarExpress.Schemas.BenefitGrantWebhook.t(),
+          timestamp: String.t()
+        }
 
   defstruct [:type, :data, :timestamp]
 
+  @doc "Returns the event type string."
+  @spec event_type() :: String.t()
   def event_type, do: "benefit_grant.created"
-  def lookup_type, do: "benefit_grant.created"
 end

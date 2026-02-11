@@ -1,8 +1,7 @@
 defmodule PolarExpress.Generator.Overrides do
   @moduledoc false
 
-  # For Polar, we don't have special structural rules like Stripe does,
-  # so overrides are minimal. Each tag becomes a service class directly.
+  # Override maps are empty since we use direct tag-based service classes.
 
   # Override service_class for specific operations if needed.
   # Key: {http_method_string, path}

@@ -41,8 +41,10 @@ defmodule PolarExpress.Events do
   ]
 
   @doc "List of all known PolarExpress event types."
+  @spec event_types() :: [String.t()]
   def event_types, do: @event_types
 
   @doc "Check if a string is a known event type."
+  @spec valid_event_type?(String.t()) :: boolean()
   def valid_event_type?(type), do: type in @event_types
 end
