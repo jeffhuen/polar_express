@@ -32,6 +32,7 @@ polar_express-*.tar
 # IDE / editor
 /.elixir_ls/
 /.vscode/
+/.claude/
 *.swp
 *.swo
 *~
