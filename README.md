@@ -18,8 +18,8 @@ auto-paging pagination — all generated from the spec with full documentation.
 The **client layer** handles HTTP execution via Finch with connection pooling,
 automatic retries, request encoding, response deserialization, and telemetry.
 
-Together, the complete Polar API surface is covered: 45 service modules,
-29 typed resource structs, 106 typed params modules, webhook signature
+Together, the complete Polar API surface is covered: 31 service modules,
+30 typed resource structs, 85 typed params modules, webhook signature
 verification, and automatic pagination.
 
 ## Installation
@@ -89,15 +89,15 @@ options and precedence rules.
 client = PolarExpress.client()
 
 # Create a customer
-{:ok, customer} = PolarExpress.Services.CustomersService.create(client, %{
+{:ok, customer} = PolarExpress.Services.CustomersService.create_customer(client, %{
   email: "jane@example.com"
 })
 
 # List products
-{:ok, products} = PolarExpress.Services.ProductsService.list(client, %{"limit" => 10})
+{:ok, products} = PolarExpress.Services.ProductsService.list_products(client, %{"limit" => 10})
 
 # Create a checkout
-{:ok, checkout} = PolarExpress.Services.CheckoutsService.create(client, %{
+{:ok, checkout} = PolarExpress.Services.CheckoutsService.create_checkout_session(client, %{
   "product_price_id" => "price_123",
   "success_url" => "https://example.com/success"
 })
@@ -128,13 +128,12 @@ client = PolarExpress.client("pk_test_other_key", max_retries: 5)
   with `@type t` definitions, full nesting support, and inner types
 - **Typed params** — request parameters have dedicated struct modules with
   `@typedoc` annotations sourced from the OpenAPI spec
-- **Per-event typed modules** — V2 and thin V1 events get dedicated modules
-  with typed data structs and `fetch_related_object/2`
-- **Auto-paging pagination** — lazy `Stream`-based iteration for V1 lists,
-  search results, and V2 lists
-- **Webhook verification** — HMAC-SHA256 signature verification with
+- **Per-event typed modules** — dedicated modules per webhook event type
+  with typed data structs
+- **Auto-paging pagination** — lazy `Stream`-based iteration for list endpoints
+- **Webhook verification** — standardwebhooks signature verification with
   constant-time comparison and timestamp tolerance
-- **OAuth** — `authorize_url`, `token`, and `deauthorize` for PolarExpress Connect
+- **OAuth** — `authorize_url`, `token`, and `deauthorize` for Polar OAuth flows
 - **Documentation** — `@moduledoc`, `@doc`, `@typedoc`, `@spec`, and
   `@deprecated` on all generated modules, sourced from the OpenAPI spec
 
@@ -142,15 +141,14 @@ client = PolarExpress.client("pk_test_other_key", max_retries: 5)
 
 - **Finch HTTP client** — modern HTTP/2-capable client with connection pooling
   via NimblePool (replaces legacy Hackney)
-- **Automatic retries** — exponential backoff with jitter, respects
-  `stripe-should-retry` header, auto-generated idempotency keys for V2
-- **Request encoding** — V1 form-encoded, V2 JSON, automatic multipart for
+- **Automatic retries** — exponential backoff with jitter for transient failures
+- **Request encoding** — JSON request encoding with automatic multipart for
   file uploads
 - **Response deserialization** — JSON to typed structs via object type registry
 - **Streaming** — chunked response streaming for large payloads and SSE
 - **Telemetry** — `:telemetry` events for request lifecycle observability
 - **Per-client configuration** — explicit struct with no global state, safe for
-  concurrent use with multiple API keys or connected accounts
+  concurrent use with multiple API keys
 - **Test stubs** — process-scoped HTTP stubs via NimbleOwnership for
   `async: true` tests
 
@@ -169,34 +167,33 @@ client = PolarExpress.client("pk_test_other_key", max_retries: 5)
 bash scripts/sync_openapi.sh
 
 # Generate the SDK
-mix stripe.generate --clean --stats
+mix polar.generate --clean --stats
 
 # Verify
 mix compile --warnings-as-errors
 mix test
 mix docs --warnings-as-errors
-bash scripts/diff_ruby.sh
+bash scripts/diff_js.sh
 ```
 
 ### Code Generation
 
-The SDK is auto-generated from Stripe's unified OpenAPI spec (`spec3.sdk.json`)
-via `mix stripe.generate`. The generator produces 1,044 files:
+The SDK is auto-generated from Polar's [OpenAPI spec](https://api.polar.sh/openapi.json)
+via `mix polar.generate`. The generator produces:
 
-- **190 service modules** (189 generated + 1 hand-written `OAuthService`)
-- **307 resource structs** with `@type t`, expandable fields, and inner types
-- **523 params modules** with `@typedoc` field annotations
+- **31 service modules** matching the JavaScript SDK layout
+- **30 resource structs** with `@type t` definitions and inner types
+- **85 params modules** with `@typedoc` field annotations
 - **2 registries** (object types and event types)
-- **22 event modules** (20 per-event typed + 1 constants + 1 unknown fallback)
+- **36 event modules** for typed webhook event handling
 
-A small set of [overrides](lib/stripe/generator/overrides.ex) handle
+A small set of [overrides](lib/polar_express/generator/overrides.ex) handle
 cases where the spec's metadata doesn't match the JavaScript SDK's service layout.
-Each override is documented with a reason and a reference to the corresponding
-Ruby service file, enforced by tests.
+Each override is documented with a reason and enforced by tests.
 
 ### Parity Testing
 
-JavaScript SDK parity is a hard invariant. CI runs `scripts/diff_ruby.sh` to verify
+JavaScript SDK parity is a hard invariant. CI runs `scripts/diff_js.sh` to verify
 1:1 service file and endpoint coverage. The test suite includes dedicated
 parity assertions comparing the generated endpoint set against both the OpenAPI
 spec and the JavaScript SDK fixture tree.

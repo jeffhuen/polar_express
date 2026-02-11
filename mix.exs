@@ -68,8 +68,8 @@ defmodule PolarExpress.MixProject do
     [
       name: "polar_express",
       description:
-        "Comprehensive PolarExpress SDK for Elixir with 1:1 feature parity to the official " <>
-          "JavaScript SDK. Complete V1+V2 API coverage (190 services, 307 resources, 523 typed params). " <>
+        "🚂 Comprehensive Polar SDK for Elixir with 1:1 feature parity to the official " <>
+          "JavaScript SDK. Full API coverage (31 services, 30 resources, 85 typed params). " <>
           "Fully typed per-event modules. Modern stack: Finch HTTP/2, RustyJSON, connection pooling, " <>
           "automatic retries, OAuth, webhooks, telemetry, per-client config, streaming pagination.",
       maintainers: ["Jeff Huen"],
@@ -79,7 +79,7 @@ defmodule PolarExpress.MixProject do
         "Changelog" => "#{@source_url}/blob/main/CHANGELOG.md"
       },
       files:
-        ~w(lib guides .formatter.exs mix.exs README.md LICENSE CHANGELOG.md OPENAPI_VERSION usage-rules.md)
+        ~w(lib guides .formatter.exs mix.exs README.md LICENSE CHANGELOG.md usage-rules.md)
     ]
   end
 
@@ -92,7 +92,6 @@ defmodule PolarExpress.MixProject do
         "guides/getting-started.md",
         "guides/igniter-installer.md",
         "guides/webhooks.md",
-        "guides/connect-and-oauth.md",
         "guides/testing.md",
         "guides/telemetry.md",
         "CHANGELOG.md"
@@ -102,21 +101,19 @@ defmodule PolarExpress.MixProject do
           "guides/getting-started.md",
           "guides/igniter-installer.md",
           "guides/webhooks.md",
-          "guides/connect-and-oauth.md",
           "guides/testing.md",
           "guides/telemetry.md"
         ]
       ],
       groups_for_modules: [
-        Core: [Stripe, PolarExpress.Client, PolarExpress.Config],
+        Core: [PolarExpress, PolarExpress.Client, PolarExpress.Config],
         "Error Handling": [PolarExpress.Error],
-        Pagination: [PolarExpress.ListObject, PolarExpress.SearchResult],
+        Pagination: [PolarExpress.ListObject],
         Webhooks: [PolarExpress.Webhook, PolarExpress.WebhookPlug],
         OAuth: [PolarExpress.OAuth],
-        "V1 Services": ~r/Stripe\.Services\.(?!V2)/,
-        "V2 Services": ~r/Stripe\.Services\.V2/,
-        Resources: ~r/Stripe\.Resources\./,
-        Params: ~r/Stripe\.Params\./
+        Services: ~r/PolarExpress\.Services\./,
+        Resources: ~r/PolarExpress\.Resources\./,
+        Params: ~r/PolarExpress\.Params\./
       ]
     ]
   end

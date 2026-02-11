@@ -7,16 +7,16 @@ you observability into latency, error rates, retry behavior, and more.
 
 | Event | Measurements | Metadata |
 |-------|-------------|----------|
-| `[:polar_express, :request, :start]` | `system_time` | `method`, `path`, `base_address` |
-| `[:polar_express, :request, :stop]` | `duration` | `method`, `path`, `base_address`, `http_status`, `num_retries`, `request_id`, `error` (on failure) |
+| `[:polar_express, :request, :start]` | `system_time` | `method`, `path`, `server` |
+| `[:polar_express, :request, :stop]` | `duration` | `method`, `path`, `server`, `http_status`, `num_retries`, `request_id`, `error` (on failure) |
 
 ### Metadata Fields
 
 | Field | Type | Description |
 |-------|------|-------------|
 | `method` | `atom` | HTTP method (`:get`, `:post`, etc.) |
-| `path` | `String.t()` | Request path (e.g. `"/v1/charges"`) |
-| `base_address` | `atom` | `:api` or `:files` |
+| `path` | `String.t()` | Request path (e.g. `"/v1/orders"`) |
+| `server` | `atom` | `:production` or `:sandbox` |
 | `http_status` | `integer \| nil` | HTTP status code, or `nil` for connection errors |
 | `num_retries` | `integer` | Number of retries before the final response (0 = first attempt succeeded) |
 | `request_id` | `String.t() \| nil` | Polar's request ID header — useful for support tickets |

@@ -22,20 +22,19 @@ and returns a `{status, headers, body}` tuple:
 defmodule MyApp.BillingTest do
   use ExUnit.Case, async: true
 
-  test "creates a charge" do
+  test "creates a customer" do
     PolarExpress.Test.stub(fn %{method: :post, url: url} ->
-      assert url =~ "/v1/charges"
-      {200, [], ~s({"id": "ch_123", "object": "charge", "amount": 2000})}
+      assert url =~ "/v1/customers"
+      {200, [], ~s({"id": "cus_123", "email": "jane@example.com"})}
     end)
 
     client = PolarExpress.client("pk_test_123")
 
-    {:ok, charge} = PolarExpress.Services.ChargeService.create(client, %{
-      amount: 2000,
-      currency: "usd"
+    {:ok, customer} = PolarExpress.Services.CustomersService.create_customer(client, %{
+      email: "jane@example.com"
     })
 
-    assert charge.id == "ch_123"
+    assert customer.id == "cus_123"
   end
 end
 ```
@@ -48,14 +47,13 @@ or URL parameters:
 ```elixir
 test "sends correct params" do
   PolarExpress.Test.stub(fn %{method: :post, body: body} ->
-    params = URI.decode_query(body)
-    assert params["amount"] == "2000"
-    assert params["currency"] == "usd"
-    {200, [], ~s({"id": "ch_123", "object": "charge"})}
+    params = JSON.decode!(body)
+    assert params["email"] == "jane@example.com"
+    {200, [], ~s({"id": "cus_123", "email": "jane@example.com"})}
   end)
 
   client = PolarExpress.client("pk_test_123")
-  {:ok, _} = PolarExpress.Services.ChargeService.create(client, %{amount: 2000, currency: "usd"})
+  {:ok, _} = PolarExpress.Services.CustomersService.create_customer(client, %{email: "jane@example.com"})
 end
 ```
 
@@ -64,17 +62,17 @@ end
 Return non-200 status codes to test error handling:
 
 ```elixir
-test "handles card decline" do
+test "handles validation error" do
   PolarExpress.Test.stub(fn _ ->
-    {402, [],
-     ~s({"error": {"type": "card_error", "code": "card_declined", "message": "Your card was declined."}})}
+    {422, [],
+     ~s({"error": {"type": "validation_error", "message": "Invalid email address."}})}
   end)
 
   client = PolarExpress.client("pk_test_123")
-  {:error, err} = PolarExpress.Services.ChargeService.create(client, %{amount: 2000, currency: "usd"})
+  {:error, err} = PolarExpress.Services.CustomersService.create_customer(client, %{email: "invalid"})
 
-  assert err.type == :card_error
-  assert err.message =~ "declined"
+  assert err.type == :validation_error
+  assert err.message =~ "Invalid"
 end
 ```
 
@@ -99,7 +97,7 @@ test "works in spawned processes" do
   # Allow the Task process to use this test's stubs
   task = Task.async(fn ->
     client = PolarExpress.client("pk_test_123")
-    PolarExpress.Services.CustomerService.retrieve(client, "cus_123")
+    PolarExpress.Services.CustomersService.get_customer(client, "cus_123")
   end)
 
   assert {:ok, customer} = Task.await(task)

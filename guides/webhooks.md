@@ -4,27 +4,25 @@ Polar sends webhook events to your application when things happen in your
 account — checkouts are completed, subscriptions renew, orders are paid, etc.
 This guide covers receiving, verifying, and handling those events.
 
-## Signature Verification
+## How It Works
 
-Every webhook request includes a signature header (standardwebhooks format). Always verify it
-before trusting the payload:
+Polar uses the [Standard Webhooks](https://github.com/standard-webhooks/standard-webhooks)
+specification. Each webhook request includes three HTTP headers:
 
-```elixir
-case PolarExpress.Webhook.construct_event(payload, sig_header, "whsec_...") do
-  {:ok, event} -> handle_event(event)
-  {:error, error} -> send_resp(conn, 400, error.message)
-end
-```
+| Header | Description |
+|--------|-------------|
+| `webhook-id` | Unique message identifier (for deduplication) |
+| `webhook-timestamp` | Unix epoch seconds when the event was sent |
+| `webhook-signature` | HMAC-SHA256 signature (`v1,<base64>`) |
 
-`construct_event/4` verifies the HMAC-SHA256 signature using constant-time
-comparison and checks the timestamp is within the tolerance window (default:
-300 seconds).
+The signature is computed over `"{webhook-id}.{webhook-timestamp}.{body}"` using
+your webhook secret as the HMAC key.
 
 ## WebhookPlug
 
 `PolarExpress.WebhookPlug` handles the full lifecycle — reading the raw body,
 verifying the signature, deserializing the event, and assigning it to
-`conn.assigns.stripe_event`.
+`conn.assigns.polar_express_event`.
 
 ### Setup
 
@@ -126,24 +124,39 @@ If the signature is invalid or the timestamp is stale, `WebhookPlug` responds
 with `400 Bad Request` and halts the connection. Your downstream plugs and
 controllers are never invoked.
 
-## Typed Event Modules
+## Manual Verification
 
-V2 events and thin V1 events have dedicated modules with typed data structs:
+If you need to verify webhooks outside of a Plug pipeline, use
+`PolarExpress.Webhook.construct_event/4` directly:
 
 ```elixir
-alias PolarExpress.Events.V1BillingMeterErrorReportTriggeredEvent
-
-# Each event module exposes the PolarExpress event type string
-V1BillingMeterErrorReportTriggeredEvent.lookup_type()
-#=> "billing.meter.error_report_triggered"
-
-# Events have typed nested data structs
-%V1BillingMeterErrorReportTriggeredEvent{
-  data: %V1BillingMeterErrorReportTriggeredEvent.Data{}
+headers = %{
+  "webhook-id" => get_req_header(conn, "webhook-id") |> List.first(),
+  "webhook-timestamp" => get_req_header(conn, "webhook-timestamp") |> List.first(),
+  "webhook-signature" => get_req_header(conn, "webhook-signature") |> List.first()
 }
 
-# V2 events support fetching related objects
-{:ok, meter} = V2BillingMeterNoMeterFoundEvent.fetch_related_object(event, client)
+case PolarExpress.Webhook.construct_event(raw_body, headers, "whsec_...") do
+  {:ok, event} -> handle_event(event)
+  {:error, error} -> send_resp(conn, 400, error.message)
+end
+```
+
+## Typed Event Modules
+
+Webhook events have dedicated modules with typed data structs:
+
+```elixir
+alias PolarExpress.Events.OrderCreated
+
+# Each event module exposes the Polar event type string
+OrderCreated.lookup_type()
+#=> "order.created"
+
+# Events have typed nested data structs
+%OrderCreated{
+  data: %OrderCreated.Data{}
+}
 ```
 
 ## Tips
@@ -151,6 +164,6 @@ V1BillingMeterErrorReportTriggeredEvent.lookup_type()
 - **Always return 200 quickly.** Process events asynchronously (e.g. via
   `Task.Supervisor` or an Oban job) to avoid timeouts.
 - **Handle duplicates.** Polar may send the same event more than once. Use
-  `event.id` as an idempotency key.
+  the `webhook-id` header as an idempotency key.
 - **Use the webhook signing secret from the Polar Dashboard**, not your API
   key. Each webhook endpoint has its own secret.

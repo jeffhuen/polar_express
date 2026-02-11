@@ -15,7 +15,7 @@ defmodule PolarExpress do
 
       client = PolarExpress.client()
 
-      {:ok, customer} = PolarExpress.Services.CustomerService.create(client, %{
+      {:ok, customer} = PolarExpress.Services.CustomersService.create_customer(client, %{
         email: "jane@example.com"
       })
 
@@ -23,8 +23,8 @@ defmodule PolarExpress do
 
   Override any config option when creating a client:
 
-      # Connect: act on behalf of a connected account
-      client = PolarExpress.client(organization_id: "acct_...")
+      # Use sandbox environment
+      client = PolarExpress.client(server: :sandbox)
 
       # Explicit key (ignores config)
       client = PolarExpress.client("pk_test_other", max_retries: 5)
@@ -41,13 +41,10 @@ defmodule PolarExpress do
 
   Client options (used by `PolarExpress.client/0,1,2`):
 
-    * `:api_key` - PolarExpress secret key (required)
-    * `:api_version` - Pin a specific Polar API version
-    * `:polar_express_account` - Default connected account ID (Stripe Connect)
-    * `:client_id` - OAuth client ID
+    * `:api_key` - Polar API key (required)
+    * `:server` - API environment: `:production` or `:sandbox` (default: `:production`)
     * `:max_retries` - Maximum retry attempts (default: 2)
-    * `:open_timeout` - Connection timeout in ms (default: 30_000)
-    * `:read_timeout` - Read timeout in ms (default: 80_000)
+    * `:timeout_ms` - Request timeout in ms (default: 30_000)
     * `:finch` - Custom Finch instance name (default: `PolarExpress.Finch`)
 
   Non-client options (used by other modules):
@@ -107,7 +104,7 @@ defmodule PolarExpress do
   ## Examples
 
       client = PolarExpress.client("pk_test_...")
-      client = PolarExpress.client("pk_test_...", organization_id: "acct_...", max_retries: 5)
+      client = PolarExpress.client("pk_test_...", server: :sandbox, max_retries: 5)
   """
   @spec client(String.t(), keyword()) :: PolarExpress.Client.t()
   def client(api_key, opts) when is_binary(api_key) do
@@ -129,7 +126,7 @@ defmodule PolarExpress do
       client = PolarExpress.client("pk_test_...")
 
       # Config defaults + overrides
-      client = PolarExpress.client(organization_id: "acct_...", max_retries: 5)
+      client = PolarExpress.client(server: :sandbox, max_retries: 5)
   """
   @spec client(String.t() | keyword()) :: PolarExpress.Client.t()
   def client(api_key) when is_binary(api_key) do

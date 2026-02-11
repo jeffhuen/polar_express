@@ -45,13 +45,12 @@ Adds a placeholder API key to `config/dev.exs`:
 
 ```elixir
 config :polar_express,
-  api_key: "pk_test_YOUR_KEY_HERE",
-  webhook_secret: "whsec_test_YOUR_SECRET",
-  server: :sandbox
+  api_key: "pk_test_YOUR_KEY_HERE"
 ```
 
-Replace the keys with your actual test-mode credentials from the
-[Polar Dashboard](https://dashboard.polar.sh).
+Replace with your actual test-mode API key from the
+[Polar Dashboard](https://dashboard.polar.sh). You'll also want to add
+`webhook_secret` and `server: :sandbox` here manually if using webhooks locally.
 
 ### 2. Runtime Config
 
@@ -100,10 +99,10 @@ defmodule MyAppWeb.PolarWebhookController do
     event = conn.assigns.polar_express_event
 
     case event.type do
-      "orders.created" -> ...
-      "orders.updated"  -> ...
-      "subscriptions.created"     -> ...
-      "subscriptions.updated" -> ...
+      "order.created" -> ...
+      "order.updated"  -> ...
+      "subscription.created"     -> ...
+      "subscription.updated" -> ...
       unhandled -> Logger.info("Unhandled Polar event: #{unhandled}")
     end
 

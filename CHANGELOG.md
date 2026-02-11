@@ -1,26 +1,30 @@
 # Changelog
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Common Changelog](https://common-changelog.org/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## v0.1.0
 
 Initial release.
 
 ### Features
 
-- Full V1 + V2 API coverage (561 endpoints across 190 service modules)
-- Auto-generated from the PolarExpress OpenAPI spec (v2166)
-- Typed Elixir structs for 307 resource types with inner type deserialization
-- V1 list pagination (`ListObject.auto_paging_stream/3`)
-- V1 search pagination (`SearchResult.auto_paging_stream/3`)
-- V2 URL-based pagination (`V2.ListObject.auto_paging_stream/3`)
-- Webhook signature verification (`Webhook.construct_event/4`)
+- Full API coverage (31 service modules matching the JavaScript SDK layout)
+- Auto-generated from the Polar OpenAPI spec
+- Typed Elixir structs for 30 resource types with inner type deserialization
+- List pagination (`ListObject.auto_paging_stream/3`)
+- Webhook signature verification via standardwebhooks (`Webhook.construct_event/4`)
 - `WebhookPlug` for Plug/Phoenix integration
 - OAuth support (`authorize_url`, `token`, `deauthorize`)
 - Multipart file uploads
 - Streaming response support (`Client.stream_request/6`)
 - Raw request support (`Client.raw_request/4`)
-- Per-event typed modules (21 event types with nested data structs)
+- Per-event typed modules (36 event types with nested data structs)
 - Ownership-based test stubs (`PolarExpress.Test`)
 - Retry with exponential backoff and jitter
 - Telemetry events for request lifecycle
 - Finch HTTP client (Mint + NimblePool)
-- Zero-dep JSON via native `JSON` module (Elixir 1.18+)
+- RustyJSON for fast JSON parsing (Rust NIF)
+- 1:1 feature parity with the official JavaScript SDK

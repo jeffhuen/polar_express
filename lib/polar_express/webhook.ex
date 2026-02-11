@@ -2,20 +2,48 @@ defmodule PolarExpress.Webhook do
   @moduledoc """
   Webhook signature verification and event construction.
 
+  Polar uses the [Standard Webhooks](https://github.com/standard-webhooks/standard-webhooks)
+  specification. Each webhook request includes three headers:
+
+    * `webhook-id` — unique message identifier
+    * `webhook-timestamp` — Unix epoch seconds
+    * `webhook-signature` — `v1,<base64>` HMAC-SHA256 signature
+
   ## Usage
 
-      case PolarExpress.Webhook.construct_event(payload, sig_header, secret) do
+      headers = %{
+        "webhook-id" => msg_id,
+        "webhook-timestamp" => timestamp,
+        "webhook-signature" => signature
+      }
+
+      case PolarExpress.Webhook.construct_event(payload, headers, secret) do
         {:ok, event} -> handle_event(event)
         {:error, error} -> send_resp(conn, 400, error.message)
       end
+
+  Most users should use `PolarExpress.WebhookPlug` instead, which handles all
+  of this automatically.
   """
 
-  alias PolarExpress.{Deserializer, Error}
+  alias PolarExpress.{Deserializer, Error, Resources}
+
+  @typedoc """
+  Standard Webhooks headers sent by Polar with every webhook request.
+
+    * `"webhook-id"` — unique message identifier (used in signature and for deduplication)
+    * `"webhook-timestamp"` — Unix epoch seconds as a string
+    * `"webhook-signature"` — one or more `v1,<base64>` HMAC-SHA256 signatures (space-separated)
+  """
+  @type headers :: %{
+          required(String.t()) => String.t()
+        }
+
+  @typedoc "Options for webhook verification."
+  @type verify_opts :: [tolerance: pos_integer()]
 
   @default_tolerance 300
 
-  # Mapping from event type to data schema module for typed deserialization.
-  # Generated from the OpenAPI spec's webhooks section.
   # Mapping from webhook event type to data schema module.
   # Derived from the OpenAPI spec's webhooks section — 35 event types.
   @event_data_schemas %{
@@ -59,20 +87,38 @@ defmodule PolarExpress.Webhook do
   @doc """
   Verify a webhook signature and construct a typed event struct.
 
+  Parses the JSON payload, verifies the HMAC-SHA256 signature against the
+  Standard Webhooks headers, and deserializes the event data into the
+  appropriate schema struct (e.g. `PolarExpress.Schemas.Order` for `"order.paid"`).
+  Unknown event types are returned with raw map data.
+
   ## Parameters
 
     * `payload` - Raw request body (binary string, NOT parsed JSON)
-    * `sig_header` - Value of the webhook signature header
+    * `headers` - Standard Webhooks headers (see `t:headers/0`)
     * `secret` - Webhook endpoint signing secret (`whsec_...`)
+    * `opts` - See `t:verify_opts/0`
 
-  ## Options
+  ## Examples
 
-    * `:tolerance` - Maximum age of the event in seconds (default: 300)
+      headers = %{
+        "webhook-id" => "msg_2Lml0nCjGr...",
+        "webhook-timestamp" => "1714000000",
+        "webhook-signature" => "v1,K7rRz..."
+      }
+
+      case PolarExpress.Webhook.construct_event(raw_body, headers, secret) do
+        {:ok, %PolarExpress.Resources.Event{type: "order.paid", data: order}} ->
+          fulfill_order(order)
+
+        {:error, %PolarExpress.Error{message: msg}} ->
+          Logger.warning("Webhook rejected: \#{msg}")
+      end
   """
-  @spec construct_event(binary(), String.t(), String.t(), keyword()) ::
-          {:ok, struct() | map()} | {:error, Error.t()}
-  def construct_event(payload, sig_header, secret, opts \\ []) do
-    with :ok <- verify_header(payload, sig_header, secret, opts),
+  @spec construct_event(binary(), headers(), String.t(), verify_opts()) ::
+          {:ok, Resources.Event.t()} | {:error, Error.t()}
+  def construct_event(payload, headers, secret, opts \\ []) do
+    with :ok <- verify_headers(payload, headers, secret, opts),
          {:ok, data} <- decode_payload(payload) do
       event_type = data["type"]
       schema_mod = Map.get(@event_data_schemas, event_type)
@@ -84,11 +130,12 @@ defmodule PolarExpress.Webhook do
           data["data"]
         end
 
-      {:ok, %PolarExpress.Resources.Event{
-        type: event_type,
-        timestamp: data["timestamp"],
-        data: typed_data
-      }}
+      {:ok,
+       %PolarExpress.Resources.Event{
+         type: event_type,
+         timestamp: data["timestamp"],
+         data: typed_data
+       }}
     end
   end
 
@@ -100,77 +147,99 @@ defmodule PolarExpress.Webhook do
   end
 
   @doc """
-  Verify a webhook signature header without constructing the event.
+  Verify Standard Webhooks headers without constructing the event.
 
-  Returns `:ok` or `{:error, %Error{}}`.
+  Checks the required headers are present, the timestamp is within the
+  tolerance window (bidirectional — rejects both stale and future-dated
+  events), and at least one `v1` signature matches the expected
+  HMAC-SHA256 using constant-time comparison.
+
+  ## Parameters
+
+    * `payload` - Raw request body (binary string)
+    * `headers` - Standard Webhooks headers (see `t:headers/0`)
+    * `secret` - Webhook endpoint signing secret (`whsec_...`)
+    * `opts` - See `t:verify_opts/0`
   """
-  @spec verify_header(binary(), String.t(), String.t(), keyword()) ::
+  @spec verify_headers(binary(), headers(), String.t(), verify_opts()) ::
           :ok | {:error, Error.t()}
-  def verify_header(payload, sig_header, secret, opts \\ []) do
+  def verify_headers(payload, headers, secret, opts \\ []) do
     tolerance = Keyword.get(opts, :tolerance, @default_tolerance)
 
-    with {:ok, timestamp, signatures} <- parse_header(sig_header),
-         :ok <- verify_signature(payload, timestamp, secret, signatures) do
-      verify_timestamp(timestamp, tolerance)
+    msg_id = headers["webhook-id"]
+    timestamp_str = headers["webhook-timestamp"]
+    sig_header = headers["webhook-signature"]
+
+    with :ok <- validate_required_headers(msg_id, timestamp_str, sig_header),
+         {:ok, timestamp} <- parse_timestamp(timestamp_str),
+         {:ok, signatures} <- parse_signatures(sig_header),
+         :ok <- verify_timestamp(timestamp, tolerance) do
+      verify_signature(msg_id, timestamp, payload, secret, signatures)
     end
   end
 
   @doc """
-  Compute the expected signature for a payload.
-  """
-  @spec compute_signature(integer(), binary(), String.t()) :: String.t()
-  def compute_signature(timestamp, payload, secret) do
-    signed_payload = "#{timestamp}.#{payload}"
+  Compute the expected Base64-encoded HMAC-SHA256 signature for a payload.
 
-    :crypto.mac(:hmac, :sha256, secret, signed_payload)
-    |> Base.encode16(case: :lower)
+  The signed content follows the Standard Webhooks format:
+
+      "{msg_id}.{timestamp}.{payload}"
+
+  The secret is used as raw bytes (Polar-specific — they pass the full secret
+  string including the `whsec_` prefix as the HMAC key, rather than
+  Base64-decoding it as the Standard Webhooks spec suggests).
+  """
+  @spec compute_signature(String.t(), integer(), binary(), String.t()) :: String.t()
+  def compute_signature(msg_id, timestamp, payload, secret) do
+    signed_content = "#{msg_id}.#{timestamp}.#{payload}"
+
+    :crypto.mac(:hmac, :sha256, secret, signed_content)
+    |> Base.encode64()
   end
 
   # -- Private ----------------------------------------------------------------
 
-  defp parse_header(nil) do
-    {:error, Error.signature_verification_error("No webhook signature header present")}
+  defp validate_required_headers(nil, _, _),
+    do: {:error, Error.signature_verification_error("Missing webhook-id header")}
+
+  defp validate_required_headers(_, nil, _),
+    do: {:error, Error.signature_verification_error("Missing webhook-timestamp header")}
+
+  defp validate_required_headers(_, _, nil),
+    do: {:error, Error.signature_verification_error("Missing webhook-signature header")}
+
+  defp validate_required_headers(_, _, _), do: :ok
+
+  defp parse_timestamp(timestamp_str) do
+    case Integer.parse(timestamp_str) do
+      {ts, ""} -> {:ok, ts}
+      _ -> {:error, Error.signature_verification_error("Invalid webhook-timestamp: #{timestamp_str}")}
+    end
   end
 
-  defp parse_header(header) when is_binary(header) do
-    parts =
-      header
-      |> String.split(",")
-      |> Enum.map(&String.trim/1)
-      |> Enum.map(fn part ->
-        case String.split(part, "=", parts: 2) do
-          [key, value] -> {key, value}
-          _ -> nil
+  # Standard Webhooks signature header format:
+  # "v1,<base64sig>" or "v1,<sig1> v1,<sig2>" (space-separated, multiple sigs)
+  defp parse_signatures(sig_header) do
+    signatures =
+      sig_header
+      |> String.split(" ", trim: true)
+      |> Enum.flat_map(fn entry ->
+        case String.split(entry, ",", parts: 2) do
+          ["v1", sig] -> [sig]
+          _ -> []
         end
       end)
-      |> Enum.reject(&is_nil/1)
 
-    timestamp =
-      case List.keyfind(parts, "t", 0) do
-        {"t", ts} -> String.to_integer(ts)
-        nil -> nil
-      end
-
-    signatures =
-      parts
-      |> Enum.filter(fn {k, _} -> k == "v1" end)
-      |> Enum.map(fn {_, v} -> v end)
-
-    cond do
-      is_nil(timestamp) ->
-        {:error, Error.signature_verification_error("Unable to extract timestamp from header")}
-
-      signatures == [] ->
-        {:error, Error.signature_verification_error("No v1 signatures found in header")}
-
-      true ->
-        {:ok, timestamp, signatures}
+    if signatures == [] do
+      {:error, Error.signature_verification_error("No v1 signatures found in webhook-signature header")}
+    else
+      {:ok, signatures}
     end
   end
 
   defp verify_timestamp(timestamp, tolerance) do
     now = System.system_time(:second)
-    age = now - timestamp
+    age = abs(now - timestamp)
 
     if age > tolerance do
       {:error,
@@ -182,15 +251,15 @@ defmodule PolarExpress.Webhook do
     end
   end
 
-  defp verify_signature(payload, timestamp, secret, signatures) do
-    expected = compute_signature(timestamp, payload, secret)
+  defp verify_signature(msg_id, timestamp, payload, secret, signatures) do
+    expected = compute_signature(msg_id, timestamp, payload, secret)
 
     if Enum.any?(signatures, &secure_compare(&1, expected)) do
       :ok
     else
       {:error,
        Error.signature_verification_error(
-         "No matching v1 signature found. Are you passing the raw request body?"
+         "No matching v1 signature found. Ensure you are passing the raw request body and the correct secret."
        )}
     end
   end

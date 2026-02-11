@@ -7,7 +7,6 @@ set -euo pipefail
 
 SPEC_DIR="priv/openapi"
 SPEC_FILE="$SPEC_DIR/openapi.json"
-VERSION_FILE="OPENAPI_VERSION"
 
 SPEC_URL="https://api.polar.sh/openapi.json"
 
@@ -36,9 +35,6 @@ if [ -z "$SPEC_VERSION" ]; then
   echo "ERROR: Could not extract version from spec" >&2
   exit 1
 fi
-
-# Write version only after successful download and validation
-echo "$SPEC_VERSION" > "$VERSION_FILE"
 
 V1_COUNT=$(grep -c '"/v1/' "$SPEC_FILE" || true)
 echo "Downloaded Polar OpenAPI spec version: $SPEC_VERSION"

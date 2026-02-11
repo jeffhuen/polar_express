@@ -139,16 +139,16 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
               event = conn.assigns.polar_express_event
 
               case event.type do
-                "orders.created" ->
+                "order.created" ->
                   handle_order_created(event)
 
-                "orders.updated" ->
+                "order.updated" ->
                   handle_order_updated(event)
 
-                "subscriptions.created" ->
+                "subscription.created" ->
                   handle_subscription_created(event)
 
-                "subscriptions.updated" ->
+                "subscription.updated" ->
                   handle_subscription_updated(event)
 
                 unhandled ->

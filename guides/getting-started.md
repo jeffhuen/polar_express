@@ -80,10 +80,9 @@ config :polar_express,
   webhook_secret: "whsec_...",
 
   # Optional — all have defaults if omitted
-  server: :sandbox,                  # :sandbox or :production (default: :sandbox)
+  server: :sandbox,                  # :sandbox or :production (default: :production)
   max_retries: 3,                    # default: 2
-  open_timeout: 30_000,              # connection timeout ms (default: 30,000)
-  read_timeout: 80_000,              # read timeout ms (default: 80,000)
+  timeout_ms: 60_000,               # request timeout in ms (default: 30,000)
   finch: MyApp.Finch                 # custom Finch pool (default: PolarExpress.Finch)
 ```
 
@@ -91,10 +90,9 @@ config :polar_express,
 |-----|---------|---------|-------------|
 | `:api_key` | `PolarExpress.client/0,1,2` | required | Polar API key |
 | `:webhook_secret` | `PolarExpress.WebhookPlug` | — | Webhook signing secret |
-| `:server` | `PolarExpress.client/0,1,2` | `:sandbox` | API environment (`:sandbox` or `:production`) |
+| `:server` | `PolarExpress.client/0,1,2` | `:production` | API environment (`:sandbox` or `:production`) |
 | `:max_retries` | `PolarExpress.client/0,1,2` | `2` | Max retry attempts |
-| `:open_timeout` | `PolarExpress.client/0,1,2` | `30_000` | Connection timeout in ms |
-| `:read_timeout` | `PolarExpress.client/0,1,2` | `80_000` | Read timeout in ms |
+| `:timeout_ms` | `PolarExpress.client/0,1,2` | `30_000` | Request timeout in ms |
 | `:finch` | `PolarExpress.client/0,1,2` | `PolarExpress.Finch` | Custom Finch pool name |
 
 ## Creating a Client
@@ -115,7 +113,7 @@ Pass options to override any config value for a specific client:
 client = PolarExpress.client(server: :production)
 
 # Override retries and timeout
-client = PolarExpress.client(max_retries: 5, read_timeout: 120_000)
+client = PolarExpress.client(max_retries: 5, timeout_ms: 60_000)
 ```
 
 ### Explicit API Key
@@ -137,7 +135,7 @@ Options are resolved in this order (highest wins):
 3. Struct defaults (e.g. `max_retries: 2`)
 
 Clients are plain structs with no global state — safe for concurrent use
-with multiple API keys or connected accounts.
+with multiple API keys.
 
 ## Making API Calls
 
@@ -146,15 +144,15 @@ client as the first argument:
 
 ```elixir
 # Create a customer
-{:ok, customer} = PolarExpress.Services.CustomersService.create(client, %{
+{:ok, customer} = PolarExpress.Services.CustomersService.create_customer(client, %{
   email: "jane@example.com"
 })
 
-# Retrieve a product
-{:ok, product} = PolarExpress.Services.ProductsService.retrieve(client, "prod_123")
+# Get a product
+{:ok, product} = PolarExpress.Services.ProductsService.get_product(client, "prod_123")
 
 # List orders
-{:ok, orders} = PolarExpress.Services.OrdersService.list(client, %{})
+{:ok, orders} = PolarExpress.Services.OrdersService.list_orders(client, %{})
 ```
 
 ## Typed Responses
@@ -175,9 +173,9 @@ access errors at compile time.
 All API errors return `{:error, %PolarExpress.Error{}}`:
 
 ```elixir
-case PolarExpress.Services.OrdersService.create(client, params) do
-  {:ok, order} ->
-    order
+case PolarExpress.Services.CheckoutsService.create_checkout_session(client, params) do
+  {:ok, checkout} ->
+    checkout
 
   {:error, %PolarExpress.Error{type: :validation_error} = err} ->
     Logger.warning("Validation failed: #{err.message}")
@@ -196,9 +194,8 @@ end
 Options can be overridden per-request for multi-environment scenarios:
 
 ```elixir
-PolarExpress.Services.OrdersService.list(client, %{},
-  server: :production,
-  idempotency_key: "order_123"
+PolarExpress.Services.OrdersService.list_orders(client, %{},
+  server: :production
 )
 ```
 
@@ -207,17 +204,17 @@ PolarExpress.Services.OrdersService.list(client, %{},
 List endpoints return paginated results with lazy auto-paging support:
 
 ```elixir
-{:ok, page} = PolarExpress.Services.CustomersService.list(client, %{})
+{:ok, page} = PolarExpress.Services.CustomersService.list_customers(client, %{})
 
 page
-|> PolarExpress.ListObject.auto_paging_stream(client)
+|> PolarExpress.ListObject.auto_paging_stream(client, "/v1/customers/")
 |> Stream.filter(& &1.email)
 |> Enum.to_list()
 ```
 
 ## Retries
 
-Failed requests (network errors, 429, 500, 503) are automatically retried
+Failed requests (network errors, 408, 409, 429, 500, 502, 503, 504) are automatically retried
 with exponential backoff and jitter.
 
 ```elixir
@@ -231,8 +228,8 @@ client = PolarExpress.client(max_retries: 5)
 Idempotency keys can be passed for idempotent operations:
 
 ```elixir
-PolarExpress.Services.OrdersService.create(client, params,
-  idempotency_key: "order_123"
+PolarExpress.Services.CheckoutsService.create_checkout_session(client, params,
+  idempotency_key: "checkout_123"
 )
 ```
 

@@ -6,16 +6,18 @@ defmodule PolarExpress.WebhookPlugTest do
   alias PolarExpress.{Webhook, WebhookPlug}
 
   @secret "whsec_test_plug_secret"
+  @msg_id "msg_plug_test_123"
   @path "/webhook/polar"
   @payload ~s({"type": "checkout.created", "timestamp": "2024-01-01T00:00:00Z", "data": {"id": "checkout_123"}})
 
   defp signed_conn(secret \\ @secret) do
     timestamp = System.system_time(:second)
-    signature = Webhook.compute_signature(timestamp, @payload, secret)
-    header = "t=#{timestamp},v1=#{signature}"
+    signature = Webhook.compute_signature(@msg_id, timestamp, @payload, secret)
 
     conn(:post, @path, @payload)
-    |> put_req_header("webhook-signature", header)
+    |> put_req_header("webhook-id", @msg_id)
+    |> put_req_header("webhook-timestamp", Integer.to_string(timestamp))
+    |> put_req_header("webhook-signature", "v1,#{signature}")
     |> put_req_header("content-type", "application/json")
   end
 
@@ -136,7 +138,7 @@ defmodule PolarExpress.WebhookPlugTest do
       assert conn.status == 400
     end
 
-    test "returns 400 on missing signature header" do
+    test "returns 400 on missing webhook headers" do
       opts = WebhookPlug.init(path: @path)
 
       conn =
@@ -146,7 +148,20 @@ defmodule PolarExpress.WebhookPlugTest do
 
       assert conn.halted
       assert conn.status == 400
-      assert conn.resp_body =~ "Missing webhook signature header"
+      assert conn.resp_body =~ "Missing required Standard Webhooks headers"
+    end
+
+    test "returns 400 when only webhook-signature present (missing id and timestamp)" do
+      opts = WebhookPlug.init(path: @path)
+
+      conn =
+        conn(:post, @path, @payload)
+        |> put_req_header("webhook-signature", "v1,somesig")
+        |> put_req_header("content-type", "application/json")
+        |> WebhookPlug.call(opts)
+
+      assert conn.halted
+      assert conn.status == 400
     end
 
     test "passes through non-matching paths" do

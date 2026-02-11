@@ -1,10 +1,11 @@
 if Code.ensure_loaded?(Plug.Conn) do
   defmodule PolarExpress.WebhookPlug do
     @moduledoc """
-    Plug for verifying PolarExpress webhook signatures.
+    Plug for verifying Polar webhook signatures.
 
-    Reads the raw request body, verifies the `webhook-signature` header,
-    deserializes the event, and assigns it to `conn.assigns.polar_express_event`.
+    Reads the raw request body, verifies the Standard Webhooks headers
+    (`webhook-id`, `webhook-timestamp`, `webhook-signature`), deserializes the
+    event, and assigns it to `conn.assigns.polar_express_event`.
 
     Returns 400 on verification failure.
 
@@ -63,9 +64,9 @@ if Code.ensure_loaded?(Plug.Conn) do
       tolerance = Keyword.get(opts, :tolerance, 300)
 
       with {:ok, body, conn} <- read_body(conn),
-           sig_header when is_binary(sig_header) <- get_sig_header(conn),
+           {:ok, headers} <- extract_webhook_headers(conn),
            {:ok, event} <-
-             PolarExpress.Webhook.construct_event(body, sig_header, secret, tolerance: tolerance) do
+             PolarExpress.Webhook.construct_event(body, headers, secret, tolerance: tolerance) do
         assign(conn, :polar_express_event, event)
       else
         {:error, %PolarExpress.Error{message: message}} ->
@@ -74,18 +75,26 @@ if Code.ensure_loaded?(Plug.Conn) do
           |> send_resp(400, message || "Webhook verification failed")
           |> halt()
 
-        nil ->
+        {:error, :missing_headers} ->
           conn
           |> put_resp_content_type("text/plain")
-          |> send_resp(400, "Missing webhook signature header")
+          |> send_resp(400, "Missing required Standard Webhooks headers")
           |> halt()
       end
     end
 
-    defp get_sig_header(conn) do
-      case get_req_header(conn, "webhook-signature") do
-        [header | _] -> header
-        [] -> nil
+    defp extract_webhook_headers(conn) do
+      with [msg_id | _] <- get_req_header(conn, "webhook-id"),
+           [timestamp | _] <- get_req_header(conn, "webhook-timestamp"),
+           [signature | _] <- get_req_header(conn, "webhook-signature") do
+        {:ok,
+         %{
+           "webhook-id" => msg_id,
+           "webhook-timestamp" => timestamp,
+           "webhook-signature" => signature
+         }}
+      else
+        [] -> {:error, :missing_headers}
       end
     end
 
