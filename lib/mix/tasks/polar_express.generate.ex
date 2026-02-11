@@ -2,10 +2,10 @@ defmodule Mix.Tasks.PolarExpress.Generate do
   @moduledoc """
   Generate Polar API modules from the OpenAPI spec.
 
-      mix polar.generate              # Generate all files
-      mix polar.generate --clean      # Remove old generated files first
-      mix polar.generate --dry-run    # Preview what would be generated
-      mix polar.generate --stats      # Show generation statistics
+      mix polar_express.generate              # Generate all files
+      mix polar_express.generate --clean      # Remove old generated files first
+      mix polar_express.generate --dry-run    # Preview what would be generated
+      mix polar_express.generate --stats      # Show generation statistics
   """
 
   use Mix.Task

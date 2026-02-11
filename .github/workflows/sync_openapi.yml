@@ -46,7 +46,7 @@ jobs:
         run: bash scripts/sync_js.sh
 
       - name: Generate SDK
-        run: mix polar.generate --clean --stats
+        run: mix polar_express.generate --clean --stats
 
       - name: Compile (warnings as errors)
         run: mix compile --warnings-as-errors
@@ -74,7 +74,7 @@ jobs:
             **Spec hash:** `${{ steps.spec.outputs.hash }}`
             **Synced:** ${{ steps.spec.outputs.date }}
 
-            Generated via `sync_openapi.sh` → `mix polar.generate --clean --stats`.
+            Generated via `sync_openapi.sh` → `mix polar_express.generate --clean --stats`.
             All gates passed: compile, test, parity.
           branch: openapi-sync/${{ steps.spec.outputs.date }}-${{ steps.spec.outputs.hash }}
           base: main
