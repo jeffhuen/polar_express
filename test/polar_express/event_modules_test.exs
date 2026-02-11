@@ -183,7 +183,9 @@ defmodule PolarExpress.EventModulesTest do
 
       for mod <- event_modules do
         type = mod.event_type()
-        assert type in known_types, "#{inspect(mod)}.event_type/0 = #{inspect(type)} not in Events.event_types/0"
+
+        assert type in known_types,
+               "#{inspect(mod)}.event_type/0 = #{inspect(type)} not in Events.event_types/0"
       end
     end
   end

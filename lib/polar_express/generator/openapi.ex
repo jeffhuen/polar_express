@@ -165,7 +165,15 @@ defmodule PolarExpress.Generator.OpenAPI do
     # First, filter out schemas with blacklisted keywords
     candidates =
       Enum.filter(schema_refs, fn ref ->
-        not String.contains?(ref, ["List", "Resource_", "Search", "Error", "NotFound", "Validation", "HTTP"])
+        not String.contains?(ref, [
+          "List",
+          "Resource_",
+          "Search",
+          "Error",
+          "NotFound",
+          "Validation",
+          "HTTP"
+        ])
       end)
 
     # Prefer shorter, simpler schemas (usually the main resource)
@@ -274,7 +282,8 @@ defmodule PolarExpress.Generator.OpenAPI do
     path = op.path
     path_params = extract_path_params(path)
     # Convert method summary to method name: "List Organizations" -> "list_organizations"
-    method_name = (op.summary || "default") |> String.downcase() |> String.replace(~r/[^a-z0-9_]/, "_")
+    method_name =
+      (op.summary || "default") |> String.downcase() |> String.replace(~r/[^a-z0-9_]/, "_")
 
     response_schema = extract_response_schema_ref(op.spec)
 
@@ -613,15 +622,17 @@ defmodule PolarExpress.Generator.OpenAPI do
             event_type = webhook_key
             data_schema_name = Map.get(webhook_data_schemas, event_type)
 
-            [{event_type,
-              %{
-                data_ref: data_schema_name,
-                kind: "webhook",
-                description: schema["description"],
-                data_schema: nil,
-                has_related_object: false,
-                schema_fields: [:type, :data, :timestamp]
-              }}]
+            [
+              {event_type,
+               %{
+                 data_ref: data_schema_name,
+                 kind: "webhook",
+                 description: schema["description"],
+                 data_schema: nil,
+                 has_related_object: false,
+                 schema_fields: [:type, :data, :timestamp]
+               }}
+            ]
 
           _ ->
             []

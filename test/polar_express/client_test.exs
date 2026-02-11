@@ -410,8 +410,10 @@ defmodule PolarExpress.ClientTest do
       assert result.pagination.total_count == 25
       assert result.pagination.max_page == 3
 
-      assert [%PolarExpress.Schemas.Subscription{} = s1,
-              %PolarExpress.Schemas.Subscription{} = s2] = result.items
+      assert [
+               %PolarExpress.Schemas.Subscription{} = s1,
+               %PolarExpress.Schemas.Subscription{} = s2
+             ] = result.items
 
       assert s1.id == "sub_1"
       assert s1.status == "active"
@@ -472,10 +474,11 @@ defmodule PolarExpress.ClientTest do
       client = PolarExpress.client("pk_test_123")
       {:ok, _} = Client.request(client, :get, "/v1/organizations/org_1")
 
-      assert_receive {:telemetry_start, ^ref, [:polar_express, :request, :start], %{system_time: _},
-                      %{method: :get, path: "/v1/organizations/org_1"}}
+      assert_receive {:telemetry_start, ^ref, [:polar_express, :request, :start],
+                      %{system_time: _}, %{method: :get, path: "/v1/organizations/org_1"}}
 
-      assert_receive {:telemetry_stop, ^ref, [:polar_express, :request, :stop], %{duration: duration},
+      assert_receive {:telemetry_stop, ^ref, [:polar_express, :request, :stop],
+                      %{duration: duration},
                       %{
                         method: :get,
                         path: "/v1/organizations/org_1",

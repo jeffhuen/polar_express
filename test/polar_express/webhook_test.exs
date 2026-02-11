@@ -72,7 +72,9 @@ defmodule PolarExpress.WebhookTest do
     end
 
     test "returns error with unknown event type as raw map data" do
-      payload = ~s({"type": "unknown.event", "timestamp": "2024-01-01T00:00:00Z", "data": {"foo": "bar"}})
+      payload =
+        ~s({"type": "unknown.event", "timestamp": "2024-01-01T00:00:00Z", "data": {"foo": "bar"}})
+
       headers = generate_headers(payload)
       assert {:ok, event} = Webhook.construct_event(payload, headers, @secret)
       assert event.type == "unknown.event"
@@ -88,31 +90,46 @@ defmodule PolarExpress.WebhookTest do
 
     test "returns error with missing webhook-id" do
       headers = generate_headers() |> Map.delete("webhook-id")
-      assert {:error, %Error{message: message}} = Webhook.verify_headers(@payload, headers, @secret)
+
+      assert {:error, %Error{message: message}} =
+               Webhook.verify_headers(@payload, headers, @secret)
+
       assert message =~ "Missing webhook-id header"
     end
 
     test "returns error with missing webhook-timestamp" do
       headers = generate_headers() |> Map.delete("webhook-timestamp")
-      assert {:error, %Error{message: message}} = Webhook.verify_headers(@payload, headers, @secret)
+
+      assert {:error, %Error{message: message}} =
+               Webhook.verify_headers(@payload, headers, @secret)
+
       assert message =~ "Missing webhook-timestamp header"
     end
 
     test "returns error with missing webhook-signature" do
       headers = generate_headers() |> Map.delete("webhook-signature")
-      assert {:error, %Error{message: message}} = Webhook.verify_headers(@payload, headers, @secret)
+
+      assert {:error, %Error{message: message}} =
+               Webhook.verify_headers(@payload, headers, @secret)
+
       assert message =~ "Missing webhook-signature header"
     end
 
     test "returns error with no v1 signatures" do
       headers = generate_headers() |> Map.put("webhook-signature", "v0,somesig")
-      assert {:error, %Error{message: message}} = Webhook.verify_headers(@payload, headers, @secret)
+
+      assert {:error, %Error{message: message}} =
+               Webhook.verify_headers(@payload, headers, @secret)
+
       assert message =~ "No v1 signatures"
     end
 
     test "returns error with invalid timestamp format" do
       headers = generate_headers() |> Map.put("webhook-timestamp", "not_a_number")
-      assert {:error, %Error{message: message}} = Webhook.verify_headers(@payload, headers, @secret)
+
+      assert {:error, %Error{message: message}} =
+               Webhook.verify_headers(@payload, headers, @secret)
+
       assert message =~ "Invalid webhook-timestamp"
     end
 

@@ -99,10 +99,11 @@ defmodule PolarExpress.StreamingTest do
 
     test "streams POST request with JSON body", %{client: client} do
       PolarExpress.Test.stub(fn %{headers: headers, body: body} ->
-        content_type = Enum.find_value(headers, fn
-          {"content-type", ct} -> ct
-          _ -> nil
-        end)
+        content_type =
+          Enum.find_value(headers, fn
+            {"content-type", ct} -> ct
+            _ -> nil
+          end)
 
         assert content_type == "application/json"
         assert body =~ "organization_id"

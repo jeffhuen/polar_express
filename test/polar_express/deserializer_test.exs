@@ -130,6 +130,7 @@ defmodule PolarExpress.DeserializerTest do
       result = Deserializer.cast(data, resource: PolarExpress.Schemas.CustomerWithMembers)
 
       assert %PolarExpress.Schemas.CustomerWithMembers{} = result
+
       assert [%PolarExpress.Schemas.Member{} = m1, %PolarExpress.Schemas.Member{} = m2] =
                result.members
 
@@ -233,8 +234,10 @@ defmodule PolarExpress.DeserializerTest do
       assert %PolarExpress.ListObject{} = result
       assert length(result.items) == 2
 
-      assert [%PolarExpress.Schemas.CustomerWithMembers{} = c1,
-              %PolarExpress.Schemas.CustomerWithMembers{} = c2] = result.items
+      assert [
+               %PolarExpress.Schemas.CustomerWithMembers{} = c1,
+               %PolarExpress.Schemas.CustomerWithMembers{} = c2
+             ] = result.items
 
       assert c1.id == "cust_1"
       assert c1.email == "alice@example.com"

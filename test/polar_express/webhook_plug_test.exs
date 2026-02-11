@@ -60,7 +60,9 @@ defmodule PolarExpress.WebhookPlugTest do
       conn = signed_conn() |> WebhookPlug.call(opts)
 
       refute conn.halted
-      assert %PolarExpress.Resources.Event{type: "checkout.created"} = conn.assigns.polar_express_event
+
+      assert %PolarExpress.Resources.Event{type: "checkout.created"} =
+               conn.assigns.polar_express_event
     end
 
     test "raises when no secret in config and no explicit secret" do

@@ -103,12 +103,16 @@ defmodule PolarExpress.Error do
   defp error_type_from_response(status, data) do
     case data["type"] do
       # FastAPI's default validation error type → our canonical :validation_error
-      "HttpValidationError" -> :validation_error
+      "HttpValidationError" ->
+        :validation_error
+
       # Domain-specific error types (e.g. "ResourceNotFound" → :resource_not_found)
       type when is_binary(type) and type != "" ->
         type |> Macro.underscore() |> String.to_atom()
+
       # No body type → fall back to HTTP status
-      _ -> status_to_error_type(status)
+      _ ->
+        status_to_error_type(status)
     end
   end
 

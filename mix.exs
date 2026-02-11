@@ -78,8 +78,7 @@ defmodule PolarExpress.MixProject do
         "GitHub" => @source_url,
         "Changelog" => "#{@source_url}/blob/main/CHANGELOG.md"
       },
-      files:
-        ~w(lib guides mix.exs README.md LICENSE CHANGELOG.md usage-rules.md)
+      files: ~w(lib guides mix.exs README.md LICENSE CHANGELOG.md usage-rules.md)
     ]
   end
 

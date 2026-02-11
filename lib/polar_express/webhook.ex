@@ -172,8 +172,12 @@ defmodule PolarExpress.Webhook do
 
   defp parse_timestamp(timestamp_str) do
     case Integer.parse(timestamp_str) do
-      {ts, ""} -> {:ok, ts}
-      _ -> {:error, Error.signature_verification_error("Invalid webhook-timestamp: #{timestamp_str}")}
+      {ts, ""} ->
+        {:ok, ts}
+
+      _ ->
+        {:error,
+         Error.signature_verification_error("Invalid webhook-timestamp: #{timestamp_str}")}
     end
   end
 
@@ -191,7 +195,8 @@ defmodule PolarExpress.Webhook do
       end)
 
     if signatures == [] do
-      {:error, Error.signature_verification_error("No v1 signatures found in webhook-signature header")}
+      {:error,
+       Error.signature_verification_error("No v1 signatures found in webhook-signature header")}
     else
       {:ok, signatures}
     end

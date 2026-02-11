@@ -80,7 +80,9 @@ defmodule PolarExpress.Generator.SchemaGenerator do
             []
 
           _ ->
-            resolved = PolarExpress.Generator.OpenAPI.resolve_response_item_schema(ref, schema_index)
+            resolved =
+              PolarExpress.Generator.OpenAPI.resolve_response_item_schema(ref, schema_index)
+
             if resolved, do: [resolved], else: []
         end
       end)
@@ -150,7 +152,8 @@ defmodule PolarExpress.Generator.SchemaGenerator do
     Enum.flat_map(variants, &extract_refs_from_property/1)
   end
 
-  defp extract_refs_from_property(%{"type" => "object", "properties" => props}) when is_map(props) do
+  defp extract_refs_from_property(%{"type" => "object", "properties" => props})
+       when is_map(props) do
     Enum.flat_map(props, fn {_name, p} -> extract_refs_from_property(p) end)
   end
 
@@ -179,7 +182,10 @@ defmodule PolarExpress.Generator.SchemaGenerator do
     # @moduledoc — use DocFormatter for proper HTML-to-markdown conversion
     title = schema["title"]
     description = schema["description"]
-    moduledoc_content = DocFormatter.schema_moduledoc(title, description) || "#{schema_name} schema."
+
+    moduledoc_content =
+      DocFormatter.schema_moduledoc(title, description) || "#{schema_name} schema."
+
     moduledoc = ~s(  @moduledoc """\n  #{moduledoc_content}\n  """)
 
     # @typedoc — build field descriptions from OpenAPI property schemas
@@ -522,7 +528,9 @@ defmodule PolarExpress.Generator.SchemaGenerator do
   end
 
   # date-time string — must be before generic string clause
-  defp property_typespec(%{"type" => "string", "format" => "date-time"}, _), do: "DateTime.t() | nil"
+  defp property_typespec(%{"type" => "string", "format" => "date-time"}, _),
+    do: "DateTime.t() | nil"
+
   defp property_typespec(%{"type" => "string"}, _), do: "String.t() | nil"
   defp property_typespec(%{"type" => "integer"}, _), do: "integer() | nil"
   defp property_typespec(%{"type" => "number"}, _), do: "float() | nil"

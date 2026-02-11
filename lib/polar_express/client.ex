@@ -64,14 +64,24 @@ defmodule PolarExpress.Client do
     cast_opts = if resource_mod, do: [resource: resource_mod], else: []
 
     {result, resp_meta} =
-      execute_with_retries(client, %{method: method, url: url, headers: headers, body: body}, 0, cast_opts)
+      execute_with_retries(
+        client,
+        %{method: method, url: url, headers: headers, body: body},
+        0,
+        cast_opts
+      )
 
     duration = System.monotonic_time() - start_time
     stop_metadata = Map.merge(metadata, resp_meta)
 
     case result do
       {:ok, data} ->
-        :telemetry.execute([:polar_express, :request, :stop], %{duration: duration}, stop_metadata)
+        :telemetry.execute(
+          [:polar_express, :request, :stop],
+          %{duration: duration},
+          stop_metadata
+        )
+
         {:ok, data}
 
       {:error, error} ->

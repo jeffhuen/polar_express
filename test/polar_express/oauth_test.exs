@@ -14,7 +14,10 @@ defmodule PolarExpress.OAuthTest do
       end)
 
       client = PolarExpress.client("pk_test_123")
-      {:ok, data} = OAuth.token(client, %{"grant_type" => "authorization_code", "code" => "test_code"})
+
+      {:ok, data} =
+        OAuth.token(client, %{"grant_type" => "authorization_code", "code" => "test_code"})
+
       assert %PolarExpress.Schemas.TokenResponse{} = data
       assert data.access_token == "polar_at_xxx"
     end

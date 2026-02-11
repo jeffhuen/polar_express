@@ -51,7 +51,9 @@ defmodule PolarExpress.ErrorTest do
     end
 
     test "parses domain error types from response body" do
-      body = JSON.encode!(%{"type" => "AlreadyCanceledSubscription", "detail" => "Already canceled"})
+      body =
+        JSON.encode!(%{"type" => "AlreadyCanceledSubscription", "detail" => "Already canceled"})
+
       error = Error.from_response(400, body, [])
 
       assert error.type == :already_canceled_subscription
