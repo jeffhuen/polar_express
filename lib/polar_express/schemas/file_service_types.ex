@@ -4,7 +4,11 @@ defmodule PolarExpress.Schemas.FileServiceTypes do
 
   @type t :: String.t()
 
-  @values ["downloadable", "product_media", "organization_avatar"]
+  @values [
+    "downloadable",
+    "product_media",
+    "organization_avatar"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

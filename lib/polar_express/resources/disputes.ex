@@ -25,7 +25,7 @@ defmodule PolarExpress.Resources.Disputes do
           created_at: String.t() | nil,
           currency: String.t() | nil,
           id: String.t() | nil,
-          modified_at: map() | nil,
+          modified_at: term() | nil,
           order_id: String.t() | nil,
           payment_id: String.t() | nil,
           resolved: boolean() | nil,

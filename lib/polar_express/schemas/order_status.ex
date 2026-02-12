@@ -4,7 +4,12 @@ defmodule PolarExpress.Schemas.OrderStatus do
 
   @type t :: String.t()
 
-  @values ["pending", "paid", "refunded", "partially_refunded"]
+  @values [
+    "pending",
+    "paid",
+    "refunded",
+    "partially_refunded"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

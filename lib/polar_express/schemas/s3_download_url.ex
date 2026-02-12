@@ -11,7 +11,7 @@ defmodule PolarExpress.Schemas.S3DownloadURL do
   """
   @type t :: %__MODULE__{
           expires_at: DateTime.t() | nil,
-          headers: map() | nil,
+          headers: %{String.t() => String.t()} | nil,
           url: String.t() | nil
         }
 

@@ -14,7 +14,7 @@ defmodule PolarExpress.Schemas.CustomerUpdatedFields do
   @type t :: %__MODULE__{
           billing_address: PolarExpress.Schemas.AddressDict.t() | nil,
           email: String.t() | nil,
-          metadata: map() | nil,
+          metadata: %{String.t() => String.t() | integer() | boolean() | nil} | nil,
           name: String.t() | nil,
           tax_id: String.t() | nil
         }

@@ -4,7 +4,11 @@ defmodule PolarExpress.Schemas.MemberRole do
 
   @type t :: String.t()
 
-  @values ["owner", "billing_manager", "member"]
+  @values [
+    "owner",
+    "billing_manager",
+    "member"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

@@ -24,7 +24,7 @@ defmodule PolarExpress.Resources.Benefits do
           description: String.t() | nil,
           id: String.t() | nil,
           metadata: map() | nil,
-          modified_at: map() | nil,
+          modified_at: term() | nil,
           organization_id: String.t() | nil,
           properties: map() | nil,
           selectable: boolean() | nil,

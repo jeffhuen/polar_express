@@ -33,11 +33,11 @@ defmodule PolarExpress.Schemas.Customer do
           external_id: String.t() | nil,
           id: String.t() | nil,
           locale: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil,
-          tax_id: term(),
+          tax_id: [String.t() | PolarExpress.Schemas.TaxIDFormat.t()] | nil,
           type: PolarExpress.Schemas.CustomerType.t() | nil
         }
 
@@ -65,6 +65,8 @@ defmodule PolarExpress.Schemas.Customer do
   def __inner_types__ do
     %{
       "billing_address" => PolarExpress.Schemas.Address,
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
+      "tax_id" => {:union, :variants, [PolarExpress.Schemas.TaxIDFormat]},
       "type" => PolarExpress.Schemas.CustomerType
     }
   end

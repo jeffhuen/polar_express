@@ -30,14 +30,7 @@ defmodule PolarExpress.Generator.DocFormatter do
       # Inline elements — resolve relative PolarExpress URLs
       |> then(fn text ->
         Regex.replace(~r/<a\s+href="([^"]*)"[^>]*>(.*?)<\/a>/is, text, fn _, href, label ->
-          url =
-            cond do
-              String.starts_with?(href, "/docs/") -> "https://docs.polar.sh#{href}"
-              String.starts_with?(href, "/api/") -> "https://docs.polar.sh#{href}"
-              String.starts_with?(href, "/") -> "https://polar.sh#{href}"
-              true -> href
-            end
-
+          url = resolve_href(href)
           "[#{label}](#{url})"
         end)
       end)
@@ -112,6 +105,15 @@ defmodule PolarExpress.Generator.DocFormatter do
     end)
   end
 
+  defp resolve_href(href) do
+    cond do
+      String.starts_with?(href, "/docs/") -> "https://docs.polar.sh#{href}"
+      String.starts_with?(href, "/api/") -> "https://docs.polar.sh#{href}"
+      String.starts_with?(href, "/") -> "https://polar.sh#{href}"
+      true -> href
+    end
+  end
+
   @doc """
   Format a property map into an annotated documentation line for `@typedoc` tables.
 
@@ -120,65 +122,54 @@ defmodule PolarExpress.Generator.DocFormatter do
   Output: `"description. Format: label. Possible values: \\`a\\`, \\`b\\`. Nullable."`
   """
   def format_property_doc(prop) when is_map(prop) do
-    parts = []
-
-    # Base description
-    parts =
-      case prop[:description] do
-        nil -> parts
-        "" -> parts
-        desc -> [html_to_markdown(desc) || "" | parts]
-      end
-
-    # Format label
-    parts =
-      case prop[:format] do
-        nil -> parts
-        "" -> parts
-        fmt -> ["Format: #{format_label(fmt)}." | parts]
-      end
-
-    # Enum values
-    parts =
-      case prop[:enum] do
-        nil ->
-          parts
-
-        [] ->
-          parts
-
-        values when is_list(values) ->
-          non_empty = Enum.reject(values, &(&1 == "" || &1 == nil))
-
-          if non_empty != [] do
-            formatted = Enum.map_join(non_empty, ", ", &"`#{&1}`")
-            ["Possible values: #{formatted}." | parts]
-          else
-            parts
-          end
-      end
-
-    # Max length
-    parts =
-      case prop[:max_length] do
-        nil -> parts
-        n when is_integer(n) -> ["Max length: #{n}." | parts]
-        _ -> parts
-      end
-
-    # Nullable
-    parts = if prop[:nullable] == true, do: ["Nullable." | parts], else: parts
-
-    # Expandable
-    parts = if prop[:expandable] == true, do: ["Expandable." | parts], else: parts
-
-    # Deprecated
-    parts = if prop[:deprecated] == true, do: ["**Deprecated.**" | parts], else: parts
-
-    case Enum.reverse(parts) do
+    []
+    |> append_description(prop)
+    |> append_format(prop)
+    |> append_enum(prop)
+    |> append_max_length(prop)
+    |> append_bool_flag(prop, :nullable, "Nullable.")
+    |> append_bool_flag(prop, :expandable, "Expandable.")
+    |> append_bool_flag(prop, :deprecated, "**Deprecated.**")
+    |> Enum.reverse()
+    |> case do
       [] -> nil
       items -> Enum.join(items, " ")
     end
+  end
+
+  defp append_description(parts, %{description: desc}) when is_binary(desc) and desc != "" do
+    [html_to_markdown(desc) || "" | parts]
+  end
+
+  defp append_description(parts, _), do: parts
+
+  defp append_format(parts, %{format: fmt}) when is_binary(fmt) and fmt != "" do
+    ["Format: #{format_label(fmt)}." | parts]
+  end
+
+  defp append_format(parts, _), do: parts
+
+  defp append_enum(parts, %{enum: values}) when is_list(values) do
+    non_empty = Enum.reject(values, &(&1 == "" || &1 == nil))
+
+    if non_empty != [] do
+      formatted = Enum.map_join(non_empty, ", ", &"`#{&1}`")
+      ["Possible values: #{formatted}." | parts]
+    else
+      parts
+    end
+  end
+
+  defp append_enum(parts, _), do: parts
+
+  defp append_max_length(parts, %{max_length: n}) when is_integer(n) do
+    ["Max length: #{n}." | parts]
+  end
+
+  defp append_max_length(parts, _), do: parts
+
+  defp append_bool_flag(parts, prop, key, label) do
+    if prop[key] == true, do: [label | parts], else: parts
   end
 
   @doc """

@@ -21,7 +21,7 @@ defmodule PolarExpress.Schemas.BenefitLicenseKeys do
           deletable: boolean() | nil,
           description: String.t() | nil,
           id: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           organization_id: String.t() | nil,
           properties: PolarExpress.Schemas.BenefitLicenseKeysProperties.t() | nil,
@@ -47,6 +47,7 @@ defmodule PolarExpress.Schemas.BenefitLicenseKeys do
 
   def __inner_types__ do
     %{
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "properties" => PolarExpress.Schemas.BenefitLicenseKeysProperties
     }
   end

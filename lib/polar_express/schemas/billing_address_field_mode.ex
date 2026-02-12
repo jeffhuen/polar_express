@@ -4,7 +4,11 @@ defmodule PolarExpress.Schemas.BillingAddressFieldMode do
 
   @type t :: String.t()
 
-  @values ["required", "optional", "disabled"]
+  @values [
+    "required",
+    "optional",
+    "disabled"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

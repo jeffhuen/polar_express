@@ -2,12 +2,12 @@ defmodule PolarExpress.Generator.SchemaGenerator do
   @moduledoc false
 
   alias PolarExpress.Generator.DocFormatter
+
   alias PolarExpress.Generator.Naming
 
   @file_header "# File generated from our OpenAPI spec"
 
   # Input-only schema suffixes — skip these (request body types, not response types)
-  @input_suffixes ~w(Create Update Input Request Params)
 
   @doc """
   Generate standalone schema modules from OpenAPI component schemas.
@@ -29,8 +29,11 @@ defmodule PolarExpress.Generator.SchemaGenerator do
     schema_index = spec.schema_index
 
     # Collect all schema names referenced in responses (direct + nested)
-    response_schemas = collect_response_schemas(spec)
-    all_needed = expand_dependencies(response_schemas, schema_index)
+    # response_schemas = collect_response_schemas(spec)
+    # all_needed = expand_dependencies(response_schemas, schema_index)
+
+    # For SDK parity, we want ALL schemas defined in components/schemas
+    all_needed = Map.keys(schema_index)
 
     # Generate a module for each needed schema
     all_needed
@@ -42,11 +45,11 @@ defmodule PolarExpress.Generator.SchemaGenerator do
 
         schema ->
           cond do
-            input_only?(schema_name) ->
-              []
+            # input_only?(schema_name) ->
+            #   []
 
             map_type_schema?(schema) ->
-              [{file_path(schema_name), generate_map_module(schema_name, schema)}]
+              [{file_path(schema_name), generate_map_module(schema_name, schema, schema_index)}]
 
             object_schema?(schema) ->
               [{file_path(schema_name), generate_module(schema_name, schema, schema_index)}]
@@ -63,101 +66,6 @@ defmodule PolarExpress.Generator.SchemaGenerator do
       end
     end)
   end
-
-  # -- Collect response schemas -----------------------------------------------
-
-  defp collect_response_schemas(spec) do
-    schema_index = spec.schema_index
-
-    api_response_refs =
-      spec.resources
-      |> Enum.flat_map(& &1.operations)
-      |> Enum.flat_map(fn op ->
-        ref = op[:response_schema]
-
-        case ref do
-          nil ->
-            []
-
-          _ ->
-            resolved =
-              PolarExpress.Generator.OpenAPI.resolve_response_item_schema(ref, schema_index)
-
-            if resolved, do: [resolved], else: []
-        end
-      end)
-      |> Enum.uniq()
-
-    webhook_refs =
-      spec.event_types
-      |> Enum.map(fn {_type, meta} -> meta.data_ref end)
-      |> Enum.reject(&is_nil/1)
-      |> Enum.uniq()
-
-    Enum.uniq(api_response_refs ++ webhook_refs)
-  end
-
-  # -- Expand dependencies recursively ----------------------------------------
-
-  defp expand_dependencies(seed_names, schema_index) do
-    expand_dependencies(MapSet.new(seed_names), seed_names, schema_index)
-  end
-
-  defp expand_dependencies(visited, [], _schema_index), do: MapSet.to_list(visited)
-
-  defp expand_dependencies(visited, queue, schema_index) do
-    new_refs =
-      queue
-      |> Enum.flat_map(fn name ->
-        case Map.get(schema_index, name) do
-          nil -> []
-          schema -> extract_ref_deps(schema, schema_index)
-        end
-      end)
-      |> Enum.reject(&MapSet.member?(visited, &1))
-      |> Enum.uniq()
-
-    new_visited = Enum.reduce(new_refs, visited, &MapSet.put(&2, &1))
-    expand_dependencies(new_visited, new_refs, schema_index)
-  end
-
-  defp extract_ref_deps(schema, schema_index) do
-    # Extract refs from properties (for object schemas)
-    prop_refs =
-      schema
-      |> resolve_properties(schema_index)
-      |> Enum.flat_map(fn {_name, prop_schema} -> extract_refs_from_property(prop_schema) end)
-
-    # Extract refs from top-level union variants (for anyOf/oneOf schemas)
-    union_refs =
-      (schema["anyOf"] || schema["oneOf"] || [])
-      |> Enum.flat_map(&extract_refs_from_property/1)
-
-    prop_refs ++ union_refs
-  end
-
-  defp extract_refs_from_property(%{"$ref" => ref}) do
-    [ref_to_name(ref)]
-  end
-
-  defp extract_refs_from_property(%{"items" => items}) do
-    extract_refs_from_property(items)
-  end
-
-  defp extract_refs_from_property(%{"anyOf" => variants}) do
-    Enum.flat_map(variants, &extract_refs_from_property/1)
-  end
-
-  defp extract_refs_from_property(%{"oneOf" => variants}) do
-    Enum.flat_map(variants, &extract_refs_from_property/1)
-  end
-
-  defp extract_refs_from_property(%{"type" => "object", "properties" => props})
-       when is_map(props) do
-    Enum.flat_map(props, fn {_name, p} -> extract_refs_from_property(p) end)
-  end
-
-  defp extract_refs_from_property(_), do: []
 
   # -- Module generation (object schemas with defstruct) ----------------------
 
@@ -229,7 +137,7 @@ defmodule PolarExpress.Generator.SchemaGenerator do
 
   # -- Map-type module generation (type: object with no properties) -----------
 
-  defp generate_map_module(schema_name, schema) do
+  defp generate_map_module(schema_name, schema, schema_index) do
     module_name = "PolarExpress.Schemas.#{sanitize_module_name(schema_name)}"
 
     description = schema["description"]
@@ -242,12 +150,20 @@ defmodule PolarExpress.Generator.SchemaGenerator do
         ~s(  @moduledoc "#{schema_name} - a map type with dynamic keys.")
       end
 
+    map_type =
+      if Map.has_key?(schema, "additionalProperties") do
+        value_type = additional_props_typespec(schema["additionalProperties"], schema_index)
+        "%{String.t() => #{value_type}}"
+      else
+        "map()"
+      end
+
     """
     #{@file_header}
     defmodule #{module_name} do
     #{moduledoc}
 
-      @type t :: map()
+      @type t :: #{map_type}
 
       @schema_name "#{schema_name}"
       def schema_name, do: @schema_name
@@ -398,6 +314,14 @@ defmodule PolarExpress.Generator.SchemaGenerator do
     "{:union, :variants, [#{mods_str}]}"
   end
 
+  defp format_inner_type_value({:map_values, inner}) do
+    "{:map_values, #{format_inner_type_value(inner)}}"
+  end
+
+  defp format_inner_type_value({:map_values_list, inner}) do
+    "{:map_values_list, #{format_inner_type_value(inner)}}"
+  end
+
   # -- Date fields generation -------------------------------------------------
 
   defp generate_date_fields_fn(props) do
@@ -436,16 +360,13 @@ defmodule PolarExpress.Generator.SchemaGenerator do
   # Returns nil, a module name string, or a union tuple
   # ({:union, :discriminated, prop, mapping} or {:union, :variants, [modules]})
 
-  defp resolve_inner_type(%{"$ref" => ref}, schema_index) do
-    ref_name = ref_to_name(ref)
-    schema = Map.get(schema_index, ref_name, %{})
+  # Returns nil, a module name string, or a union tuple
+  # ({:union, :discriminated, prop, mapping} or {:union, :variants, [modules]})
 
-    if map_type_schema?(schema) do
-      # Map-type schemas should stay as raw maps — don't add to inner_types
-      nil
-    else
-      "PolarExpress.Schemas.#{sanitize_module_name(ref_name)}"
-    end
+  defp resolve_inner_type(%{"$ref" => ref}, _schema_index) do
+    ref_name = ref_to_name(ref)
+
+    "PolarExpress.Schemas.#{sanitize_module_name(ref_name)}"
   end
 
   defp resolve_inner_type(%{"anyOf" => variants} = schema, schema_index) do
@@ -460,7 +381,51 @@ defmodule PolarExpress.Generator.SchemaGenerator do
     resolve_inner_type(items, schema_index)
   end
 
+  defp resolve_inner_type(%{"type" => "array", "prefixItems" => items}, _schema_index) do
+    # Treat tuple as a union of all possible types in the tuple
+    ref_names =
+      items
+      |> Enum.flat_map(fn
+        %{"$ref" => ref} -> [ref_to_name(ref)]
+        _ -> []
+      end)
+      |> Enum.uniq()
+
+    if ref_names == [] do
+      nil
+    else
+      modules = Enum.map(ref_names, &"PolarExpress.Schemas.#{sanitize_module_name(&1)}")
+      {:union, :variants, modules}
+    end
+  end
+
+  # Object with typed additionalProperties whose values are $ref or typed arrays
+  defp resolve_inner_type(
+         %{"type" => "object", "additionalProperties" => ap},
+         schema_index
+       )
+       when is_map(ap) do
+    resolve_additional_props_inner(ap, schema_index)
+  end
+
   defp resolve_inner_type(_, _schema_index), do: nil
+
+  # Map values are a $ref → {:map_values, Module}
+  defp resolve_additional_props_inner(%{"$ref" => ref}, _schema_index) do
+    ref_name = ref_to_name(ref)
+
+    {:map_values, "PolarExpress.Schemas.#{sanitize_module_name(ref_name)}"}
+  end
+
+  # Map values are arrays of $ref or unions → {:map_values_list, inner}
+  defp resolve_additional_props_inner(%{"type" => "array", "items" => items}, schema_index) do
+    case resolve_inner_type(items, schema_index) do
+      nil -> nil
+      inner -> {:map_values_list, inner}
+    end
+  end
+
+  defp resolve_additional_props_inner(_, _schema_index), do: nil
 
   # Unified handler for anyOf/oneOf variants
   defp resolve_union_inner(variants, discriminator, schema_index) do
@@ -495,36 +460,34 @@ defmodule PolarExpress.Generator.SchemaGenerator do
     if ref_names == [] do
       nil
     else
+      resolve_discriminated_union(ref_names, discriminator)
+    end
+  end
+
+  defp resolve_discriminated_union(ref_names, discriminator) do
+    if discriminator && is_map(discriminator["mapping"]) do
+      prop = discriminator["propertyName"]
+
+      mapping =
+        discriminator["mapping"]
+        |> Enum.map(fn {val, ref} ->
+          {val, "PolarExpress.Schemas.#{sanitize_module_name(ref_to_name(ref))}"}
+        end)
+        |> Map.new()
+
+      {:union, :discriminated, prop, mapping}
+    else
       modules = Enum.map(ref_names, &"PolarExpress.Schemas.#{sanitize_module_name(&1)}")
-
-      if discriminator && is_map(discriminator["mapping"]) do
-        prop = discriminator["propertyName"]
-
-        mapping =
-          discriminator["mapping"]
-          |> Enum.map(fn {val, ref} ->
-            {val, "PolarExpress.Schemas.#{sanitize_module_name(ref_to_name(ref))}"}
-          end)
-          |> Map.new()
-
-        {:union, :discriminated, prop, mapping}
-      else
-        {:union, :variants, modules}
-      end
+      {:union, :variants, modules}
     end
   end
 
   # -- Typespec generation ----------------------------------------------------
 
-  defp property_typespec(%{"$ref" => ref}, schema_index) do
+  defp property_typespec(%{"$ref" => ref}, _schema_index) do
     ref_name = ref_to_name(ref)
-    schema = Map.get(schema_index, ref_name, %{})
 
-    if map_type_schema?(schema) do
-      "map() | nil"
-    else
-      "PolarExpress.Schemas.#{sanitize_module_name(ref_name)}.t() | nil"
-    end
+    "PolarExpress.Schemas.#{sanitize_module_name(ref_name)}.t() | nil"
   end
 
   # date-time string — must be before generic string clause
@@ -536,9 +499,26 @@ defmodule PolarExpress.Generator.SchemaGenerator do
   defp property_typespec(%{"type" => "number"}, _), do: "float() | nil"
   defp property_typespec(%{"type" => "boolean"}, _), do: "boolean() | nil"
 
+  defp property_typespec(%{"type" => "array", "prefixItems" => items}, schema_index) do
+    inner =
+      Enum.map(items, fn item ->
+        property_typespec(item, schema_index) |> String.replace(" | nil", "")
+      end)
+      |> Enum.uniq()
+      |> Enum.join(" | ")
+
+    "[#{inner}] | nil"
+  end
+
   defp property_typespec(%{"type" => "array", "items" => items}, schema_index) do
     inner = property_typespec(items, schema_index) |> String.replace(" | nil", "")
     "[#{inner}] | nil"
+  end
+
+  defp property_typespec(%{"type" => "object", "additionalProperties" => ap}, schema_index)
+       when is_map(ap) do
+    value_type = additional_props_typespec(ap, schema_index)
+    "%{String.t() => #{value_type}} | nil"
   end
 
   defp property_typespec(%{"type" => "object"}, _), do: "map() | nil"
@@ -564,27 +544,63 @@ defmodule PolarExpress.Generator.SchemaGenerator do
         property_typespec(single, schema_index)
 
       multiple when length(multiple) >= 2 ->
-        types =
-          multiple
-          |> Enum.flat_map(fn
-            %{"$ref" => ref} ->
-              ref_name = ref_to_name(ref)
-              ["PolarExpress.Schemas.#{sanitize_module_name(ref_name)}.t()"]
-
-            other ->
-              t = property_typespec(other, schema_index) |> String.replace(" | nil", "")
-              if t == "term()", do: [], else: [t]
-          end)
-
-        case types do
-          [] -> "term()"
-          _ -> Enum.join(types, " | ") <> " | nil"
-        end
+        build_multi_variant_typespec(multiple, schema_index)
 
       _ ->
         "term()"
     end
   end
+
+  defp build_multi_variant_typespec(multiple, schema_index) do
+    types =
+      multiple
+      |> Enum.flat_map(fn variant ->
+        build_variant_type(variant, schema_index)
+      end)
+
+    case types do
+      [] -> "term()"
+      _ -> Enum.join(types, " | ") <> " | nil"
+    end
+  end
+
+  defp build_variant_type(%{"$ref" => ref}, _index) do
+    ref_name = ref_to_name(ref)
+    ["PolarExpress.Schemas.#{sanitize_module_name(ref_name)}.t()"]
+  end
+
+  defp build_variant_type(other, index) do
+    t = property_typespec(other, index) |> String.replace(" | nil", "")
+    if t == "term()", do: [], else: [t]
+  end
+
+  # -- additionalProperties typespec ------------------------------------------
+
+  defp additional_props_typespec(%{"$ref" => ref}, _schema_index) do
+    ref_name = ref_to_name(ref)
+
+    "PolarExpress.Schemas.#{sanitize_module_name(ref_name)}.t()"
+  end
+
+  defp additional_props_typespec(%{"type" => "string"}, _), do: "String.t()"
+  defp additional_props_typespec(%{"type" => "integer"}, _), do: "integer()"
+  defp additional_props_typespec(%{"type" => "number"}, _), do: "float()"
+  defp additional_props_typespec(%{"type" => "boolean"}, _), do: "boolean()"
+
+  defp additional_props_typespec(%{"type" => "array", "items" => items}, schema_index) do
+    inner = additional_props_typespec(items, schema_index)
+    "[#{inner}]"
+  end
+
+  defp additional_props_typespec(%{"anyOf" => variants}, schema_index) do
+    union_typespec(variants, nil, schema_index)
+  end
+
+  defp additional_props_typespec(%{"oneOf" => variants}, schema_index) do
+    union_typespec(variants, nil, schema_index)
+  end
+
+  defp additional_props_typespec(_, _), do: "term()"
 
   # -- Schema type detection --------------------------------------------------
 
@@ -644,7 +660,9 @@ defmodule PolarExpress.Generator.SchemaGenerator do
 
       @type t :: #{base_type}
 
-      @values #{inspect(values)}
+      @values [
+        #{Enum.map_join(values, ",\n    ", &inspect(&1))}
+      ]
 
       @doc "List of valid enum values."
       def values, do: @values
@@ -673,10 +691,6 @@ defmodule PolarExpress.Generator.SchemaGenerator do
       true ->
         %{}
     end
-  end
-
-  defp input_only?(schema_name) do
-    Enum.any?(@input_suffixes, fn suffix -> String.ends_with?(schema_name, suffix) end)
   end
 
   defp file_path(schema_name) do

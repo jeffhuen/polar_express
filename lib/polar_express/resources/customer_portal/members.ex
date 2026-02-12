@@ -18,8 +18,8 @@ defmodule PolarExpress.Resources.CustomerPortal.Members do
           created_at: String.t() | nil,
           email: String.t() | nil,
           id: String.t() | nil,
-          modified_at: map() | nil,
-          name: map() | nil,
+          modified_at: term() | nil,
+          name: term() | nil,
           role: map() | nil
         }
 

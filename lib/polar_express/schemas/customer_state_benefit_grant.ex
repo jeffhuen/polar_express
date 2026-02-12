@@ -18,7 +18,7 @@ defmodule PolarExpress.Schemas.CustomerStateBenefitGrant do
   """
   @type t :: %__MODULE__{
           benefit_id: String.t() | nil,
-          benefit_metadata: map() | nil,
+          benefit_metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           benefit_type: PolarExpress.Schemas.BenefitType.t() | nil,
           created_at: DateTime.t() | nil,
           granted_at: DateTime.t() | nil,
@@ -49,6 +49,7 @@ defmodule PolarExpress.Schemas.CustomerStateBenefitGrant do
 
   def __inner_types__ do
     %{
+      "benefit_metadata" => PolarExpress.Schemas.MetadataOutputType,
       "benefit_type" => PolarExpress.Schemas.BenefitType,
       "properties" =>
         {:union, :variants,

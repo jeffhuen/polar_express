@@ -19,7 +19,7 @@ defmodule PolarExpress.Schemas.LicenseKeyActivationRead do
           label: String.t() | nil,
           license_key: PolarExpress.Schemas.LicenseKeyRead.t() | nil,
           license_key_id: String.t() | nil,
-          meta: map() | nil,
+          meta: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
           modified_at: DateTime.t() | nil
         }
 

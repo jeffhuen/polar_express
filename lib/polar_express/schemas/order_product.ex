@@ -26,7 +26,7 @@ defmodule PolarExpress.Schemas.OrderProduct do
           id: String.t() | nil,
           is_archived: boolean() | nil,
           is_recurring: boolean() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil,
@@ -59,6 +59,7 @@ defmodule PolarExpress.Schemas.OrderProduct do
 
   def __inner_types__ do
     %{
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
       "trial_interval" => PolarExpress.Schemas.TrialInterval,
       "visibility" => PolarExpress.Schemas.ProductVisibility

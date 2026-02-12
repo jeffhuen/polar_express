@@ -4,7 +4,14 @@ defmodule PolarExpress.Schemas.DisputeStatus do
 
   @type t :: String.t()
 
-  @values ["prevented", "early_warning", "needs_response", "under_review", "lost", "won"]
+  @values [
+    "prevented",
+    "early_warning",
+    "needs_response",
+    "under_review",
+    "lost",
+    "won"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

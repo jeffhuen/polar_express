@@ -23,7 +23,7 @@ defmodule PolarExpress.Resources.Webhooks do
           events: [map()] | nil,
           format: map() | nil,
           id: String.t() | nil,
-          modified_at: map() | nil,
+          modified_at: term() | nil,
           organization_id: String.t() | nil,
           secret: String.t() | nil,
           url: String.t() | nil

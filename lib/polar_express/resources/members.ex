@@ -20,10 +20,10 @@ defmodule PolarExpress.Resources.Members do
           created_at: String.t() | nil,
           customer_id: String.t() | nil,
           email: String.t() | nil,
-          external_id: map() | nil,
+          external_id: term() | nil,
           id: String.t() | nil,
-          modified_at: map() | nil,
-          name: map() | nil,
+          modified_at: term() | nil,
+          name: term() | nil,
           role: map() | nil
         }
 

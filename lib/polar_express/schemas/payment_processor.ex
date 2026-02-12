@@ -4,7 +4,9 @@ defmodule PolarExpress.Schemas.PaymentProcessor do
 
   @type t :: String.t()
 
-  @values ["stripe"]
+  @values [
+    "stripe"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

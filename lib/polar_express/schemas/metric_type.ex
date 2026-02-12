@@ -4,7 +4,12 @@ defmodule PolarExpress.Schemas.MetricType do
 
   @type t :: String.t()
 
-  @values ["scalar", "currency", "currency_sub_cent", "percentage"]
+  @values [
+    "scalar",
+    "currency",
+    "currency_sub_cent",
+    "percentage"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

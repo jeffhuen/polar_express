@@ -24,21 +24,21 @@ defmodule PolarExpress.Resources.CustomerSeats do
   * `subscription_id` - The subscription ID (for recurring seats)
   """
   @type t :: %__MODULE__{
-          claimed_at: map() | nil,
+          claimed_at: term() | nil,
           created_at: String.t() | nil,
-          customer_email: map() | nil,
-          customer_id: map() | nil,
-          email: map() | nil,
+          customer_email: term() | nil,
+          customer_id: term() | nil,
+          email: term() | nil,
           id: String.t() | nil,
-          invitation_token_expires_at: map() | nil,
-          member: map() | nil,
-          member_id: map() | nil,
-          modified_at: map() | nil,
-          order_id: map() | nil,
-          revoked_at: map() | nil,
-          seat_metadata: map() | nil,
+          invitation_token_expires_at: term() | nil,
+          member: term() | nil,
+          member_id: term() | nil,
+          modified_at: term() | nil,
+          order_id: term() | nil,
+          revoked_at: term() | nil,
+          seat_metadata: term() | nil,
           status: map() | nil,
-          subscription_id: map() | nil
+          subscription_id: term() | nil
         }
 
   defstruct [

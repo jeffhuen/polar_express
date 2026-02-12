@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2026-02-12
+
+### Added
+
+- Support for `oneOf` / `anyOf` polymorphism (e.g., `BenefitCreate`), generating Union types
+- Support for `prefixItems` (tuple arrays) in OpenAPI schemas, resolving to Union lists (e.g., `Customer.tax_id`)
+
+### Fixed
+
+- Correctly generate typed maps for `additionalProperties` (e.g., `CheckoutPublicConfirmed.prices`) instead of generic `map()`
+- Add missing `CustomerPortalOAuthAccount` schema to support `oauth_accounts` field throughout the API
+- Fix `Enum` module generation to prevent truncation of large value lists (e.g., `CountryAlpha2`)
+- Resolve all compiler warnings in generator logic
+
 ## [0.1.1] - 2026-02-11
 
 ### Changed

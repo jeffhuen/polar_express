@@ -4,7 +4,9 @@ defmodule PolarExpress.Schemas.PresentmentCurrency do
 
   @type t :: String.t()
 
-  @values ["usd"]
+  @values [
+    "usd"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

@@ -19,8 +19,8 @@ defmodule PolarExpress.Resources.EventTypes do
           created_at: String.t() | nil,
           id: String.t() | nil,
           label: String.t() | nil,
-          label_property_selector: map() | nil,
-          modified_at: map() | nil,
+          label_property_selector: term() | nil,
+          modified_at: term() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil
         }

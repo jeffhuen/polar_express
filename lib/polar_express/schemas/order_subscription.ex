@@ -47,7 +47,7 @@ defmodule PolarExpress.Schemas.OrderSubscription do
           ended_at: DateTime.t() | nil,
           ends_at: DateTime.t() | nil,
           id: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           product_id: String.t() | nil,
           recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
@@ -93,6 +93,7 @@ defmodule PolarExpress.Schemas.OrderSubscription do
   def __inner_types__ do
     %{
       "customer_cancellation_reason" => PolarExpress.Schemas.CustomerCancellationReason,
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
       "status" => PolarExpress.Schemas.SubscriptionStatus
     }

@@ -20,7 +20,7 @@ defmodule PolarExpress.Resources.CustomerPortal.Wallets do
           currency: String.t() | nil,
           customer_id: String.t() | nil,
           id: String.t() | nil,
-          modified_at: map() | nil
+          modified_at: term() | nil
         }
 
   defstruct [:balance, :created_at, :currency, :customer_id, :id, :modified_at]

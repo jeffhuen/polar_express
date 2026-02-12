@@ -4,7 +4,10 @@ defmodule PolarExpress.Schemas.EventSource do
 
   @type t :: String.t()
 
-  @values ["system", "user"]
+  @values [
+    "system",
+    "user"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

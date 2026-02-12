@@ -9,7 +9,7 @@ defmodule PolarExpress.Schemas.BenefitDownloadablesProperties do
   * `files`
   """
   @type t :: %__MODULE__{
-          archived: map() | nil,
+          archived: %{String.t() => boolean()} | nil,
           files: [String.t()] | nil
         }
 

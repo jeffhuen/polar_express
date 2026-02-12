@@ -4,7 +4,10 @@ defmodule PolarExpress.Schemas.SubscriptionProrationBehavior do
 
   @type t :: String.t()
 
-  @values ["invoice", "prorate"]
+  @values [
+    "invoice",
+    "prorate"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

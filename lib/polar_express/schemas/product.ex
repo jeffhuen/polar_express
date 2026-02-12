@@ -35,7 +35,7 @@ defmodule PolarExpress.Schemas.Product do
           is_archived: boolean() | nil,
           is_recurring: boolean() | nil,
           medias: [PolarExpress.Schemas.ProductMediaFileRead.t()] | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil,
@@ -81,6 +81,7 @@ defmodule PolarExpress.Schemas.Product do
       "attached_custom_fields" => PolarExpress.Schemas.AttachedCustomField,
       "benefits" => PolarExpress.Schemas.Benefit,
       "medias" => PolarExpress.Schemas.ProductMediaFileRead,
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "prices" =>
         {:union, :variants,
          [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},

@@ -25,7 +25,7 @@ defmodule PolarExpress.Schemas.Meter do
           created_at: DateTime.t() | nil,
           filter: PolarExpress.Schemas.Filter.t() | nil,
           id: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil
@@ -58,7 +58,8 @@ defmodule PolarExpress.Schemas.Meter do
            "sum" => PolarExpress.Schemas.PropertyAggregation,
            "unique" => PolarExpress.Schemas.UniqueAggregation
          }},
-      "filter" => PolarExpress.Schemas.Filter
+      "filter" => PolarExpress.Schemas.Filter,
+      "metadata" => PolarExpress.Schemas.MetadataOutputType
     }
   end
 

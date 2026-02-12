@@ -4,7 +4,12 @@ defmodule PolarExpress.Schemas.TrialInterval do
 
   @type t :: String.t()
 
-  @values ["day", "week", "month", "year"]
+  @values [
+    "day",
+    "week",
+    "month",
+    "year"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

@@ -4,7 +4,11 @@ defmodule PolarExpress.Schemas.LicenseKeyStatus do
 
   @type t :: String.t()
 
-  @values ["granted", "revoked", "disabled"]
+  @values [
+    "granted",
+    "revoked",
+    "disabled"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

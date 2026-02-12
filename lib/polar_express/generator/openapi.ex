@@ -132,37 +132,42 @@ defmodule PolarExpress.Generator.OpenAPI do
   end
 
   defp extract_properties_from_ops(ops, schema_index) do
-    # Extract schemas from operation responses, preferring success status codes
-    schema_refs =
-      ops
-      |> Enum.flat_map(fn op ->
-        responses = op.spec["responses"] || %{}
+    schema_refs = collect_schema_refs(ops)
+    preferred_schema = select_preferred_schema(schema_refs)
 
-        # Prefer 2xx success responses over others
-        success_responses =
-          responses
-          |> Enum.filter(fn {status, _} ->
-            String.match?(status, ~r/^2[0-9]{2}$/)
-          end)
-          |> Enum.concat(responses)
-          |> Enum.uniq_by(fn {k, _} -> k end)
+    resolve_schema_properties(preferred_schema, schema_refs, schema_index)
+  end
 
-        success_responses
-        |> Enum.flat_map(fn {_status, response} ->
-          # Look for schema ref in response content
-          schema = get_in(response, ["content", "application/json", "schema"])
+  defp collect_schema_refs(ops) do
+    ops
+    |> Enum.flat_map(fn op ->
+      op.spec
+      |> get_success_responses()
+      |> Enum.flat_map(&extract_schema_from_response/1)
+    end)
+    |> Enum.uniq()
+  end
 
-          if schema && Map.has_key?(schema, "$ref") do
-            [ref_to_name(schema["$ref"])]
-          else
-            []
-          end
-        end)
-      end)
-      |> Enum.uniq()
+  defp get_success_responses(spec) do
+    responses = spec["responses"] || %{}
 
-    # Prefer schemas that aren't list/pagination wrappers or error types
-    # First, filter out schemas with blacklisted keywords
+    responses
+    |> Enum.filter(fn {status, _} -> String.match?(status, ~r/^2[0-9]{2}$/) end)
+    |> Enum.concat(responses)
+    |> Enum.uniq_by(fn {k, _} -> k end)
+  end
+
+  defp extract_schema_from_response({_status, response}) do
+    schema = get_in(response, ["content", "application/json", "schema"])
+
+    if schema && Map.has_key?(schema, "$ref") do
+      [ref_to_name(schema["$ref"])]
+    else
+      []
+    end
+  end
+
+  defp select_preferred_schema(schema_refs) do
     candidates =
       Enum.filter(schema_refs, fn ref ->
         not String.contains?(ref, [
@@ -176,105 +181,88 @@ defmodule PolarExpress.Generator.OpenAPI do
         ])
       end)
 
-    # Prefer shorter, simpler schemas (usually the main resource)
-    preferred_schema =
-      case Enum.sort_by(candidates, &String.length/1) do
-        [] -> List.first(schema_refs)
-        [first | _] -> first
-      end
+    case Enum.sort_by(candidates, &String.length/1) do
+      [] -> List.first(schema_refs)
+      [first | _] -> first
+    end
+  end
 
-    case preferred_schema do
+  defp resolve_schema_properties(nil, _refs, _index), do: {[], %{}}
+
+  defp resolve_schema_properties(schema_id, refs, index) do
+    case Map.get(index, schema_id) do
       nil ->
-        {[], %{}}
+        resolve_from_list_schema(refs, index)
 
-      schema_id ->
-        # Look up the schema and extract its properties
-        case Map.get(schema_index, schema_id) do
-          nil ->
-            # If schema not found, try to extract from list wrapper
-            # e.g., ListResource_Organization_ -> extract Organization ref from items
-            result = extract_from_list_schema(schema_refs, schema_index)
+      schema ->
+        resolve_union_or_schema(schema_id, schema, index)
+    end
+  end
 
-            # If still not found, fall back to using any candidate
-            case result do
-              {[], %{}} ->
-                # Try any of the candidate schemas that weren't filtered
-                Enum.find_value(candidates, {[], %{}}, fn ref ->
-                  case try_resolve_union_type(ref, schema_index) do
-                    nil -> nil
-                    {_, schema} when schema != nil -> extract_properties(schema, schema_index)
-                    _ -> nil
-                  end
-                end)
+  defp resolve_from_list_schema(refs, index) do
+    case extract_from_list_schema(refs, index) do
+      {[], %{}} -> try_any_candidate(refs, index)
+      res -> res
+    end
+  end
 
-              res ->
-                res
-            end
+  defp try_any_candidate(refs, index) do
+    Enum.find_value(refs, {[], %{}}, fn ref ->
+      case try_resolve_union_type(ref, index) do
+        {_, schema} when schema != nil -> extract_properties(schema, index)
+        _ -> nil
+      end
+    end)
+  end
 
-          schema ->
-            # Check if it's a union type and resolve it
-            case try_resolve_union_type(schema_id, schema_index) do
-              {_, resolved_schema} when resolved_schema != nil ->
-                extract_properties(resolved_schema, schema_index)
-
-              _ ->
-                extract_properties(schema, schema_index)
-            end
-        end
+  defp resolve_union_or_schema(schema_id, schema, index) do
+    case try_resolve_union_type(schema_id, index) do
+      {_, resolved} when resolved != nil -> extract_properties(resolved, index)
+      _ -> extract_properties(schema, index)
     end
   end
 
   defp extract_from_list_schema(schema_refs, schema_index) do
     # Try to find a list wrapper and extract the item type
     Enum.find_value(schema_refs, {[], %{}}, fn schema_id ->
-      case Map.get(schema_index, schema_id) do
-        nil ->
-          nil
-
-        schema ->
-          # Look for items with a $ref (typical of list schemas)
-          items_schema = get_in(schema, ["properties", "items", "items"])
-
-          if items_schema && Map.has_key?(items_schema, "$ref") do
-            item_ref = ref_to_name(items_schema["$ref"])
-
-            case Map.get(schema_index, item_ref) do
-              nil -> nil
-              item_schema -> extract_properties(item_schema, schema_index)
-            end
-          else
-            nil
-          end
-      end
+      try_extract_item_schema(schema_id, schema_index)
     end)
   end
 
+  defp try_extract_item_schema(schema_id, schema_index) do
+    with %{} = schema <- Map.get(schema_index, schema_id),
+         items_schema when is_map(items_schema) <-
+           get_in(schema, ["properties", "items", "items"]),
+         %{"$ref" => ref} <- items_schema,
+         item_ref <- ref_to_name(ref),
+         item_schema when is_map(item_schema) <- Map.get(schema_index, item_ref) do
+      extract_properties(item_schema, schema_index)
+    else
+      _ -> nil
+    end
+  end
+
   defp try_resolve_union_type(schema_id, schema_index) do
-    # If a schema is a union (anyOf), try to extract properties from the first variant
     case Map.get(schema_index, schema_id) do
-      nil ->
+      %{"anyOf" => variants} when is_list(variants) and variants != [] ->
+        resolve_first_variant(variants, schema_index)
+
+      %{"anyOf" => nil} = schema ->
+        {schema_id, schema}
+
+      _ ->
         nil
+    end
+  end
 
-      schema ->
-        case schema["anyOf"] do
-          nil ->
-            # Not a union, return as-is
-            {schema_id, schema}
+  defp resolve_first_variant(variants, schema_index) do
+    first_variant = List.first(variants)
 
-          variants when is_list(variants) and variants != [] ->
-            # Get the first ref variant
-            first_variant = List.first(variants)
-
-            if Map.has_key?(first_variant, "$ref") do
-              ref_name = ref_to_name(first_variant["$ref"])
-              {ref_name, Map.get(schema_index, ref_name)}
-            else
-              nil
-            end
-
-          _ ->
-            nil
-        end
+    if Map.has_key?(first_variant, "$ref") do
+      ref_name = ref_to_name(first_variant["$ref"])
+      {ref_name, Map.get(schema_index, ref_name)}
+    else
+      nil
     end
   end
 
@@ -371,6 +359,19 @@ defmodule PolarExpress.Generator.OpenAPI do
     resolve_union(field_name, variants, schema, schema_index)
   end
 
+  defp do_resolve_type(field_name, %{"type" => "array", "prefixItems" => items}, schema_index) do
+    {types, inner_maps} =
+      Enum.map(items, fn item ->
+        do_resolve_type(field_name, item, schema_index)
+      end)
+      |> Enum.unzip()
+
+    unique_types = Enum.uniq(types)
+    merged_inners = Enum.reduce(inner_maps, %{}, &Map.merge/2)
+
+    {{:list, {:union, unique_types}}, merged_inners}
+  end
+
   defp do_resolve_type(field_name, %{"type" => "array", "items" => items}, schema_index) do
     {inner_type, inner_types} = resolve_type(field_name, items, schema_index)
     {{:list, inner_type}, inner_types}
@@ -382,6 +383,16 @@ defmodule PolarExpress.Generator.OpenAPI do
     {inner_props, nested_inners} = extract_inner_type_props(props, schema_index)
     inner_type = %{class_name: inner_name, properties: inner_props, inner_types: nested_inners}
     {{:inner, inner_name}, %{field_name => inner_type}}
+  end
+
+  defp do_resolve_type(
+         field_name,
+         %{"type" => "object", "additionalProperties" => ap},
+         schema_index
+       )
+       when is_map(ap) do
+    {inner_type, inner_types} = resolve_type(field_name, ap, schema_index)
+    {{:map_of, inner_type}, inner_types}
   end
 
   defp do_resolve_type(_field_name, %{"type" => "object"}, _schema_index) do
@@ -406,39 +417,37 @@ defmodule PolarExpress.Generator.OpenAPI do
         {{:nullable, type}, inners}
 
       _ ->
-        # Check if it's nullable (has a "" enum variant)
-        has_null = length(variants) > length(non_null)
-
-        # For unions with refs, use the first ref as the primary type
-        refs = Enum.filter(non_null, &Map.has_key?(&1, "$ref"))
-        strings = Enum.filter(non_null, &(&1["type"] == "string"))
-
-        cond do
-          # Single ref + string = expandable field pattern
-          length(refs) == 1 && strings != [] ->
-            ref_name = ref_to_name(refs |> hd() |> Map.get("$ref"))
-
-            type =
-              if has_null, do: {:nullable, {:ref, ref_name}}, else: {:ref, ref_name}
-
-            {type, %{}}
-
-          # Multiple refs (union of object types) - treat as map
-          length(refs) > 1 ->
-            type = if has_null, do: {:nullable, :map}, else: :map
-            {type, %{}}
-
-          # Single non-ref type
-          length(non_null) == 1 ->
-            {type, inners} = resolve_type(field_name, hd(non_null), schema_index)
-            type = if has_null, do: {:nullable, type}, else: type
-            {type, inners}
-
-          true ->
-            type = if has_null, do: {:nullable, :map}, else: :map
-            {type, %{}}
-        end
+        resolve_complex_union(field_name, variants, non_null, schema_index)
     end
+  end
+
+  defp resolve_complex_union(field_name, variants, non_null, schema_index) do
+    # Check if it's nullable (has a "" enum variant)
+    has_null = length(variants) > length(non_null)
+
+    # For unions with refs, use the first ref as the primary type
+    refs = Enum.filter(non_null, &Map.has_key?(&1, "$ref"))
+    strings = Enum.filter(non_null, &(&1["type"] == "string"))
+
+    {type, inners} =
+      determine_complex_union_type(field_name, refs, strings, non_null, schema_index)
+
+    type = if has_null, do: {:nullable, type}, else: type
+    {type, inners}
+  end
+
+  defp determine_complex_union_type(field_name, _refs, _strings, non_null, index) do
+    # Resolve all variants
+    {types, inner_maps} =
+      Enum.map(non_null, fn variant ->
+        do_resolve_type(field_name, variant, index)
+      end)
+      |> Enum.unzip()
+
+    unique_types = Enum.uniq(types)
+    merged_inners = Enum.reduce(inner_maps, %{}, &Map.merge/2)
+
+    {{:union, unique_types}, merged_inners}
   end
 
   defp extract_inner_type_props(props, schema_index) do
@@ -611,35 +620,39 @@ defmodule PolarExpress.Generator.OpenAPI do
 
     webhooks
     |> Enum.flat_map(fn {webhook_key, methods} ->
-      Enum.flat_map(methods, fn {_method, spec} ->
-        body_schema =
-          get_in(spec, ["requestBody", "content", "application/json", "schema"])
-
-        case body_schema do
-          %{"$ref" => ref} ->
-            schema_name = ref_to_name(ref)
-            schema = Map.get(schema_index, schema_name, %{})
-            event_type = webhook_key
-            data_schema_name = Map.get(webhook_data_schemas, event_type)
-
-            [
-              {event_type,
-               %{
-                 data_ref: data_schema_name,
-                 kind: "webhook",
-                 description: schema["description"],
-                 data_schema: nil,
-                 has_related_object: false,
-                 schema_fields: [:type, :data, :timestamp]
-               }}
-            ]
-
-          _ ->
-            []
-        end
-      end)
+      Enum.flat_map(
+        methods,
+        &extract_event_from_method(&1, webhook_key, schema_index, webhook_data_schemas)
+      )
     end)
     |> Map.new()
+  end
+
+  defp extract_event_from_method({_method, spec}, webhook_key, schema_index, webhook_data_schemas) do
+    body_schema =
+      get_in(spec, ["requestBody", "content", "application/json", "schema"])
+
+    case body_schema do
+      %{"$ref" => ref} ->
+        schema_name = ref_to_name(ref)
+        schema = Map.get(schema_index, schema_name, %{})
+        data_schema_name = Map.get(webhook_data_schemas, webhook_key)
+
+        [
+          {webhook_key,
+           %{
+             data_ref: data_schema_name,
+             kind: "webhook",
+             description: schema["description"],
+             data_schema: nil,
+             has_related_object: false,
+             schema_fields: [:type, :data, :timestamp]
+           }}
+        ]
+
+      _ ->
+        []
+    end
   end
 
   defp parse_webhook_data_schemas(raw) do
@@ -647,47 +660,50 @@ defmodule PolarExpress.Generator.OpenAPI do
     schema_index = build_schema_index(raw["components"]["schemas"] || %{})
 
     webhooks
-    |> Enum.flat_map(fn {webhook_key, methods} ->
-      Enum.flat_map(methods, fn {_method, spec} ->
-        body_schema =
-          get_in(spec, ["requestBody", "content", "application/json", "schema"])
-
-        case body_schema do
-          %{"$ref" => ref} ->
-            wrapper_name = ref_to_name(ref)
-            wrapper = Map.get(schema_index, wrapper_name, %{})
-
-            # Use the webhook key as the event type
-            event_type = webhook_key
-
-            # Extract data schema ref from the wrapper's data property
-            data_ref = get_in(wrapper, ["properties", "data", "$ref"])
-
-            if data_ref do
-              [{event_type, ref_to_name(data_ref)}]
-            else
-              # Check anyOf on the data property
-              data_any_of = get_in(wrapper, ["properties", "data", "anyOf"]) || []
-
-              ref_variant =
-                Enum.find_value(data_any_of, fn
-                  %{"$ref" => r} -> ref_to_name(r)
-                  _ -> nil
-                end)
-
-              if ref_variant do
-                [{event_type, ref_variant}]
-              else
-                []
-              end
-            end
-
-          _ ->
-            []
-        end
-      end)
-    end)
+    |> Enum.flat_map(&process_webhook_schemas(&1, schema_index))
     |> Map.new()
+  end
+
+  defp process_webhook_schemas({webhook_key, methods}, schema_index) do
+    Enum.flat_map(methods, fn {_method, spec} ->
+      body_schema =
+        get_in(spec, ["requestBody", "content", "application/json", "schema"])
+
+      case body_schema do
+        %{"$ref" => ref} ->
+          wrapper_name = ref_to_name(ref)
+          wrapper = Map.get(schema_index, wrapper_name, %{})
+
+          resolve_webhook_data_ref(wrapper, webhook_key)
+
+        _ ->
+          []
+      end
+    end)
+  end
+
+  defp resolve_webhook_data_ref(wrapper, webhook_key) do
+    # Extract data schema ref from the wrapper's data property
+    data_ref = get_in(wrapper, ["properties", "data", "$ref"])
+
+    if data_ref do
+      [{webhook_key, ref_to_name(data_ref)}]
+    else
+      # Check anyOf on the data property
+      data_any_of = get_in(wrapper, ["properties", "data", "anyOf"]) || []
+
+      ref_variant =
+        Enum.find_value(data_any_of, fn
+          %{"$ref" => r} -> ref_to_name(r)
+          _ -> nil
+        end)
+
+      if ref_variant do
+        [{webhook_key, ref_variant}]
+      else
+        []
+      end
+    end
   end
 
   # -- Helpers ----------------------------------------------------------------

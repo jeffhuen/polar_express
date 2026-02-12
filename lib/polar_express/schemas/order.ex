@@ -51,7 +51,8 @@ defmodule PolarExpress.Schemas.Order do
           checkout_id: String.t() | nil,
           created_at: DateTime.t() | nil,
           currency: String.t() | nil,
-          custom_field_data: map() | nil,
+          custom_field_data:
+            %{String.t() => String.t() | integer() | boolean() | DateTime.t() | nil} | nil,
           customer: PolarExpress.Schemas.OrderCustomer.t() | nil,
           customer_id: String.t() | nil,
           description: String.t() | nil,
@@ -68,7 +69,7 @@ defmodule PolarExpress.Schemas.Order do
           invoice_number: String.t() | nil,
           is_invoice_generated: boolean() | nil,
           items: [PolarExpress.Schemas.OrderItemSchema.t()] | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           net_amount: integer() | nil,
           paid: boolean() | nil,
@@ -145,6 +146,7 @@ defmodule PolarExpress.Schemas.Order do
            PolarExpress.Schemas.DiscountPercentageRepeatDurationBase
          ]},
       "items" => PolarExpress.Schemas.OrderItemSchema,
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "product" => PolarExpress.Schemas.OrderProduct,
       "status" => PolarExpress.Schemas.OrderStatus,
       "subscription" => PolarExpress.Schemas.OrderSubscription

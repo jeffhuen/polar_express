@@ -4,7 +4,10 @@ defmodule PolarExpress.Schemas.FilterConjunction do
 
   @type t :: String.t()
 
-  @values ["and", "or"]
+  @values [
+    "and",
+    "or"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

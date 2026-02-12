@@ -43,11 +43,11 @@ defmodule PolarExpress.Schemas.CustomerState do
           granted_benefits: [PolarExpress.Schemas.CustomerStateBenefitGrant.t()] | nil,
           id: String.t() | nil,
           locale: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil,
-          tax_id: term(),
+          tax_id: [String.t() | PolarExpress.Schemas.TaxIDFormat.t()] | nil,
           type: PolarExpress.Schemas.CustomerType.t() | nil
         }
 
@@ -81,6 +81,8 @@ defmodule PolarExpress.Schemas.CustomerState do
       "active_subscriptions" => PolarExpress.Schemas.CustomerStateSubscription,
       "billing_address" => PolarExpress.Schemas.Address,
       "granted_benefits" => PolarExpress.Schemas.CustomerStateBenefitGrant,
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
+      "tax_id" => {:union, :variants, [PolarExpress.Schemas.TaxIDFormat]},
       "type" => PolarExpress.Schemas.CustomerType
     }
   end

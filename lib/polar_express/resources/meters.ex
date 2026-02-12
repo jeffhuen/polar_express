@@ -18,13 +18,13 @@ defmodule PolarExpress.Resources.Meters do
   * `organization_id` - The ID of the organization owning the meter. Format: uuid4.
   """
   @type t :: %__MODULE__{
-          aggregation: map() | nil,
-          archived_at: map() | nil,
+          aggregation: term() | nil,
+          archived_at: term() | nil,
           created_at: String.t() | nil,
           filter: map() | nil,
           id: String.t() | nil,
           metadata: map() | nil,
-          modified_at: map() | nil,
+          modified_at: term() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil
         }

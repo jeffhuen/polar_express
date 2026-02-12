@@ -36,7 +36,7 @@ defmodule PolarExpress.Schemas.DiscountFixedRepeatDuration do
           ends_at: DateTime.t() | nil,
           id: String.t() | nil,
           max_redemptions: integer() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil,
@@ -72,6 +72,7 @@ defmodule PolarExpress.Schemas.DiscountFixedRepeatDuration do
   def __inner_types__ do
     %{
       "duration" => PolarExpress.Schemas.DiscountDuration,
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "products" => PolarExpress.Schemas.DiscountProduct,
       "type" => PolarExpress.Schemas.DiscountType
     }

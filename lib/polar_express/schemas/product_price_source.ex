@@ -4,7 +4,10 @@ defmodule PolarExpress.Schemas.ProductPriceSource do
 
   @type t :: String.t()
 
-  @values ["catalog", "ad_hoc"]
+  @values [
+    "catalog",
+    "ad_hoc"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

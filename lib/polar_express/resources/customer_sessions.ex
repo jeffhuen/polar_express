@@ -24,8 +24,8 @@ defmodule PolarExpress.Resources.CustomerSessions do
           customer_portal_url: String.t() | nil,
           expires_at: String.t() | nil,
           id: String.t() | nil,
-          modified_at: map() | nil,
-          return_url: map() | nil,
+          modified_at: term() | nil,
+          return_url: term() | nil,
           token: String.t() | nil
         }
 

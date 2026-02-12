@@ -36,11 +36,12 @@ defmodule PolarExpress.Schemas.CustomerStateSubscription do
           currency: String.t() | nil,
           current_period_end: DateTime.t() | nil,
           current_period_start: DateTime.t() | nil,
-          custom_field_data: map() | nil,
+          custom_field_data:
+            %{String.t() => String.t() | integer() | boolean() | DateTime.t() | nil} | nil,
           discount_id: String.t() | nil,
           ends_at: DateTime.t() | nil,
           id: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           meters: [PolarExpress.Schemas.CustomerStateSubscriptionMeter.t()] | nil,
           modified_at: DateTime.t() | nil,
           product_id: String.t() | nil,
@@ -79,6 +80,7 @@ defmodule PolarExpress.Schemas.CustomerStateSubscription do
 
   def __inner_types__ do
     %{
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "meters" => PolarExpress.Schemas.CustomerStateSubscriptionMeter,
       "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval
     }

@@ -80,6 +80,8 @@ defmodule PolarExpress.Deserializer do
 
   # Populate a struct from raw JSON map, recursively handling inner types
   defp populate_struct(module, data) do
+    _ = Code.ensure_loaded(module)
+
     inner_types =
       if function_exported?(module, :__inner_types__, 0),
         do: module.__inner_types__(),
@@ -117,7 +119,17 @@ defmodule PolarExpress.Deserializer do
   # Field has an inner type mapping and the value is a map → cast using inner type
   defp cast_field(key, %{} = raw, inner_types) when is_map_key(inner_types, key) do
     inner = Map.fetch!(inner_types, key)
-    cast_inner(raw, inner)
+
+    case inner do
+      {:map_values, value_inner} ->
+        Map.new(raw, fn {k, v} -> {k, cast_inner(v, value_inner)} end)
+
+      {:map_values_list, value_inner} ->
+        Map.new(raw, fn {k, v} -> {k, Enum.map(v, &cast_inner(&1, value_inner))} end)
+
+      _ ->
+        cast_inner(raw, inner)
+    end
   end
 
   # No inner type match — passthrough

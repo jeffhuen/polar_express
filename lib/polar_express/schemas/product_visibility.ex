@@ -4,7 +4,11 @@ defmodule PolarExpress.Schemas.ProductVisibility do
 
   @type t :: String.t()
 
-  @values ["draft", "private", "public"]
+  @values [
+    "draft",
+    "private",
+    "public"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

@@ -4,7 +4,10 @@ defmodule PolarExpress.Schemas.DiscountType do
 
   @type t :: String.t()
 
-  @values ["fixed", "percentage"]
+  @values [
+    "fixed",
+    "percentage"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

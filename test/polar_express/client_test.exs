@@ -443,19 +443,15 @@ defmodule PolarExpress.ClientTest do
       :telemetry.attach(
         "test-start-#{inspect(ref)}",
         [:polar_express, :request, :start],
-        fn event, measurements, metadata, _ ->
-          send(pid, {:telemetry_start, ref, event, measurements, metadata})
-        end,
-        nil
+        &__MODULE__.handle_telemetry_event/4,
+        {pid, ref}
       )
 
       :telemetry.attach(
         "test-stop-#{inspect(ref)}",
         [:polar_express, :request, :stop],
-        fn event, measurements, metadata, _ ->
-          send(pid, {:telemetry_stop, ref, event, measurements, metadata})
-        end,
-        nil
+        &__MODULE__.handle_telemetry_event/4,
+        {pid, ref}
       )
 
       on_exit(fn ->
@@ -553,6 +549,16 @@ defmodule PolarExpress.ClientTest do
 
       assert_receive {:telemetry_start, ^ref, _, _, %{server: :sandbox}}
       assert_receive {:telemetry_stop, ^ref, _, _, %{server: :sandbox}}
+    end
+  end
+
+  def handle_telemetry_event(event, measurements, metadata, {pid, ref}) do
+    case event do
+      [:polar_express, :request, :start] ->
+        send(pid, {:telemetry_start, ref, event, measurements, metadata})
+
+      [:polar_express, :request, :stop] ->
+        send(pid, {:telemetry_stop, ref, event, measurements, metadata})
     end
   end
 end

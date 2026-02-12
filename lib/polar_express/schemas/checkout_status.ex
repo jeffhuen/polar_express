@@ -4,7 +4,13 @@ defmodule PolarExpress.Schemas.CheckoutStatus do
 
   @type t :: String.t()
 
-  @values ["open", "expired", "confirmed", "succeeded", "failed"]
+  @values [
+    "open",
+    "expired",
+    "confirmed",
+    "succeeded",
+    "failed"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

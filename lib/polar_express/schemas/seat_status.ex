@@ -4,7 +4,11 @@ defmodule PolarExpress.Schemas.SeatStatus do
 
   @type t :: String.t()
 
-  @values ["pending", "claimed", "revoked"]
+  @values [
+    "pending",
+    "claimed",
+    "revoked"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

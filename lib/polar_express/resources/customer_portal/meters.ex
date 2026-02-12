@@ -26,7 +26,7 @@ defmodule PolarExpress.Resources.CustomerPortal.Meters do
           id: String.t() | nil,
           meter: map() | nil,
           meter_id: String.t() | nil,
-          modified_at: map() | nil
+          modified_at: term() | nil
         }
 
   defstruct [

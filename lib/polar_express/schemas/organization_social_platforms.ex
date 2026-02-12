@@ -4,7 +4,16 @@ defmodule PolarExpress.Schemas.OrganizationSocialPlatforms do
 
   @type t :: String.t()
 
-  @values ["x", "github", "facebook", "instagram", "youtube", "tiktok", "linkedin", "other"]
+  @values [
+    "x",
+    "github",
+    "facebook",
+    "instagram",
+    "youtube",
+    "tiktok",
+    "linkedin",
+    "other"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

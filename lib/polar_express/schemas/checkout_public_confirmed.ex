@@ -76,7 +76,8 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
           client_secret: String.t() | nil,
           created_at: DateTime.t() | nil,
           currency: String.t() | nil,
-          custom_field_data: map() | nil,
+          custom_field_data:
+            %{String.t() => String.t() | integer() | boolean() | DateTime.t() | nil} | nil,
           customer_billing_address: PolarExpress.Schemas.Address.t() | nil,
           customer_billing_name: String.t() | nil,
           customer_email: String.t() | nil,
@@ -108,9 +109,17 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
           organization: PolarExpress.Schemas.CheckoutOrganization.t() | nil,
           organization_id: String.t() | nil,
           payment_processor: PolarExpress.Schemas.PaymentProcessor.t() | nil,
-          payment_processor_metadata: map() | nil,
+          payment_processor_metadata: %{String.t() => String.t()} | nil,
           price_per_seat: integer() | nil,
-          prices: map() | nil,
+          prices:
+            %{
+              String.t() => [
+                PolarExpress.Schemas.LegacyRecurringProductPrice.t()
+                | PolarExpress.Schemas.ProductPrice.t()
+                | nil
+              ]
+            }
+            | nil,
           product: PolarExpress.Schemas.CheckoutProduct.t() | nil,
           product_id: String.t() | nil,
           product_price:
@@ -206,6 +215,10 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
          ]},
       "organization" => PolarExpress.Schemas.CheckoutOrganization,
       "payment_processor" => PolarExpress.Schemas.PaymentProcessor,
+      "prices" =>
+        {:map_values_list,
+         {:union, :variants,
+          [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]}},
       "product" => PolarExpress.Schemas.CheckoutProduct,
       "product_price" =>
         {:union, :variants,

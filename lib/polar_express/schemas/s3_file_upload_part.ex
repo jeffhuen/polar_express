@@ -18,7 +18,7 @@ defmodule PolarExpress.Schemas.S3FileUploadPart do
           chunk_end: integer() | nil,
           chunk_start: integer() | nil,
           expires_at: DateTime.t() | nil,
-          headers: map() | nil,
+          headers: %{String.t() => String.t()} | nil,
           number: integer() | nil,
           url: String.t() | nil
         }

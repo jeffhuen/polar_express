@@ -4,7 +4,11 @@ defmodule PolarExpress.Schemas.WebhookFormat do
 
   @type t :: String.t()
 
-  @values ["raw", "discord", "slack"]
+  @values [
+    "raw",
+    "discord",
+    "slack"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

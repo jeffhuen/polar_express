@@ -84,14 +84,15 @@ defmodule PolarExpress.Schemas.Checkout do
           client_secret: String.t() | nil,
           created_at: DateTime.t() | nil,
           currency: String.t() | nil,
-          custom_field_data: map() | nil,
+          custom_field_data:
+            %{String.t() => String.t() | integer() | boolean() | DateTime.t() | nil} | nil,
           customer_billing_address: PolarExpress.Schemas.Address.t() | nil,
           customer_billing_name: String.t() | nil,
           customer_email: String.t() | nil,
           customer_external_id: String.t() | nil,
           customer_id: String.t() | nil,
           customer_ip_address: String.t() | nil,
-          customer_metadata: map() | nil,
+          customer_metadata: %{String.t() => String.t() | integer() | boolean() | nil} | nil,
           customer_name: String.t() | nil,
           customer_tax_id: String.t() | nil,
           discount:
@@ -113,14 +114,22 @@ defmodule PolarExpress.Schemas.Checkout do
           is_payment_required: boolean() | nil,
           is_payment_setup_required: boolean() | nil,
           locale: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           net_amount: integer() | nil,
           organization_id: String.t() | nil,
           payment_processor: PolarExpress.Schemas.PaymentProcessor.t() | nil,
-          payment_processor_metadata: map() | nil,
+          payment_processor_metadata: %{String.t() => String.t()} | nil,
           price_per_seat: integer() | nil,
-          prices: map() | nil,
+          prices:
+            %{
+              String.t() => [
+                PolarExpress.Schemas.LegacyRecurringProductPrice.t()
+                | PolarExpress.Schemas.ProductPrice.t()
+                | nil
+              ]
+            }
+            | nil,
           product: PolarExpress.Schemas.CheckoutProduct.t() | nil,
           product_id: String.t() | nil,
           product_price:
@@ -222,7 +231,12 @@ defmodule PolarExpress.Schemas.Checkout do
            PolarExpress.Schemas.CheckoutDiscountPercentageOnceForeverDuration,
            PolarExpress.Schemas.CheckoutDiscountPercentageRepeatDuration
          ]},
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "payment_processor" => PolarExpress.Schemas.PaymentProcessor,
+      "prices" =>
+        {:map_values_list,
+         {:union, :variants,
+          [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]}},
       "product" => PolarExpress.Schemas.CheckoutProduct,
       "product_price" =>
         {:union, :variants,

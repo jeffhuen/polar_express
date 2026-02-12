@@ -20,7 +20,7 @@ defmodule PolarExpress.Schemas.CustomFieldText do
   @type t :: %__MODULE__{
           created_at: DateTime.t() | nil,
           id: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil,
@@ -46,6 +46,7 @@ defmodule PolarExpress.Schemas.CustomFieldText do
 
   def __inner_types__ do
     %{
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "properties" => PolarExpress.Schemas.CustomFieldTextProperties
     }
   end

@@ -35,10 +35,16 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
       |> add_next_steps()
     end
 
+    alias Igniter.Code.Common
+    alias Igniter.Code.Function
+    alias Igniter.Libs.Phoenix
+    alias Igniter.Project.Config
+    alias Igniter.Project.Module, as: ProjectModule
+
     # -- Step 1: Dev config ------------------------------------------------------
 
     defp configure_dev(igniter) do
-      Igniter.Project.Config.configure_new(
+      Config.configure_new(
         igniter,
         "dev.exs",
         :polar_express,
@@ -51,13 +57,13 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
 
     defp configure_runtime(igniter) do
       igniter
-      |> Igniter.Project.Config.configure_runtime_env(
+      |> Config.configure_runtime_env(
         :prod,
         :polar_express,
         [:api_key],
         {:code, Sourceror.parse_string!(~S[System.fetch_env!("POLAR_ACCESS_TOKEN")])}
       )
-      |> Igniter.Project.Config.configure_runtime_env(
+      |> Config.configure_runtime_env(
         :prod,
         :polar_express,
         [:webhook_secret],
@@ -68,7 +74,7 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
     # -- Step 3: Endpoint plug ---------------------------------------------------
 
     defp add_webhook_plug_to_endpoint(igniter) do
-      case Igniter.Libs.Phoenix.select_endpoint(igniter) do
+      case Phoenix.select_endpoint(igniter) do
         {igniter, nil} ->
           Igniter.add_notice(igniter, """
           No Phoenix endpoint found. Add PolarExpress.WebhookPlug to your endpoint
@@ -78,31 +84,33 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
           """)
 
         {igniter, endpoint} ->
-          Igniter.Project.Module.find_and_update_module!(igniter, endpoint, fn zipper ->
-            plug_code = ~s(plug PolarExpress.WebhookPlug, path: "/webhook/polar")
-
-            with :error <-
-                   insert_before_plug_parsers(zipper, plug_code, 2),
-                 :error <-
-                   insert_before_plug_parsers(zipper, plug_code, 1) do
-              {:warning,
-               """
-               Could not find `plug Plug.Parsers` in #{inspect(endpoint)}.
-               Add PolarExpress.WebhookPlug manually before Plug.Parsers:
-
-                   plug PolarExpress.WebhookPlug, path: "/webhook/polar"
-               """}
-            end
+          ProjectModule.find_and_update_module!(igniter, endpoint, fn zipper ->
+            inject_webhook_plug(zipper, endpoint)
           end)
       end
     end
 
+    defp inject_webhook_plug(zipper, endpoint) do
+      plug_code = ~s(plug PolarExpress.WebhookPlug, path: "/webhook/polar")
+
+      with :error <- insert_before_plug_parsers(zipper, plug_code, 2),
+           :error <- insert_before_plug_parsers(zipper, plug_code, 1) do
+        {:warning,
+         """
+         Could not find `plug Plug.Parsers` in #{inspect(endpoint)}.
+         Add PolarExpress.WebhookPlug manually before Plug.Parsers:
+
+             plug PolarExpress.WebhookPlug, path: "/webhook/polar"
+         """}
+      end
+    end
+
     defp insert_before_plug_parsers(zipper, plug_code, arity) do
-      case Igniter.Code.Function.move_to_function_call(zipper, :plug, arity, fn call_zipper ->
-             Igniter.Code.Function.argument_equals?(call_zipper, 0, Plug.Parsers)
+      case Function.move_to_function_call(zipper, :plug, arity, fn call_zipper ->
+             Function.argument_equals?(call_zipper, 0, Plug.Parsers)
            end) do
         {:ok, zipper} ->
-          {:ok, Igniter.Code.Common.add_code(zipper, plug_code, placement: :before)}
+          {:ok, Common.add_code(zipper, plug_code, placement: :before)}
 
         :error ->
           :error
@@ -112,15 +120,15 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
     # -- Step 4: Webhook controller ----------------------------------------------
 
     defp scaffold_webhook_controller(igniter) do
-      case Igniter.Libs.Phoenix.select_endpoint(igniter) do
+      case Phoenix.select_endpoint(igniter) do
         {igniter, nil} ->
           igniter
 
         {igniter, _endpoint} ->
-          web_module = Igniter.Libs.Phoenix.web_module(igniter)
+          web_module = Phoenix.web_module(igniter)
           controller_module = Module.concat(web_module, PolarWebhookController)
 
-          Igniter.Project.Module.create_module(igniter, controller_module, """
+          ProjectModule.create_module(igniter, controller_module, """
             @moduledoc \"\"\"
             Handles incoming Polar webhook events.
 
@@ -191,7 +199,7 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
     # -- Step 5: Webhook route ---------------------------------------------------
 
     defp add_webhook_route(igniter) do
-      case Igniter.Libs.Phoenix.select_router(igniter) do
+      case Phoenix.select_router(igniter) do
         {igniter, nil} ->
           Igniter.add_notice(igniter, """
           No Phoenix router found. Add the webhook route manually:
@@ -202,10 +210,10 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
           """)
 
         {igniter, router} ->
-          web_module = Igniter.Libs.Phoenix.web_module(igniter)
+          web_module = Phoenix.web_module(igniter)
           controller = Module.concat(web_module, PolarWebhookController)
 
-          Igniter.Libs.Phoenix.add_scope(
+          Phoenix.add_scope(
             igniter,
             "/webhook",
             """

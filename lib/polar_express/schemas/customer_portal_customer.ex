@@ -28,8 +28,9 @@ defmodule PolarExpress.Schemas.CustomerPortalCustomer do
           id: String.t() | nil,
           modified_at: DateTime.t() | nil,
           name: String.t() | nil,
-          oauth_accounts: map() | nil,
-          tax_id: term(),
+          oauth_accounts:
+            %{String.t() => PolarExpress.Schemas.CustomerPortalOAuthAccount.t()} | nil,
+          tax_id: [String.t() | PolarExpress.Schemas.TaxIDFormat.t()] | nil,
           type: PolarExpress.Schemas.CustomerType.t() | nil
         }
 
@@ -54,6 +55,8 @@ defmodule PolarExpress.Schemas.CustomerPortalCustomer do
   def __inner_types__ do
     %{
       "billing_address" => PolarExpress.Schemas.Address,
+      "oauth_accounts" => {:map_values, PolarExpress.Schemas.CustomerPortalOAuthAccount},
+      "tax_id" => {:union, :variants, [PolarExpress.Schemas.TaxIDFormat]},
       "type" => PolarExpress.Schemas.CustomerType
     }
   end

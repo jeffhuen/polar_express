@@ -4,7 +4,11 @@ defmodule PolarExpress.Schemas.DiscountDuration do
 
   @type t :: String.t()
 
-  @values ["once", "forever", "repeating"]
+  @values [
+    "once",
+    "forever",
+    "repeating"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

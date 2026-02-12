@@ -28,16 +28,16 @@ defmodule PolarExpress.Resources.Refunds do
           created_at: String.t() | nil,
           currency: String.t() | nil,
           customer_id: String.t() | nil,
-          dispute: map() | nil,
+          dispute: term() | nil,
           id: String.t() | nil,
           metadata: map() | nil,
-          modified_at: map() | nil,
+          modified_at: term() | nil,
           order_id: String.t() | nil,
           organization_id: String.t() | nil,
           reason: map() | nil,
           revoke_benefits: boolean() | nil,
           status: map() | nil,
-          subscription_id: map() | nil,
+          subscription_id: term() | nil,
           tax_amount: integer() | nil
         }
 

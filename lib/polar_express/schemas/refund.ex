@@ -28,7 +28,7 @@ defmodule PolarExpress.Schemas.Refund do
           customer_id: String.t() | nil,
           dispute: PolarExpress.Schemas.RefundDispute.t() | nil,
           id: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           order_id: String.t() | nil,
           organization_id: String.t() | nil,
@@ -63,6 +63,7 @@ defmodule PolarExpress.Schemas.Refund do
   def __inner_types__ do
     %{
       "dispute" => PolarExpress.Schemas.RefundDispute,
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "reason" => PolarExpress.Schemas.RefundReason,
       "status" => PolarExpress.Schemas.RefundStatus
     }

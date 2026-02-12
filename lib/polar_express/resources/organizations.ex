@@ -29,16 +29,16 @@ defmodule PolarExpress.Resources.Organizations do
   """
   @type t :: %__MODULE__{
           allow_customer_updates: boolean() | nil,
-          avatar_url: map() | nil,
+          avatar_url: term() | nil,
           created_at: String.t() | nil,
           customer_email_settings: map() | nil,
           customer_portal_settings: map() | nil,
           default_presentment_currency: map() | nil,
-          details_submitted_at: map() | nil,
-          email: map() | nil,
-          feature_settings: map() | nil,
+          details_submitted_at: term() | nil,
+          email: term() | nil,
+          feature_settings: term() | nil,
           id: String.t() | nil,
-          modified_at: map() | nil,
+          modified_at: term() | nil,
           name: String.t() | nil,
           notification_settings: map() | nil,
           proration_behavior: map() | nil,
@@ -46,7 +46,7 @@ defmodule PolarExpress.Resources.Organizations do
           socials: [map()] | nil,
           status: map() | nil,
           subscription_settings: map() | nil,
-          website: map() | nil
+          website: term() | nil
         }
 
   defstruct [

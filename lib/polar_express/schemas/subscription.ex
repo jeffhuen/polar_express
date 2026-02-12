@@ -46,7 +46,8 @@ defmodule PolarExpress.Schemas.Subscription do
           currency: String.t() | nil,
           current_period_end: DateTime.t() | nil,
           current_period_start: DateTime.t() | nil,
-          custom_field_data: map() | nil,
+          custom_field_data:
+            %{String.t() => String.t() | integer() | boolean() | DateTime.t() | nil} | nil,
           customer: PolarExpress.Schemas.SubscriptionCustomer.t() | nil,
           customer_cancellation_comment: String.t() | nil,
           customer_cancellation_reason: PolarExpress.Schemas.CustomerCancellationReason.t() | nil,
@@ -61,7 +62,7 @@ defmodule PolarExpress.Schemas.Subscription do
           ended_at: DateTime.t() | nil,
           ends_at: DateTime.t() | nil,
           id: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           meters: [PolarExpress.Schemas.SubscriptionMeter.t()] | nil,
           modified_at: DateTime.t() | nil,
           prices:
@@ -130,6 +131,7 @@ defmodule PolarExpress.Schemas.Subscription do
            PolarExpress.Schemas.DiscountPercentageOnceForeverDurationBase,
            PolarExpress.Schemas.DiscountPercentageRepeatDurationBase
          ]},
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "meters" => PolarExpress.Schemas.SubscriptionMeter,
       "prices" =>
         {:union, :variants,

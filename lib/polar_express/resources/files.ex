@@ -25,12 +25,12 @@ defmodule PolarExpress.Resources.Files do
   * `version`
   """
   @type t :: %__MODULE__{
-          checksum_etag: map() | nil,
-          checksum_sha256_base64: map() | nil,
-          checksum_sha256_hex: map() | nil,
+          checksum_etag: term() | nil,
+          checksum_sha256_base64: term() | nil,
+          checksum_sha256_hex: term() | nil,
           id: String.t() | nil,
           is_uploaded: boolean() | nil,
-          last_modified_at: map() | nil,
+          last_modified_at: term() | nil,
           mime_type: String.t() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil,
@@ -38,9 +38,9 @@ defmodule PolarExpress.Resources.Files do
           service: map() | nil,
           size: integer() | nil,
           size_readable: String.t() | nil,
-          storage_version: map() | nil,
+          storage_version: term() | nil,
           upload: map() | nil,
-          version: map() | nil
+          version: term() | nil
         }
 
   defstruct [

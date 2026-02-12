@@ -38,7 +38,7 @@ defmodule PolarExpress.Schemas.CheckoutLink do
           discount_id: String.t() | nil,
           id: String.t() | nil,
           label: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           organization_id: String.t() | nil,
           payment_processor: PolarExpress.Schemas.PaymentProcessor.t() | nil,
@@ -83,6 +83,7 @@ defmodule PolarExpress.Schemas.CheckoutLink do
            PolarExpress.Schemas.DiscountPercentageOnceForeverDurationBase,
            PolarExpress.Schemas.DiscountPercentageRepeatDurationBase
          ]},
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "payment_processor" => PolarExpress.Schemas.PaymentProcessor,
       "products" => PolarExpress.Schemas.CheckoutLinkProduct,
       "trial_interval" => PolarExpress.Schemas.TrialInterval

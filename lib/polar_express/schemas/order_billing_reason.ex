@@ -4,7 +4,12 @@ defmodule PolarExpress.Schemas.OrderBillingReason do
 
   @type t :: String.t()
 
-  @values ["purchase", "subscription_create", "subscription_cycle", "subscription_update"]
+  @values [
+    "purchase",
+    "subscription_create",
+    "subscription_cycle",
+    "subscription_update"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

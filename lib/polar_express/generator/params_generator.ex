@@ -3,7 +3,6 @@ defmodule PolarExpress.Generator.ParamsGenerator do
 
   alias PolarExpress.Generator.DocFormatter
   alias PolarExpress.Generator.Naming
-  alias PolarExpress.Generator.Overrides
 
   @file_header "# File generated from our OpenAPI spec"
 
@@ -24,34 +23,41 @@ defmodule PolarExpress.Generator.ParamsGenerator do
   end
 
   defp generate_params(resource, op, path_specs) do
+    case resolve_params_schema(op, path_specs) do
+      nil ->
+        []
+
+      params_schema ->
+        build_params_module(resource, op, params_schema)
+    end
+  end
+
+  defp resolve_params_schema(op, path_specs) do
     path_key = "#{String.upcase(to_string(op.http_method))} #{op.path}"
     path_spec = Map.get(path_specs, path_key)
 
-    params_schema =
-      cond do
-        # POST/PUT/PATCH — use requestBody schema
-        op.http_method in [:post, :put, :patch] && path_spec && path_spec.params_schema ->
-          path_spec.params_schema
+    cond do
+      # POST/PUT/PATCH — use requestBody schema
+      op.http_method in [:post, :put, :patch] && path_spec && path_spec.params_schema ->
+        path_spec.params_schema
 
-        # GET/DELETE — use query parameters
-        op.http_method in [:get, :delete, :head] && path_spec && path_spec.query_params != [] ->
-          query_params_to_schema(path_spec.query_params)
+      # GET/DELETE — use query parameters
+      op.http_method in [:get, :delete, :head] && path_spec && path_spec.query_params != [] ->
+        query_params_to_schema(path_spec.query_params)
 
-        true ->
-          nil
-      end
-
-    if params_schema do
-      # Use resolved service class unless explicitly overridden.
-      params_class = resolve_params_class(op)
-      package = op.service_package || resource.package
-      module = Naming.params_module(params_class, package, op.method_name)
-      path = Naming.module_to_path(module)
-      content = generate_params_module(module, params_schema)
-      [{path, content}]
-    else
-      []
+      true ->
+        nil
     end
+  end
+
+  defp build_params_module(resource, op, params_schema) do
+    # Use resolved service class unless explicitly overridden.
+    params_class = resolve_params_class(op)
+    package = op.service_package || resource.package
+    module = Naming.params_module(params_class, package, op.method_name)
+    path = Naming.module_to_path(module)
+    content = generate_params_module(module, params_schema)
+    [{path, content}]
   end
 
   defp query_params_to_schema(params) do
@@ -279,9 +285,6 @@ defmodule PolarExpress.Generator.ParamsGenerator do
   defp params_typespec(_), do: "term()"
 
   defp resolve_params_class(op) do
-    case Map.get(Overrides.params_overrides(), {to_string(op.http_method), op.path}) do
-      %{params_class: params_class} when is_binary(params_class) -> params_class
-      _ -> op.service_class
-    end
+    op.service_class
   end
 end

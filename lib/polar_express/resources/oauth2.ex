@@ -18,7 +18,7 @@ defmodule PolarExpress.Resources.Oauth2 do
           access_token: String.t() | nil,
           expires_in: integer() | nil,
           id_token: String.t() | nil,
-          refresh_token: map() | nil,
+          refresh_token: term() | nil,
           scope: String.t() | nil,
           token_type: String.t() | nil
         }

@@ -36,7 +36,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantCustom do
           member_id: String.t() | nil,
           modified_at: DateTime.t() | nil,
           order_id: String.t() | nil,
-          properties: map() | nil,
+          properties: PolarExpress.Schemas.BenefitGrantCustomProperties.t() | nil,
           revoked_at: DateTime.t() | nil,
           subscription_id: String.t() | nil
         }
@@ -67,7 +67,8 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantCustom do
     %{
       "benefit" => PolarExpress.Schemas.BenefitCustomSubscriber,
       "customer" => PolarExpress.Schemas.CustomerPortalCustomer,
-      "error" => PolarExpress.Schemas.BenefitGrantError
+      "error" => PolarExpress.Schemas.BenefitGrantError,
+      "properties" => PolarExpress.Schemas.BenefitGrantCustomProperties
     }
   end
 

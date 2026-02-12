@@ -6,6 +6,10 @@ defmodule PolarExpress.DocGenerationTest do
   """
   use ExUnit.Case, async: true
 
+  alias Code.Typespec
+  alias Code.Typespec
+  alias PolarExpress.Events.CheckoutCreated
+  alias PolarExpress.Events.UnknownEvent
   alias PolarExpress.Generator.OpenAPI
 
   describe "resource documentation" do
@@ -61,7 +65,7 @@ defmodule PolarExpress.DocGenerationTest do
     end
 
     test "service method has @spec" do
-      {:ok, specs} = Code.Typespec.fetch_specs(PolarExpress.Services.CustomersService)
+      {:ok, specs} = Typespec.fetch_specs(PolarExpress.Services.CustomersService)
 
       create_specs =
         Enum.filter(specs, fn
@@ -121,7 +125,7 @@ defmodule PolarExpress.DocGenerationTest do
 
     test "event module has @moduledoc mentioning webhook" do
       {:docs_v1, _, _, _, moduledoc, _, _} =
-        Code.fetch_docs(PolarExpress.Events.CheckoutCreated)
+        Code.fetch_docs(CheckoutCreated)
 
       assert moduledoc != :hidden
       assert moduledoc != :none
@@ -130,12 +134,12 @@ defmodule PolarExpress.DocGenerationTest do
     end
 
     test "event module has event_type constant" do
-      assert PolarExpress.Events.CheckoutCreated.event_type() == "checkout.created"
+      assert CheckoutCreated.event_type() == "checkout.created"
     end
 
     test "unknown event module has @moduledoc" do
       {:docs_v1, _, _, _, moduledoc, _, _} =
-        Code.fetch_docs(PolarExpress.Events.UnknownEvent)
+        Code.fetch_docs(UnknownEvent)
 
       assert moduledoc != :hidden
       assert moduledoc != :none

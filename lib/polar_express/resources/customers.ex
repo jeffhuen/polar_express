@@ -30,21 +30,21 @@ defmodule PolarExpress.Resources.Customers do
           active_meters: [map()] | nil,
           active_subscriptions: [map()] | nil,
           avatar_url: String.t() | nil,
-          billing_address: map() | nil,
+          billing_address: term() | nil,
           created_at: String.t() | nil,
-          deleted_at: map() | nil,
+          deleted_at: term() | nil,
           email: String.t() | nil,
           email_verified: boolean() | nil,
-          external_id: map() | nil,
+          external_id: term() | nil,
           granted_benefits: [map()] | nil,
           id: String.t() | nil,
-          locale: map() | nil,
+          locale: term() | nil,
           metadata: map() | nil,
-          modified_at: map() | nil,
-          name: map() | nil,
+          modified_at: term() | nil,
+          name: term() | nil,
           organization_id: String.t() | nil,
-          tax_id: map() | nil,
-          type: map() | nil
+          tax_id: term() | nil,
+          type: term() | nil
         }
 
   defstruct [

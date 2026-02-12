@@ -114,66 +114,55 @@ defmodule PolarExpress.Generator.ServiceGenerator do
   end
 
   defp generate_method(op, strip_defaults, path_specs, schema_index) do
-    path_params = op.path_params
-
-    # Build function signature
-    path_param_args = Enum.map(path_params, &Macro.underscore/1)
-
-    {params_arg, opts_arg} =
-      if strip_defaults do
-        {"params", "opts"}
-      else
-        {"params \\\\ %{}", "opts \\\\ []"}
-      end
-
-    args = ["client"] ++ path_param_args ++ [params_arg, opts_arg]
-
-    sig = Enum.join(args, ", ")
-
-    # Build the path string with interpolation
-    path_str = build_path_string(op.path)
-
-    # Resolve response schema for resource: hint
-    resolved_schema =
-      case op.response_schema do
-        nil ->
-          nil
-
-        ref ->
-          PolarExpress.Generator.OpenAPI.resolve_response_item_schema(ref, schema_index)
-      end
-
-    # Build opts for Client.request
-    merge_opts = build_merge_opts(op, resolved_schema)
-
-    # Look up operation docs from path_specs
     path_key = "#{String.upcase(to_string(op.http_method))} #{op.path}"
     op_spec = Map.get(path_specs, path_key, %{})
 
-    # @doc — include params cross-reference when available
+    resolved_schema = resolve_response_schema(op, schema_index)
+
+    doc_block = build_doc_block(op, op_spec, resolved_schema, schema_index)
+    def_line = build_def_line(op, strip_defaults)
+    body = build_method_body(op, resolved_schema)
+
+    """
+    #{doc_block}
+    #{def_line}
+    #{body}
+    """
+  end
+
+  defp resolve_response_schema(op, schema_index) do
+    case op.response_schema do
+      nil -> nil
+      ref -> OpenAPI.resolve_response_item_schema(ref, schema_index)
+    end
+  end
+
+  defp build_doc_block(op, op_spec, resolved_schema, schema_index) do
     doc_content = DocFormatter.operation_doc(op_spec[:summary], op_spec[:description])
     params_ref = build_params_module_ref(op)
 
-    doc_with_params =
+    doc_text =
       if params_ref && doc_content do
         "#{doc_content}\n\n  See `#{params_ref}` for parameter details."
       else
         doc_content
       end
 
-    doc_line =
-      case doc_with_params do
-        nil -> ""
-        text -> "  @doc \"\"\"\n  #{text}\n  \"\"\"\n"
-      end
+    doc_attr = if doc_text, do: "  @doc \"\"\"\n  #{doc_text}\n  \"\"\"\n", else: ""
 
-    # @deprecated
-    deprecated_line =
-      if op_spec[:deprecated] == true do
-        "  @deprecated \"This endpoint is deprecated by PolarExpress.\"\n"
-      else
-        ""
-      end
+    deprecated =
+      if op_spec[:deprecated] == true,
+        do: "  @deprecated \"This endpoint is deprecated by PolarExpress.\"\n",
+        else: ""
+
+    spec = build_spec_attr(op, resolved_schema, schema_index)
+
+    "#{doc_attr}#{deprecated}#{spec}"
+  end
+
+  defp build_spec_attr(op, resolved_schema, schema_index) do
+    path_args = List.duplicate("String.t()", length(op.path_params))
+    spec_args = ["Client.t()"] ++ path_args ++ ["map()", "keyword()"]
 
     # @spec — use schema module type when available; list endpoints return ListObject.t()
     is_list_endpoint =
@@ -193,16 +182,26 @@ defmodule PolarExpress.Generator.ServiceGenerator do
         "term()"
       end
 
-    spec_args =
-      ["Client.t()"] ++
-        List.duplicate("String.t()", length(path_params)) ++
-        ["map()", "keyword()"]
+    "  @spec #{op.method_name}(#{Enum.join(spec_args, ", ")}) ::\n          {:ok, #{return_type}} | {:error, PolarExpress.Error.t()}"
+  end
 
-    spec_line =
-      "  @spec #{op.method_name}(#{Enum.join(spec_args, ", ")}) ::\n          {:ok, #{return_type}} | {:error, PolarExpress.Error.t()}\n"
+  defp build_def_line(op, strip_defaults) do
+    path_param_args = Enum.map(op.path_params, &Macro.underscore/1)
+
+    {params_arg, opts_arg} =
+      if strip_defaults, do: {"params", "opts"}, else: {"params \\\\ %{}", "opts \\\\ []"}
+
+    args = ["client"] ++ path_param_args ++ [params_arg, opts_arg]
+    sig = Enum.join(args, ", ")
+
+    "  def #{op.method_name}(#{sig}) do"
+  end
+
+  defp build_method_body(op, resolved_schema) do
+    path_str = build_path_string(op.path)
+    merge_opts = build_merge_opts(op, resolved_schema)
 
     """
-    #{doc_line}#{deprecated_line}#{spec_line}  def #{op.method_name}(#{sig}) do
         Client.request(client, :#{op.http_method}, #{path_str},
           #{merge_opts}
         )

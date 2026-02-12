@@ -4,7 +4,10 @@ defmodule PolarExpress.Schemas.CustomerType do
 
   @type t :: String.t()
 
-  @values ["individual", "team"]
+  @values [
+    "individual",
+    "team"
+  ]
 
   @doc "List of valid enum values."
   def values, do: @values

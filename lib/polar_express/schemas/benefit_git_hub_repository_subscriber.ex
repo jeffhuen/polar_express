@@ -22,7 +22,7 @@ defmodule PolarExpress.Schemas.BenefitGitHubRepositorySubscriber do
           deletable: boolean() | nil,
           description: String.t() | nil,
           id: String.t() | nil,
-          metadata: map() | nil,
+          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           organization: PolarExpress.Schemas.BenefitSubscriberOrganization.t() | nil,
           organization_id: String.t() | nil,
@@ -50,6 +50,7 @@ defmodule PolarExpress.Schemas.BenefitGitHubRepositorySubscriber do
 
   def __inner_types__ do
     %{
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "organization" => PolarExpress.Schemas.BenefitSubscriberOrganization,
       "properties" => PolarExpress.Schemas.BenefitGitHubRepositorySubscriberProperties
     }
