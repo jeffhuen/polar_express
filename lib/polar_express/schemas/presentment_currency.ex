@@ -1,10 +1,19 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.PresentmentCurrency do
-  @moduledoc "PresentmentCurrency enum. Possible values: `usd`."
+  @moduledoc "PresentmentCurrency enum. Possible values: `aud`, `brl`, `cad`, `chf`, `eur`, `inr`, `gbp`, `jpy`, `sek`, `usd`."
 
   @type t :: String.t()
 
   @values [
+    "aud",
+    "brl",
+    "cad",
+    "chf",
+    "eur",
+    "inr",
+    "gbp",
+    "jpy",
+    "sek",
     "usd"
   ]
 

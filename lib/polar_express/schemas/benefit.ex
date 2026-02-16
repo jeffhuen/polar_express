@@ -23,4 +23,16 @@ defmodule PolarExpress.Schemas.Benefit do
       PolarExpress.Schemas.BenefitMeterCredit
     ]
   end
+
+  def __discriminator__ do
+    {"type",
+     %{
+       "custom" => PolarExpress.Schemas.BenefitCustom,
+       "discord" => PolarExpress.Schemas.BenefitDiscord,
+       "downloadables" => PolarExpress.Schemas.BenefitDownloadables,
+       "github_repository" => PolarExpress.Schemas.BenefitGitHubRepository,
+       "license_keys" => PolarExpress.Schemas.BenefitLicenseKeys,
+       "meter_credit" => PolarExpress.Schemas.BenefitMeterCredit
+     }}
+  end
 end
