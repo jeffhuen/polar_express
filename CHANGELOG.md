@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - 2026-02-16
+
+### Fixed
+
+- Use `String.to_existing_atom/1` instead of `String.to_atom/1` when parsing API error type strings to prevent atom table exhaustion from unexpected error types
+
 ## [0.1.2] - 2026-02-12
 
 ### Added

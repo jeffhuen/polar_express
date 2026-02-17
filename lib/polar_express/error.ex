@@ -108,7 +108,13 @@ defmodule PolarExpress.Error do
 
       # Domain-specific error types (e.g. "ResourceNotFound" → :resource_not_found)
       type when is_binary(type) and type != "" ->
-        type |> Macro.underscore() |> String.to_atom()
+        underscored = Macro.underscore(type)
+
+        try do
+          String.to_existing_atom(underscored)
+        rescue
+          ArgumentError -> status_to_error_type(status)
+        end
 
       # No body type → fall back to HTTP status
       _ ->
