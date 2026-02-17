@@ -2,7 +2,7 @@ defmodule PolarExpress.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/jeffhuen/polar_express"
-  @version "0.1.3"
+  @version "0.1.4"
 
   def project do
     [
@@ -78,7 +78,8 @@ defmodule PolarExpress.MixProject do
         "GitHub" => @source_url,
         "Changelog" => "#{@source_url}/blob/main/CHANGELOG.md"
       },
-      files: ~w(lib guides mix.exs README.md LICENSE CHANGELOG.md usage-rules.md)
+      files: ~w(lib guides mix.exs README.md LICENSE CHANGELOG.md usage-rules.md),
+      exclude_patterns: ~w(lib/polar_express/generator lib/mix/tasks/polar_express.generate.ex)
     ]
   end
 

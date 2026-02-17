@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.4] - 2026-02-17
+
+### Changed
+
+- Exclude code generator and `mix polar_express.generate` task from hex package — the package is regenerated weekly from the latest Polar OpenAPI spec, so end users only need the generated output; contributors who need immediate regeneration can use `mix polar_express.generate` from the repo. This also drops the `rustyjson` transitive dependency
+
 ## [0.1.3] - 2026-02-16
 
 ### Fixed
