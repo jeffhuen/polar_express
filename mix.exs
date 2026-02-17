@@ -49,8 +49,8 @@ defmodule PolarExpress.MixProject do
       # Test stub ownership (allows SDK consumers to use PolarExpress.Test)
       {:nimble_ownership, "~> 1.0"},
 
-      # JSON (heavy payloads — Rust NIF, 2-3x faster than Jason)
-      {:rustyjson, "~> 0.3"},
+      # JSON (generator only — parses the OpenAPI spec)
+      {:rustyjson, "~> 0.3", only: [:dev, :test], runtime: false},
 
       # Installer
       {:igniter, "~> 0.7", optional: true},
