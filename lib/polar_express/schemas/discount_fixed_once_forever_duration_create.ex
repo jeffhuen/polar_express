@@ -9,7 +9,7 @@ defmodule PolarExpress.Schemas.DiscountFixedOnceForeverDurationCreate do
   @typedoc """
   * `amount` - Fixed amount to discount from the invoice total.
   * `code` - Code customers can use to apply the discount during checkout. Must be between 3 and 256 characters long and contain only alphanumeric characters.If not provided, the discount can only be applied via the API. Nullable.
-  * `currency` - The currency. Currently, only `usd` is supported.
+  * `currency` - The currency of the fixed amount discount.
   * `duration`
   * `ends_at` - Optional timestamp after which the discount is no longer redeemable. Nullable.
   * `max_redemptions` - Optional maximum number of times the discount can be redeemed. Nullable.
@@ -33,7 +33,7 @@ defmodule PolarExpress.Schemas.DiscountFixedOnceForeverDurationCreate do
   @type t :: %__MODULE__{
           amount: integer() | nil,
           code: String.t() | nil,
-          currency: String.t() | nil,
+          currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
           duration: PolarExpress.Schemas.DiscountDuration.t() | nil,
           ends_at: DateTime.t() | nil,
           max_redemptions: integer() | nil,
@@ -65,6 +65,7 @@ defmodule PolarExpress.Schemas.DiscountFixedOnceForeverDurationCreate do
 
   def __inner_types__ do
     %{
+      "currency" => PolarExpress.Schemas.PresentmentCurrency,
       "duration" => PolarExpress.Schemas.DiscountDuration,
       "type" => PolarExpress.Schemas.DiscountType
     }

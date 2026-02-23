@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec
-defmodule PolarExpress.Params.OrdersExportSubscriptionsParams do
-  @moduledoc "Parameters for orders export subscriptions."
+defmodule PolarExpress.Params.OrdersExportOrdersParams do
+  @moduledoc "Parameters for orders export orders."
 
   @typedoc """
   * `organization_id` - Filter by organization ID.

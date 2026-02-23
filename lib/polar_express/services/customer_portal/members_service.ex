@@ -41,7 +41,7 @@ defmodule PolarExpress.Services.CustomerPortal.MembersService do
   See `PolarExpress.Params.CustomerPortal.MembersListMembersParams` for parameter details.
   """
   @spec list_members(Client.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.CustomerPortalMember.t()} | {:error, PolarExpress.Error.t()}
+          {:ok, PolarExpress.ListObject.t()} | {:error, PolarExpress.Error.t()}
   def list_members(client, params \\ %{}, opts \\ []) do
     Client.request(
       client,

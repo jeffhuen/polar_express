@@ -31,7 +31,7 @@ defmodule PolarExpress.Schemas.ProductPriceMeteredUnit do
           meter: PolarExpress.Schemas.ProductPriceMeter.t() | nil,
           meter_id: String.t() | nil,
           modified_at: DateTime.t() | nil,
-          price_currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
+          price_currency: String.t() | nil,
           product_id: String.t() | nil,
           recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
           source: PolarExpress.Schemas.ProductPriceSource.t() | nil,
@@ -62,7 +62,6 @@ defmodule PolarExpress.Schemas.ProductPriceMeteredUnit do
   def __inner_types__ do
     %{
       "meter" => PolarExpress.Schemas.ProductPriceMeter,
-      "price_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
       "source" => PolarExpress.Schemas.ProductPriceSource,
       "type" => PolarExpress.Schemas.ProductPriceType

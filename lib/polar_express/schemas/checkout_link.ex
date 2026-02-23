@@ -20,6 +20,7 @@ defmodule PolarExpress.Schemas.CheckoutLink do
   * `payment_processor` - Payment processor used.
   * `products`
   * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting.
+  * `return_url` - When set, a back button will be shown in the checkout to return to this URL. Nullable.
   * `success_url` - URL where the customer will be redirected after a successful payment. Nullable.
   * `trial_interval` - The interval unit for the trial period. Nullable.
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
@@ -44,6 +45,7 @@ defmodule PolarExpress.Schemas.CheckoutLink do
           payment_processor: PolarExpress.Schemas.PaymentProcessor.t() | nil,
           products: [PolarExpress.Schemas.CheckoutLinkProduct.t()] | nil,
           require_billing_address: boolean() | nil,
+          return_url: String.t() | nil,
           success_url: String.t() | nil,
           trial_interval: PolarExpress.Schemas.TrialInterval.t() | nil,
           trial_interval_count: integer() | nil,
@@ -64,6 +66,7 @@ defmodule PolarExpress.Schemas.CheckoutLink do
     :payment_processor,
     :products,
     :require_billing_address,
+    :return_url,
     :success_url,
     :trial_interval,
     :trial_interval_count,

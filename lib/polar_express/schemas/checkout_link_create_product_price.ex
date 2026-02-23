@@ -26,6 +26,7 @@ defmodule PolarExpress.Schemas.CheckoutLinkCreateProductPrice do
   * `payment_processor` - Payment processor to use. Currently only Stripe is supported.
   * `product_price_id` - Format: uuid4.
   * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting.
+  * `return_url` - When set, a back button will be shown in the checkout to return to this URL. Nullable.
   * `success_url` - URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id. Nullable.
   * `trial_interval` - The interval unit for the trial period. Nullable.
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
@@ -38,6 +39,7 @@ defmodule PolarExpress.Schemas.CheckoutLinkCreateProductPrice do
           payment_processor: String.t() | nil,
           product_price_id: String.t() | nil,
           require_billing_address: boolean() | nil,
+          return_url: String.t() | nil,
           success_url: String.t() | nil,
           trial_interval: PolarExpress.Schemas.TrialInterval.t() | nil,
           trial_interval_count: integer() | nil
@@ -51,6 +53,7 @@ defmodule PolarExpress.Schemas.CheckoutLinkCreateProductPrice do
     :payment_processor,
     :product_price_id,
     :require_billing_address,
+    :return_url,
     :success_url,
     :trial_interval,
     :trial_interval_count

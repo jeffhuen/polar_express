@@ -9,6 +9,7 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
   * `subscription_cancellation`
   * `subscription_confirmation`
   * `subscription_cycled`
+  * `subscription_cycled_after_trial`
   * `subscription_past_due`
   * `subscription_revoked`
   * `subscription_uncanceled`
@@ -19,6 +20,7 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
           subscription_cancellation: boolean() | nil,
           subscription_confirmation: boolean() | nil,
           subscription_cycled: boolean() | nil,
+          subscription_cycled_after_trial: boolean() | nil,
           subscription_past_due: boolean() | nil,
           subscription_revoked: boolean() | nil,
           subscription_uncanceled: boolean() | nil,
@@ -30,6 +32,7 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
     :subscription_cancellation,
     :subscription_confirmation,
     :subscription_cycled,
+    :subscription_cycled_after_trial,
     :subscription_past_due,
     :subscription_revoked,
     :subscription_uncanceled,

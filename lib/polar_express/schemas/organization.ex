@@ -33,7 +33,7 @@ defmodule PolarExpress.Schemas.Organization do
             PolarExpress.Schemas.OrganizationCustomerEmailSettings.t() | nil,
           customer_portal_settings:
             PolarExpress.Schemas.OrganizationCustomerPortalSettings.t() | nil,
-          default_presentment_currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
+          default_presentment_currency: String.t() | nil,
           details_submitted_at: DateTime.t() | nil,
           email: String.t() | nil,
           feature_settings: PolarExpress.Schemas.OrganizationFeatureSettings.t() | nil,
@@ -78,7 +78,6 @@ defmodule PolarExpress.Schemas.Organization do
     %{
       "customer_email_settings" => PolarExpress.Schemas.OrganizationCustomerEmailSettings,
       "customer_portal_settings" => PolarExpress.Schemas.OrganizationCustomerPortalSettings,
-      "default_presentment_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettings,
       "notification_settings" => PolarExpress.Schemas.OrganizationNotificationSettings,
       "proration_behavior" => PolarExpress.Schemas.SubscriptionProrationBehavior,
