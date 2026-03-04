@@ -38,7 +38,6 @@ defmodule PolarExpress.Resources.CustomerPortal.Orders do
   * `subtotal_amount` - Amount in cents, before discounts and taxes.
   * `tax_amount` - Sales tax amount in cents.
   * `total_amount` - Amount in cents, after discounts and taxes.
-  * `user_id` - Format: uuid4. **Deprecated.**
   """
   @type t :: %__MODULE__{
           applied_balance_amount: integer() | nil,
@@ -71,8 +70,7 @@ defmodule PolarExpress.Resources.CustomerPortal.Orders do
           subscription_id: term() | nil,
           subtotal_amount: integer() | nil,
           tax_amount: integer() | nil,
-          total_amount: integer() | nil,
-          user_id: String.t() | nil
+          total_amount: integer() | nil
         }
 
   defstruct [
@@ -106,8 +104,7 @@ defmodule PolarExpress.Resources.CustomerPortal.Orders do
     :subscription_id,
     :subtotal_amount,
     :tax_amount,
-    :total_amount,
-    :user_id
+    :total_amount
   ]
 
   @object_name "orders"

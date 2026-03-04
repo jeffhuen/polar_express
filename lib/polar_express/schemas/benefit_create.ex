@@ -9,6 +9,7 @@ defmodule PolarExpress.Schemas.BenefitCreate do
           | PolarExpress.Schemas.BenefitDownloadablesCreate.t()
           | PolarExpress.Schemas.BenefitLicenseKeysCreate.t()
           | PolarExpress.Schemas.BenefitMeterCreditCreate.t()
+          | PolarExpress.Schemas.BenefitFeatureFlagCreate.t()
 
   @schema_name "BenefitCreate"
   def schema_name, do: @schema_name
@@ -20,7 +21,8 @@ defmodule PolarExpress.Schemas.BenefitCreate do
       PolarExpress.Schemas.BenefitGitHubRepositoryCreate,
       PolarExpress.Schemas.BenefitDownloadablesCreate,
       PolarExpress.Schemas.BenefitLicenseKeysCreate,
-      PolarExpress.Schemas.BenefitMeterCreditCreate
+      PolarExpress.Schemas.BenefitMeterCreditCreate,
+      PolarExpress.Schemas.BenefitFeatureFlagCreate
     ]
   end
 
@@ -30,6 +32,7 @@ defmodule PolarExpress.Schemas.BenefitCreate do
        "custom" => PolarExpress.Schemas.BenefitCustomCreate,
        "discord" => PolarExpress.Schemas.BenefitDiscordCreate,
        "downloadables" => PolarExpress.Schemas.BenefitDownloadablesCreate,
+       "feature_flag" => PolarExpress.Schemas.BenefitFeatureFlagCreate,
        "github_repository" => PolarExpress.Schemas.BenefitGitHubRepositoryCreate,
        "license_keys" => PolarExpress.Schemas.BenefitLicenseKeysCreate,
        "meter_credit" => PolarExpress.Schemas.BenefitMeterCreditCreate

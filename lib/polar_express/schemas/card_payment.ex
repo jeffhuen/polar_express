@@ -11,7 +11,7 @@ defmodule PolarExpress.Schemas.CardPayment do
   * `checkout_id` - The ID of the checkout session associated with this payment. Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `currency` - The payment currency. Currently, only `usd` is supported.
-  * `decline_message` - Human-reasable error message, if the payment was declined. Nullable.
+  * `decline_message` - Human-readable error message, if the payment was declined. Nullable.
   * `decline_reason` - Error code, if the payment was declined. Nullable.
   * `id` - The ID of the object. Format: uuid4.
   * `method` - The payment method used.

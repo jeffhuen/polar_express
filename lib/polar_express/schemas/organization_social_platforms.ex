@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.OrganizationSocialPlatforms do
-  @moduledoc "OrganizationSocialPlatforms enum. Possible values: `x`, `github`, `facebook`, `instagram`, `youtube`, `tiktok`, `linkedin`, `other`."
+  @moduledoc "OrganizationSocialPlatforms enum. Possible values: `x`, `github`, `facebook`, `instagram`, `youtube`, `tiktok`, `linkedin`, `threads`, `discord`, `other`."
 
   @type t :: String.t()
 
@@ -12,6 +12,8 @@ defmodule PolarExpress.Schemas.OrganizationSocialPlatforms do
     "youtube",
     "tiktok",
     "linkedin",
+    "threads",
+    "discord",
     "other"
   ]
 

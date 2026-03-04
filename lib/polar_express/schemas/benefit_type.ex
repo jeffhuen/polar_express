@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.BenefitType do
-  @moduledoc "BenefitType enum. Possible values: `custom`, `discord`, `github_repository`, `downloadables`, `license_keys`, `meter_credit`."
+  @moduledoc "BenefitType enum. Possible values: `custom`, `discord`, `github_repository`, `downloadables`, `license_keys`, `meter_credit`, `feature_flag`."
 
   @type t :: String.t()
 
@@ -10,7 +10,8 @@ defmodule PolarExpress.Schemas.BenefitType do
     "github_repository",
     "downloadables",
     "license_keys",
-    "meter_credit"
+    "meter_credit",
+    "feature_flag"
   ]
 
   @doc "List of valid enum values."

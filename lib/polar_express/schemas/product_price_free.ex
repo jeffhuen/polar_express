@@ -14,9 +14,7 @@ defmodule PolarExpress.Schemas.ProductPriceFree do
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `price_currency` - The currency in which the customer will be charged.
   * `product_id` - The ID of the product owning the price. Format: uuid4.
-  * `recurring_interval` - Nullable. **Deprecated.**
   * `source` - The source of the price . `catalog` is a predefined price, while `ad_hoc` is a price created dynamically on a Checkout session.
-  * `type` - **Deprecated.**
   """
   @type t :: %__MODULE__{
           amount_type: String.t() | nil,
@@ -26,9 +24,7 @@ defmodule PolarExpress.Schemas.ProductPriceFree do
           modified_at: DateTime.t() | nil,
           price_currency: String.t() | nil,
           product_id: String.t() | nil,
-          recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
-          source: PolarExpress.Schemas.ProductPriceSource.t() | nil,
-          type: PolarExpress.Schemas.ProductPriceType.t() | nil
+          source: PolarExpress.Schemas.ProductPriceSource.t() | nil
         }
 
   defstruct [
@@ -39,9 +35,7 @@ defmodule PolarExpress.Schemas.ProductPriceFree do
     :modified_at,
     :price_currency,
     :product_id,
-    :recurring_interval,
-    :source,
-    :type
+    :source
   ]
 
   @schema_name "ProductPriceFree"
@@ -49,9 +43,7 @@ defmodule PolarExpress.Schemas.ProductPriceFree do
 
   def __inner_types__ do
     %{
-      "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
-      "source" => PolarExpress.Schemas.ProductPriceSource,
-      "type" => PolarExpress.Schemas.ProductPriceType
+      "source" => PolarExpress.Schemas.ProductPriceSource
     }
   end
 

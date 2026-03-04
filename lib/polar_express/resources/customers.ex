@@ -7,8 +7,6 @@ defmodule PolarExpress.Resources.Customers do
   """
 
   @typedoc """
-  * `active_meters` - The customer's active meters.
-  * `active_subscriptions` - The customer's active subscriptions.
   * `avatar_url`
   * `billing_address`
   * `created_at` - Creation timestamp of the object. Format: date-time.
@@ -16,7 +14,6 @@ defmodule PolarExpress.Resources.Customers do
   * `email` - The email address of the customer. This must be unique within the organization.
   * `email_verified` - Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
   * `external_id` - The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
-  * `granted_benefits` - The customer's active benefit grants.
   * `id` - The ID of the customer. Format: uuid4.
   * `locale`
   * `metadata`
@@ -27,8 +24,6 @@ defmodule PolarExpress.Resources.Customers do
   * `type` - The type of customer: 'individual' for single users, 'team' for customers with multiple members. Legacy customers may have NULL type which is treated as 'individual'.
   """
   @type t :: %__MODULE__{
-          active_meters: [map()] | nil,
-          active_subscriptions: [map()] | nil,
           avatar_url: String.t() | nil,
           billing_address: term() | nil,
           created_at: String.t() | nil,
@@ -36,7 +31,6 @@ defmodule PolarExpress.Resources.Customers do
           email: String.t() | nil,
           email_verified: boolean() | nil,
           external_id: term() | nil,
-          granted_benefits: [map()] | nil,
           id: String.t() | nil,
           locale: term() | nil,
           metadata: map() | nil,
@@ -48,8 +42,6 @@ defmodule PolarExpress.Resources.Customers do
         }
 
   defstruct [
-    :active_meters,
-    :active_subscriptions,
     :avatar_url,
     :billing_address,
     :created_at,
@@ -57,7 +49,6 @@ defmodule PolarExpress.Resources.Customers do
     :email,
     :email_verified,
     :external_id,
-    :granted_benefits,
     :id,
     :locale,
     :metadata,

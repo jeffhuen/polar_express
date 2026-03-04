@@ -30,6 +30,7 @@ defmodule PolarExpress.Schemas.CustomerStateBenefitGrant do
             | PolarExpress.Schemas.BenefitGrantDownloadablesProperties.t()
             | PolarExpress.Schemas.BenefitGrantLicenseKeysProperties.t()
             | PolarExpress.Schemas.BenefitGrantCustomProperties.t()
+            | PolarExpress.Schemas.BenefitGrantFeatureFlagProperties.t()
             | nil
         }
 
@@ -58,7 +59,8 @@ defmodule PolarExpress.Schemas.CustomerStateBenefitGrant do
            PolarExpress.Schemas.BenefitGrantGitHubRepositoryProperties,
            PolarExpress.Schemas.BenefitGrantDownloadablesProperties,
            PolarExpress.Schemas.BenefitGrantLicenseKeysProperties,
-           PolarExpress.Schemas.BenefitGrantCustomProperties
+           PolarExpress.Schemas.BenefitGrantCustomProperties,
+           PolarExpress.Schemas.BenefitGrantFeatureFlagProperties
          ]}
     }
   end

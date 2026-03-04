@@ -13,6 +13,7 @@ defmodule PolarExpress.Schemas.WebhookEndpoint do
   * `format` - The format of the webhook payload.
   * `id` - The ID of the object. Format: uuid4.
   * `modified_at` - Last modification timestamp of the object. Nullable.
+  * `name` - An optional name for the webhook endpoint to help organize and identify it. Nullable.
   * `organization_id` - The organization ID associated with the webhook endpoint. Format: uuid4.
   * `secret` - The secret used to sign the webhook events.
   * `url` - The URL where the webhook events will be sent. Format: uri. Max length: 2083.
@@ -24,6 +25,7 @@ defmodule PolarExpress.Schemas.WebhookEndpoint do
           format: PolarExpress.Schemas.WebhookFormat.t() | nil,
           id: String.t() | nil,
           modified_at: DateTime.t() | nil,
+          name: String.t() | nil,
           organization_id: String.t() | nil,
           secret: String.t() | nil,
           url: String.t() | nil
@@ -36,6 +38,7 @@ defmodule PolarExpress.Schemas.WebhookEndpoint do
     :format,
     :id,
     :modified_at,
+    :name,
     :organization_id,
     :secret,
     :url

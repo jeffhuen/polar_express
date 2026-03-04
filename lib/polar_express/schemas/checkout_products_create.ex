@@ -39,6 +39,7 @@ defmodule PolarExpress.Schemas.CheckoutProductsCreate do
   * `external_customer_id` - ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set. Nullable.
   * `is_business_customer` - Whether the customer is a business or an individual. If `true`, the customer will be required to fill their full billing address and billing name.
   * `locale` - Nullable.
+  * `max_seats` - Maximum number of seats (works with seat-based pricing only) Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
 
   The key must be a string with a maximum length of **40 characters**.
@@ -50,11 +51,12 @@ defmodule PolarExpress.Schemas.CheckoutProductsCreate do
   * A boolean
 
   You can store up to **50 key-value pairs**.
+  * `min_seats` - Minimum number of seats (works with seat-based pricing only) Nullable.
   * `prices` - Optional mapping of product IDs to a list of ad-hoc prices to create for that product. If not set, catalog prices of the product will be used. Nullable.
   * `products` - List of product IDs available to select at that checkout. The first one will be selected by default.
   * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
   * `return_url` - When set, a back button will be shown in the checkout to return to this URL. Nullable.
-  * `seats` - Number of seats for seat-based pricing. Required for seat-based products. Nullable.
+  * `seats` - Predefined number of seats (works with seat-based pricing only) Nullable.
   * `subscription_id` - ID of a subscription to upgrade. It must be on a free pricing. If checkout is successful, metadata set on this checkout will be copied to the subscription, and existing keys will be overwritten. Nullable.
   * `success_url` - URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id. Nullable.
   * `trial_interval` - The interval unit for the trial period. Nullable.
@@ -81,7 +83,9 @@ defmodule PolarExpress.Schemas.CheckoutProductsCreate do
           external_customer_id: String.t() | nil,
           is_business_customer: boolean() | nil,
           locale: String.t() | nil,
+          max_seats: integer() | nil,
           metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
+          min_seats: integer() | nil,
           prices:
             %{
               String.t() => [
@@ -123,7 +127,9 @@ defmodule PolarExpress.Schemas.CheckoutProductsCreate do
     :external_customer_id,
     :is_business_customer,
     :locale,
+    :max_seats,
     :metadata,
+    :min_seats,
     :prices,
     :products,
     :require_billing_address,

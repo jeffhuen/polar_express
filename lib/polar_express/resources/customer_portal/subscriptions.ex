@@ -13,7 +13,7 @@ defmodule PolarExpress.Resources.CustomerPortal.Subscriptions do
   * `checkout_id`
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `currency` - The currency of the subscription.
-  * `current_period_end` - The end timestamp of the current billing period.
+  * `current_period_end` - The end timestamp of the current billing period. Format: date-time.
   * `current_period_start` - The start timestamp of the current billing period. Format: date-time.
   * `customer_cancellation_comment`
   * `customer_cancellation_reason`
@@ -42,7 +42,7 @@ defmodule PolarExpress.Resources.CustomerPortal.Subscriptions do
           checkout_id: term() | nil,
           created_at: String.t() | nil,
           currency: String.t() | nil,
-          current_period_end: term() | nil,
+          current_period_end: String.t() | nil,
           current_period_start: String.t() | nil,
           customer_cancellation_comment: term() | nil,
           customer_cancellation_reason: term() | nil,

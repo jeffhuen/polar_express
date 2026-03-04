@@ -21,7 +21,6 @@ defmodule PolarExpress.Resources.Checkouts do
   * `customer_billing_address`
   * `customer_billing_name`
   * `customer_email` - Email address of the customer.
-  * `customer_external_id` - **Deprecated.**
   * `customer_id`
   * `customer_ip_address`
   * `customer_metadata`
@@ -41,7 +40,9 @@ defmodule PolarExpress.Resources.Checkouts do
   * `is_payment_required` - Whether the checkout requires payment, e.g. in case of free products or discounts that cover the total amount.
   * `is_payment_setup_required` - Whether the checkout requires setting up a payment method, regardless of the amount, e.g. subscriptions that have first free cycles.
   * `locale`
+  * `max_seats` - Maximum number of seats (works with seat-based pricing only)
   * `metadata`
+  * `min_seats` - Minimum number of seats (works with seat-based pricing only)
   * `modified_at` - Last modification timestamp of the object.
   * `net_amount` - Amount in cents, after discounts but before taxes.
   * `organization_id` - ID of the organization owning the checkout session. Format: uuid4.
@@ -56,7 +57,7 @@ defmodule PolarExpress.Resources.Checkouts do
   * `products` - List of products available to select.
   * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
   * `return_url` - When set, a back button will be shown in the checkout to return to this URL.
-  * `seats` - Number of seats for seat-based pricing.
+  * `seats` - Predefined number of seats (works with seat-based pricing only)
   * `status` - Status of the checkout session.
 
   - Open: the checkout session was opened.
@@ -88,7 +89,6 @@ defmodule PolarExpress.Resources.Checkouts do
           customer_billing_address: term() | nil,
           customer_billing_name: term() | nil,
           customer_email: term() | nil,
-          customer_external_id: term() | nil,
           customer_id: term() | nil,
           customer_ip_address: term() | nil,
           customer_metadata: term() | nil,
@@ -108,7 +108,9 @@ defmodule PolarExpress.Resources.Checkouts do
           is_payment_required: boolean() | nil,
           is_payment_setup_required: boolean() | nil,
           locale: term() | nil,
+          max_seats: term() | nil,
           metadata: map() | nil,
+          min_seats: term() | nil,
           modified_at: term() | nil,
           net_amount: integer() | nil,
           organization_id: String.t() | nil,
@@ -150,7 +152,6 @@ defmodule PolarExpress.Resources.Checkouts do
     :customer_billing_address,
     :customer_billing_name,
     :customer_email,
-    :customer_external_id,
     :customer_id,
     :customer_ip_address,
     :customer_metadata,
@@ -170,7 +171,9 @@ defmodule PolarExpress.Resources.Checkouts do
     :is_payment_required,
     :is_payment_setup_required,
     :locale,
+    :max_seats,
     :metadata,
+    :min_seats,
     :modified_at,
     :net_amount,
     :organization_id,

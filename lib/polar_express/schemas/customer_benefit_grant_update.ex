@@ -9,6 +9,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantUpdate do
           | PolarExpress.Schemas.CustomerBenefitGrantLicenseKeysUpdate.t()
           | PolarExpress.Schemas.CustomerBenefitGrantCustomUpdate.t()
           | PolarExpress.Schemas.CustomerBenefitGrantMeterCreditUpdate.t()
+          | PolarExpress.Schemas.CustomerBenefitGrantFeatureFlagUpdate.t()
 
   @schema_name "CustomerBenefitGrantUpdate"
   def schema_name, do: @schema_name
@@ -20,7 +21,8 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantUpdate do
       PolarExpress.Schemas.CustomerBenefitGrantDownloadablesUpdate,
       PolarExpress.Schemas.CustomerBenefitGrantLicenseKeysUpdate,
       PolarExpress.Schemas.CustomerBenefitGrantCustomUpdate,
-      PolarExpress.Schemas.CustomerBenefitGrantMeterCreditUpdate
+      PolarExpress.Schemas.CustomerBenefitGrantMeterCreditUpdate,
+      PolarExpress.Schemas.CustomerBenefitGrantFeatureFlagUpdate
     ]
   end
 
@@ -30,6 +32,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantUpdate do
        "custom" => PolarExpress.Schemas.CustomerBenefitGrantCustomUpdate,
        "discord" => PolarExpress.Schemas.CustomerBenefitGrantDiscordUpdate,
        "downloadables" => PolarExpress.Schemas.CustomerBenefitGrantDownloadablesUpdate,
+       "feature_flag" => PolarExpress.Schemas.CustomerBenefitGrantFeatureFlagUpdate,
        "github_repository" => PolarExpress.Schemas.CustomerBenefitGrantGitHubRepositoryUpdate,
        "license_keys" => PolarExpress.Schemas.CustomerBenefitGrantLicenseKeysUpdate,
        "meter_credit" => PolarExpress.Schemas.CustomerBenefitGrantMeterCreditUpdate

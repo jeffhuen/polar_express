@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec
-defmodule PolarExpress.Schemas.BenefitGrant do
+defmodule PolarExpress.Schemas.BenefitGrantFeatureFlagWebhook do
   @moduledoc """
-  BenefitGrant
+  BenefitGrantFeatureFlagWebhook
   """
 
   @typedoc """
@@ -19,12 +19,13 @@ defmodule PolarExpress.Schemas.BenefitGrant do
   * `member_id` - The ID of the member concerned by this grant. Nullable.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `order_id` - The ID of the order that granted this benefit. Nullable.
+  * `previous_properties` - Nullable.
   * `properties`
   * `revoked_at` - The timestamp when the benefit was revoked. If `None`, the benefit is not revoked. Nullable.
   * `subscription_id` - The ID of the subscription that granted this benefit. Nullable.
   """
   @type t :: %__MODULE__{
-          benefit: PolarExpress.Schemas.Benefit.t() | nil,
+          benefit: PolarExpress.Schemas.BenefitFeatureFlag.t() | nil,
           benefit_id: String.t() | nil,
           created_at: DateTime.t() | nil,
           customer: PolarExpress.Schemas.Customer.t() | nil,
@@ -38,14 +39,8 @@ defmodule PolarExpress.Schemas.BenefitGrant do
           member_id: String.t() | nil,
           modified_at: DateTime.t() | nil,
           order_id: String.t() | nil,
-          properties:
-            PolarExpress.Schemas.BenefitGrantDiscordProperties.t()
-            | PolarExpress.Schemas.BenefitGrantGitHubRepositoryProperties.t()
-            | PolarExpress.Schemas.BenefitGrantDownloadablesProperties.t()
-            | PolarExpress.Schemas.BenefitGrantLicenseKeysProperties.t()
-            | PolarExpress.Schemas.BenefitGrantCustomProperties.t()
-            | PolarExpress.Schemas.BenefitGrantFeatureFlagProperties.t()
-            | nil,
+          previous_properties: PolarExpress.Schemas.BenefitGrantFeatureFlagProperties.t() | nil,
+          properties: PolarExpress.Schemas.BenefitGrantFeatureFlagProperties.t() | nil,
           revoked_at: DateTime.t() | nil,
           subscription_id: String.t() | nil
         }
@@ -65,30 +60,23 @@ defmodule PolarExpress.Schemas.BenefitGrant do
     :member_id,
     :modified_at,
     :order_id,
+    :previous_properties,
     :properties,
     :revoked_at,
     :subscription_id
   ]
 
-  @schema_name "BenefitGrant"
+  @schema_name "BenefitGrantFeatureFlagWebhook"
   def schema_name, do: @schema_name
 
   def __inner_types__ do
     %{
-      "benefit" => PolarExpress.Schemas.Benefit,
+      "benefit" => PolarExpress.Schemas.BenefitFeatureFlag,
       "customer" => PolarExpress.Schemas.Customer,
       "error" => PolarExpress.Schemas.BenefitGrantError,
       "member" => PolarExpress.Schemas.Member,
-      "properties" =>
-        {:union, :variants,
-         [
-           PolarExpress.Schemas.BenefitGrantDiscordProperties,
-           PolarExpress.Schemas.BenefitGrantGitHubRepositoryProperties,
-           PolarExpress.Schemas.BenefitGrantDownloadablesProperties,
-           PolarExpress.Schemas.BenefitGrantLicenseKeysProperties,
-           PolarExpress.Schemas.BenefitGrantCustomProperties,
-           PolarExpress.Schemas.BenefitGrantFeatureFlagProperties
-         ]}
+      "previous_properties" => PolarExpress.Schemas.BenefitGrantFeatureFlagProperties,
+      "properties" => PolarExpress.Schemas.BenefitGrantFeatureFlagProperties
     }
   end
 

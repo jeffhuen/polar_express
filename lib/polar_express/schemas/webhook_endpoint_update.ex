@@ -10,18 +10,18 @@ defmodule PolarExpress.Schemas.WebhookEndpointUpdate do
   * `enabled` - Whether the webhook endpoint is enabled. Nullable.
   * `events` - Nullable.
   * `format` - Nullable.
-  * `secret` - Nullable. **Deprecated.**
+  * `name` - An optional name for the webhook endpoint to help organize and identify it. Nullable.
   * `url` - Nullable.
   """
   @type t :: %__MODULE__{
           enabled: boolean() | nil,
           events: [PolarExpress.Schemas.WebhookEventType.t()] | nil,
           format: PolarExpress.Schemas.WebhookFormat.t() | nil,
-          secret: String.t() | nil,
+          name: String.t() | nil,
           url: String.t() | nil
         }
 
-  defstruct [:enabled, :events, :format, :secret, :url]
+  defstruct [:enabled, :events, :format, :name, :url]
 
   @schema_name "WebhookEndpointUpdate"
   def schema_name, do: @schema_name

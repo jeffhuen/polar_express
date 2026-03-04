@@ -8,7 +8,7 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
   * `checkout_localization_enabled` - If this organization has checkout localization enabled
   * `issue_funding_enabled` - If this organization has issue funding enabled
   * `member_model_enabled` - If this organization has the Member model enabled
-  * `presentment_currencies_enabled` - If this organization has multiple presentment currencies enabled
+  * `overview_metrics` - Ordered list of metric slugs shown on the dashboard overview. Nullable.
   * `revops_enabled` - If this organization has RevOps enabled
   * `seat_based_pricing_enabled` - If this organization has seat-based pricing enabled
   * `tinybird_compare` - If this organization compares Tinybird results with database
@@ -19,7 +19,7 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
           checkout_localization_enabled: boolean() | nil,
           issue_funding_enabled: boolean() | nil,
           member_model_enabled: boolean() | nil,
-          presentment_currencies_enabled: boolean() | nil,
+          overview_metrics: [String.t()] | nil,
           revops_enabled: boolean() | nil,
           seat_based_pricing_enabled: boolean() | nil,
           tinybird_compare: boolean() | nil,
@@ -31,7 +31,7 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
     :checkout_localization_enabled,
     :issue_funding_enabled,
     :member_model_enabled,
-    :presentment_currencies_enabled,
+    :overview_metrics,
     :revops_enabled,
     :seat_based_pricing_enabled,
     :tinybird_compare,

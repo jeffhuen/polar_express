@@ -100,6 +100,7 @@ defmodule PolarExpress.ParityTest do
     "clients" => "oauth2",
     "customersession" => "customersessions",
     "downloadables" => "benefitgrants",
+    "membersessions" => "members",
     "seats" => "customerseats",
     "wallets" => "customerportal"
   }

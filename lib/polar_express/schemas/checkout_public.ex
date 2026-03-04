@@ -38,6 +38,8 @@ defmodule PolarExpress.Schemas.CheckoutPublic do
   * `is_payment_required` - Whether the checkout requires payment, e.g. in case of free products or discounts that cover the total amount.
   * `is_payment_setup_required` - Whether the checkout requires setting up a payment method, regardless of the amount, e.g. subscriptions that have first free cycles.
   * `locale` - Nullable.
+  * `max_seats` - Maximum number of seats (works with seat-based pricing only) Nullable.
+  * `min_seats` - Minimum number of seats (works with seat-based pricing only) Nullable.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `net_amount` - Amount in cents, after discounts but before taxes.
   * `organization`
@@ -53,7 +55,7 @@ defmodule PolarExpress.Schemas.CheckoutPublic do
   * `products` - List of products available to select.
   * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
   * `return_url` - When set, a back button will be shown in the checkout to return to this URL. Nullable.
-  * `seats` - Number of seats for seat-based pricing. Nullable.
+  * `seats` - Predefined number of seats (works with seat-based pricing only) Nullable.
   * `status` - Status of the checkout session.
 
   - Open: the checkout session was opened.
@@ -105,6 +107,8 @@ defmodule PolarExpress.Schemas.CheckoutPublic do
           is_payment_required: boolean() | nil,
           is_payment_setup_required: boolean() | nil,
           locale: String.t() | nil,
+          max_seats: integer() | nil,
+          min_seats: integer() | nil,
           modified_at: DateTime.t() | nil,
           net_amount: integer() | nil,
           organization: PolarExpress.Schemas.CheckoutOrganization.t() | nil,
@@ -172,6 +176,8 @@ defmodule PolarExpress.Schemas.CheckoutPublic do
     :is_payment_required,
     :is_payment_setup_required,
     :locale,
+    :max_seats,
+    :min_seats,
     :modified_at,
     :net_amount,
     :organization,

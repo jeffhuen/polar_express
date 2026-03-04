@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.OrderStatus do
-  @moduledoc "OrderStatus enum. Possible values: `pending`, `paid`, `refunded`, `partially_refunded`."
+  @moduledoc "OrderStatus enum. Possible values: `pending`, `paid`, `refunded`, `partially_refunded`, `void`."
 
   @type t :: String.t()
 
@@ -8,7 +8,8 @@ defmodule PolarExpress.Schemas.OrderStatus do
     "pending",
     "paid",
     "refunded",
-    "partially_refunded"
+    "partially_refunded",
+    "void"
   ]
 
   @doc "List of valid enum values."

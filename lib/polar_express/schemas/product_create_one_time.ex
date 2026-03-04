@@ -19,7 +19,7 @@ defmodule PolarExpress.Schemas.ProductCreateOneTime do
   * A boolean
 
   You can store up to **50 key-value pairs**.
-  * `name` - The name of the product.
+  * `name` - The name of the product. Max length: 64.
   * `organization_id` - The ID of the organization owning the product. **Required unless you use an organization token.** Nullable.
   * `prices` - List of available prices for this product. It should contain at most one static price (fixed, custom or free), and any number of metered prices. Metered prices are not supported on one-time purchase products.
   * `recurring_interval` - States that the product is a one-time purchase.

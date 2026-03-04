@@ -11,7 +11,7 @@ defmodule PolarExpress.Schemas.CustomerOrderSubscription do
   * `checkout_id` - Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `currency` - The currency of the subscription.
-  * `current_period_end` - The end timestamp of the current billing period. Nullable.
+  * `current_period_end` - The end timestamp of the current billing period. Format: date-time.
   * `current_period_start` - The start timestamp of the current billing period. Format: date-time.
   * `customer_cancellation_comment` - Nullable.
   * `customer_cancellation_reason` - Nullable.

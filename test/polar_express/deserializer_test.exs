@@ -2,6 +2,7 @@ defmodule PolarExpress.DeserializerTest do
   use ExUnit.Case, async: true
 
   alias PolarExpress.Deserializer
+  alias PolarExpress.Test.Fixtures, as: F
 
   describe "cast/1 paginated list" do
     test "casts Polar paginated response to ListObject" do
@@ -83,9 +84,9 @@ defmodule PolarExpress.DeserializerTest do
         "created_at" => "2024-01-15T10:00:00Z"
       }
 
-      result = Deserializer.cast(data, resource: PolarExpress.Schemas.CustomerWithMembers)
+      result = Deserializer.cast(data, resource: F.Customer)
 
-      assert %PolarExpress.Schemas.CustomerWithMembers{} = result
+      assert %F.Customer{} = result
       assert result.id == "cust_123"
       assert result.email == "alice@example.com"
       assert result.name == "Alice"
@@ -107,10 +108,10 @@ defmodule PolarExpress.DeserializerTest do
         }
       }
 
-      result = Deserializer.cast(data, resource: PolarExpress.Schemas.CustomerWithMembers)
+      result = Deserializer.cast(data, resource: F.Customer)
 
-      assert %PolarExpress.Schemas.CustomerWithMembers{} = result
-      assert %PolarExpress.Schemas.Address{} = result.billing_address
+      assert %F.Customer{} = result
+      assert %F.Address{} = result.billing_address
       assert result.billing_address.country == "US"
       assert result.billing_address.city == "San Francisco"
       assert result.billing_address.state == "CA"
@@ -127,11 +128,11 @@ defmodule PolarExpress.DeserializerTest do
         ]
       }
 
-      result = Deserializer.cast(data, resource: PolarExpress.Schemas.CustomerWithMembers)
+      result = Deserializer.cast(data, resource: F.Customer)
 
-      assert %PolarExpress.Schemas.CustomerWithMembers{} = result
+      assert %F.Customer{} = result
 
-      assert [%PolarExpress.Schemas.Member{} = m1, %PolarExpress.Schemas.Member{} = m2] =
+      assert [%F.Member{} = m1, %F.Member{} = m2] =
                result.members
 
       assert m1.id == "mem_1"
@@ -186,9 +187,9 @@ defmodule PolarExpress.DeserializerTest do
         "members" => nil
       }
 
-      result = Deserializer.cast(data, resource: PolarExpress.Schemas.CustomerWithMembers)
+      result = Deserializer.cast(data, resource: F.Customer)
 
-      assert %PolarExpress.Schemas.CustomerWithMembers{} = result
+      assert %F.Customer{} = result
       assert result.billing_address == nil
       assert result.members == nil
     end
@@ -201,9 +202,9 @@ defmodule PolarExpress.DeserializerTest do
         "another_extra" => 42
       }
 
-      result = Deserializer.cast(data, resource: PolarExpress.Schemas.CustomerWithMembers)
+      result = Deserializer.cast(data, resource: F.Customer)
 
-      assert %PolarExpress.Schemas.CustomerWithMembers{} = result
+      assert %F.Customer{} = result
       assert result.id == "cust_123"
       assert result.email == "alice@example.com"
       # Extra fields are not present on the struct
@@ -229,14 +230,14 @@ defmodule PolarExpress.DeserializerTest do
         "pagination" => %{"total_count" => 2, "max_page" => 1}
       }
 
-      result = Deserializer.cast(data, resource: PolarExpress.Schemas.CustomerWithMembers)
+      result = Deserializer.cast(data, resource: F.Customer)
 
       assert %PolarExpress.ListObject{} = result
       assert length(result.items) == 2
 
       assert [
-               %PolarExpress.Schemas.CustomerWithMembers{} = c1,
-               %PolarExpress.Schemas.CustomerWithMembers{} = c2
+               %F.Customer{} = c1,
+               %F.Customer{} = c2
              ] = result.items
 
       assert c1.id == "cust_1"
@@ -300,7 +301,6 @@ defmodule PolarExpress.DeserializerTest do
       assert %PolarExpress.Schemas.ProductPriceSeatBased{} = price
       assert price.amount_type == "seat_based"
       assert price.price_currency == "usd"
-      assert price.recurring_interval == "month"
     end
 
     test "resolves discriminated union with fixed amount_type" do
@@ -460,9 +460,9 @@ defmodule PolarExpress.DeserializerTest do
         }
       }
 
-      result = Deserializer.cast(data, resource: PolarExpress.Schemas.CustomerWithMembers)
+      result = Deserializer.cast(data, resource: F.Customer)
 
-      assert %PolarExpress.Schemas.CustomerWithMembers{} = result
+      assert %F.Customer{} = result
       assert is_map(result.metadata)
       refute is_struct(result.metadata)
       assert result.metadata == %{"plan" => "enterprise", "team_size" => 50, "trial" => true}
@@ -475,7 +475,7 @@ defmodule PolarExpress.DeserializerTest do
         "metadata" => %{}
       }
 
-      result = Deserializer.cast(data, resource: PolarExpress.Schemas.CustomerWithMembers)
+      result = Deserializer.cast(data, resource: F.Customer)
       assert result.metadata == %{}
     end
   end

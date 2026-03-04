@@ -17,13 +17,13 @@ defmodule PolarExpress.Services.CustomersService do
   See `PolarExpress.Params.CustomersCreateCustomerParams` for parameter details.
   """
   @spec create_customer(Client.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.CustomerWithMembers.t()} | {:error, PolarExpress.Error.t()}
+          {:ok, PolarExpress.Schemas.Customer.t()} | {:error, PolarExpress.Error.t()}
   def create_customer(client, params \\ %{}, opts \\ []) do
     Client.request(
       client,
       :post,
       "/v1/customers/",
-      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.CustomerWithMembers)
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Customer)
     )
   end
 
@@ -105,13 +105,13 @@ defmodule PolarExpress.Services.CustomersService do
   See `PolarExpress.Params.CustomersGetCustomerParams` for parameter details.
   """
   @spec get_customer(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.CustomerWithMembers.t()} | {:error, PolarExpress.Error.t()}
+          {:ok, PolarExpress.Schemas.Customer.t()} | {:error, PolarExpress.Error.t()}
   def get_customer(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
       :get,
       "/v1/customers/#{id}",
-      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.CustomerWithMembers)
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Customer)
     )
   end
 
@@ -125,13 +125,13 @@ defmodule PolarExpress.Services.CustomersService do
   See `PolarExpress.Params.CustomersGetCustomerByExternalIdParams` for parameter details.
   """
   @spec get_customer_by_external_id(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.CustomerWithMembers.t()} | {:error, PolarExpress.Error.t()}
+          {:ok, PolarExpress.Schemas.Customer.t()} | {:error, PolarExpress.Error.t()}
   def get_customer_by_external_id(client, external_id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
       :get,
       "/v1/customers/external/#{external_id}",
-      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.CustomerWithMembers)
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Customer)
     )
   end
 
@@ -203,7 +203,7 @@ defmodule PolarExpress.Services.CustomersService do
       client,
       :get,
       "/v1/customers/",
-      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.CustomerWithMembers)
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Customer)
     )
   end
 
@@ -217,13 +217,13 @@ defmodule PolarExpress.Services.CustomersService do
   See `PolarExpress.Params.CustomersUpdateCustomerParams` for parameter details.
   """
   @spec update_customer(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.CustomerWithMembers.t()} | {:error, PolarExpress.Error.t()}
+          {:ok, PolarExpress.Schemas.Customer.t()} | {:error, PolarExpress.Error.t()}
   def update_customer(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
       :patch,
       "/v1/customers/#{id}",
-      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.CustomerWithMembers)
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Customer)
     )
   end
 
@@ -237,13 +237,13 @@ defmodule PolarExpress.Services.CustomersService do
   See `PolarExpress.Params.CustomersUpdateCustomerByExternalIdParams` for parameter details.
   """
   @spec update_customer_by_external_id(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.CustomerWithMembers.t()} | {:error, PolarExpress.Error.t()}
+          {:ok, PolarExpress.Schemas.Customer.t()} | {:error, PolarExpress.Error.t()}
   def update_customer_by_external_id(client, external_id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
       :patch,
       "/v1/customers/external/#{external_id}",
-      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.CustomerWithMembers)
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Customer)
     )
   end
 end

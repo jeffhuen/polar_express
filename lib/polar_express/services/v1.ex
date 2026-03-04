@@ -18,7 +18,6 @@ defmodule PolarExpress.Services.V1 do
     :events,
     :files,
     :license_keys,
-    :member_sessions,
     :members,
     :meters,
     :metrics,

@@ -2,6 +2,7 @@ defmodule PolarExpress.ClientTest do
   use ExUnit.Case, async: true
 
   alias PolarExpress.Client
+  alias PolarExpress.Test.Fixtures, as: F
 
   describe "client/0 (from config)" do
     setup do
@@ -369,19 +370,19 @@ defmodule PolarExpress.ClientTest do
 
       {:ok, customer} =
         Client.request(client, :get, "/v1/customers/cust_123",
-          resource: PolarExpress.Schemas.CustomerWithMembers
+          resource: F.Customer
         )
 
-      assert %PolarExpress.Schemas.CustomerWithMembers{} = customer
+      assert %F.Customer{} = customer
       assert customer.id == "cust_123"
       assert customer.email == "alice@example.com"
       assert customer.email_verified == true
 
-      assert %PolarExpress.Schemas.Address{} = customer.billing_address
+      assert %F.Address{} = customer.billing_address
       assert customer.billing_address.country == "US"
       assert customer.billing_address.city == "San Francisco"
 
-      assert [%PolarExpress.Schemas.Member{} = member] = customer.members
+      assert [%F.Member{} = member] = customer.members
       assert member.id == "mem_1"
     end
 

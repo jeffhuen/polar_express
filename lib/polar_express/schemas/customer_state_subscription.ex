@@ -12,7 +12,7 @@ defmodule PolarExpress.Schemas.CustomerStateSubscription do
   * `canceled_at` - The timestamp when the subscription was canceled. The subscription might still be active if `cancel_at_period_end` is `true`. Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `currency` - The currency of the subscription.
-  * `current_period_end` - The end timestamp of the current billing period. Nullable.
+  * `current_period_end` - The end timestamp of the current billing period. Format: date-time.
   * `current_period_start` - The start timestamp of the current billing period. Format: date-time.
   * `custom_field_data` - Key-value object storing custom field values.
   * `discount_id` - The ID of the applied discount, if any. Nullable.

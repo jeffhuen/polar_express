@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.5] - 2026-03-03
+
+### Changed
+
+- Sync OpenAPI spec — adds feature flag benefits, multi-currency support, removes `CustomerWithMembers` and `MemberSession` schemas, updates customers service to return `Customer` directly
+- Decouple client and deserializer tests from generated schemas using stable test fixtures (`test/support/fixtures.ex`) so upstream spec changes no longer break CI
+
+### Fixed
+
+- Fix CI failures caused by upstream Polar API removing `CustomerWithMembers` schema and `recurring_interval` field from `ProductPriceSeatBased`
+- Add `membersessions` JS SDK parity alias (service not yet in public OpenAPI spec)
+
 ## [0.1.4] - 2026-02-17
 
 ### Changed

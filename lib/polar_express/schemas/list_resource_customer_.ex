@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec
-defmodule PolarExpress.Schemas.ListResource_CustomerWithMembers_ do
+defmodule PolarExpress.Schemas.ListResource_Customer_ do
   @moduledoc """
-  ListResource[CustomerWithMembers]
+  ListResource[Customer]
   """
 
   @typedoc """
@@ -9,18 +9,18 @@ defmodule PolarExpress.Schemas.ListResource_CustomerWithMembers_ do
   * `pagination`
   """
   @type t :: %__MODULE__{
-          items: [PolarExpress.Schemas.CustomerWithMembers.t()] | nil,
+          items: [PolarExpress.Schemas.Customer.t()] | nil,
           pagination: PolarExpress.Schemas.Pagination.t() | nil
         }
 
   defstruct [:items, :pagination]
 
-  @schema_name "ListResource_CustomerWithMembers_"
+  @schema_name "ListResource_Customer_"
   def schema_name, do: @schema_name
 
   def __inner_types__ do
     %{
-      "items" => PolarExpress.Schemas.CustomerWithMembers,
+      "items" => PolarExpress.Schemas.Customer,
       "pagination" => PolarExpress.Schemas.Pagination
     }
   end
