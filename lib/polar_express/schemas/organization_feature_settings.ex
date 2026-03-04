@@ -5,6 +5,7 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
   """
 
   @typedoc """
+  * `checkout_localization_enabled` - If this organization has checkout localization enabled
   * `issue_funding_enabled` - If this organization has issue funding enabled
   * `member_model_enabled` - If this organization has the Member model enabled
   * `presentment_currencies_enabled` - If this organization has multiple presentment currencies enabled
@@ -15,6 +16,7 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
   * `wallets_enabled` - If this organization has Wallets enabled
   """
   @type t :: %__MODULE__{
+          checkout_localization_enabled: boolean() | nil,
           issue_funding_enabled: boolean() | nil,
           member_model_enabled: boolean() | nil,
           presentment_currencies_enabled: boolean() | nil,
@@ -26,6 +28,7 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
         }
 
   defstruct [
+    :checkout_localization_enabled,
     :issue_funding_enabled,
     :member_model_enabled,
     :presentment_currencies_enabled,

@@ -33,7 +33,7 @@ defmodule PolarExpress.Resources.Organizations do
           created_at: String.t() | nil,
           customer_email_settings: map() | nil,
           customer_portal_settings: map() | nil,
-          default_presentment_currency: map() | nil,
+          default_presentment_currency: String.t() | nil,
           details_submitted_at: term() | nil,
           email: term() | nil,
           feature_settings: term() | nil,

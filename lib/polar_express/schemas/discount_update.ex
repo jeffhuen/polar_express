@@ -35,7 +35,7 @@ defmodule PolarExpress.Schemas.DiscountUpdate do
           amount: integer() | nil,
           basis_points: integer() | nil,
           code: String.t() | nil,
-          currency: String.t() | nil,
+          currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
           duration: PolarExpress.Schemas.DiscountDuration.t() | nil,
           duration_in_months: integer() | nil,
           ends_at: DateTime.t() | nil,
@@ -68,6 +68,7 @@ defmodule PolarExpress.Schemas.DiscountUpdate do
 
   def __inner_types__ do
     %{
+      "currency" => PolarExpress.Schemas.PresentmentCurrency,
       "duration" => PolarExpress.Schemas.DiscountDuration,
       "type" => PolarExpress.Schemas.DiscountType
     }

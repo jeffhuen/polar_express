@@ -25,7 +25,7 @@ defmodule PolarExpress.Schemas.ProductPriceSeatBased do
           id: String.t() | nil,
           is_archived: boolean() | nil,
           modified_at: DateTime.t() | nil,
-          price_currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
+          price_currency: String.t() | nil,
           product_id: String.t() | nil,
           recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
           seat_tiers: PolarExpress.Schemas.ProductPriceSeatTiersOutput.t() | nil,
@@ -52,7 +52,6 @@ defmodule PolarExpress.Schemas.ProductPriceSeatBased do
 
   def __inner_types__ do
     %{
-      "price_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
       "seat_tiers" => PolarExpress.Schemas.ProductPriceSeatTiersOutput,
       "source" => PolarExpress.Schemas.ProductPriceSource,

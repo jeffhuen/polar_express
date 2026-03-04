@@ -33,7 +33,7 @@ defmodule PolarExpress.Services.CustomerPortal.SeatsService do
   See `PolarExpress.Params.CustomerPortal.SeatsListClaimedSubscriptionsParams` for parameter details.
   """
   @spec list_claimed_subscriptions(Client.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.CustomerSubscription.t()} | {:error, PolarExpress.Error.t()}
+          {:ok, PolarExpress.ListObject.t()} | {:error, PolarExpress.Error.t()}
   def list_claimed_subscriptions(client, params \\ %{}, opts \\ []) do
     Client.request(
       client,

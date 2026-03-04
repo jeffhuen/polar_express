@@ -34,7 +34,7 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPriceCustom do
           minimum_amount: integer() | nil,
           modified_at: DateTime.t() | nil,
           preset_amount: integer() | nil,
-          price_currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
+          price_currency: String.t() | nil,
           product_id: String.t() | nil,
           recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
           source: PolarExpress.Schemas.ProductPriceSource.t() | nil,
@@ -63,7 +63,6 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPriceCustom do
 
   def __inner_types__ do
     %{
-      "price_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
       "source" => PolarExpress.Schemas.ProductPriceSource
     }

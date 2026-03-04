@@ -8,17 +8,17 @@ defmodule PolarExpress.Services.OrdersService do
   alias PolarExpress.Client
 
   @doc """
-  Export Subscriptions
+  Export Orders
 
   Export orders as a CSV file.
 
   **Scopes**: `orders:read`
 
-  See `PolarExpress.Params.OrdersExportSubscriptionsParams` for parameter details.
+  See `PolarExpress.Params.OrdersExportOrdersParams` for parameter details.
   """
-  @spec export_subscriptions(Client.t(), map(), keyword()) ::
+  @spec export_orders(Client.t(), map(), keyword()) ::
           {:ok, term()} | {:error, PolarExpress.Error.t()}
-  def export_subscriptions(client, params \\ %{}, opts \\ []) do
+  def export_orders(client, params \\ %{}, opts \\ []) do
     Client.request(client, :get, "/v1/orders/export", Keyword.merge(opts, params: params))
   end
 

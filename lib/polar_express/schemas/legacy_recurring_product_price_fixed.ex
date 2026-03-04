@@ -30,7 +30,7 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPriceFixed do
           legacy: boolean() | nil,
           modified_at: DateTime.t() | nil,
           price_amount: integer() | nil,
-          price_currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
+          price_currency: String.t() | nil,
           product_id: String.t() | nil,
           recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
           source: PolarExpress.Schemas.ProductPriceSource.t() | nil,
@@ -57,7 +57,6 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPriceFixed do
 
   def __inner_types__ do
     %{
-      "price_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
       "source" => PolarExpress.Schemas.ProductPriceSource
     }
