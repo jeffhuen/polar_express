@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.DiscountSortProperty do
-  @moduledoc "DiscountSortProperty enum. Possible values: `created_at`, `-created_at`, `name`, `-name`, `code`, `-code`, `redemptions_count`, `-redemptions_count`."
+  @moduledoc "DiscountSortProperty enum. Possible values: `created_at`, `-created_at`, `name`, `-name`, `code`, `-code`, `redemptions_count`, `-redemptions_count`, `ends_at`, `-ends_at`."
 
   @type t :: String.t()
 
@@ -12,7 +12,9 @@ defmodule PolarExpress.Schemas.DiscountSortProperty do
     "code",
     "-code",
     "redemptions_count",
-    "-redemptions_count"
+    "-redemptions_count",
+    "ends_at",
+    "-ends_at"
   ]
 
   @doc "List of valid enum values."
