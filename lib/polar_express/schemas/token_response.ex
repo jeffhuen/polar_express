@@ -7,7 +7,7 @@ defmodule PolarExpress.Schemas.TokenResponse do
   @typedoc """
   * `access_token`
   * `expires_in`
-  * `id_token`
+  * `id_token` - Nullable.
   * `refresh_token` - Nullable.
   * `scope`
   * `token_type`
