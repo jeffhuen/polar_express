@@ -28,6 +28,7 @@ defmodule PolarExpress.Resources.Subscriptions do
   * `metadata`
   * `meters` - List of meters associated with the subscription.
   * `modified_at` - Last modification timestamp of the object.
+  * `pending_update` - Pending subscription update that will be applied at the beginning of the next period. If `null`, there is no pending update.
   * `prices` - List of enabled prices for the subscription.
   * `product`
   * `product_id` - The ID of the subscribed product. Format: uuid4.
@@ -61,6 +62,7 @@ defmodule PolarExpress.Resources.Subscriptions do
           metadata: map() | nil,
           meters: [map()] | nil,
           modified_at: term() | nil,
+          pending_update: term() | nil,
           prices: [term()] | nil,
           product: map() | nil,
           product_id: String.t() | nil,
@@ -95,6 +97,7 @@ defmodule PolarExpress.Resources.Subscriptions do
     :metadata,
     :meters,
     :modified_at,
+    :pending_update,
     :prices,
     :product,
     :product_id,

@@ -11,7 +11,9 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
   * `subscription_cycled`
   * `subscription_cycled_after_trial`
   * `subscription_past_due`
+  * `subscription_renewal_reminder`
   * `subscription_revoked`
+  * `subscription_trial_conversion_reminder`
   * `subscription_uncanceled`
   * `subscription_updated`
   """
@@ -22,7 +24,9 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
           subscription_cycled: boolean() | nil,
           subscription_cycled_after_trial: boolean() | nil,
           subscription_past_due: boolean() | nil,
+          subscription_renewal_reminder: boolean() | nil,
           subscription_revoked: boolean() | nil,
+          subscription_trial_conversion_reminder: boolean() | nil,
           subscription_uncanceled: boolean() | nil,
           subscription_updated: boolean() | nil
         }
@@ -34,7 +38,9 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
     :subscription_cycled,
     :subscription_cycled_after_trial,
     :subscription_past_due,
+    :subscription_renewal_reminder,
     :subscription_revoked,
+    :subscription_trial_conversion_reminder,
     :subscription_uncanceled,
     :subscription_updated
   ]

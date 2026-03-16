@@ -31,7 +31,7 @@ defmodule PolarExpress.Schemas.CustomerUpdate do
           locale: String.t() | nil,
           metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
           name: String.t() | nil,
-          tax_id: [String.t() | PolarExpress.Schemas.TaxIDFormat.t()] | nil,
+          tax_id: String.t() | nil,
           type: PolarExpress.Schemas.CustomerType.t() | nil
         }
 
@@ -43,7 +43,6 @@ defmodule PolarExpress.Schemas.CustomerUpdate do
   def __inner_types__ do
     %{
       "billing_address" => PolarExpress.Schemas.AddressInput,
-      "tax_id" => {:union, :variants, [PolarExpress.Schemas.TaxIDFormat]},
       "type" => PolarExpress.Schemas.CustomerType
     }
   end

@@ -5,10 +5,11 @@ defmodule PolarExpress.Schemas.DiscountFixedRepeatDurationBase do
   """
 
   @typedoc """
-  * `amount`
+  * `amount` - **Deprecated.**
+  * `amounts` - Map of currency to fixed amount to discount from the total.
   * `code` - Code customers can use to apply the discount during checkout. Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
-  * `currency`
+  * `currency` - **Deprecated.**
   * `duration`
   * `duration_in_months`
   * `ends_at` - Timestamp after which the discount is no longer redeemable. Nullable.
@@ -24,6 +25,7 @@ defmodule PolarExpress.Schemas.DiscountFixedRepeatDurationBase do
   """
   @type t :: %__MODULE__{
           amount: integer() | nil,
+          amounts: %{String.t() => integer()} | nil,
           code: String.t() | nil,
           created_at: DateTime.t() | nil,
           currency: String.t() | nil,
@@ -43,6 +45,7 @@ defmodule PolarExpress.Schemas.DiscountFixedRepeatDurationBase do
 
   defstruct [
     :amount,
+    :amounts,
     :code,
     :created_at,
     :currency,
