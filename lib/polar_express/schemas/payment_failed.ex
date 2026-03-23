@@ -1,9 +1,7 @@
 # File generated from our OpenAPI spec
-defmodule PolarExpress.Resources.CustomerPortal.Subscriptions do
+defmodule PolarExpress.Schemas.PaymentFailed do
   @moduledoc """
-  Subscriptions
-
-  Subscriptions API operations.
+  PaymentFailed
   """
 
   @typedoc """
@@ -17,6 +15,6 @@ defmodule PolarExpress.Resources.CustomerPortal.Subscriptions do
 
   defstruct [:detail, :error]
 
-  @object_name "subscriptions"
-  def object_name, do: @object_name
+  @schema_name "PaymentFailed"
+  def schema_name, do: @schema_name
 end

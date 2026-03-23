@@ -7,11 +7,12 @@ defmodule PolarExpress.Schemas.Organization do
   @typedoc """
   * `allow_customer_updates` - Whether customers can update their subscriptions from the customer portal.
   * `avatar_url` - Avatar URL shown in checkout, customer portal, emails etc. Nullable.
+  * `country` - Two-letter country code (ISO 3166-1 alpha-2). Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `customer_email_settings` - Settings related to customer emails
   * `customer_portal_settings` - Settings related to the customer portal
   * `default_presentment_currency` - Default presentment currency. Used as fallback in checkout and customer portal, if the customer's local currency is not available.
-  * `details_submitted_at` - When the business details were submitted. Nullable.
+  * `details_submitted_at` - When the business details were submitted for review. Nullable.
   * `email` - Public support email. Nullable.
   * `feature_settings` - Organization feature settings Nullable.
   * `id` - The ID of the object. Format: uuid4.
@@ -28,6 +29,7 @@ defmodule PolarExpress.Schemas.Organization do
   @type t :: %__MODULE__{
           allow_customer_updates: boolean() | nil,
           avatar_url: String.t() | nil,
+          country: String.t() | nil,
           created_at: DateTime.t() | nil,
           customer_email_settings:
             PolarExpress.Schemas.OrganizationCustomerEmailSettings.t() | nil,
@@ -52,6 +54,7 @@ defmodule PolarExpress.Schemas.Organization do
   defstruct [
     :allow_customer_updates,
     :avatar_url,
+    :country,
     :created_at,
     :customer_email_settings,
     :customer_portal_settings,

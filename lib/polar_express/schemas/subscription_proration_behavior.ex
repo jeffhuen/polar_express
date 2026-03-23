@@ -1,12 +1,13 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.SubscriptionProrationBehavior do
-  @moduledoc "SubscriptionProrationBehavior enum. Possible values: `invoice`, `prorate`."
+  @moduledoc "SubscriptionProrationBehavior enum. Possible values: `invoice`, `prorate`, `next_period`."
 
   @type t :: String.t()
 
   @values [
     "invoice",
-    "prorate"
+    "prorate",
+    "next_period"
   ]
 
   @doc "List of valid enum values."

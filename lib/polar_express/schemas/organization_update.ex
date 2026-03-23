@@ -6,6 +6,7 @@ defmodule PolarExpress.Schemas.OrganizationUpdate do
 
   @typedoc """
   * `avatar_url` - Nullable.
+  * `country` - Two-letter country code (ISO 3166-1 alpha-2). Nullable.
   * `customer_email_settings` - Nullable.
   * `customer_portal_settings` - Nullable.
   * `default_presentment_currency` - Default presentment currency for the organization Nullable.
@@ -20,6 +21,7 @@ defmodule PolarExpress.Schemas.OrganizationUpdate do
   """
   @type t :: %__MODULE__{
           avatar_url: String.t() | nil,
+          country: String.t() | nil,
           customer_email_settings:
             PolarExpress.Schemas.OrganizationCustomerEmailSettings.t() | nil,
           customer_portal_settings:
@@ -37,6 +39,7 @@ defmodule PolarExpress.Schemas.OrganizationUpdate do
 
   defstruct [
     :avatar_url,
+    :country,
     :customer_email_settings,
     :customer_portal_settings,
     :default_presentment_currency,

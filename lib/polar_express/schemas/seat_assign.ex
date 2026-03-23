@@ -9,9 +9,9 @@ defmodule PolarExpress.Schemas.SeatAssign do
   * `customer_id` - Customer ID for the seat assignment Nullable.
   * `email` - Email of the customer to assign the seat to Nullable.
   * `external_customer_id` - External customer ID for the seat assignment Nullable.
-  * `external_member_id` - External member ID for the seat assignment. Only supported when member_model_enabled is true. Can be used alone (lookup existing member) or with email (create/validate member). Nullable.
+  * `external_member_id` - External member ID for the seat assignment. Can be used alone (lookup existing member) or with email (create/validate member). Nullable.
   * `immediate_claim` - If true, the seat will be immediately claimed without sending an invitation email. API-only feature.
-  * `member_id` - Member ID for the seat assignment. Only supported when member_model_enabled is true. Nullable.
+  * `member_id` - Member ID for the seat assignment. Nullable.
   * `metadata` - Additional metadata for the seat (max 10 keys, 1KB total) Nullable.
   * `order_id` - Order ID for one-time purchases. Required if subscription_id and checkout_id are not provided. Nullable.
   * `subscription_id` - Subscription ID. Required if checkout_id and order_id are not provided. Nullable.

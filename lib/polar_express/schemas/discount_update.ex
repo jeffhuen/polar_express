@@ -7,10 +7,11 @@ defmodule PolarExpress.Schemas.DiscountUpdate do
   """
 
   @typedoc """
-  * `amount` - Nullable.
+  * `amount` - Nullable. **Deprecated.**
+  * `amounts` - Nullable.
   * `basis_points` - Nullable.
   * `code` - Code customers can use to apply the discount during checkout. Must be between 3 and 256 characters long and contain only alphanumeric characters.If not provided, the discount can only be applied via the API. Nullable.
-  * `currency` - Nullable.
+  * `currency` - Nullable. **Deprecated.**
   * `duration` - Nullable.
   * `duration_in_months` - Nullable.
   * `ends_at` - Optional timestamp after which the discount is no longer redeemable. Nullable.
@@ -33,6 +34,7 @@ defmodule PolarExpress.Schemas.DiscountUpdate do
   """
   @type t :: %__MODULE__{
           amount: integer() | nil,
+          amounts: %{String.t() => integer()} | nil,
           basis_points: integer() | nil,
           code: String.t() | nil,
           currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
@@ -49,6 +51,7 @@ defmodule PolarExpress.Schemas.DiscountUpdate do
 
   defstruct [
     :amount,
+    :amounts,
     :basis_points,
     :code,
     :currency,

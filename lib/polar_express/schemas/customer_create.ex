@@ -35,7 +35,7 @@ defmodule PolarExpress.Schemas.CustomerCreate do
           name: String.t() | nil,
           organization_id: String.t() | nil,
           owner: PolarExpress.Schemas.OwnerCreate.t() | nil,
-          tax_id: [String.t() | PolarExpress.Schemas.TaxIDFormat.t()] | nil,
+          tax_id: String.t() | nil,
           type: PolarExpress.Schemas.CustomerType.t() | nil
         }
 
@@ -59,7 +59,6 @@ defmodule PolarExpress.Schemas.CustomerCreate do
     %{
       "billing_address" => PolarExpress.Schemas.AddressInput,
       "owner" => PolarExpress.Schemas.OwnerCreate,
-      "tax_id" => {:union, :variants, [PolarExpress.Schemas.TaxIDFormat]},
       "type" => PolarExpress.Schemas.CustomerType
     }
   end

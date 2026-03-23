@@ -6,12 +6,14 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
 
   @typedoc """
   * `avatar_url` - Nullable.
+  * `country` - Two-letter country code (ISO 3166-1 alpha-2). Nullable.
   * `customer_email_settings` - Nullable.
   * `customer_portal_settings` - Nullable.
   * `default_presentment_currency` - Default presentment currency for the organization
   * `details` - Additional, private, business details Polar needs about active organizations for compliance (KYC). Nullable.
   * `email` - Public support email. Nullable.
   * `feature_settings` - Nullable.
+  * `legal_entity` - Nullable.
   * `name`
   * `notification_settings` - Nullable.
   * `slug`
@@ -21,6 +23,7 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
   """
   @type t :: %__MODULE__{
           avatar_url: String.t() | nil,
+          country: String.t() | nil,
           customer_email_settings:
             PolarExpress.Schemas.OrganizationCustomerEmailSettings.t() | nil,
           customer_portal_settings:
@@ -29,6 +32,10 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
           details: PolarExpress.Schemas.OrganizationDetails.t() | nil,
           email: String.t() | nil,
           feature_settings: PolarExpress.Schemas.OrganizationFeatureSettings.t() | nil,
+          legal_entity:
+            PolarExpress.Schemas.OrganizationIndividualLegalEntitySchema.t()
+            | PolarExpress.Schemas.OrganizationCompanyLegalEntitySchema.t()
+            | nil,
           name: String.t() | nil,
           notification_settings: PolarExpress.Schemas.OrganizationNotificationSettings.t() | nil,
           slug: String.t() | nil,
@@ -39,12 +46,14 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
 
   defstruct [
     :avatar_url,
+    :country,
     :customer_email_settings,
     :customer_portal_settings,
     :default_presentment_currency,
     :details,
     :email,
     :feature_settings,
+    :legal_entity,
     :name,
     :notification_settings,
     :slug,
@@ -63,6 +72,12 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
       "default_presentment_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "details" => PolarExpress.Schemas.OrganizationDetails,
       "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettings,
+      "legal_entity" =>
+        {:union, :discriminated, "type",
+         %{
+           "company" => PolarExpress.Schemas.OrganizationCompanyLegalEntitySchema,
+           "individual" => PolarExpress.Schemas.OrganizationIndividualLegalEntitySchema
+         }},
       "notification_settings" => PolarExpress.Schemas.OrganizationNotificationSettings,
       "socials" => PolarExpress.Schemas.OrganizationSocialLink,
       "subscription_settings" => PolarExpress.Schemas.OrganizationSubscriptionSettings

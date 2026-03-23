@@ -7,6 +7,7 @@ defmodule PolarExpress.Params.MembersListMembersParams do
   * `external_customer_id` - Filter by customer external ID.
   * `limit` - Size of a page, defaults to 10. Maximum is 100.
   * `page` - Page number, defaults to 1.
+  * `role` - Filter by member role.
   * `sorting` - Sorting criterion. Several criteria can be used simultaneously and will be applied in order. Add a minus sign `-` before the criteria name to sort by descending order.
   """
   @type t :: %__MODULE__{
@@ -14,8 +15,9 @@ defmodule PolarExpress.Params.MembersListMembersParams do
           external_customer_id: String.t() | nil,
           limit: integer() | nil,
           page: integer() | nil,
+          role: map() | nil,
           sorting: [map()] | nil
         }
 
-  defstruct [:customer_id, :external_customer_id, :limit, :page, :sorting]
+  defstruct [:customer_id, :external_customer_id, :limit, :page, :role, :sorting]
 end

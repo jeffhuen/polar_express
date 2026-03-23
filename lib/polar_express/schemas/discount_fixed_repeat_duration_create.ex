@@ -8,9 +8,10 @@ defmodule PolarExpress.Schemas.DiscountFixedRepeatDurationCreate do
   """
 
   @typedoc """
-  * `amount` - Fixed amount to discount from the invoice total.
+  * `amount` - Nullable. **Deprecated.**
+  * `amounts` - Nullable.
   * `code` - Code customers can use to apply the discount during checkout. Must be between 3 and 256 characters long and contain only alphanumeric characters.If not provided, the discount can only be applied via the API. Nullable.
-  * `currency` - The currency of the fixed amount discount.
+  * `currency` - Nullable. **Deprecated.**
   * `duration`
   * `duration_in_months` - Number of months the discount should be applied.
 
@@ -37,6 +38,7 @@ defmodule PolarExpress.Schemas.DiscountFixedRepeatDurationCreate do
   """
   @type t :: %__MODULE__{
           amount: integer() | nil,
+          amounts: %{String.t() => integer()} | nil,
           code: String.t() | nil,
           currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
           duration: PolarExpress.Schemas.DiscountDuration.t() | nil,
@@ -53,6 +55,7 @@ defmodule PolarExpress.Schemas.DiscountFixedRepeatDurationCreate do
 
   defstruct [
     :amount,
+    :amounts,
     :code,
     :currency,
     :duration,

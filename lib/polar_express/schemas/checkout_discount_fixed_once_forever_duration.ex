@@ -7,9 +7,10 @@ defmodule PolarExpress.Schemas.CheckoutDiscountFixedOnceForeverDuration do
   """
 
   @typedoc """
-  * `amount`
+  * `amount` - **Deprecated.**
+  * `amounts` - Map of currency to fixed amount to discount from the total.
   * `code` - Nullable.
-  * `currency`
+  * `currency` - **Deprecated.**
   * `duration`
   * `id` - The ID of the object. Format: uuid4.
   * `name`
@@ -17,6 +18,7 @@ defmodule PolarExpress.Schemas.CheckoutDiscountFixedOnceForeverDuration do
   """
   @type t :: %__MODULE__{
           amount: integer() | nil,
+          amounts: %{String.t() => integer()} | nil,
           code: String.t() | nil,
           currency: String.t() | nil,
           duration: PolarExpress.Schemas.DiscountDuration.t() | nil,
@@ -25,7 +27,7 @@ defmodule PolarExpress.Schemas.CheckoutDiscountFixedOnceForeverDuration do
           type: PolarExpress.Schemas.DiscountType.t() | nil
         }
 
-  defstruct [:amount, :code, :currency, :duration, :id, :name, :type]
+  defstruct [:amount, :amounts, :code, :currency, :duration, :id, :name, :type]
 
   @schema_name "CheckoutDiscountFixedOnceForeverDuration"
   def schema_name, do: @schema_name
