@@ -321,16 +321,22 @@ defmodule PolarExpress.Generator.OpenAPI do
     {Enum.reverse(properties), inner_types}
   end
 
-  # Resolve properties, handling allOf by merging all branches
+  # Resolve properties from a schema.
+  #
+  # For composed schemas (allOf/oneOf/anyOf), merges properties across all
+  # branches so a struct can represent any variant — matching the typed-union
+  # semantics used by client code (read Customer → any variant's fields).
+  # Recurses so nested composition (e.g. oneOf of allOf) is handled.
   defp resolve_properties(schema, schema_index) do
     cond do
       Map.has_key?(schema, "allOf") ->
-        schema["allOf"]
-        |> Enum.flat_map(fn branch ->
-          resolved = resolve_ref_or_inline(branch, schema_index)
-          Map.to_list(resolved["properties"] || %{})
-        end)
-        |> Map.new()
+        merge_branch_properties(schema["allOf"], schema_index)
+
+      Map.has_key?(schema, "oneOf") ->
+        merge_branch_properties(schema["oneOf"], schema_index)
+
+      Map.has_key?(schema, "anyOf") ->
+        merge_branch_properties(schema["anyOf"], schema_index)
 
       Map.has_key?(schema, "properties") ->
         schema["properties"]
@@ -338,6 +344,15 @@ defmodule PolarExpress.Generator.OpenAPI do
       true ->
         %{}
     end
+  end
+
+  defp merge_branch_properties(branches, schema_index) do
+    branches
+    |> Enum.flat_map(fn branch ->
+      resolved = resolve_ref_or_inline(branch, schema_index)
+      resolve_properties(resolved, schema_index) |> Map.to_list()
+    end)
+    |> Map.new()
   end
 
   # -- Type Resolution --------------------------------------------------------

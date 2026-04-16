@@ -1,0 +1,55 @@
+{
+  "openapi": "3.1.0",
+  "info": {"title": "OneOf Test", "version": "0.0.1"},
+  "paths": {
+    "/v1/widgets/": {
+      "get": {
+        "tags": ["widgets"],
+        "summary": "List Widgets",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Widget"}}}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Widget": {
+        "oneOf": [
+          {"$ref": "#/components/schemas/WidgetA"},
+          {"$ref": "#/components/schemas/WidgetB"}
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "a": "#/components/schemas/WidgetA",
+            "b": "#/components/schemas/WidgetB"
+          }
+        }
+      },
+      "WidgetA": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "shared": {"type": "string"},
+          "a_only": {"type": "integer"},
+          "type": {"type": "string", "enum": ["a"]}
+        },
+        "required": ["id", "type"]
+      },
+      "WidgetB": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "shared": {"type": "string"},
+          "b_only": {"type": "boolean"},
+          "type": {"type": "string", "enum": ["b"]}
+        },
+        "required": ["id", "type"]
+      }
+    }
+  }
+}
