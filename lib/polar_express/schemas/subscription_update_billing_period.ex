@@ -5,7 +5,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdateBillingPeriod do
   """
 
   @typedoc """
-  * `current_billing_period_end` - Set a new date for the end of the current billing period. The subscription will renew on this date. Needs to be later than the current value.
+  * `current_billing_period_end` - Set a new date for the end of the current billing period. The subscription will renew on this date. The new date can be earlier or later than the current period end, as long as it's in the future.
 
   It is not possible to update the current billing period on a canceled subscription. Format: date-time.
   """

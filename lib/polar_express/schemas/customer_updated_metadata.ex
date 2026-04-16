@@ -5,7 +5,7 @@ defmodule PolarExpress.Schemas.CustomerUpdatedMetadata do
   """
 
   @typedoc """
-  * `customer_email`
+  * `customer_email` - Nullable.
   * `customer_external_id` - Nullable.
   * `customer_id`
   * `customer_name` - Nullable.

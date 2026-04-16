@@ -14,6 +14,7 @@ defmodule PolarExpress.Params.OrdersListOrdersParams do
   * `product_billing_type` - Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
   * `product_id` - Filter by product ID.
   * `sorting` - Sorting criterion. Several criteria can be used simultaneously and will be applied in order. Add a minus sign `-` before the criteria name to sort by descending order.
+  * `subscription_id` - Filter by subscription ID.
   """
   @type t :: %__MODULE__{
           checkout_id: map() | nil,
@@ -26,7 +27,8 @@ defmodule PolarExpress.Params.OrdersListOrdersParams do
           page: integer() | nil,
           product_billing_type: map() | nil,
           product_id: map() | nil,
-          sorting: [map()] | nil
+          sorting: [map()] | nil,
+          subscription_id: map() | nil
         }
 
   defstruct [
@@ -40,6 +42,7 @@ defmodule PolarExpress.Params.OrdersListOrdersParams do
     :page,
     :product_billing_type,
     :product_id,
-    :sorting
+    :sorting,
+    :subscription_id
   ]
 end

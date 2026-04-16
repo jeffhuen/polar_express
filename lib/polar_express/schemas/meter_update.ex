@@ -6,6 +6,8 @@ defmodule PolarExpress.Schemas.MeterUpdate do
 
   @typedoc """
   * `aggregation` - The aggregation to apply on the filtered events to calculate the meter. Nullable.
+  * `custom_label` - The label for the custom unit. Required when unit is 'custom'. Nullable.
+  * `custom_multiplier` - The multiplier to convert from base unit to display scale. Required when unit is 'custom'. Nullable.
   * `filter` - The filter to apply on events that'll be used to calculate the meter. Nullable.
   * `is_archived` - Whether the meter is archived. Archived meters are no longer used for billing. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
@@ -20,6 +22,7 @@ defmodule PolarExpress.Schemas.MeterUpdate do
 
   You can store up to **50 key-value pairs**.
   * `name` - The name of the meter. Will be shown on customer's invoices and usage. Nullable.
+  * `unit` - The unit of the meter. Nullable.
   """
   @type t :: %__MODULE__{
           aggregation:
@@ -27,13 +30,25 @@ defmodule PolarExpress.Schemas.MeterUpdate do
             | PolarExpress.Schemas.PropertyAggregation.t()
             | PolarExpress.Schemas.UniqueAggregation.t()
             | nil,
+          custom_label: String.t() | nil,
+          custom_multiplier: integer() | nil,
           filter: PolarExpress.Schemas.Filter.t() | nil,
           is_archived: boolean() | nil,
           metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          name: String.t() | nil
+          name: String.t() | nil,
+          unit: PolarExpress.Schemas.MeterUnit.t() | nil
         }
 
-  defstruct [:aggregation, :filter, :is_archived, :metadata, :name]
+  defstruct [
+    :aggregation,
+    :custom_label,
+    :custom_multiplier,
+    :filter,
+    :is_archived,
+    :metadata,
+    :name,
+    :unit
+  ]
 
   @schema_name "MeterUpdate"
   def schema_name, do: @schema_name
@@ -50,7 +65,8 @@ defmodule PolarExpress.Schemas.MeterUpdate do
            "sum" => PolarExpress.Schemas.PropertyAggregation,
            "unique" => PolarExpress.Schemas.UniqueAggregation
          }},
-      "filter" => PolarExpress.Schemas.Filter
+      "filter" => PolarExpress.Schemas.Filter,
+      "unit" => PolarExpress.Schemas.MeterUnit
     }
   end
 end

@@ -18,6 +18,7 @@ defmodule PolarExpress.Schemas.ProductPriceCustom do
   * `price_currency` - The currency in which the customer will be charged.
   * `product_id` - The ID of the product owning the price. Format: uuid4.
   * `source` - The source of the price . `catalog` is a predefined price, while `ad_hoc` is a price created dynamically on a Checkout session.
+  * `tax_behavior` - The tax behavior of the price. If null, it defaults to the organization's default tax behavior. Nullable.
   """
   @type t :: %__MODULE__{
           amount_type: String.t() | nil,
@@ -30,7 +31,8 @@ defmodule PolarExpress.Schemas.ProductPriceCustom do
           preset_amount: integer() | nil,
           price_currency: String.t() | nil,
           product_id: String.t() | nil,
-          source: PolarExpress.Schemas.ProductPriceSource.t() | nil
+          source: PolarExpress.Schemas.ProductPriceSource.t() | nil,
+          tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil
         }
 
   defstruct [
@@ -44,7 +46,8 @@ defmodule PolarExpress.Schemas.ProductPriceCustom do
     :preset_amount,
     :price_currency,
     :product_id,
-    :source
+    :source,
+    :tax_behavior
   ]
 
   @schema_name "ProductPriceCustom"
@@ -52,7 +55,8 @@ defmodule PolarExpress.Schemas.ProductPriceCustom do
 
   def __inner_types__ do
     %{
-      "source" => PolarExpress.Schemas.ProductPriceSource
+      "source" => PolarExpress.Schemas.ProductPriceSource,
+      "tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption
     }
   end
 

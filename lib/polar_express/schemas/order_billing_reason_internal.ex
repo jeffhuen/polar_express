@@ -3,7 +3,7 @@ defmodule PolarExpress.Schemas.OrderBillingReasonInternal do
   @moduledoc """
   Internal billing reasons with additional granularity.
 
-  Possible values: `purchase`, `subscription_create`, `subscription_cycle`, `subscription_cycle_after_trial`, `subscription_update`
+  Possible values: `purchase`, `subscription_create`, `subscription_cycle`, `subscription_cycle_after_trial`, `subscription_cancel`, `subscription_update`
   """
 
   @type t :: String.t()
@@ -13,6 +13,7 @@ defmodule PolarExpress.Schemas.OrderBillingReasonInternal do
     "subscription_create",
     "subscription_cycle",
     "subscription_cycle_after_trial",
+    "subscription_cancel",
     "subscription_update"
   ]
 

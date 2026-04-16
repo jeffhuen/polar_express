@@ -18,6 +18,7 @@ defmodule PolarExpress.Schemas.ProductPriceMeteredUnit do
   * `price_currency` - The currency in which the customer will be charged.
   * `product_id` - The ID of the product owning the price. Format: uuid4.
   * `source` - The source of the price . `catalog` is a predefined price, while `ad_hoc` is a price created dynamically on a Checkout session.
+  * `tax_behavior` - The tax behavior of the price. If null, it defaults to the organization's default tax behavior. Nullable.
   * `unit_amount` - The price per unit in cents.
   """
   @type t :: %__MODULE__{
@@ -32,6 +33,7 @@ defmodule PolarExpress.Schemas.ProductPriceMeteredUnit do
           price_currency: String.t() | nil,
           product_id: String.t() | nil,
           source: PolarExpress.Schemas.ProductPriceSource.t() | nil,
+          tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil,
           unit_amount: String.t() | nil
         }
 
@@ -47,6 +49,7 @@ defmodule PolarExpress.Schemas.ProductPriceMeteredUnit do
     :price_currency,
     :product_id,
     :source,
+    :tax_behavior,
     :unit_amount
   ]
 
@@ -56,7 +59,8 @@ defmodule PolarExpress.Schemas.ProductPriceMeteredUnit do
   def __inner_types__ do
     %{
       "meter" => PolarExpress.Schemas.ProductPriceMeter,
-      "source" => PolarExpress.Schemas.ProductPriceSource
+      "source" => PolarExpress.Schemas.ProductPriceSource,
+      "tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption
     }
   end
 

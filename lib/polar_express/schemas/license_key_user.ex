@@ -6,7 +6,7 @@ defmodule PolarExpress.Schemas.LicenseKeyUser do
 
   @typedoc """
   * `avatar_url` - Nullable.
-  * `email`
+  * `email` - Nullable.
   * `id` - Format: uuid4.
   * `public_name`
   """

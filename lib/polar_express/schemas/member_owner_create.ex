@@ -1,13 +1,13 @@
 # File generated from our OpenAPI spec
-defmodule PolarExpress.Schemas.OwnerCreate do
+defmodule PolarExpress.Schemas.MemberOwnerCreate do
   @moduledoc """
-  OwnerCreate
+  MemberOwnerCreate
 
   Schema for creating an owner member during customer creation.
   """
 
   @typedoc """
-  * `email` - The email address of the member. Nullable.
+  * `email` - The email address of the member. Format: email.
   * `external_id` - The ID of the member in your system. This must be unique within the customer. Nullable.
   * `name` - Nullable.
   """
@@ -19,6 +19,6 @@ defmodule PolarExpress.Schemas.OwnerCreate do
 
   defstruct [:email, :external_id, :name]
 
-  @schema_name "OwnerCreate"
+  @schema_name "MemberOwnerCreate"
   def schema_name, do: @schema_name
 end

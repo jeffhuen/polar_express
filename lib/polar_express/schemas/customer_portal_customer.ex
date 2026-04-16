@@ -9,7 +9,7 @@ defmodule PolarExpress.Schemas.CustomerPortalCustomer do
   * `billing_name` - Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `default_payment_method_id` - Nullable.
-  * `email`
+  * `email` - Nullable.
   * `email_verified`
   * `id` - The ID of the object. Format: uuid4.
   * `modified_at` - Last modification timestamp of the object. Nullable.

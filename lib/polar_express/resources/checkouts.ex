@@ -48,7 +48,6 @@ defmodule PolarExpress.Resources.Checkouts do
   * `organization_id` - ID of the organization owning the checkout session. Format: uuid4.
   * `payment_processor` - Payment processor used.
   * `payment_processor_metadata`
-  * `price_per_seat` - Price per seat in cents for the current seat count, based on the applicable tier. Only relevant for seat-based pricing.
   * `prices` - Mapping of product IDs to their list of prices.
   * `product` - Product selected to checkout.
   * `product_id` - ID of the product to checkout.
@@ -116,7 +115,6 @@ defmodule PolarExpress.Resources.Checkouts do
           organization_id: String.t() | nil,
           payment_processor: map() | nil,
           payment_processor_metadata: term() | nil,
-          price_per_seat: term() | nil,
           prices: term() | nil,
           product: term() | nil,
           product_id: term() | nil,
@@ -179,7 +177,6 @@ defmodule PolarExpress.Resources.Checkouts do
     :organization_id,
     :payment_processor,
     :payment_processor_metadata,
-    :price_per_seat,
     :prices,
     :product,
     :product_id,

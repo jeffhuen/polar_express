@@ -9,7 +9,7 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
   * `issue_funding_enabled` - If this organization has issue funding enabled
   * `member_model_enabled` - If this organization has the Member model enabled
   * `overview_metrics` - Ordered list of metric slugs shown on the dashboard overview. Nullable.
-  * `revops_enabled` - If this organization has RevOps enabled
+  * `reset_proration_behavior_enabled` - If this organization has access to reset proration behavior.
   * `seat_based_pricing_enabled` - If this organization has seat-based pricing enabled
   * `tinybird_compare` - If this organization compares Tinybird results with database
   * `tinybird_read` - If this organization reads from Tinybird
@@ -20,7 +20,7 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
           issue_funding_enabled: boolean() | nil,
           member_model_enabled: boolean() | nil,
           overview_metrics: [String.t()] | nil,
-          revops_enabled: boolean() | nil,
+          reset_proration_behavior_enabled: boolean() | nil,
           seat_based_pricing_enabled: boolean() | nil,
           tinybird_compare: boolean() | nil,
           tinybird_read: boolean() | nil,
@@ -32,7 +32,7 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
     :issue_funding_enabled,
     :member_model_enabled,
     :overview_metrics,
-    :revops_enabled,
+    :reset_proration_behavior_enabled,
     :seat_based_pricing_enabled,
     :tinybird_compare,
     :tinybird_read,

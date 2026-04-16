@@ -16,6 +16,7 @@ defmodule PolarExpress.Schemas.ProductPriceSeatBased do
   * `product_id` - The ID of the product owning the price. Format: uuid4.
   * `seat_tiers` - Tiered pricing based on seat quantity
   * `source` - The source of the price . `catalog` is a predefined price, while `ad_hoc` is a price created dynamically on a Checkout session.
+  * `tax_behavior` - The tax behavior of the price. If null, it defaults to the organization's default tax behavior. Nullable.
   """
   @type t :: %__MODULE__{
           amount_type: String.t() | nil,
@@ -26,7 +27,8 @@ defmodule PolarExpress.Schemas.ProductPriceSeatBased do
           price_currency: String.t() | nil,
           product_id: String.t() | nil,
           seat_tiers: PolarExpress.Schemas.ProductPriceSeatTiersOutput.t() | nil,
-          source: PolarExpress.Schemas.ProductPriceSource.t() | nil
+          source: PolarExpress.Schemas.ProductPriceSource.t() | nil,
+          tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil
         }
 
   defstruct [
@@ -38,7 +40,8 @@ defmodule PolarExpress.Schemas.ProductPriceSeatBased do
     :price_currency,
     :product_id,
     :seat_tiers,
-    :source
+    :source,
+    :tax_behavior
   ]
 
   @schema_name "ProductPriceSeatBased"
@@ -47,7 +50,8 @@ defmodule PolarExpress.Schemas.ProductPriceSeatBased do
   def __inner_types__ do
     %{
       "seat_tiers" => PolarExpress.Schemas.ProductPriceSeatTiersOutput,
-      "source" => PolarExpress.Schemas.ProductPriceSource
+      "source" => PolarExpress.Schemas.ProductPriceSource,
+      "tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption
     }
   end
 

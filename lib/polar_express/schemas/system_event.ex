@@ -10,6 +10,7 @@ defmodule PolarExpress.Schemas.SystemEvent do
           | PolarExpress.Schemas.BenefitUpdatedEvent.t()
           | PolarExpress.Schemas.BenefitRevokedEvent.t()
           | PolarExpress.Schemas.SubscriptionCreatedEvent.t()
+          | PolarExpress.Schemas.SubscriptionUpdatedEvent.t()
           | PolarExpress.Schemas.SubscriptionCycledEvent.t()
           | PolarExpress.Schemas.SubscriptionCanceledEvent.t()
           | PolarExpress.Schemas.SubscriptionRevokedEvent.t()
@@ -19,6 +20,7 @@ defmodule PolarExpress.Schemas.SystemEvent do
           | PolarExpress.Schemas.SubscriptionBillingPeriodUpdatedEvent.t()
           | PolarExpress.Schemas.OrderPaidEvent.t()
           | PolarExpress.Schemas.OrderRefundedEvent.t()
+          | PolarExpress.Schemas.OrderVoidedEvent.t()
           | PolarExpress.Schemas.CheckoutCreatedEvent.t()
           | PolarExpress.Schemas.CustomerCreatedEvent.t()
           | PolarExpress.Schemas.CustomerUpdatedEvent.t()
@@ -42,6 +44,7 @@ defmodule PolarExpress.Schemas.SystemEvent do
       PolarExpress.Schemas.BenefitUpdatedEvent,
       PolarExpress.Schemas.BenefitRevokedEvent,
       PolarExpress.Schemas.SubscriptionCreatedEvent,
+      PolarExpress.Schemas.SubscriptionUpdatedEvent,
       PolarExpress.Schemas.SubscriptionCycledEvent,
       PolarExpress.Schemas.SubscriptionCanceledEvent,
       PolarExpress.Schemas.SubscriptionRevokedEvent,
@@ -51,6 +54,7 @@ defmodule PolarExpress.Schemas.SystemEvent do
       PolarExpress.Schemas.SubscriptionBillingPeriodUpdatedEvent,
       PolarExpress.Schemas.OrderPaidEvent,
       PolarExpress.Schemas.OrderRefundedEvent,
+      PolarExpress.Schemas.OrderVoidedEvent,
       PolarExpress.Schemas.CheckoutCreatedEvent,
       PolarExpress.Schemas.CustomerCreatedEvent,
       PolarExpress.Schemas.CustomerUpdatedEvent,
@@ -85,6 +89,7 @@ defmodule PolarExpress.Schemas.SystemEvent do
        "meter.reset" => PolarExpress.Schemas.MeterResetEvent,
        "order.paid" => PolarExpress.Schemas.OrderPaidEvent,
        "order.refunded" => PolarExpress.Schemas.OrderRefundedEvent,
+       "order.voided" => PolarExpress.Schemas.OrderVoidedEvent,
        "subscription.billing_period_updated" =>
          PolarExpress.Schemas.SubscriptionBillingPeriodUpdatedEvent,
        "subscription.canceled" => PolarExpress.Schemas.SubscriptionCanceledEvent,
@@ -93,7 +98,8 @@ defmodule PolarExpress.Schemas.SystemEvent do
        "subscription.product_updated" => PolarExpress.Schemas.SubscriptionProductUpdatedEvent,
        "subscription.revoked" => PolarExpress.Schemas.SubscriptionRevokedEvent,
        "subscription.seats_updated" => PolarExpress.Schemas.SubscriptionSeatsUpdatedEvent,
-       "subscription.uncanceled" => PolarExpress.Schemas.SubscriptionUncanceledEvent
+       "subscription.uncanceled" => PolarExpress.Schemas.SubscriptionUncanceledEvent,
+       "subscription.updated" => PolarExpress.Schemas.SubscriptionUpdatedEvent
      }}
   end
 end

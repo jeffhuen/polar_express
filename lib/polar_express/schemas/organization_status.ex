@@ -1,16 +1,17 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.OrganizationStatus do
-  @moduledoc "OrganizationStatus enum. Possible values: `created`, `onboarding_started`, `initial_review`, `ongoing_review`, `denied`, `active`."
+  @moduledoc "OrganizationStatus enum. Possible values: `created`, `review`, `snoozed`, `denied`, `active`, `blocked`, `offboarding`."
 
   @type t :: String.t()
 
   @values [
     "created",
-    "onboarding_started",
-    "initial_review",
-    "ongoing_review",
+    "review",
+    "snoozed",
     "denied",
-    "active"
+    "active",
+    "blocked",
+    "offboarding"
   ]
 
   @doc "List of valid enum values."

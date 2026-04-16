@@ -5,6 +5,9 @@ defmodule PolarExpress.Params.SubscriptionsListSubscriptionsParams do
   @typedoc """
   * `active` - Filter by active or inactive subscription.
   * `cancel_at_period_end` - Filter by subscriptions that are set to cancel at period end.
+  * `canceled_at_after` - Filter by cancellation date (after or equal to).
+  * `canceled_at_before` - Filter by cancellation date (before or equal to).
+  * `customer_cancellation_reason` - Filter by customer cancellation reason.
   * `customer_id` - Filter by customer ID.
   * `discount_id` - Filter by discount ID.
   * `external_customer_id` - Filter by customer external ID.
@@ -18,6 +21,9 @@ defmodule PolarExpress.Params.SubscriptionsListSubscriptionsParams do
   @type t :: %__MODULE__{
           active: boolean() | nil,
           cancel_at_period_end: boolean() | nil,
+          canceled_at_after: String.t() | nil,
+          canceled_at_before: String.t() | nil,
+          customer_cancellation_reason: map() | nil,
           customer_id: map() | nil,
           discount_id: map() | nil,
           external_customer_id: map() | nil,
@@ -32,6 +38,9 @@ defmodule PolarExpress.Params.SubscriptionsListSubscriptionsParams do
   defstruct [
     :active,
     :cancel_at_period_end,
+    :canceled_at_after,
+    :canceled_at_before,
+    :customer_cancellation_reason,
     :customer_id,
     :discount_id,
     :external_customer_id,

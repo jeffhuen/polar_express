@@ -48,6 +48,26 @@ defmodule PolarExpress.Services.MembersService do
   end
 
   @doc """
+  Delete Member by External ID
+
+  Delete a member by external ID. One of customer_id or external_customer_id must be specified.
+
+  **Scopes**: `members:write`
+
+  See `PolarExpress.Params.MembersDeleteMemberByExternalIdParams` for parameter details.
+  """
+  @spec delete_member_by_external_id(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, term()} | {:error, PolarExpress.Error.t()}
+  def delete_member_by_external_id(client, external_id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :delete,
+      "/v1/members/external/#{external_id}",
+      Keyword.merge(opts, params: params)
+    )
+  end
+
+  @doc """
   Get Member
 
   Get a member by ID.
@@ -65,6 +85,26 @@ defmodule PolarExpress.Services.MembersService do
       client,
       :get,
       "/v1/members/#{id}",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Member)
+    )
+  end
+
+  @doc """
+  Get Member by External ID
+
+  Get a member by external ID. One of customer_id or external_customer_id must be specified.
+
+  **Scopes**: `members:read` `members:write`
+
+  See `PolarExpress.Params.MembersGetMemberByExternalIdParams` for parameter details.
+  """
+  @spec get_member_by_external_id(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.Member.t()} | {:error, PolarExpress.Error.t()}
+  def get_member_by_external_id(client, external_id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :get,
+      "/v1/members/external/#{external_id}",
       Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Member)
     )
   end
@@ -108,6 +148,26 @@ defmodule PolarExpress.Services.MembersService do
       client,
       :patch,
       "/v1/members/#{id}",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Member)
+    )
+  end
+
+  @doc """
+  Update Member by External ID
+
+  Update a member by external ID. One of customer_id or external_customer_id must be specified.
+
+  **Scopes**: `members:write`
+
+  See `PolarExpress.Params.MembersUpdateMemberByExternalIdParams` for parameter details.
+  """
+  @spec update_member_by_external_id(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.Member.t()} | {:error, PolarExpress.Error.t()}
+  def update_member_by_external_id(client, external_id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :patch,
+      "/v1/members/external/#{external_id}",
       Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Member)
     )
   end

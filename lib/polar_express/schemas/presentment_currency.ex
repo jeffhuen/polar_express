@@ -1,20 +1,46 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.PresentmentCurrency do
-  @moduledoc "PresentmentCurrency enum. Possible values: `aud`, `brl`, `cad`, `chf`, `eur`, `inr`, `gbp`, `jpy`, `sek`, `usd`."
+  @moduledoc "PresentmentCurrency enum. Possible values: `aed`, `ars`, `aud`, `brl`, `cad`, `chf`, `clp`, `cny`, `cop`, `czk`, `dkk`, `eur`, `gbp`, `hkd`, `huf`, `idr`, `ils`, `inr`, `jpy`, `krw`, `mxn`, `myr`, `nok`, `nzd`, `pen`, `php`, `pln`, `ron`, `sar`, `sek`, `sgd`, `thb`, `try`, `twd`, `usd`, `zar`."
 
   @type t :: String.t()
 
   @values [
+    "aed",
+    "ars",
     "aud",
     "brl",
     "cad",
     "chf",
+    "clp",
+    "cny",
+    "cop",
+    "czk",
+    "dkk",
     "eur",
-    "inr",
     "gbp",
+    "hkd",
+    "huf",
+    "idr",
+    "ils",
+    "inr",
     "jpy",
+    "krw",
+    "mxn",
+    "myr",
+    "nok",
+    "nzd",
+    "pen",
+    "php",
+    "pln",
+    "ron",
+    "sar",
     "sek",
-    "usd"
+    "sgd",
+    "thb",
+    "try",
+    "twd",
+    "usd",
+    "zar"
   ]
 
   @doc "List of valid enum values."
