@@ -8,12 +8,15 @@ defmodule PolarExpress.Schemas.Meter do
   * `aggregation` - The aggregation to apply on the filtered events to calculate the meter.
   * `archived_at` - Whether the meter is archived and the time it was archived. Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
+  * `custom_label` - The label for the custom unit. Nullable.
+  * `custom_multiplier` - The multiplier to convert from base unit to display scale. Nullable.
   * `filter` - The filter to apply on events that'll be used to calculate the meter.
   * `id` - The ID of the object. Format: uuid4.
   * `metadata`
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `name` - The name of the meter. Will be shown on customer's invoices and usage.
   * `organization_id` - The ID of the organization owning the meter. Format: uuid4.
+  * `unit` - The unit of the meter.
   """
   @type t :: %__MODULE__{
           aggregation:
@@ -23,24 +26,30 @@ defmodule PolarExpress.Schemas.Meter do
             | nil,
           archived_at: DateTime.t() | nil,
           created_at: DateTime.t() | nil,
+          custom_label: String.t() | nil,
+          custom_multiplier: integer() | nil,
           filter: PolarExpress.Schemas.Filter.t() | nil,
           id: String.t() | nil,
           metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           name: String.t() | nil,
-          organization_id: String.t() | nil
+          organization_id: String.t() | nil,
+          unit: PolarExpress.Schemas.MeterUnit.t() | nil
         }
 
   defstruct [
     :aggregation,
     :archived_at,
     :created_at,
+    :custom_label,
+    :custom_multiplier,
     :filter,
     :id,
     :metadata,
     :modified_at,
     :name,
-    :organization_id
+    :organization_id,
+    :unit
   ]
 
   @schema_name "Meter"
@@ -59,7 +68,8 @@ defmodule PolarExpress.Schemas.Meter do
            "unique" => PolarExpress.Schemas.UniqueAggregation
          }},
       "filter" => PolarExpress.Schemas.Filter,
-      "metadata" => PolarExpress.Schemas.MetadataOutputType
+      "metadata" => PolarExpress.Schemas.MetadataOutputType,
+      "unit" => PolarExpress.Schemas.MeterUnit
     }
   end
 

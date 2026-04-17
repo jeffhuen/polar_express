@@ -50,7 +50,6 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
   * `organization_id` - ID of the organization owning the checkout session. Format: uuid4.
   * `payment_processor` - Payment processor used.
   * `payment_processor_metadata`
-  * `price_per_seat` - Price per seat in cents for the current seat count, based on the applicable tier. Only relevant for seat-based pricing. Nullable.
   * `prices` - Mapping of product IDs to their list of prices. Nullable.
   * `product` - Product selected to checkout. Nullable.
   * `product_id` - ID of the product to checkout. Nullable.
@@ -114,7 +113,6 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
           organization_id: String.t() | nil,
           payment_processor: PolarExpress.Schemas.PaymentProcessor.t() | nil,
           payment_processor_metadata: %{String.t() => String.t()} | nil,
-          price_per_seat: integer() | nil,
           prices:
             %{
               String.t() => [
@@ -184,7 +182,6 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
     :organization_id,
     :payment_processor,
     :payment_processor_metadata,
-    :price_per_seat,
     :prices,
     :product,
     :product_id,

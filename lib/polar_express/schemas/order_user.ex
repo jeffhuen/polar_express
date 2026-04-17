@@ -6,7 +6,7 @@ defmodule PolarExpress.Schemas.OrderUser do
 
   @typedoc """
   * `avatar_url` - Nullable.
-  * `email`
+  * `email` - Nullable.
   * `github_username` - Nullable.
   * `id` - Format: uuid4.
   * `public_name`

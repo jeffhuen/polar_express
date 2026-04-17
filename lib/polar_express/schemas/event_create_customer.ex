@@ -19,7 +19,7 @@ defmodule PolarExpress.Schemas.EventCreateCustomer do
   * A boolean
 
   You can store up to **50 key-value pairs**.
-  * `name` - The name of the event.
+  * `name` - The name of the event. Max length: 128.
   * `organization_id` - The ID of the organization owning the event. **Required unless you use an organization token.** Nullable.
   * `parent_id` - The ID of the parent event. Can be either a Polar event ID (UUID) or an external event ID. Nullable.
   * `timestamp` - The timestamp of the event. Format: date-time.

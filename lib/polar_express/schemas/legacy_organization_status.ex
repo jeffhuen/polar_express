@@ -4,14 +4,13 @@ defmodule PolarExpress.Schemas.LegacyOrganizationStatus do
   Legacy organization status values kept for backward compatibility in schemas
   using OrganizationPublicBase.
 
-  Possible values: `created`, `onboarding_started`, `under_review`, `denied`, `active`
+  Possible values: `created`, `under_review`, `denied`, `active`
   """
 
   @type t :: String.t()
 
   @values [
     "created",
-    "onboarding_started",
     "under_review",
     "denied",
     "active"

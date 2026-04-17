@@ -19,6 +19,7 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPriceFree do
   * `product_id` - The ID of the product owning the price. Format: uuid4.
   * `recurring_interval` - The recurring interval of the price.
   * `source` - The source of the price . `catalog` is a predefined price, while `ad_hoc` is a price created dynamically on a Checkout session.
+  * `tax_behavior` - The tax behavior of the price. If null, it defaults to the organization's default tax behavior. Nullable.
   * `type` - The type of the price.
   """
   @type t :: %__MODULE__{
@@ -32,6 +33,7 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPriceFree do
           product_id: String.t() | nil,
           recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
           source: PolarExpress.Schemas.ProductPriceSource.t() | nil,
+          tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil,
           type: String.t() | nil
         }
 
@@ -46,6 +48,7 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPriceFree do
     :product_id,
     :recurring_interval,
     :source,
+    :tax_behavior,
     :type
   ]
 
@@ -55,7 +58,8 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPriceFree do
   def __inner_types__ do
     %{
       "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
-      "source" => PolarExpress.Schemas.ProductPriceSource
+      "source" => PolarExpress.Schemas.ProductPriceSource,
+      "tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption
     }
   end
 

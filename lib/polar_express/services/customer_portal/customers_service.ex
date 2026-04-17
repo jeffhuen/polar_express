@@ -30,6 +30,24 @@ defmodule PolarExpress.Services.CustomerPortal.CustomersService do
   end
 
   @doc """
+  Check Email Change Token
+
+  Check if an email change verification token is still valid.
+
+  See `PolarExpress.Params.CustomerPortal.CustomersCheckEmailChangeTokenParams` for parameter details.
+  """
+  @spec check_email_change_token(Client.t(), map(), keyword()) ::
+          {:ok, term()} | {:error, PolarExpress.Error.t()}
+  def check_email_change_token(client, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :get,
+      "/v1/customer-portal/customers/me/email-update/check",
+      Keyword.merge(opts, params: params)
+    )
+  end
+
+  @doc """
   Confirm Customer Payment Method
 
   Confirm a payment method for the authenticated customer.
@@ -109,6 +127,24 @@ defmodule PolarExpress.Services.CustomerPortal.CustomersService do
   end
 
   @doc """
+  Request Email Change
+
+  Request an email change for the authenticated customer.
+
+  See `PolarExpress.Params.CustomerPortal.CustomersRequestEmailChangeParams` for parameter details.
+  """
+  @spec request_email_change(Client.t(), map(), keyword()) ::
+          {:ok, term()} | {:error, PolarExpress.Error.t()}
+  def request_email_change(client, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :post,
+      "/v1/customer-portal/customers/me/email-update/request",
+      Keyword.merge(opts, params: params)
+    )
+  end
+
+  @doc """
   Update Customer
 
   Update authenticated customer.
@@ -124,6 +160,28 @@ defmodule PolarExpress.Services.CustomerPortal.CustomersService do
       :patch,
       "/v1/customer-portal/customers/me",
       Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.CustomerPortalCustomer)
+    )
+  end
+
+  @doc """
+  Verify Email Change
+
+  Verify an email change using the token from the verification email.
+
+  See `PolarExpress.Params.CustomerPortal.CustomersVerifyEmailChangeParams` for parameter details.
+  """
+  @spec verify_email_change(Client.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.CustomerEmailUpdateVerifyResponse.t()}
+          | {:error, PolarExpress.Error.t()}
+  def verify_email_change(client, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :post,
+      "/v1/customer-portal/customers/me/email-update/verify",
+      Keyword.merge(opts,
+        params: params,
+        resource: PolarExpress.Schemas.CustomerEmailUpdateVerifyResponse
+      )
     )
   end
 end

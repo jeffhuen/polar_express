@@ -9,7 +9,7 @@ defmodule PolarExpress.Schemas.SubscriptionCustomer do
   * `billing_address` - Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `deleted_at` - Timestamp for when the customer was soft deleted. Nullable.
-  * `email` - The email address of the customer. This must be unique within the organization.
+  * `email` - The email address of the customer. This must be unique within the organization. Nullable.
   * `email_verified` - Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
   * `external_id` - The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated. Nullable.
   * `id` - The ID of the customer. Format: uuid4.
@@ -19,7 +19,7 @@ defmodule PolarExpress.Schemas.SubscriptionCustomer do
   * `name` - The name of the customer. Nullable.
   * `organization_id` - The ID of the organization owning the customer. Format: uuid4.
   * `tax_id` - Nullable.
-  * `type` - The type of customer: 'individual' for single users, 'team' for customers with multiple members. Legacy customers may have NULL type which is treated as 'individual'. Nullable.
+  * `type` - The type of customer: 'individual' for single users, 'team' for customers with multiple members.
   """
   @type t :: %__MODULE__{
           avatar_url: String.t() | nil,

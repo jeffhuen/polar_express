@@ -9,6 +9,7 @@ defmodule PolarExpress.Schemas.BenefitLicenseKeys do
   * `deletable` - Whether the benefit is deletable.
   * `description` - The description of the benefit.
   * `id` - The ID of the benefit. Format: uuid4.
+  * `is_deleted` - Whether the benefit is deleted.
   * `metadata`
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `organization_id` - The ID of the organization owning the benefit. Format: uuid4.
@@ -21,6 +22,7 @@ defmodule PolarExpress.Schemas.BenefitLicenseKeys do
           deletable: boolean() | nil,
           description: String.t() | nil,
           id: String.t() | nil,
+          is_deleted: boolean() | nil,
           metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           organization_id: String.t() | nil,
@@ -34,6 +36,7 @@ defmodule PolarExpress.Schemas.BenefitLicenseKeys do
     :deletable,
     :description,
     :id,
+    :is_deleted,
     :metadata,
     :modified_at,
     :organization_id,

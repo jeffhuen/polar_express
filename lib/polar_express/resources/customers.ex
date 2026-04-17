@@ -21,14 +21,14 @@ defmodule PolarExpress.Resources.Customers do
   * `name` - The name of the customer.
   * `organization_id` - The ID of the organization owning the customer. Format: uuid4.
   * `tax_id`
-  * `type` - The type of customer: 'individual' for single users, 'team' for customers with multiple members. Legacy customers may have NULL type which is treated as 'individual'.
+  * `type` - The type of customer. Team customers can have multiple members.
   """
   @type t :: %__MODULE__{
           avatar_url: String.t() | nil,
           billing_address: term() | nil,
           created_at: String.t() | nil,
           deleted_at: term() | nil,
-          email: String.t() | nil,
+          email: term() | nil,
           email_verified: boolean() | nil,
           external_id: term() | nil,
           id: String.t() | nil,
@@ -38,7 +38,7 @@ defmodule PolarExpress.Resources.Customers do
           name: term() | nil,
           organization_id: String.t() | nil,
           tax_id: term() | nil,
-          type: term() | nil
+          type: String.t() | nil
         }
 
   defstruct [

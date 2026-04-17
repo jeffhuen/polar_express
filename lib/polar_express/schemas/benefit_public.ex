@@ -9,6 +9,7 @@ defmodule PolarExpress.Schemas.BenefitPublic do
   * `deletable` - Whether the benefit is deletable.
   * `description` - The description of the benefit.
   * `id` - The ID of the benefit. Format: uuid4.
+  * `is_deleted` - Whether the benefit is deleted.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `organization_id` - The ID of the organization owning the benefit. Format: uuid4.
   * `selectable` - Whether the benefit is selectable when creating a product.
@@ -19,6 +20,7 @@ defmodule PolarExpress.Schemas.BenefitPublic do
           deletable: boolean() | nil,
           description: String.t() | nil,
           id: String.t() | nil,
+          is_deleted: boolean() | nil,
           modified_at: DateTime.t() | nil,
           organization_id: String.t() | nil,
           selectable: boolean() | nil,
@@ -30,6 +32,7 @@ defmodule PolarExpress.Schemas.BenefitPublic do
     :deletable,
     :description,
     :id,
+    :is_deleted,
     :modified_at,
     :organization_id,
     :selectable,

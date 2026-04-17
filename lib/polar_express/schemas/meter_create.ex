@@ -6,6 +6,8 @@ defmodule PolarExpress.Schemas.MeterCreate do
 
   @typedoc """
   * `aggregation` - The aggregation to apply on the filtered events to calculate the meter.
+  * `custom_label` - The label for the custom unit, e.g. 'request'. Required when unit is 'custom'. Nullable.
+  * `custom_multiplier` - The multiplier to convert from the base unit to display scale, e.g. 1000 to display per 1000 units. Defaults to 1 when not provided. Nullable.
   * `filter` - The filter to apply on events that'll be used to calculate the meter.
   * `metadata` - Key-value object allowing you to store additional information.
 
@@ -20,6 +22,7 @@ defmodule PolarExpress.Schemas.MeterCreate do
   You can store up to **50 key-value pairs**.
   * `name` - The name of the meter. Will be shown on customer's invoices and usage.
   * `organization_id` - The ID of the organization owning the meter. **Required unless you use an organization token.** Nullable.
+  * `unit` - The unit of the meter.
   """
   @type t :: %__MODULE__{
           aggregation:
@@ -27,13 +30,25 @@ defmodule PolarExpress.Schemas.MeterCreate do
             | PolarExpress.Schemas.PropertyAggregation.t()
             | PolarExpress.Schemas.UniqueAggregation.t()
             | nil,
+          custom_label: String.t() | nil,
+          custom_multiplier: integer() | nil,
           filter: PolarExpress.Schemas.Filter.t() | nil,
           metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
           name: String.t() | nil,
-          organization_id: String.t() | nil
+          organization_id: String.t() | nil,
+          unit: PolarExpress.Schemas.MeterUnit.t() | nil
         }
 
-  defstruct [:aggregation, :filter, :metadata, :name, :organization_id]
+  defstruct [
+    :aggregation,
+    :custom_label,
+    :custom_multiplier,
+    :filter,
+    :metadata,
+    :name,
+    :organization_id,
+    :unit
+  ]
 
   @schema_name "MeterCreate"
   def schema_name, do: @schema_name
@@ -50,7 +65,8 @@ defmodule PolarExpress.Schemas.MeterCreate do
            "sum" => PolarExpress.Schemas.PropertyAggregation,
            "unique" => PolarExpress.Schemas.UniqueAggregation
          }},
-      "filter" => PolarExpress.Schemas.Filter
+      "filter" => PolarExpress.Schemas.Filter,
+      "unit" => PolarExpress.Schemas.MeterUnit
     }
   end
 end

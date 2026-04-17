@@ -22,6 +22,7 @@ defmodule PolarExpress.Schemas.CustomerSubscription do
   * `id` - The ID of the object. Format: uuid4.
   * `meters` - List of meters associated with the subscription.
   * `modified_at` - Last modification timestamp of the object. Nullable.
+  * `pending_update` - Pending subscription update that will be applied at the beginning of the next period. If `null`, there is no pending update. Nullable.
   * `prices` - List of enabled prices for the subscription.
   * `product`
   * `product_id` - The ID of the subscribed product. Format: uuid4.
@@ -51,6 +52,7 @@ defmodule PolarExpress.Schemas.CustomerSubscription do
           id: String.t() | nil,
           meters: [PolarExpress.Schemas.CustomerSubscriptionMeter.t()] | nil,
           modified_at: DateTime.t() | nil,
+          pending_update: PolarExpress.Schemas.PendingSubscriptionUpdate.t() | nil,
           prices:
             [
               PolarExpress.Schemas.LegacyRecurringProductPrice.t()
@@ -86,6 +88,7 @@ defmodule PolarExpress.Schemas.CustomerSubscription do
     :id,
     :meters,
     :modified_at,
+    :pending_update,
     :prices,
     :product,
     :product_id,
@@ -105,6 +108,7 @@ defmodule PolarExpress.Schemas.CustomerSubscription do
     %{
       "customer_cancellation_reason" => PolarExpress.Schemas.CustomerCancellationReason,
       "meters" => PolarExpress.Schemas.CustomerSubscriptionMeter,
+      "pending_update" => PolarExpress.Schemas.PendingSubscriptionUpdate,
       "prices" =>
         {:union, :variants,
          [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},

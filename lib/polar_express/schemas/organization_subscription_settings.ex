@@ -9,14 +9,14 @@ defmodule PolarExpress.Schemas.OrganizationSubscriptionSettings do
   * `allow_multiple_subscriptions`
   * `benefit_revocation_grace_period`
   * `prevent_trial_abuse`
-  * `proration_behavior`
+  * `proration_behavior` - Possible values: `invoice`, `prorate`, `next_period`.
   """
   @type t :: %__MODULE__{
           allow_customer_updates: boolean() | nil,
           allow_multiple_subscriptions: boolean() | nil,
           benefit_revocation_grace_period: integer() | nil,
           prevent_trial_abuse: boolean() | nil,
-          proration_behavior: PolarExpress.Schemas.SubscriptionProrationBehavior.t() | nil
+          proration_behavior: String.t() | nil
         }
 
   defstruct [
@@ -29,10 +29,4 @@ defmodule PolarExpress.Schemas.OrganizationSubscriptionSettings do
 
   @schema_name "OrganizationSubscriptionSettings"
   def schema_name, do: @schema_name
-
-  def __inner_types__ do
-    %{
-      "proration_behavior" => PolarExpress.Schemas.SubscriptionProrationBehavior
-    }
-  end
 end
