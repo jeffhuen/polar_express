@@ -26,7 +26,7 @@ defmodule PolarExpress.MixProject do
       dialyzer: [
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
         flags: [:unmatched_returns, :error_handling, :extra_return, :missing_return],
-        plt_add_apps: [:mix, :ex_unit]
+        plt_add_apps: [:mix, :ex_unit, :rustyjson]
       ]
     ]
   end
