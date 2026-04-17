@@ -369,9 +369,7 @@ defmodule PolarExpress.ClientTest do
       client = PolarExpress.client("pk_test_123")
 
       {:ok, customer} =
-        Client.request(client, :get, "/v1/customers/cust_123",
-          resource: F.Customer
-        )
+        Client.request(client, :get, "/v1/customers/cust_123", resource: F.Customer)
 
       assert %F.Customer{} = customer
       assert customer.id == "cust_123"
