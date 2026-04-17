@@ -2,7 +2,7 @@ defmodule PolarExpress.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/jeffhuen/polar_express"
-  @version "0.1.5"
+  @version "0.1.6"
 
   def project do
     [

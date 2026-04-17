@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.6] - 2026-04-16
+
+### Added
+
+- Customer-portal email-change flow: `request_email_change`, `verify_email_change`, `check_email_change_token`
+- Members service with external-id lookups (get/update/delete by external id)
+- Metrics service with metric-dashboard CRUD and metrics export
+- `pending_subscription_update`, `subscription_updated_event` and related metadata schemas (billing period, discount, product, seats, trial)
+- `order_voided_event` and `order_voided_metadata`
+- `payment_failed`, `manual_retry_limit_exceeded` event schemas
+- Organization legal-entity schemas (`organization_company_legal_entity_schema`, `organization_individual_legal_entity_schema`)
+- `meter_unit`, `seat_tier_type`, `tax_behavior_option`, `customer_portal_customer_settings`, `organization_customer_email_settings`
+- Expanded coverage on benefits, custom fields, discounts, events, meters, organizations, subscriptions resources
+
+### Changed
+
+- Split `Customer`/`CustomerCreate`/`CustomerState` into individual and team variants (`customer_individual`, `customer_team`, `customer_state_individual`, `customer_state_team`, `customer_individual_create`, `customer_team_create`)
+- Rename `OwnerCreate` → `MemberOwnerCreate`
+- Rename `ListResource_` → `ListResourcePayment_`
+- Expand `presentment_currency` enum values
+
 ## [0.1.5] - 2026-03-03
 
 ### Changed
