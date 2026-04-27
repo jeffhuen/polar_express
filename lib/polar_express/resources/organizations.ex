@@ -10,6 +10,7 @@ defmodule PolarExpress.Resources.Organizations do
   * `account_id` - ID of the transactions account.
   * `allow_customer_updates` - Whether customers can update their subscriptions from the customer portal.
   * `avatar_url` - Avatar URL shown in checkout, customer portal, emails etc.
+  * `capabilities` - Capabilities currently granted to the organization.
   * `country` - Two-letter country code (ISO 3166-1 alpha-2).
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `customer_email_settings` - Settings related to customer emails
@@ -35,6 +36,7 @@ defmodule PolarExpress.Resources.Organizations do
           account_id: term() | nil,
           allow_customer_updates: boolean() | nil,
           avatar_url: term() | nil,
+          capabilities: map() | nil,
           country: term() | nil,
           created_at: String.t() | nil,
           customer_email_settings: map() | nil,
@@ -61,6 +63,7 @@ defmodule PolarExpress.Resources.Organizations do
     :account_id,
     :allow_customer_updates,
     :avatar_url,
+    :capabilities,
     :country,
     :created_at,
     :customer_email_settings,

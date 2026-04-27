@@ -8,6 +8,7 @@ defmodule PolarExpress.Schemas.Organization do
   * `account_id` - ID of the transactions account. Nullable.
   * `allow_customer_updates` - Whether customers can update their subscriptions from the customer portal.
   * `avatar_url` - Avatar URL shown in checkout, customer portal, emails etc. Nullable.
+  * `capabilities` - Capabilities currently granted to the organization.
   * `country` - Two-letter country code (ISO 3166-1 alpha-2). Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `customer_email_settings` - Settings related to customer emails
@@ -33,6 +34,7 @@ defmodule PolarExpress.Schemas.Organization do
           account_id: String.t() | nil,
           allow_customer_updates: boolean() | nil,
           avatar_url: String.t() | nil,
+          capabilities: PolarExpress.Schemas.OrganizationCapabilities.t() | nil,
           country: String.t() | nil,
           created_at: DateTime.t() | nil,
           customer_email_settings:
@@ -61,6 +63,7 @@ defmodule PolarExpress.Schemas.Organization do
     :account_id,
     :allow_customer_updates,
     :avatar_url,
+    :capabilities,
     :country,
     :created_at,
     :customer_email_settings,
@@ -88,6 +91,7 @@ defmodule PolarExpress.Schemas.Organization do
 
   def __inner_types__ do
     %{
+      "capabilities" => PolarExpress.Schemas.OrganizationCapabilities,
       "customer_email_settings" => PolarExpress.Schemas.OrganizationCustomerEmailSettings,
       "customer_portal_settings" => PolarExpress.Schemas.OrganizationCustomerPortalSettings,
       "default_tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption,

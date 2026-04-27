@@ -7,6 +7,7 @@ defmodule PolarExpress.Schemas.Metrics do
   @typedoc """
   * `active_subscriptions` - Nullable.
   * `active_user_by_event` - Nullable.
+  * `annual_recurring_revenue` - Nullable.
   * `average_order_value` - Nullable.
   * `average_revenue_per_user` - Nullable.
   * `canceled_subscriptions` - Nullable.
@@ -23,6 +24,7 @@ defmodule PolarExpress.Schemas.Metrics do
   * `checkouts_conversion` - Nullable.
   * `churn_rate` - Nullable.
   * `churned_subscriptions` - Nullable.
+  * `committed_annual_recurring_revenue` - Nullable.
   * `committed_monthly_recurring_revenue` - Nullable.
   * `committed_subscriptions` - Nullable.
   * `cost_per_user` - Nullable.
@@ -48,10 +50,13 @@ defmodule PolarExpress.Schemas.Metrics do
   * `renewed_subscriptions_revenue` - Nullable.
   * `revenue` - Nullable.
   * `succeeded_checkouts` - Nullable.
+  * `trial_committed_monthly_recurring_revenue` - Nullable.
+  * `trial_monthly_recurring_revenue` - Nullable.
   """
   @type t :: %__MODULE__{
           active_subscriptions: PolarExpress.Schemas.Metric.t() | nil,
           active_user_by_event: PolarExpress.Schemas.Metric.t() | nil,
+          annual_recurring_revenue: PolarExpress.Schemas.Metric.t() | nil,
           average_order_value: PolarExpress.Schemas.Metric.t() | nil,
           average_revenue_per_user: PolarExpress.Schemas.Metric.t() | nil,
           canceled_subscriptions: PolarExpress.Schemas.Metric.t() | nil,
@@ -68,6 +73,7 @@ defmodule PolarExpress.Schemas.Metrics do
           checkouts_conversion: PolarExpress.Schemas.Metric.t() | nil,
           churn_rate: PolarExpress.Schemas.Metric.t() | nil,
           churned_subscriptions: PolarExpress.Schemas.Metric.t() | nil,
+          committed_annual_recurring_revenue: PolarExpress.Schemas.Metric.t() | nil,
           committed_monthly_recurring_revenue: PolarExpress.Schemas.Metric.t() | nil,
           committed_subscriptions: PolarExpress.Schemas.Metric.t() | nil,
           cost_per_user: PolarExpress.Schemas.Metric.t() | nil,
@@ -92,12 +98,15 @@ defmodule PolarExpress.Schemas.Metrics do
           renewed_subscriptions_net_revenue: PolarExpress.Schemas.Metric.t() | nil,
           renewed_subscriptions_revenue: PolarExpress.Schemas.Metric.t() | nil,
           revenue: PolarExpress.Schemas.Metric.t() | nil,
-          succeeded_checkouts: PolarExpress.Schemas.Metric.t() | nil
+          succeeded_checkouts: PolarExpress.Schemas.Metric.t() | nil,
+          trial_committed_monthly_recurring_revenue: PolarExpress.Schemas.Metric.t() | nil,
+          trial_monthly_recurring_revenue: PolarExpress.Schemas.Metric.t() | nil
         }
 
   defstruct [
     :active_subscriptions,
     :active_user_by_event,
+    :annual_recurring_revenue,
     :average_order_value,
     :average_revenue_per_user,
     :canceled_subscriptions,
@@ -114,6 +123,7 @@ defmodule PolarExpress.Schemas.Metrics do
     :checkouts_conversion,
     :churn_rate,
     :churned_subscriptions,
+    :committed_annual_recurring_revenue,
     :committed_monthly_recurring_revenue,
     :committed_subscriptions,
     :cost_per_user,
@@ -138,7 +148,9 @@ defmodule PolarExpress.Schemas.Metrics do
     :renewed_subscriptions_net_revenue,
     :renewed_subscriptions_revenue,
     :revenue,
-    :succeeded_checkouts
+    :succeeded_checkouts,
+    :trial_committed_monthly_recurring_revenue,
+    :trial_monthly_recurring_revenue
   ]
 
   @schema_name "Metrics"
@@ -148,6 +160,7 @@ defmodule PolarExpress.Schemas.Metrics do
     %{
       "active_subscriptions" => PolarExpress.Schemas.Metric,
       "active_user_by_event" => PolarExpress.Schemas.Metric,
+      "annual_recurring_revenue" => PolarExpress.Schemas.Metric,
       "average_order_value" => PolarExpress.Schemas.Metric,
       "average_revenue_per_user" => PolarExpress.Schemas.Metric,
       "canceled_subscriptions" => PolarExpress.Schemas.Metric,
@@ -164,6 +177,7 @@ defmodule PolarExpress.Schemas.Metrics do
       "checkouts_conversion" => PolarExpress.Schemas.Metric,
       "churn_rate" => PolarExpress.Schemas.Metric,
       "churned_subscriptions" => PolarExpress.Schemas.Metric,
+      "committed_annual_recurring_revenue" => PolarExpress.Schemas.Metric,
       "committed_monthly_recurring_revenue" => PolarExpress.Schemas.Metric,
       "committed_subscriptions" => PolarExpress.Schemas.Metric,
       "cost_per_user" => PolarExpress.Schemas.Metric,
@@ -188,7 +202,9 @@ defmodule PolarExpress.Schemas.Metrics do
       "renewed_subscriptions_net_revenue" => PolarExpress.Schemas.Metric,
       "renewed_subscriptions_revenue" => PolarExpress.Schemas.Metric,
       "revenue" => PolarExpress.Schemas.Metric,
-      "succeeded_checkouts" => PolarExpress.Schemas.Metric
+      "succeeded_checkouts" => PolarExpress.Schemas.Metric,
+      "trial_committed_monthly_recurring_revenue" => PolarExpress.Schemas.Metric,
+      "trial_monthly_recurring_revenue" => PolarExpress.Schemas.Metric
     }
   end
 end
