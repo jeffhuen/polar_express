@@ -67,6 +67,7 @@ defmodule PolarExpress.Schemas.Checkout do
   * `subscription_id` - Nullable.
   * `success_url` - URL where the customer will be redirected after a successful payment.
   * `tax_amount` - Sales tax amount in cents. If `null`, it means there is no enough information yet to calculate it. Nullable.
+  * `tax_behavior` - Tax behavior of the checkout. `inclusive` means the price includes tax, `exclusive` means tax is added on top. If `null`, tax is not yet calculated. Nullable.
   * `total_amount` - Amount in cents, after discounts and taxes.
   * `trial_end` - End date and time of the trial period, if any. Nullable.
   * `trial_interval` - The interval unit for the trial period. Nullable.
@@ -145,6 +146,7 @@ defmodule PolarExpress.Schemas.Checkout do
           subscription_id: String.t() | nil,
           success_url: String.t() | nil,
           tax_amount: integer() | nil,
+          tax_behavior: PolarExpress.Schemas.TaxBehavior.t() | nil,
           total_amount: integer() | nil,
           trial_end: DateTime.t() | nil,
           trial_interval: PolarExpress.Schemas.TrialInterval.t() | nil,
@@ -207,6 +209,7 @@ defmodule PolarExpress.Schemas.Checkout do
     :subscription_id,
     :success_url,
     :tax_amount,
+    :tax_behavior,
     :total_amount,
     :trial_end,
     :trial_interval,
@@ -243,6 +246,7 @@ defmodule PolarExpress.Schemas.Checkout do
          [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
       "products" => PolarExpress.Schemas.CheckoutProduct,
       "status" => PolarExpress.Schemas.CheckoutStatus,
+      "tax_behavior" => PolarExpress.Schemas.TaxBehavior,
       "trial_interval" => PolarExpress.Schemas.TrialInterval
     }
   end

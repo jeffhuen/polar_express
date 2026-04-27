@@ -67,6 +67,7 @@ defmodule PolarExpress.Resources.Checkouts do
   * `subscription_id`
   * `success_url` - URL where the customer will be redirected after a successful payment.
   * `tax_amount` - Sales tax amount in cents. If `null`, it means there is no enough information yet to calculate it.
+  * `tax_behavior` - Tax behavior of the checkout. `inclusive` means the price includes tax, `exclusive` means tax is added on top. If `null`, tax is not yet calculated.
   * `total_amount` - Amount in cents, after discounts and taxes.
   * `trial_end` - End date and time of the trial period, if any.
   * `trial_interval` - The interval unit for the trial period.
@@ -128,6 +129,7 @@ defmodule PolarExpress.Resources.Checkouts do
           subscription_id: term() | nil,
           success_url: String.t() | nil,
           tax_amount: term() | nil,
+          tax_behavior: term() | nil,
           total_amount: integer() | nil,
           trial_end: term() | nil,
           trial_interval: term() | nil,
@@ -190,6 +192,7 @@ defmodule PolarExpress.Resources.Checkouts do
     :subscription_id,
     :success_url,
     :tax_amount,
+    :tax_behavior,
     :total_amount,
     :trial_end,
     :trial_interval,
