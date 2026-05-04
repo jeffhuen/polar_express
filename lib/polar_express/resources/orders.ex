@@ -34,6 +34,9 @@ defmodule PolarExpress.Resources.Orders do
   * `platform_fee_currency` - Currency of the platform fee.
   * `product`
   * `product_id`
+  * `receipt_number` - The receipt number for this order. Set once the order is paid for organizations with receipts enabled. When set, a downloadable receipt PDF can be obtained via the receipt endpoint.
+  * `refundable_amount` - Amount in cents that can still be refunded (net, before taxes). Accounts for any applied customer balance and previous refunds.
+  * `refundable_tax_amount` - Sales tax in cents that would be refunded if the full refundable amount is refunded.
   * `refunded_amount` - Amount refunded in cents.
   * `refunded_tax_amount` - Sales tax refunded in cents.
   * `seats` - Number of seats purchased (for seat-based one-time orders).
@@ -72,6 +75,9 @@ defmodule PolarExpress.Resources.Orders do
           platform_fee_currency: term() | nil,
           product: term() | nil,
           product_id: term() | nil,
+          receipt_number: term() | nil,
+          refundable_amount: integer() | nil,
+          refundable_tax_amount: integer() | nil,
           refunded_amount: integer() | nil,
           refunded_tax_amount: integer() | nil,
           seats: term() | nil,
@@ -111,6 +117,9 @@ defmodule PolarExpress.Resources.Orders do
     :platform_fee_currency,
     :product,
     :product_id,
+    :receipt_number,
+    :refundable_amount,
+    :refundable_tax_amount,
     :refunded_amount,
     :refunded_tax_amount,
     :seats,

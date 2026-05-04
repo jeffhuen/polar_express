@@ -32,8 +32,6 @@ defmodule PolarExpress.Services.OrganizationsService do
 
   Get an organization by ID.
 
-  **Scopes**: `organizations:read` `organizations:write`
-
   See `PolarExpress.Params.OrganizationsGetOrganizationParams` for parameter details.
   """
   @spec get_organization(Client.t(), String.t(), map(), keyword()) ::
@@ -71,8 +69,6 @@ defmodule PolarExpress.Services.OrganizationsService do
   Update Organization
 
   Update an organization.
-
-  **Scopes**: `organizations:write`
 
   See `PolarExpress.Params.OrganizationsUpdateOrganizationParams` for parameter details.
   """
