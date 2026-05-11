@@ -5,6 +5,7 @@ defmodule PolarExpress.Schemas.SeatAssign do
   """
 
   @typedoc """
+  * `checkout_client_secret` - Client secret of the checkout. Required when assigning seats via checkout_id as an anonymous caller (e.g. the checkout confirmation page). Nullable.
   * `checkout_id` - Checkout ID. Used to look up subscription or order from the checkout page. Nullable.
   * `customer_id` - Customer ID for the seat assignment Nullable.
   * `email` - Email of the customer to assign the seat to Nullable.
@@ -17,6 +18,7 @@ defmodule PolarExpress.Schemas.SeatAssign do
   * `subscription_id` - Subscription ID. Required if checkout_id and order_id are not provided. Nullable.
   """
   @type t :: %__MODULE__{
+          checkout_client_secret: String.t() | nil,
           checkout_id: String.t() | nil,
           customer_id: String.t() | nil,
           email: String.t() | nil,
@@ -30,6 +32,7 @@ defmodule PolarExpress.Schemas.SeatAssign do
         }
 
   defstruct [
+    :checkout_client_secret,
     :checkout_id,
     :customer_id,
     :email,

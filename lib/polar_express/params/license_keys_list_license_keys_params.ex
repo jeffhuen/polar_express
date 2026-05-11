@@ -7,13 +7,15 @@ defmodule PolarExpress.Params.LicenseKeysListLicenseKeysParams do
   * `limit` - Size of a page, defaults to 10. Maximum is 100.
   * `organization_id` - Filter by organization ID.
   * `page` - Page number, defaults to 1.
+  * `status` - Filter by license key status.
   """
   @type t :: %__MODULE__{
           benefit_id: map() | nil,
           limit: integer() | nil,
           organization_id: map() | nil,
-          page: integer() | nil
+          page: integer() | nil,
+          status: map() | nil
         }
 
-  defstruct [:benefit_id, :limit, :organization_id, :page]
+  defstruct [:benefit_id, :limit, :organization_id, :page, :status]
 end
