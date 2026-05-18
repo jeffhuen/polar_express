@@ -1,10 +1,11 @@
 # File generated from our OpenAPI spec
-defmodule PolarExpress.Schemas.SeatAssign do
+defmodule PolarExpress.Schemas.CustomerSeatAssign do
   @moduledoc """
-  SeatAssign
+  CustomerSeatAssign
   """
 
   @typedoc """
+  * `checkout_id` - Checkout ID. Resolves to the subscription or order produced by the checkout. Nullable.
   * `customer_id` - Customer ID for the seat assignment Nullable.
   * `email` - Email of the customer to assign the seat to Nullable.
   * `external_customer_id` - External customer ID for the seat assignment Nullable.
@@ -16,6 +17,7 @@ defmodule PolarExpress.Schemas.SeatAssign do
   * `subscription_id` - Subscription ID. Required if neither order_id nor checkout_id is provided. Nullable.
   """
   @type t :: %__MODULE__{
+          checkout_id: String.t() | nil,
           customer_id: String.t() | nil,
           email: String.t() | nil,
           external_customer_id: String.t() | nil,
@@ -28,6 +30,7 @@ defmodule PolarExpress.Schemas.SeatAssign do
         }
 
   defstruct [
+    :checkout_id,
     :customer_id,
     :email,
     :external_customer_id,
@@ -39,6 +42,6 @@ defmodule PolarExpress.Schemas.SeatAssign do
     :subscription_id
   ]
 
-  @schema_name "SeatAssign"
+  @schema_name "CustomerSeatAssign"
   def schema_name, do: @schema_name
 end
