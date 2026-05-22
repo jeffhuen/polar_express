@@ -41,7 +41,7 @@ defmodule PolarExpress.Services.BenefitsService do
   See `PolarExpress.Params.BenefitsDeleteBenefitParams` for parameter details.
   """
   @spec delete_benefit(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_benefit(client, id, params \\ %{}, opts \\ []) do
     Client.request(client, :delete, "/v1/benefits/#{id}", Keyword.merge(opts, params: params))
   end

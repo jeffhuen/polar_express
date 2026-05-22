@@ -14,11 +14,11 @@ if Code.ensure_loaded?(Plug.Conn) do
     Add to your endpoint *before* `Plug.Parsers` (which consumes the body):
 
         plug PolarExpress.WebhookPlug,
+          secret: {MyApp.Config, :polar_webhook_secret, []},
           path: "/webhook/polar"
 
-    The signing secret is read from `config :polar_express, :webhook_secret`.
-
-    To override the secret per-plug (e.g. multiple webhook endpoints):
+    To use multiple webhook endpoints with different secrets, configure each
+    plug separately:
 
         plug PolarExpress.WebhookPlug,
           secret: "whsec_other",
@@ -32,8 +32,7 @@ if Code.ensure_loaded?(Plug.Conn) do
 
     ## Options
 
-      * `:secret` - Signing secret (string or `{mod, fun, args}` MFA tuple).
-        Defaults to `Application.get_env(:polar_express, :webhook_secret)`.
+      * `:secret` - Signing secret (string or `{mod, fun, args}` MFA tuple). Required.
       * `:path` - Request path to match (string). Required.
       * `:tolerance` - Maximum event age in seconds (default: 300).
     """
@@ -46,6 +45,9 @@ if Code.ensure_loaded?(Plug.Conn) do
     def init(opts) do
       unless Keyword.has_key?(opts, :path),
         do: raise(ArgumentError, "PolarExpress.WebhookPlug requires :path option")
+
+      unless Keyword.has_key?(opts, :secret),
+        do: raise(ArgumentError, "PolarExpress.WebhookPlug requires :secret option")
 
       opts
     end
@@ -101,21 +103,7 @@ if Code.ensure_loaded?(Plug.Conn) do
     defp resolve_secret(opts) do
       case Keyword.get(opts, :secret) do
         nil ->
-          case Application.get_env(:polar_express, :webhook_secret) do
-            nil ->
-              raise ArgumentError, """
-              PolarExpress webhook secret not configured. Either:
-
-                  config :polar_express, webhook_secret: "whsec_..."
-
-              Or pass it explicitly:
-
-                  plug PolarExpress.WebhookPlug, secret: "whsec_...", path: "/webhook/polar"
-              """
-
-            secret ->
-              resolve_secret_value(secret)
-          end
+          raise ArgumentError, "PolarExpress.WebhookPlug requires :secret option"
 
         secret ->
           resolve_secret_value(secret)

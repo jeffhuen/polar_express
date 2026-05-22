@@ -37,7 +37,7 @@ defmodule PolarExpress.Services.OrganizationAccessTokensService do
   See `PolarExpress.Params.OrganizationAccessTokensDeleteParams` for parameter details.
   """
   @spec delete(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,

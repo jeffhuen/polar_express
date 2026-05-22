@@ -26,12 +26,14 @@ verifying the signature, deserializing the event, and assigning it to
 
 ### Setup
 
-First, configure your webhook secret (see [Getting Started](getting-started.md)):
+Expose your webhook secret from your application boundary. For Phoenix apps, an
+MFA helper keeps runtime secrets out of compile-time plug init:
 
 ```elixir
-# config/runtime.exs
-config :polar_express,
-  webhook_secret: System.fetch_env!("POLAR_WEBHOOK_SECRET")
+# lib/my_app/config.ex
+defmodule MyApp.Config do
+  def polar_webhook_secret, do: System.fetch_env!("POLAR_WEBHOOK_SECRET")
+end
 ```
 
 Then add the plug to your endpoint **before** `Plug.Parsers` (which consumes
@@ -41,6 +43,7 @@ the raw body):
 # lib/my_app_web/endpoint.ex
 
 plug PolarExpress.WebhookPlug,
+  secret: {MyApp.Config, :polar_webhook_secret, []},
   path: "/webhook/polar"
 
 # This must come AFTER WebhookPlug
@@ -48,8 +51,6 @@ plug Plug.Parsers,
   parsers: [:urlencoded, :multipart, :json],
   json_decoder: JSON
 ```
-
-The secret is read automatically from `config :polar_express, :webhook_secret`.
 
 ### Per-Plug Secret Override
 
@@ -74,7 +75,7 @@ plug PolarExpress.WebhookPlug,
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `:secret` | `String.t()` or `{mod, fun, args}` | from config | Webhook signing secret |
+| `:secret` | `String.t()` or `{mod, fun, args}` | required | Webhook signing secret |
 | `:path` | `String.t()` | required | Request path to match |
 | `:tolerance` | `integer()` | `300` | Maximum event age in seconds |
 

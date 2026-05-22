@@ -1,113 +1,141 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Common Changelog](https://common-changelog.org/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [0.1.6] - 2026-04-16
-
-### Added
-
-- Customer-portal email-change flow: `request_email_change`, `verify_email_change`, `check_email_change_token`
-- Members service with external-id lookups (get/update/delete by external id)
-- Metrics service with metric-dashboard CRUD and metrics export
-- `pending_subscription_update`, `subscription_updated_event` and related metadata schemas (billing period, discount, product, seats, trial)
-- `order_voided_event` and `order_voided_metadata`
-- `payment_failed`, `manual_retry_limit_exceeded` event schemas
-- Organization legal-entity schemas (`organization_company_legal_entity_schema`, `organization_individual_legal_entity_schema`)
-- `meter_unit`, `seat_tier_type`, `tax_behavior_option`, `customer_portal_customer_settings`, `organization_customer_email_settings`
-- Expanded coverage on benefits, custom fields, discounts, events, meters, organizations, subscriptions resources
+## [0.2.0] - 2026-05-22
 
 ### Changed
 
-- Split `Customer`/`CustomerCreate`/`CustomerState` into individual and team variants (`customer_individual`, `customer_team`, `customer_state_individual`, `customer_state_team`, `customer_individual_create`, `customer_team_create`)
-- Rename `OwnerCreate` → `MemberOwnerCreate`
-- Rename `ListResource_` → `ListResourcePayment_`
-- Expand `presentment_currency` enum values
+- **Breaking:** require explicit API keys in `PolarExpress.client/1` and `PolarExpress.client/2` instead of reading global application config ([0.2.0])
+- **Breaking:** make `PolarExpress.client/0` raise with explicit credential guidance instead of building a config-backed client ([0.2.0])
+- **Breaking:** require applications to supervise the default Finch pool explicitly with `PolarExpress.child_spec/1` or pass a custom `:finch` pool ([0.2.0])
+- **Breaking:** require `PolarExpress.WebhookPlug` to receive an explicit `:secret` instead of reading `:webhook_secret` from global application config ([0.2.0])
+- Return raw response maps from CSV export service functions instead of JSON-decoding export bodies ([0.2.0])
+- Resolve polymorphic response variants only when raw JSON keys identify exactly one variant ([0.2.0])
+
+### Added
+
+- Add `PolarExpress.child_spec/1` for supervising the default `PolarExpress.Finch` pool ([0.2.0])
+- Add public `response_data` and `raw_response` response types on `PolarExpress.Client` ([0.2.0])
+- Add `:invalid_response_error` for successful HTTP responses with invalid JSON bodies ([0.2.0])
+- Add ExSlop to the Credo quality gate for generated-code slop checks ([0.2.0])
+
+### Removed
+
+- **Breaking:** remove the auto-started `PolarExpress.Application` callback from package startup ([0.2.0])
+
+### Fixed
+
+- Fix `Client.request/4` to report non-JSON `2xx` responses as errors instead of ambiguous `%{"raw" => body}` successes ([0.2.0])
+- Fix `Client.request/4` specs to include `nil` for `204 No Content` responses ([0.2.0])
+- Fix `Client.raw_request/4` to return `PolarExpress.Error` for non-`2xx` API responses ([0.2.0])
+- Tighten `Deserializer.cast/2` specs so Dialyzer can detect request return-shape mismatches ([0.2.0])
+- Generate `Client.raw_request/4` calls for OpenAPI operations that return non-JSON success bodies ([0.2.0])
+
+## [0.1.6] - 2026-04-16
+
+### Changed
+
+- Split customer schemas into individual and team variants for reads, creates, and state responses ([`7d439c2`])
+- Rename generated `OwnerCreate` and `ListResource_` schemas to match the latest OpenAPI names ([`7d439c2`])
+- Expand generated `presentment_currency` enum values from the latest OpenAPI spec ([`7d439c2`])
+
+### Added
+
+- Add customer-portal email-change endpoints, members external-id lookups, metrics dashboards, and metrics export support ([`7d439c2`])
+- Add generated subscription update, order voided, payment failure, organization legal-entity, meter, seat-tier, tax, and settings schemas ([`7d439c2`])
+- Add expanded generated API coverage for benefits, custom fields, discounts, events, meters, organizations, and subscriptions ([`7d439c2`])
+
+### Fixed
+
+- Fix generated schema property merging across `oneOf` and `anyOf` branches ([`dc300f2`])
+- Add `rustyjson` to Dialyzer PLT applications so analysis can run cleanly ([`66d43a5`])
 
 ## [0.1.5] - 2026-03-03
 
 ### Changed
 
-- Sync OpenAPI spec — adds feature flag benefits, multi-currency support, removes `CustomerWithMembers` and `MemberSession` schemas, updates customers service to return `Customer` directly
-- Decouple client and deserializer tests from generated schemas using stable test fixtures (`test/support/fixtures.ex`) so upstream spec changes no longer break CI
+- Sync the generated SDK with Polar's multi-currency OpenAPI update ([`4b19808`])
+- Decouple client and deserializer tests from generated schemas using stable fixtures ([`f7d11a7`])
+
+### Added
+
+- Add the `membersessions` JavaScript SDK parity alias while it is absent from the public OpenAPI spec ([`4b19808`])
 
 ### Fixed
 
-- Fix CI failures caused by upstream Polar API removing `CustomerWithMembers` schema and `recurring_interval` field from `ProductPriceSeatBased`
-- Add `membersessions` JS SDK parity alias (service not yet in public OpenAPI spec)
+- Fix CI failures from upstream removal of `CustomerWithMembers` and `ProductPriceSeatBased.recurring_interval` ([`f7d11a7`])
 
 ## [0.1.4] - 2026-02-17
 
 ### Changed
 
-- Exclude code generator and `mix polar_express.generate` task from hex package — the package is regenerated weekly from the latest Polar OpenAPI spec, so end users only need the generated output; contributors who need immediate regeneration can use `mix polar_express.generate` from the repo. This also drops the `rustyjson` transitive dependency
+- Exclude the code generator and `mix polar_express.generate` task from the Hex package ([`42f4650`])
+- Make `rustyjson` a dev/test-only dependency after excluding generator code from the package ([`46c322f`])
 
 ## [0.1.3] - 2026-02-16
 
 ### Fixed
 
-- Use `String.to_existing_atom/1` instead of `String.to_atom/1` when parsing API error type strings to prevent atom table exhaustion from unexpected error types
+- Use `String.to_existing_atom/1` for API error type parsing to prevent atom table exhaustion from unexpected error types ([`b719873`])
 
 ## [0.1.2] - 2026-02-12
 
 ### Added
 
-- Support for `oneOf` / `anyOf` polymorphism (e.g., `BenefitCreate`), generating Union types
-- Support for `prefixItems` (tuple arrays) in OpenAPI schemas, resolving to Union lists (e.g., `Customer.tax_id`)
+- Add generated `oneOf`, `anyOf`, `prefixItems`, typed-map, polymorphic, and nested-array support ([`0d0e648`])
+- Add missing generated `CustomerPortalOAuthAccount` schema support for `oauth_accounts` fields ([`0d0e648`])
 
 ### Fixed
 
-- Correctly generate typed maps for `additionalProperties` (e.g., `CheckoutPublicConfirmed.prices`) instead of generic `map()`
-- Add missing `CustomerPortalOAuthAccount` schema to support `oauth_accounts` field throughout the API
-- Fix `Enum` module generation to prevent truncation of large value lists (e.g., `CountryAlpha2`)
-- Resolve all compiler warnings in generator logic
+- Fix generated enum modules so large value lists are not truncated ([`0d0e648`])
+- Fix compiler warnings in generator logic ([`0d0e648`])
 
 ## [0.1.1] - 2026-02-11
 
 ### Changed
 
-- Wire webhook event deserialization through generated `EventTypes` registry instead of hardcoded map in `Webhook`
-- Add `@type t`, `@typedoc`, and `@spec` to all generated per-event modules
-- Type the `data` field on event structs to the correct schema (e.g., `Order.t()` instead of `map()`)
-- Replace `event_type_to_data_ref` string registry with `event_type_to_schema` returning full module atoms
-- Populate `event_type_to_module` mapping for all 35 webhook event types
+- Wire webhook event deserialization through the generated `EventTypes` registry ([`dd54197`])
+- Add typed modules and typed event `data` fields for generated webhook events ([`dd54197`])
 
 ### Removed
 
-- Remove `ObjectTypes` registry module (Stripe-ism, unused by Polar API)
-- Remove Stripe dead code from generator: `x-stripeEvent` parsing, thin event support, `lookup_type/0`
-- Remove `webhook_data_schemas` from spec struct (now derived from `event_types`)
+- Remove unused Stripe-derived registry and generator code from the Polar SDK ([`dd54197`])
 
 ### Fixed
 
-- Fix package description exceeding Hex.pm 300-character limit
-- Remove missing `.formatter.exs` from package file list
-- Fix generator outputting registry files to `lib/stripe/` instead of `lib/polar_express/`
-- Fix `EventTypes.event_type_to_data_ref` mapping all events to `nil`
-- Fix doctest in `Naming.module_to_path/1` referencing `lib/stripe/`
+- Fix Standard Webhooks verification behavior in webhook handling ([`c4e7f55`])
+- Fix package metadata issues that prevented Hex publication ([`430c39a`])
+- Fix CI to call `mix polar_express.generate` instead of the old task name ([`0df0843`])
+- Fix generator paths that still emitted registry files under `lib/stripe/` ([`dd54197`])
 
-## v0.1.0
+## [0.1.0] - 2026-02-11
 
-Initial release.
+_Initial release._
 
-### Features
+### Added
 
-- Full API coverage (31 service modules matching the JavaScript SDK layout)
-- Auto-generated from the Polar OpenAPI spec
-- Typed Elixir structs for 30 resource types with inner type deserialization
-- List pagination (`ListObject.auto_paging_stream/3`)
-- Webhook signature verification via standardwebhooks (`Webhook.construct_event/4`)
-- `WebhookPlug` for Plug/Phoenix integration
-- OAuth support (`authorize_url`, `token`, `deauthorize`)
-- Multipart file uploads
-- Streaming response support (`Client.stream_request/6`)
-- Raw request support (`Client.raw_request/4`)
-- Per-event typed modules (36 event types with nested data structs)
-- Ownership-based test stubs (`PolarExpress.Test`)
-- Retry with exponential backoff and jitter
-- Telemetry events for request lifecycle
-- Finch HTTP client (Mint + NimblePool)
-- RustyJSON for fast JSON parsing (Rust NIF)
-- 1:1 feature parity with the official JavaScript SDK
+- Add generated Polar API services, resources, params, schemas, and event modules with JavaScript SDK parity ([`693a87e`])
+- Add list pagination, raw requests, streaming requests, retries, telemetry, OAuth, webhooks, and test stubs ([`693a87e`])
+- Add Finch-backed HTTP client and RustyJSON-backed JSON decoding ([`693a87e`])
+
+[0.2.0]: https://github.com/jeffhuen/polar_express/compare/66d43a5...HEAD
+[0.1.6]: https://github.com/jeffhuen/polar_express/commit/7d439c227951918e05277783dc55c7f5ab1b1359
+[0.1.5]: https://github.com/jeffhuen/polar_express/commit/4b198081298905870f66c02cd8d7458a99a2083b
+[0.1.4]: https://github.com/jeffhuen/polar_express/commit/42f4650a6585964d8e0028bdede8ed214a076508
+[0.1.3]: https://github.com/jeffhuen/polar_express/commit/b719873300d4820887070d3339f7709a435f6991
+[0.1.2]: https://github.com/jeffhuen/polar_express/commit/0d0e648d23ecda40ad629f2dad17ec24d063eee8
+[0.1.1]: https://github.com/jeffhuen/polar_express/commit/dd541976cd373f48056de1790f975e8754eabeab
+[0.1.0]: https://github.com/jeffhuen/polar_express/commit/693a87efc6e2cc967c328c594982c3d3c849345d
+[`7d439c2`]: https://github.com/jeffhuen/polar_express/commit/7d439c227951918e05277783dc55c7f5ab1b1359
+[`dc300f2`]: https://github.com/jeffhuen/polar_express/commit/dc300f26689f3a29b5040c6d3b226c0790ce1a96
+[`66d43a5`]: https://github.com/jeffhuen/polar_express/commit/66d43a5e8fe9b3d33b083fe47f0d6a486844d29a
+[`4b19808`]: https://github.com/jeffhuen/polar_express/commit/4b198081298905870f66c02cd8d7458a99a2083b
+[`f7d11a7`]: https://github.com/jeffhuen/polar_express/commit/f7d11a72cbae1e1cc11fb7ec77db90f134a423d5
+[`42f4650`]: https://github.com/jeffhuen/polar_express/commit/42f4650a6585964d8e0028bdede8ed214a076508
+[`46c322f`]: https://github.com/jeffhuen/polar_express/commit/46c322f9577c77c64dc020177204677db89f93bf
+[`b719873`]: https://github.com/jeffhuen/polar_express/commit/b719873300d4820887070d3339f7709a435f6991
+[`0d0e648`]: https://github.com/jeffhuen/polar_express/commit/0d0e648d23ecda40ad629f2dad17ec24d063eee8
+[`dd54197`]: https://github.com/jeffhuen/polar_express/commit/dd541976cd373f48056de1790f975e8754eabeab
+[`c4e7f55`]: https://github.com/jeffhuen/polar_express/commit/c4e7f55f93b03af26e3eb73a01c098e0a0300604
+[`430c39a`]: https://github.com/jeffhuen/polar_express/commit/430c39a8d429f2850750bfaf179588a2716204ac
+[`0df0843`]: https://github.com/jeffhuen/polar_express/commit/0df0843f1c8bd284150574686d4e1f34bb7e86d0
+[`693a87e`]: https://github.com/jeffhuen/polar_express/commit/693a87efc6e2cc967c328c594982c3d3c849345d

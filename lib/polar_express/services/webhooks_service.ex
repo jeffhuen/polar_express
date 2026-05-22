@@ -37,7 +37,7 @@ defmodule PolarExpress.Services.WebhooksService do
   See `PolarExpress.Params.WebhooksDeleteWebhookEndpointParams` for parameter details.
   """
   @spec delete_webhook_endpoint(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_webhook_endpoint(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
@@ -119,7 +119,7 @@ defmodule PolarExpress.Services.WebhooksService do
   See `PolarExpress.Params.WebhooksRedeliverWebhookEventParams` for parameter details.
   """
   @spec redeliver_webhook_event(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def redeliver_webhook_event(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,

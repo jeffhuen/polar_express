@@ -51,7 +51,7 @@ defmodule PolarExpress.Services.CustomersService do
   See `PolarExpress.Params.CustomersDeleteCustomerParams` for parameter details.
   """
   @spec delete_customer(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_customer(client, id, params \\ %{}, opts \\ []) do
     Client.request(client, :delete, "/v1/customers/#{id}", Keyword.merge(opts, params: params))
   end
@@ -70,7 +70,7 @@ defmodule PolarExpress.Services.CustomersService do
   See `PolarExpress.Params.CustomersDeleteCustomerByExternalIdParams` for parameter details.
   """
   @spec delete_customer_by_external_id(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_customer_by_external_id(client, external_id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
@@ -90,9 +90,9 @@ defmodule PolarExpress.Services.CustomersService do
   See `PolarExpress.Params.CustomersExportCustomersParams` for parameter details.
   """
   @spec export_customers(Client.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.raw_response()} | {:error, PolarExpress.Error.t()}
   def export_customers(client, params \\ %{}, opts \\ []) do
-    Client.request(client, :get, "/v1/customers/export", Keyword.merge(opts, params: params))
+    Client.raw_request(client, :get, "/v1/customers/export", Keyword.merge(opts, params: params))
   end
 
   @doc """

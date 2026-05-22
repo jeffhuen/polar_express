@@ -4,10 +4,6 @@ defmodule PolarExpress.Client do
 
   Create a client via `PolarExpress.client/1` or `PolarExpress.client/2`:
 
-      # From application config
-      client = PolarExpress.client()
-
-      # With explicit API key
       client = PolarExpress.client("pk_test_...", server: :sandbox)
 
       # Execute a request
@@ -17,6 +13,11 @@ defmodule PolarExpress.Client do
   alias PolarExpress.{Deserializer, Error}
 
   @type server :: :production | :sandbox
+  @type scalar :: String.t() | number() | boolean() | atom() | nil
+  @type json_value :: scalar() | [json_value()] | %{optional(String.t()) => json_value()}
+  @type response_data :: struct() | PolarExpress.ListObject.t() | json_value()
+  @type raw_response :: %{status: integer(), headers: list(), body: binary()}
+
   @type t :: %__MODULE__{
           api_key: String.t(),
           server: server(),
@@ -43,7 +44,7 @@ defmodule PolarExpress.Client do
     * `:params` - Request parameters (map)
   """
   @spec request(t(), atom(), String.t(), keyword()) ::
-          {:ok, struct() | map()} | {:error, Error.t()}
+          {:ok, response_data()} | {:error, Error.t()}
   def request(%__MODULE__{} = client, method, path, opts \\ []) do
     {resource_mod, opts} = Keyword.pop(opts, :resource)
     params = Keyword.get(opts, :params, %{})
@@ -96,13 +97,14 @@ defmodule PolarExpress.Client do
   end
 
   @doc """
-  Execute an API request and return the raw response without deserialization.
+  Execute an API request and return the raw successful response without
+  deserialization.
 
-  Returns `{:ok, %{status: integer, headers: list, body: binary}}` on success,
-  or `{:error, Error.t()}` on failure.
+  Returns `{:ok, %{status: integer, headers: list, body: binary}}` for `2xx`
+  responses, or `{:error, Error.t()}` on API or connection failures.
   """
   @spec raw_request(t(), atom(), String.t(), keyword()) ::
-          {:ok, %{status: integer(), headers: list(), body: binary()}} | {:error, Error.t()}
+          {:ok, raw_response()} | {:error, Error.t()}
   def raw_request(%__MODULE__{} = client, method, path, opts \\ []) do
     params = Keyword.get(opts, :params, %{})
     url = client.base_url <> path
@@ -111,8 +113,11 @@ defmodule PolarExpress.Client do
     {url, headers, body} = encode_request(method, url, headers, params)
 
     case do_request(client, %{method: method, url: url, headers: headers, body: body}) do
-      {:ok, status, resp_headers, resp_body} ->
+      {:ok, status, resp_headers, resp_body} when status in 200..299 ->
         {:ok, %{status: status, headers: resp_headers, body: resp_body}}
+
+      {:ok, status, resp_headers, resp_body} ->
+        {:error, Error.from_response(status, resp_body, resp_headers)}
 
       {:error, reason} ->
         {:error, Error.connection_error("Request failed: #{inspect(reason)}")}
@@ -204,7 +209,7 @@ defmodule PolarExpress.Client do
         {{:ok, nil}, response_meta(204, resp_headers, attempt)}
 
       {:ok, status, resp_headers, resp_body} when status in 200..299 ->
-        result = decode_success(resp_body, cast_opts)
+        result = decode_success(status, resp_headers, resp_body, cast_opts)
         {result, response_meta(status, resp_headers, attempt)}
 
       {:ok, status, resp_headers, resp_body} ->
@@ -237,11 +242,20 @@ defmodule PolarExpress.Client do
     %{http_status: http_status, num_retries: num_retries, request_id: request_id}
   end
 
-  defp decode_success(resp_body, cast_opts) do
+  defp decode_success(status, resp_headers, resp_body, cast_opts) do
     case JSON.decode(resp_body) do
       {:ok, data} -> {:ok, Deserializer.cast(data, cast_opts)}
-      {:error, _} -> {:ok, %{"raw" => resp_body}}
+      {:error, _} -> {:error, invalid_json_response(status, resp_headers, resp_body)}
     end
+  end
+
+  defp invalid_json_response(status, resp_headers, resp_body) do
+    Error.invalid_response_error(
+      "Expected a JSON response body. Use raw_request/4 for non-JSON responses.",
+      status,
+      resp_body,
+      resp_headers
+    )
   end
 
   # Check for a test stub first; fall through to Finch if none registered.

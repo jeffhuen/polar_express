@@ -65,7 +65,7 @@ defmodule PolarExpress.Services.CustomerPortal.MembersService do
   See `PolarExpress.Params.CustomerPortal.MembersRemoveMemberParams` for parameter details.
   """
   @spec remove_member(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def remove_member(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,

@@ -31,7 +31,7 @@ defmodule PolarExpress.Services.Oauth2Service do
   See `PolarExpress.Params.Oauth2CreateClientParams` for parameter details.
   """
   @spec create_client(Client.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def create_client(client, params \\ %{}, opts \\ []) do
     Client.request(client, :post, "/v1/oauth2/register", Keyword.merge(opts, params: params))
   end
@@ -44,7 +44,7 @@ defmodule PolarExpress.Services.Oauth2Service do
   See `PolarExpress.Params.Oauth2DeleteClientParams` for parameter details.
   """
   @spec delete_client(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_client(client, client_id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
@@ -62,7 +62,7 @@ defmodule PolarExpress.Services.Oauth2Service do
   See `PolarExpress.Params.Oauth2GetClientParams` for parameter details.
   """
   @spec get_client(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def get_client(client, client_id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
@@ -153,7 +153,7 @@ defmodule PolarExpress.Services.Oauth2Service do
   See `PolarExpress.Params.Oauth2UpdateClientParams` for parameter details.
   """
   @spec update_client(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def update_client(client, client_id, params \\ %{}, opts \\ []) do
     Client.request(
       client,

@@ -37,7 +37,7 @@ defmodule PolarExpress.Services.DiscountsService do
   See `PolarExpress.Params.DiscountsDeleteDiscountParams` for parameter details.
   """
   @spec delete_discount(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_discount(client, id, params \\ %{}, opts \\ []) do
     Client.request(client, :delete, "/v1/discounts/#{id}", Keyword.merge(opts, params: params))
   end

@@ -2,6 +2,7 @@ defmodule PolarExpress.StreamingTest do
   use ExUnit.Case, async: true
 
   alias PolarExpress.Client
+  alias PolarExpress.Services.CustomersService
 
   setup do
     client = PolarExpress.client("pk_test_123")
@@ -42,6 +43,49 @@ defmodule PolarExpress.StreamingTest do
       {:ok, resp} = Client.raw_request(client, :get, "/v1/charges", params: %{"limit" => 5})
 
       assert resp.status == 200
+    end
+
+    test "returns error tuple on non-2xx HTTP response", %{client: client} do
+      PolarExpress.Test.stub(fn _req ->
+        {422, [{"request-id", "req_validation"}],
+         ~s({"type": "ValidationError", "detail": "Invalid params"})}
+      end)
+
+      assert {:error, %PolarExpress.Error{} = error} =
+               Client.raw_request(client, :get, "/v1/charges")
+
+      assert error.type == :validation_error
+      assert error.http_status == 422
+      assert error.request_id == "req_validation"
+    end
+  end
+
+  describe "CSV export services" do
+    test "return raw responses instead of JSON-decoding CSV", %{client: client} do
+      PolarExpress.Test.stub(fn %{method: :get, url: url} ->
+        assert url =~ "/v1/customers/export"
+        {200, [{"content-type", "text/csv"}], "id,email\ncus_123,jane@example.com\n"}
+      end)
+
+      assert {:ok, response} = CustomersService.export_customers(client, %{})
+
+      assert response.status == 200
+      assert response.body =~ "cus_123"
+      assert response.headers == [{"content-type", "text/csv"}]
+    end
+
+    test "return API errors for non-2xx export responses", %{client: client} do
+      PolarExpress.Test.stub(fn %{method: :get, url: url} ->
+        assert url =~ "/v1/customers/export"
+        {422, [], ~s({"type": "HttpValidationError", "detail": "Invalid filter"})}
+      end)
+
+      assert {:error, %PolarExpress.Error{} = error} =
+               CustomersService.export_customers(client, %{})
+
+      assert error.type == :validation_error
+      assert error.http_status == 422
+      assert error.detail == "Invalid filter"
     end
   end
 

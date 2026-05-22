@@ -1,7 +1,11 @@
 defmodule PolarExpress.Deserializer do
   @moduledoc false
 
-  @spec cast(map() | list() | term(), keyword()) :: struct() | map() | list() | term()
+  @type scalar :: String.t() | number() | boolean() | atom() | nil
+  @type json_value :: scalar() | [json_value()] | %{optional(String.t()) => json_value()}
+  @type cast_result :: struct() | PolarExpress.ListObject.t() | json_value()
+
+  @spec cast(json_value(), keyword()) :: cast_result()
   def cast(data, opts \\ [])
 
   # Polar paginated list — detected by items + pagination keys
@@ -141,19 +145,14 @@ defmodule PolarExpress.Deserializer do
     _ = Code.ensure_loaded(module)
     {prop, mapping} = module.__discriminator__()
 
-    case Map.get(raw, prop) do
-      nil ->
-        # Discriminator field missing — fall back to variant matching
-        resolve_variants(module.__variants__(), raw)
+    case Map.fetch(raw, prop) do
+      :error ->
+        raw
 
-      value ->
-        case Map.get(mapping, value) do
-          nil ->
-            # Unknown discriminator value — fall back to variant matching
-            resolve_variants(module.__variants__(), raw)
-
-          target ->
-            populate_struct(target, raw)
+      {:ok, value} ->
+        case Map.fetch(mapping, value) do
+          {:ok, target} -> populate_struct(target, raw)
+          :error -> raw
         end
     end
   end
@@ -164,6 +163,7 @@ defmodule PolarExpress.Deserializer do
     # Try discriminated resolution first for any module that has a discriminator
     case try_discriminated_modules(modules, raw) do
       {:ok, result} -> result
+      :unknown_discriminator -> raw
       :none -> score_match_variants(modules, raw)
     end
   end
@@ -182,13 +182,16 @@ defmodule PolarExpress.Deserializer do
 
   defp try_discriminator(module, raw, acc) do
     {prop, mapping} = module.__discriminator__()
-    value = Map.get(raw, prop)
-    target = if value, do: Map.get(mapping, value)
 
-    if target do
-      {:halt, {:ok, populate_struct(target, raw)}}
-    else
-      {:cont, acc}
+    case Map.fetch(raw, prop) do
+      :error ->
+        {:cont, acc}
+
+      {:ok, value} ->
+        case Map.fetch(mapping, value) do
+          {:ok, target} -> {:halt, {:ok, populate_struct(target, raw)}}
+          :error -> {:cont, :unknown_discriminator}
+        end
     end
   end
 
@@ -217,9 +220,8 @@ defmodule PolarExpress.Deserializer do
       end)
       |> Enum.uniq()
 
-    # Score each concrete module by how well its struct fields match the raw data
-    scored =
-      Enum.map(concrete, fn module ->
+    candidates =
+      Enum.filter(concrete, fn module ->
         struct_keys =
           module.__struct__()
           |> Map.keys()
@@ -227,14 +229,11 @@ defmodule PolarExpress.Deserializer do
           |> Enum.map(&Atom.to_string/1)
           |> MapSet.new()
 
-        present = MapSet.intersection(struct_keys, raw_keys) |> MapSet.size()
-        missing = MapSet.difference(struct_keys, raw_keys) |> MapSet.size()
-        {module, present, missing}
+        MapSet.size(raw_keys) > 0 and MapSet.subset?(raw_keys, struct_keys)
       end)
 
-    # Pick the best match: highest present count, then lowest missing count
-    case Enum.max_by(scored, fn {_, present, missing} -> {present, -missing} end, fn -> nil end) do
-      {module, present, _missing} when present > 0 -> populate_struct(module, raw)
+    case candidates do
+      [module] -> populate_struct(module, raw)
       _ -> raw
     end
   end

@@ -42,9 +42,14 @@ defmodule PolarExpress.Services.SubscriptionsService do
   See `PolarExpress.Params.SubscriptionsExportSubscriptionsParams` for parameter details.
   """
   @spec export_subscriptions(Client.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.raw_response()} | {:error, PolarExpress.Error.t()}
   def export_subscriptions(client, params \\ %{}, opts \\ []) do
-    Client.request(client, :get, "/v1/subscriptions/export", Keyword.merge(opts, params: params))
+    Client.raw_request(
+      client,
+      :get,
+      "/v1/subscriptions/export",
+      Keyword.merge(opts, params: params)
+    )
   end
 
   @doc """

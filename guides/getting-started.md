@@ -16,11 +16,10 @@ mix igniter.install polar_express
 
 This will:
 
-- Add API key config to `config/dev.exs`
-- Add runtime env var config to `config/runtime.exs`
 - Add `PolarExpress.WebhookPlug` to your endpoint (before `Plug.Parsers`)
 - Scaffold a `PolarWebhookController` with event handler stubs
 - Add the webhook route to your router
+- Show where to start the Finch pool and pass credentials explicitly
 
 Igniter shows a diff of all changes for your approval before writing anything.
 See the [Igniter Installer](igniter-installer.md) guide for a detailed
@@ -43,98 +42,80 @@ Requires Elixir 1.19+ and OTP 27+.
 
 ## Configuration
 
-Add your PolarExpress credentials to your application config. The recommended
-pattern is to use `config/dev.exs` for sandbox keys and `config/runtime.exs`
-for production:
+PolarExpress does not read `config :polar_express`. Read credentials from your
+own application boundary, then pass them to `PolarExpress.client/1` or
+`PolarExpress.client/2`.
+
+Start the default Finch pool in your application supervision tree:
 
 ```elixir
-# config/dev.exs
-import Config
-
-config :polar_express,
-  api_key: "pk_test_...",
-  webhook_secret: "whsec_test_..."
+# lib/my_app/application.ex
+children = [
+  PolarExpress
+]
 ```
+
+If you already run your own Finch pool, pass its name when creating the client:
 
 ```elixir
-# config/runtime.exs
-import Config
+children = [
+  {Finch, name: MyApp.Finch}
+]
 
-if config_env() == :prod do
-  config :polar_express,
-    api_key: System.fetch_env!("POLAR_ACCESS_TOKEN"),
-    webhook_secret: System.fetch_env!("POLAR_WEBHOOK_SECRET")
-end
+client = PolarExpress.client("pk_test_...", finch: MyApp.Finch)
 ```
 
-### All Config Options
+### Client Options
 
 The only required key is `:api_key`. Everything else has sensible defaults:
 
 ```elixir
-config :polar_express,
-  # Required
+PolarExpress.client(
   api_key: "pk_test_...",
-
-  # Webhooks (required if using WebhookPlug)
-  webhook_secret: "whsec_...",
-
-  # Optional — all have defaults if omitted
-  server: :sandbox,                  # :sandbox or :production (default: :production)
-  max_retries: 3,                    # default: 2
-  timeout_ms: 60_000,               # request timeout in ms (default: 30,000)
-  finch: MyApp.Finch                 # custom Finch pool (default: PolarExpress.Finch)
+  server: :sandbox,
+  max_retries: 3,
+  timeout_ms: 60_000,
+  finch: MyApp.Finch
+)
 ```
 
-| Key | Used By | Default | Description |
-|-----|---------|---------|-------------|
-| `:api_key` | `PolarExpress.client/0,1,2` | required | Polar API key |
-| `:webhook_secret` | `PolarExpress.WebhookPlug` | — | Webhook signing secret |
-| `:server` | `PolarExpress.client/0,1,2` | `:production` | API environment (`:sandbox` or `:production`) |
-| `:max_retries` | `PolarExpress.client/0,1,2` | `2` | Max retry attempts |
-| `:timeout_ms` | `PolarExpress.client/0,1,2` | `30_000` | Request timeout in ms |
-| `:finch` | `PolarExpress.client/0,1,2` | `PolarExpress.Finch` | Custom Finch pool name |
+| Key | Default | Description |
+|-----|---------|-------------|
+| `:api_key` | required | Polar API key |
+| `:server` | `:production` | API environment (`:sandbox` or `:production`) |
+| `:max_retries` | `2` | Max retry attempts |
+| `:timeout_ms` | `30_000` | Request timeout in ms |
+| `:finch` | `PolarExpress.Finch` | Finch pool name |
 
 ## Creating a Client
 
-Once configured, create a client with no arguments — it reads from your config
-automatically:
+Create a client with an explicit API key:
 
 ```elixir
-client = PolarExpress.client()
+client = PolarExpress.client(System.fetch_env!("POLAR_ACCESS_TOKEN"))
 ```
 
-### Overriding Config
+### Per-Client Options
 
-Pass options to override any config value for a specific client:
+Pass options for a specific client:
 
 ```elixir
 # Override the server environment
-client = PolarExpress.client(server: :production)
+client = PolarExpress.client("pk_test_...", server: :production)
 
 # Override retries and timeout
-client = PolarExpress.client(max_retries: 5, timeout_ms: 60_000)
+client = PolarExpress.client("pk_test_...", max_retries: 5, timeout_ms: 60_000)
 ```
 
-### Explicit API Key
+### Keyword API Key
 
-Pass a string to use a different API key (config defaults still apply for
-other options):
+You can also pass the key in keyword options:
 
 ```elixir
-client = PolarExpress.client("pk_test_other_key")
-client = PolarExpress.client("pk_test_other_key", max_retries: 5)
+client = PolarExpress.client(api_key: "pk_test_...", server: :sandbox)
 ```
 
-### Config Precedence
-
-Options are resolved in this order (highest wins):
-
-1. Explicit arguments to `client/1` or `client/2`
-2. Application config (`config :polar_express, ...`)
-3. Struct defaults (e.g. `max_retries: 2`)
-
-Clients are plain structs with no global state — safe for concurrent use
+Clients are plain structs with no global app config — safe for concurrent use
 with multiple API keys.
 
 ## Making API Calls
@@ -218,11 +199,7 @@ Failed requests (network errors, 408, 409, 429, 500, 502, 503, 504) are automati
 with exponential backoff and jitter.
 
 ```elixir
-# Via config
-config :polar_express, max_retries: 5
-
-# Or per-client
-client = PolarExpress.client(max_retries: 5)
+client = PolarExpress.client("pk_test_...", max_retries: 5)
 ```
 
 Idempotency keys can be passed for idempotent operations:

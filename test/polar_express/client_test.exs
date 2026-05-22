@@ -4,7 +4,7 @@ defmodule PolarExpress.ClientTest do
   alias PolarExpress.Client
   alias PolarExpress.Test.Fixtures, as: F
 
-  describe "client/0 (from config)" do
+  describe "client/0" do
     setup do
       on_exit(fn ->
         Application.delete_env(:polar_express, :api_key)
@@ -16,42 +16,16 @@ defmodule PolarExpress.ClientTest do
       :ok
     end
 
-    test "creates client from application config" do
+    test "does not read application config" do
       Application.put_env(:polar_express, :api_key, "pk_test_from_config")
-      client = PolarExpress.client()
-      assert client.api_key == "pk_test_from_config"
-    end
 
-    test "raises when api_key not configured" do
-      Application.delete_env(:polar_express, :api_key)
-
-      assert_raise ArgumentError, ~r/Polar API key not configured/, fn ->
+      assert_raise ArgumentError, ~r/pass an API key explicitly/, fn ->
         PolarExpress.client()
       end
     end
-
-    test "merges config options into client" do
-      Application.put_env(:polar_express, :api_key, "pk_test_cfg")
-      Application.put_env(:polar_express, :max_retries, 5)
-      Application.put_env(:polar_express, :server, :sandbox)
-
-      client = PolarExpress.client()
-      assert client.api_key == "pk_test_cfg"
-      assert client.max_retries == 5
-      assert client.server == :sandbox
-    end
-
-    test "ignores non-client config keys like webhook_secret" do
-      Application.put_env(:polar_express, :api_key, "pk_test_cfg")
-      Application.put_env(:polar_express, :webhook_secret, "whsec_123")
-
-      client = PolarExpress.client()
-      assert client.api_key == "pk_test_cfg"
-      # webhook_secret is not a field on Client struct — no crash
-    end
   end
 
-  describe "client/1 (keyword overrides)" do
+  describe "client/1 (keyword opts)" do
     setup do
       on_exit(fn ->
         Application.delete_env(:polar_express, :api_key)
@@ -61,46 +35,41 @@ defmodule PolarExpress.ClientTest do
       :ok
     end
 
-    test "overrides config with keyword opts" do
-      Application.put_env(:polar_express, :api_key, "pk_test_cfg")
+    test "uses only explicit keyword opts" do
       Application.put_env(:polar_express, :max_retries, 5)
 
-      client = PolarExpress.client(max_retries: 10)
-      assert client.api_key == "pk_test_cfg"
-      assert client.max_retries == 10
-    end
-
-    test "keyword opts can provide api_key" do
       client = PolarExpress.client(api_key: "pk_test_kwarg")
       assert client.api_key == "pk_test_kwarg"
+      assert client.max_retries == 2
+    end
+
+    test "raises when keyword opts do not include api_key" do
+      assert_raise ArgumentError, ~r/pass an API key explicitly/, fn ->
+        PolarExpress.client(max_retries: 10)
+      end
     end
   end
 
   describe "client/2 (explicit key + opts)" do
     setup do
       on_exit(fn ->
+        Application.delete_env(:polar_express, :api_key)
         Application.delete_env(:polar_express, :max_retries)
       end)
 
       :ok
     end
 
-    test "explicit key takes precedence over config" do
+    test "does not merge application config defaults" do
       Application.put_env(:polar_express, :api_key, "pk_test_cfg")
+      Application.put_env(:polar_express, :max_retries, 5)
+
       client = PolarExpress.client("pk_test_explicit")
       assert client.api_key == "pk_test_explicit"
+      assert client.max_retries == 2
     end
 
-    test "merges config defaults with explicit opts" do
-      Application.put_env(:polar_express, :max_retries, 5)
-      client = PolarExpress.client("pk_test_key", server: :sandbox)
-      assert client.api_key == "pk_test_key"
-      assert client.max_retries == 5
-      assert client.server == :sandbox
-    end
-
-    test "explicit opts override config" do
-      Application.put_env(:polar_express, :max_retries, 5)
+    test "uses explicit opts" do
       client = PolarExpress.client("pk_test_key", max_retries: 10)
       assert client.max_retries == 10
     end
@@ -339,6 +308,27 @@ defmodule PolarExpress.ClientTest do
 
       client = PolarExpress.client("pk_test_123")
       assert {:ok, _} = Client.request(client, :get, "/v1/organizations/")
+    end
+
+    test "returns nil for 204 responses" do
+      PolarExpress.Test.stub(fn _req ->
+        {204, [], ""}
+      end)
+
+      client = PolarExpress.client("pk_test_123")
+      assert {:ok, nil} = Client.request(client, :delete, "/v1/customers/cus_123")
+    end
+
+    test "returns an error for non-JSON 2xx responses" do
+      PolarExpress.Test.stub(fn _req ->
+        {200, [{"content-type", "text/plain"}], "not json"}
+      end)
+
+      client = PolarExpress.client("pk_test_123")
+      assert {:error, %PolarExpress.Error{} = error} = Client.request(client, :get, "/v1/raw")
+      assert error.type == :invalid_response_error
+      assert error.http_status == 200
+      assert error.http_body == "not json"
     end
   end
 

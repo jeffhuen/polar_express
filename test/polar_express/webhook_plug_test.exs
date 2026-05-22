@@ -30,10 +30,10 @@ defmodule PolarExpress.WebhookPlugTest do
       end
     end
 
-    test "does not require :secret when config may provide it" do
-      # No raise — secret will be resolved at call time from config
-      opts = WebhookPlug.init(path: @path)
-      assert Keyword.get(opts, :path) == @path
+    test "requires :secret option" do
+      assert_raise ArgumentError, ~r/requires :secret option/, fn ->
+        WebhookPlug.init(path: @path)
+      end
     end
 
     test "accepts explicit :secret" do
@@ -44,7 +44,7 @@ defmodule PolarExpress.WebhookPlugTest do
 
   # -- secret resolution -----------------------------------------------------
 
-  describe "secret from config" do
+  describe "secret resolution" do
     setup do
       on_exit(fn ->
         Application.delete_env(:polar_express, :webhook_secret)
@@ -53,26 +53,11 @@ defmodule PolarExpress.WebhookPlugTest do
       :ok
     end
 
-    test "uses :webhook_secret from application config" do
+    test "does not read :webhook_secret from application config" do
       Application.put_env(:polar_express, :webhook_secret, @secret)
 
-      opts = WebhookPlug.init(path: @path)
-      conn = signed_conn() |> WebhookPlug.call(opts)
-
-      refute conn.halted
-
-      assert %PolarExpress.Resources.Event{type: "checkout.created"} =
-               conn.assigns.polar_express_event
-    end
-
-    test "raises when no secret in config and no explicit secret" do
-      # Ensure no config is set
-      Application.delete_env(:polar_express, :webhook_secret)
-
-      opts = WebhookPlug.init(path: @path)
-
-      assert_raise ArgumentError, ~r/PolarExpress webhook secret not configured/, fn ->
-        signed_conn() |> WebhookPlug.call(opts)
+      assert_raise ArgumentError, ~r/requires :secret option/, fn ->
+        WebhookPlug.init(path: @path)
       end
     end
   end
@@ -94,15 +79,11 @@ defmodule PolarExpress.WebhookPlugTest do
 
   describe "MFA secret" do
     test "resolves secret from {mod, fun, args} tuple" do
-      Application.put_env(:polar_express, :webhook_secret, {__MODULE__, :test_secret, []})
-
-      opts = WebhookPlug.init(path: @path)
+      opts = WebhookPlug.init(secret: {__MODULE__, :test_secret, []}, path: @path)
       conn = signed_conn() |> WebhookPlug.call(opts)
 
       refute conn.halted
       assert conn.assigns.polar_express_event.type == "checkout.created"
-
-      Application.delete_env(:polar_express, :webhook_secret)
     end
 
     test "resolves explicit MFA secret" do
@@ -118,13 +99,10 @@ defmodule PolarExpress.WebhookPlugTest do
 
   describe "call/2" do
     setup do
-      Application.put_env(:polar_express, :webhook_secret, @secret)
-      on_exit(fn -> Application.delete_env(:polar_express, :webhook_secret) end)
-      :ok
+      %{opts: WebhookPlug.init(secret: @secret, path: @path)}
     end
 
-    test "assigns polar_express_event on valid signature" do
-      opts = WebhookPlug.init(path: @path)
+    test "assigns polar_express_event on valid signature", %{opts: opts} do
       conn = signed_conn() |> WebhookPlug.call(opts)
 
       refute conn.halted
@@ -132,17 +110,14 @@ defmodule PolarExpress.WebhookPlugTest do
       assert conn.assigns.polar_express_event.type == "checkout.created"
     end
 
-    test "returns 400 on invalid signature" do
-      opts = WebhookPlug.init(path: @path)
+    test "returns 400 on invalid signature", %{opts: opts} do
       conn = signed_conn("whsec_wrong") |> WebhookPlug.call(opts)
 
       assert conn.halted
       assert conn.status == 400
     end
 
-    test "returns 400 on missing webhook headers" do
-      opts = WebhookPlug.init(path: @path)
-
+    test "returns 400 on missing webhook headers", %{opts: opts} do
       conn =
         conn(:post, @path, @payload)
         |> put_req_header("content-type", "application/json")
@@ -153,9 +128,9 @@ defmodule PolarExpress.WebhookPlugTest do
       assert conn.resp_body =~ "Missing required Standard Webhooks headers"
     end
 
-    test "returns 400 when only webhook-signature present (missing id and timestamp)" do
-      opts = WebhookPlug.init(path: @path)
-
+    test "returns 400 when only webhook-signature present (missing id and timestamp)", %{
+      opts: opts
+    } do
       conn =
         conn(:post, @path, @payload)
         |> put_req_header("webhook-signature", "v1,somesig")
@@ -166,9 +141,7 @@ defmodule PolarExpress.WebhookPlugTest do
       assert conn.status == 400
     end
 
-    test "passes through non-matching paths" do
-      opts = WebhookPlug.init(path: @path)
-
+    test "passes through non-matching paths", %{opts: opts} do
       conn =
         conn(:post, "/other/path", "")
         |> WebhookPlug.call(opts)

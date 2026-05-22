@@ -511,7 +511,8 @@ defmodule PolarExpress.Generator.OpenAPI do
            method: method,
            summary: spec["summary"],
            description: spec["description"],
-           deprecated: spec["deprecated"] == true
+           deprecated: spec["deprecated"] == true,
+           responses: spec["responses"] || %{}
          }}
       end)
     end)

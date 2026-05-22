@@ -44,7 +44,7 @@ defmodule PolarExpress.Services.CustomerPortal.LicenseKeysService do
   See `PolarExpress.Params.CustomerPortal.LicenseKeysDeactivateLicenseKeyParams` for parameter details.
   """
   @spec deactivate_license_key(Client.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def deactivate_license_key(client, params \\ %{}, opts \\ []) do
     Client.request(
       client,

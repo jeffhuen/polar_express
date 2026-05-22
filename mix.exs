@@ -2,7 +2,7 @@ defmodule PolarExpress.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/jeffhuen/polar_express"
-  @version "0.1.6"
+  @version "0.2.0"
 
   def project do
     [
@@ -33,8 +33,7 @@ defmodule PolarExpress.MixProject do
 
   def application do
     [
-      extra_applications: [:logger],
-      mod: {PolarExpress.Application, []}
+      extra_applications: [:logger]
     ]
   end
 
@@ -59,6 +58,7 @@ defmodule PolarExpress.MixProject do
       {:plug, "~> 1.16", only: :test},
       {:mox, "~> 1.1", only: :test},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:ex_slop, "~> 0.4.1", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.34", only: :dev, runtime: false}
     ]
@@ -71,7 +71,7 @@ defmodule PolarExpress.MixProject do
         "🚂 Complete Polar SDK for Elixir with 1:1 feature parity to the official " <>
           "JavaScript SDK. Full API coverage. Fully typed per-event modules. Modern stack: " <>
           "Finch HTTP/2, RustyJSON, connection pooling, automatic retries, OAuth, webhooks, " <>
-          "telemetry, per-client config, streaming pagination.",
+          "telemetry, explicit client options, streaming pagination.",
       maintainers: ["Jeff Huen"],
       licenses: ["MIT"],
       links: %{
@@ -106,7 +106,7 @@ defmodule PolarExpress.MixProject do
         ]
       ],
       groups_for_modules: [
-        Core: [PolarExpress, PolarExpress.Client, PolarExpress.Config],
+        Core: [PolarExpress, PolarExpress.Client],
         "Error Handling": [PolarExpress.Error],
         Pagination: [PolarExpress.ListObject],
         Webhooks: [PolarExpress.Webhook, PolarExpress.WebhookPlug],

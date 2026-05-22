@@ -37,7 +37,7 @@ defmodule PolarExpress.Services.CustomerPortal.OrdersService do
   See `PolarExpress.Params.CustomerPortal.OrdersGenerateOrderInvoiceParams` for parameter details.
   """
   @spec generate_order_invoice(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def generate_order_invoice(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,

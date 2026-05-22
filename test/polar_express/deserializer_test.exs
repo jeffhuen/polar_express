@@ -349,7 +349,7 @@ defmodule PolarExpress.DeserializerTest do
   end
 
   describe "cast/2 non-discriminated union resolution (variant matching)" do
-    test "resolves checkout discount to fixed once/forever variant" do
+    test "keeps ambiguous checkout discount once/forever variant as raw map" do
       data = %{
         "id" => "checkout_1",
         "discount" => %{
@@ -365,9 +365,29 @@ defmodule PolarExpress.DeserializerTest do
       result = Deserializer.cast(data, resource: PolarExpress.Schemas.Checkout)
 
       assert %PolarExpress.Schemas.Checkout{} = result
-      assert is_struct(result.discount)
+      assert result.discount == data["discount"]
+    end
+
+    test "resolves checkout discount to fixed repeat variant when keys are unambiguous" do
+      data = %{
+        "id" => "checkout_1",
+        "discount" => %{
+          "id" => "disc_1",
+          "name" => "10% off",
+          "type" => "fixed",
+          "duration" => "repeating",
+          "duration_in_months" => 3,
+          "amount" => 500,
+          "currency" => "usd"
+        }
+      }
+
+      result = Deserializer.cast(data, resource: PolarExpress.Schemas.Checkout)
+
+      assert %PolarExpress.Schemas.Checkout{} = result
+      assert %PolarExpress.Schemas.CheckoutDiscountFixedRepeatDuration{} = result.discount
       assert result.discount.id == "disc_1"
-      assert result.discount.name == "10% off"
+      assert result.discount.duration_in_months == 3
       assert result.discount.amount == 500
     end
 

@@ -37,7 +37,7 @@ defmodule PolarExpress.Services.CustomerPortal.CustomersService do
   See `PolarExpress.Params.CustomerPortal.CustomersCheckEmailChangeTokenParams` for parameter details.
   """
   @spec check_email_change_token(Client.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def check_email_change_token(client, params \\ %{}, opts \\ []) do
     Client.request(
       client,
@@ -77,7 +77,7 @@ defmodule PolarExpress.Services.CustomerPortal.CustomersService do
   See `PolarExpress.Params.CustomerPortal.CustomersDeleteCustomerPaymentMethodParams` for parameter details.
   """
   @spec delete_customer_payment_method(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_customer_payment_method(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
@@ -134,7 +134,7 @@ defmodule PolarExpress.Services.CustomerPortal.CustomersService do
   See `PolarExpress.Params.CustomerPortal.CustomersRequestEmailChangeParams` for parameter details.
   """
   @spec request_email_change(Client.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def request_email_change(client, params \\ %{}, opts \\ []) do
     Client.request(
       client,

@@ -37,7 +37,7 @@ defmodule PolarExpress.Services.CheckoutLinksService do
   See `PolarExpress.Params.CheckoutLinksDeleteCheckoutLinkParams` for parameter details.
   """
   @spec delete_checkout_link(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_checkout_link(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,

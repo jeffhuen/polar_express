@@ -37,7 +37,7 @@ defmodule PolarExpress.Services.CustomFieldsService do
   See `PolarExpress.Params.CustomFieldsDeleteCustomFieldParams` for parameter details.
   """
   @spec delete_custom_field(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_custom_field(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,

@@ -42,7 +42,7 @@ defmodule PolarExpress.Services.MembersService do
   See `PolarExpress.Params.MembersDeleteMemberParams` for parameter details.
   """
   @spec delete_member(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_member(client, id, params \\ %{}, opts \\ []) do
     Client.request(client, :delete, "/v1/members/#{id}", Keyword.merge(opts, params: params))
   end
@@ -57,7 +57,7 @@ defmodule PolarExpress.Services.MembersService do
   See `PolarExpress.Params.MembersDeleteMemberByExternalIdParams` for parameter details.
   """
   @spec delete_member_by_external_id(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_member_by_external_id(client, external_id, params \\ %{}, opts \\ []) do
     Client.request(
       client,

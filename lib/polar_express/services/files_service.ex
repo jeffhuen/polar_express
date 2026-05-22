@@ -57,7 +57,7 @@ defmodule PolarExpress.Services.FilesService do
   See `PolarExpress.Params.FilesDeleteFileParams` for parameter details.
   """
   @spec delete_file(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_file(client, id, params \\ %{}, opts \\ []) do
     Client.request(client, :delete, "/v1/files/#{id}", Keyword.merge(opts, params: params))
   end

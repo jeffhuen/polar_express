@@ -17,9 +17,9 @@ defmodule PolarExpress.Services.OrdersService do
   See `PolarExpress.Params.OrdersExportOrdersParams` for parameter details.
   """
   @spec export_orders(Client.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.raw_response()} | {:error, PolarExpress.Error.t()}
   def export_orders(client, params \\ %{}, opts \\ []) do
-    Client.request(client, :get, "/v1/orders/export", Keyword.merge(opts, params: params))
+    Client.raw_request(client, :get, "/v1/orders/export", Keyword.merge(opts, params: params))
   end
 
   @doc """
@@ -32,7 +32,7 @@ defmodule PolarExpress.Services.OrdersService do
   See `PolarExpress.Params.OrdersGenerateOrderInvoiceParams` for parameter details.
   """
   @spec generate_order_invoice(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def generate_order_invoice(client, id, params \\ %{}, opts \\ []) do
     Client.request(client, :post, "/v1/orders/#{id}/invoice", Keyword.merge(opts, params: params))
   end

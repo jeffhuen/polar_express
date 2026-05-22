@@ -37,7 +37,7 @@ defmodule PolarExpress.Services.MetricsService do
   See `PolarExpress.Params.MetricsDeleteMetricDashboardParams` for parameter details.
   """
   @spec delete_metric_dashboard(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
   def delete_metric_dashboard(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
@@ -57,9 +57,9 @@ defmodule PolarExpress.Services.MetricsService do
   See `PolarExpress.Params.MetricsExportMetricsParams` for parameter details.
   """
   @spec export_metrics(Client.t(), map(), keyword()) ::
-          {:ok, term()} | {:error, PolarExpress.Error.t()}
+          {:ok, Client.raw_response()} | {:error, PolarExpress.Error.t()}
   def export_metrics(client, params \\ %{}, opts \\ []) do
-    Client.request(client, :get, "/v1/metrics/export", Keyword.merge(opts, params: params))
+    Client.raw_request(client, :get, "/v1/metrics/export", Keyword.merge(opts, params: params))
   end
 
   @doc """

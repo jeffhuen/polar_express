@@ -118,10 +118,11 @@ defmodule PolarExpress.Generator.ServiceGenerator do
     op_spec = Map.get(path_specs, path_key, %{})
 
     resolved_schema = resolve_response_schema(op, schema_index)
+    raw_response? = raw_response?(op_spec)
 
-    doc_block = build_doc_block(op, op_spec, resolved_schema, schema_index)
+    doc_block = build_doc_block(op, op_spec, resolved_schema, schema_index, raw_response?)
     def_line = build_def_line(op, strip_defaults)
-    body = build_method_body(op, resolved_schema)
+    body = build_method_body(op, resolved_schema, raw_response?)
 
     """
     #{doc_block}
@@ -137,7 +138,36 @@ defmodule PolarExpress.Generator.ServiceGenerator do
     end
   end
 
-  defp build_doc_block(op, op_spec, resolved_schema, schema_index) do
+  defp raw_response?(op_spec) do
+    op_spec
+    |> Map.get(:responses, %{})
+    |> Enum.any?(fn {status, response} ->
+      success_status?(status) && has_non_json_content?(response)
+    end)
+  end
+
+  defp success_status?(status) when is_integer(status), do: status in 200..299
+
+  defp success_status?(status) when is_binary(status) do
+    case Integer.parse(status) do
+      {code, ""} -> success_status?(code)
+      _ -> false
+    end
+  end
+
+  defp success_status?(_status), do: false
+
+  defp has_non_json_content?(response) do
+    response
+    |> response_content()
+    |> Map.keys()
+    |> Enum.any?(&(&1 != "application/json"))
+  end
+
+  defp response_content(response),
+    do: Map.get(response, :content) || Map.get(response, "content", %{})
+
+  defp build_doc_block(op, op_spec, resolved_schema, schema_index, raw_response?) do
     doc_content = DocFormatter.operation_doc(op_spec[:summary], op_spec[:description])
     params_ref = build_params_module_ref(op)
 
@@ -155,12 +185,12 @@ defmodule PolarExpress.Generator.ServiceGenerator do
         do: "  @deprecated \"This endpoint is deprecated by PolarExpress.\"\n",
         else: ""
 
-    spec = build_spec_attr(op, resolved_schema, schema_index)
+    spec = build_spec_attr(op, resolved_schema, schema_index, raw_response?)
 
     "#{doc_attr}#{deprecated}#{spec}"
   end
 
-  defp build_spec_attr(op, resolved_schema, schema_index) do
+  defp build_spec_attr(op, resolved_schema, schema_index, raw_response?) do
     path_args = List.duplicate("String.t()", length(op.path_params))
     spec_args = ["Client.t()"] ++ path_args ++ ["map()", "keyword()"]
 
@@ -172,14 +202,18 @@ defmodule PolarExpress.Generator.ServiceGenerator do
       end
 
     return_type =
-      if resolved_schema do
-        if is_list_endpoint do
+      cond do
+        raw_response? ->
+          "Client.raw_response()"
+
+        resolved_schema && is_list_endpoint ->
           "PolarExpress.ListObject.t()"
-        else
+
+        resolved_schema ->
           "PolarExpress.Schemas.#{resolved_schema}.t()"
-        end
-      else
-        "term()"
+
+        true ->
+          "Client.response_data()"
       end
 
     "  @spec #{op.method_name}(#{Enum.join(spec_args, ", ")}) ::\n          {:ok, #{return_type}} | {:error, PolarExpress.Error.t()}"
@@ -197,16 +231,24 @@ defmodule PolarExpress.Generator.ServiceGenerator do
     "  def #{op.method_name}(#{sig}) do"
   end
 
-  defp build_method_body(op, resolved_schema) do
+  defp build_method_body(op, resolved_schema, raw_response?) do
     path_str = build_path_string(op.path)
-    merge_opts = build_merge_opts(op, resolved_schema)
 
-    """
-        Client.request(client, :#{op.http_method}, #{path_str},
-          #{merge_opts}
-        )
-      end
-    """
+    if raw_response? do
+      """
+          Client.raw_request(client, :#{op.http_method}, #{path_str}, Keyword.merge(opts, params: params))
+        end
+      """
+    else
+      merge_opts = build_merge_opts(op, resolved_schema)
+
+      """
+          Client.request(client, :#{op.http_method}, #{path_str},
+            #{merge_opts}
+          )
+        end
+      """
+    end
   end
 
   defp build_path_string(path) do

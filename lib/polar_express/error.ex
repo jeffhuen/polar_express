@@ -13,6 +13,7 @@ defmodule PolarExpress.Error do
     * `:not_found_error` - Resource not found (404)
     * `:rate_limit_error` - Too many requests (429)
     * `:api_connection_error` - Network/connection failure
+    * `:invalid_response_error` - Successful response body could not be decoded
     * `:signature_verification_error` - Webhook signature mismatch
   """
 
@@ -24,6 +25,7 @@ defmodule PolarExpress.Error do
           | :not_found_error
           | :rate_limit_error
           | :api_connection_error
+          | :invalid_response_error
           | :signature_verification_error
 
   @type t :: %__MODULE__{
@@ -82,6 +84,20 @@ defmodule PolarExpress.Error do
   @spec connection_error(String.t()) :: t()
   def connection_error(message) do
     %__MODULE__{type: :api_connection_error, message: message}
+  end
+
+  @doc "Build an error for a successful HTTP response with an invalid JSON body."
+  @spec invalid_response_error(String.t(), integer(), String.t(), [{String.t(), String.t()}]) ::
+          t()
+  def invalid_response_error(message, status, body, headers) do
+    %__MODULE__{
+      type: :invalid_response_error,
+      message: message,
+      http_status: status,
+      http_body: body,
+      http_headers: headers,
+      request_id: get_header(headers, "request-id") || get_header(headers, "x-request-id")
+    }
   end
 
   @doc "Build a webhook signature verification error."

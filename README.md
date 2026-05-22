@@ -30,7 +30,7 @@ verification, and automatic pagination.
 > [Report issues here.](https://github.com/jeffhuen/polar_express/issues)
 
 If your project uses [Igniter](https://hex.pm/packages/igniter), one command
-sets up everything — config, webhook plug, controller, and route:
+sets up the webhook plug, controller, route, and setup guidance:
 
 ```bash
 mix igniter.install polar_express
@@ -55,38 +55,35 @@ Requires Elixir 1.19+ and OTP 27+.
 
 ## Configuration
 
-```elixir
-# config/dev.exs — sandbox credentials
-config :polar_express,
-  api_key: "pk_test_...",
-  webhook_secret: "whsec_test_..."
+PolarExpress does not read `config :polar_express`. Read secrets at your
+application boundary and pass them explicitly.
 
-# config/runtime.exs — production credentials
-if config_env() == :prod do
-  config :polar_express,
-    api_key: System.fetch_env!("POLAR_ACCESS_TOKEN"),
-    webhook_secret: System.fetch_env!("POLAR_WEBHOOK_SECRET")
-end
+Start the default Finch pool in your supervision tree:
+
+```elixir
+children = [
+  PolarExpress
+]
 ```
 
-Optional global defaults (all have sensible defaults if omitted):
+Create clients with explicit credentials:
 
 ```elixir
-config :polar_express,
-  api_key: "pk_test_...",
-  webhook_secret: "whsec_...",
-  server: :sandbox,                  # :production or :sandbox, default: :production
-  max_retries: 3,                    # default: 2
-  timeout_ms: 30_000                 # request timeout in ms, default: 30_000
+client =
+  PolarExpress.client(System.fetch_env!("POLAR_ACCESS_TOKEN"),
+    server: :sandbox,
+    max_retries: 3,
+    timeout_ms: 30_000
+  )
 ```
 
 See the [Getting Started](guides/getting-started.md) guide for all config
-options and precedence rules.
+options.
 
 ## Quick Start
 
 ```elixir
-client = PolarExpress.client()
+client = PolarExpress.client(System.fetch_env!("POLAR_ACCESS_TOKEN"))
 
 # Create a customer
 {:ok, customer} = PolarExpress.Services.CustomersService.create_customer(client, %{
@@ -111,10 +108,10 @@ customer.email     #=> "jane@example.com"
 customer.__struct__ #=> PolarExpress.Resources.Customers
 ```
 
-Override config per-client for multi-key or multi-server scenarios:
+Pass options per-client for multi-key or multi-server scenarios:
 
 ```elixir
-client = PolarExpress.client(server: :sandbox)
+client = PolarExpress.client("pk_test_key", server: :sandbox)
 client = PolarExpress.client("pk_test_other_key", max_retries: 5)
 ```
 
@@ -147,7 +144,7 @@ client = PolarExpress.client("pk_test_other_key", max_retries: 5)
 - **Response deserialization** — JSON to typed structs via object type registry
 - **Streaming** — chunked response streaming for large payloads and SSE
 - **Telemetry** — `:telemetry` events for request lifecycle observability
-- **Per-client configuration** — explicit struct with no global state, safe for
+- **Per-client configuration** — explicit struct with no global app config, safe for
   concurrent use with multiple API keys
 - **Test stubs** — process-scoped HTTP stubs via NimbleOwnership for
   `async: true` tests

@@ -7,12 +7,10 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
 
     This installer:
 
-    1. Adds Polar API key config to `config/dev.exs` (sandbox environment)
-    2. Adds runtime config with env vars to `config/runtime.exs` (production)
-    3. Adds `PolarExpress.WebhookPlug` to the Phoenix endpoint (before `Plug.Parsers`)
-    4. Scaffolds a `PolarWebhookController` with event handler skeleton for Polar events
-    5. Adds the webhook route to the router
-    6. Shows next steps and configuration guidance
+    1. Adds `PolarExpress.WebhookPlug` to the Phoenix endpoint (before `Plug.Parsers`)
+    2. Scaffolds a `PolarWebhookController` with event handler skeleton for Polar events
+    3. Adds the webhook route to the router
+    4. Shows next steps and configuration guidance
     """
 
     use Igniter.Mix.Task
@@ -27,8 +25,6 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
     @impl Igniter.Mix.Task
     def igniter(igniter) do
       igniter
-      |> configure_dev()
-      |> configure_runtime()
       |> add_webhook_plug_to_endpoint()
       |> scaffold_webhook_controller()
       |> add_webhook_route()
@@ -38,40 +34,9 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
     alias Igniter.Code.Common
     alias Igniter.Code.Function
     alias Igniter.Libs.Phoenix
-    alias Igniter.Project.Config
     alias Igniter.Project.Module, as: ProjectModule
 
-    # -- Step 1: Dev config ------------------------------------------------------
-
-    defp configure_dev(igniter) do
-      Config.configure_new(
-        igniter,
-        "dev.exs",
-        :polar_express,
-        [:api_key],
-        "pk_test_YOUR_KEY_HERE"
-      )
-    end
-
-    # -- Step 2: Runtime config --------------------------------------------------
-
-    defp configure_runtime(igniter) do
-      igniter
-      |> Config.configure_runtime_env(
-        :prod,
-        :polar_express,
-        [:api_key],
-        {:code, Sourceror.parse_string!(~S[System.fetch_env!("POLAR_ACCESS_TOKEN")])}
-      )
-      |> Config.configure_runtime_env(
-        :prod,
-        :polar_express,
-        [:webhook_secret],
-        {:code, Sourceror.parse_string!(~S[System.fetch_env!("POLAR_WEBHOOK_SECRET")])}
-      )
-    end
-
-    # -- Step 3: Endpoint plug ---------------------------------------------------
+    # -- Step 1: Endpoint plug ---------------------------------------------------
 
     defp add_webhook_plug_to_endpoint(igniter) do
       case Phoenix.select_endpoint(igniter) do
@@ -80,7 +45,9 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
           No Phoenix endpoint found. Add PolarExpress.WebhookPlug to your endpoint
           manually, before Plug.Parsers:
 
-              plug PolarExpress.WebhookPlug, path: "/webhook/polar"
+              plug PolarExpress.WebhookPlug,
+                secret: {System, :fetch_env!, ["POLAR_WEBHOOK_SECRET"]},
+                path: "/webhook/polar"
           """)
 
         {igniter, endpoint} ->
@@ -91,7 +58,8 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
     end
 
     defp inject_webhook_plug(zipper, endpoint) do
-      plug_code = ~s(plug PolarExpress.WebhookPlug, path: "/webhook/polar")
+      plug_code =
+        ~s(plug PolarExpress.WebhookPlug, secret: {System, :fetch_env!, ["POLAR_WEBHOOK_SECRET"]}, path: "/webhook/polar")
 
       with :error <- insert_before_plug_parsers(zipper, plug_code, 2),
            :error <- insert_before_plug_parsers(zipper, plug_code, 1) do
@@ -100,7 +68,9 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
          Could not find `plug Plug.Parsers` in #{inspect(endpoint)}.
          Add PolarExpress.WebhookPlug manually before Plug.Parsers:
 
-             plug PolarExpress.WebhookPlug, path: "/webhook/polar"
+             plug PolarExpress.WebhookPlug,
+               secret: {System, :fetch_env!, ["POLAR_WEBHOOK_SECRET"]},
+               path: "/webhook/polar"
          """}
       end
     end
@@ -117,7 +87,7 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
       end
     end
 
-    # -- Step 4: Webhook controller ----------------------------------------------
+    # -- Step 2: Webhook controller ----------------------------------------------
 
     defp scaffold_webhook_controller(igniter) do
       case Phoenix.select_endpoint(igniter) do
@@ -196,7 +166,7 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
       end
     end
 
-    # -- Step 5: Webhook route ---------------------------------------------------
+    # -- Step 3: Webhook route ---------------------------------------------------
 
     defp add_webhook_route(igniter) do
       case Phoenix.select_router(igniter) do
@@ -224,45 +194,48 @@ if Code.ensure_loaded?(Igniter.Mix.Task) do
       end
     end
 
-    # -- Step 6: Next steps notice -----------------------------------------------
+    # -- Step 4: Next steps notice -----------------------------------------------
 
     defp add_next_steps(igniter) do
       Igniter.add_notice(igniter, """
       ┌─ POLAR EXPRESS INSTALLED ──────────────────────────────┐
       │                                                          │
-      │ ✓ Configuration added to config/dev.exs and runtime.exs │
       │ ✓ WebhookPlug configured in endpoint                    │
       │ ✓ PolarWebhookController scaffolded                     │
       │ ✓ Webhook route added at POST /webhook/polar           │
       │                                                          │
       │ NEXT STEPS:                                             │
       │                                                          │
-      │ 1. Set your test API key in config/dev.exs:            │
+      │ 1. Add PolarExpress to your supervision tree:           │
       │                                                          │
-      │        config :polar_express,                          │
-      │          api_key: "pk_test_YOUR_KEY_HERE",             │
-      │          webhook_secret: "whsec_test_YOUR_SECRET",     │
+      │        children = [PolarExpress]                       │
+      │                                                          │
+      │ 2. Create clients with explicit credentials:            │
+      │                                                          │
+      │        PolarExpress.client(                            │
+      │          System.fetch_env!("POLAR_ACCESS_TOKEN"),       │
       │          server: :sandbox                              │
+      │        )                                                │
       │                                                          │
-      │ 2. Set production environment variables:                │
+      │ 3. Set production environment variables:                │
       │                                                          │
       │        POLAR_ACCESS_TOKEN=pk_live_YOUR_KEY             │
       │        POLAR_WEBHOOK_SECRET=whsec_live_YOUR_SECRET     │
       │                                                          │
-      │ 3. Create a webhook endpoint in Polar Dashboard:        │
+      │ 4. Create a webhook endpoint in Polar Dashboard:        │
       │    https://dashboard.polar.sh/webhooks                 │
       │    Point to: https://your-domain.com/webhook/polar     │
       │                                                          │
-      │ 4. Customize event handlers in PolarWebhookController   │
+      │ 5. Customize event handlers in PolarWebhookController   │
       │    - Replace Logger.info stubs with your logic          │
       │    - Handle orders, subscriptions, and other events     │
       │                                                          │
-      │ 5. For local testing, use curl or Polar's webhook CLI   │
+      │ 6. For local testing, use curl or Polar's webhook CLI   │
       │                                                          │
       │ 📚 Documentation:                                        │
       │    • Getting started: guides/getting-started.md         │
       │    • Webhooks: guides/webhooks.md                       │
-      │    • Configuration: guides/configuration.md             │
+      │    • Testing: guides/testing.md                         │
       │                                                          │
       └──────────────────────────────────────────────────────┘
       """)
