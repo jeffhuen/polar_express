@@ -7,8 +7,10 @@ defmodule PolarExpress.Schemas.MetricsTotals do
   @typedoc """
   * `active_subscriptions` - Nullable.
   * `active_user_by_event` - Nullable.
+  * `annual_recurring_revenue` - Nullable.
   * `average_order_value` - Nullable.
   * `average_revenue_per_user` - Nullable.
+  * `average_seats_per_customer` - Nullable.
   * `canceled_subscriptions` - Nullable.
   * `canceled_subscriptions_customer_service` - Nullable.
   * `canceled_subscriptions_low_quality` - Nullable.
@@ -22,7 +24,9 @@ defmodule PolarExpress.Schemas.MetricsTotals do
   * `checkouts` - Nullable.
   * `checkouts_conversion` - Nullable.
   * `churn_rate` - Nullable.
+  * `churned_seat_customers` - Nullable.
   * `churned_subscriptions` - Nullable.
+  * `committed_annual_recurring_revenue` - Nullable.
   * `committed_monthly_recurring_revenue` - Nullable.
   * `committed_subscriptions` - Nullable.
   * `cost_per_user` - Nullable.
@@ -36,6 +40,7 @@ defmodule PolarExpress.Schemas.MetricsTotals do
   * `net_average_order_value` - Nullable.
   * `net_cumulative_revenue` - Nullable.
   * `net_revenue` - Nullable.
+  * `new_seat_customers` - Nullable.
   * `new_subscriptions` - Nullable.
   * `new_subscriptions_net_revenue` - Nullable.
   * `new_subscriptions_revenue` - Nullable.
@@ -47,13 +52,22 @@ defmodule PolarExpress.Schemas.MetricsTotals do
   * `renewed_subscriptions_net_revenue` - Nullable.
   * `renewed_subscriptions_revenue` - Nullable.
   * `revenue` - Nullable.
+  * `seat_customers` - Nullable.
+  * `seat_utilization_rate` - Nullable.
+  * `seats_claimed` - Nullable.
+  * `seats_pending` - Nullable.
+  * `seats_total` - Nullable.
   * `succeeded_checkouts` - Nullable.
+  * `trial_committed_monthly_recurring_revenue` - Nullable.
+  * `trial_monthly_recurring_revenue` - Nullable.
   """
   @type t :: %__MODULE__{
           active_subscriptions: integer() | float() | nil,
           active_user_by_event: integer() | float() | nil,
+          annual_recurring_revenue: integer() | float() | nil,
           average_order_value: integer() | float() | nil,
           average_revenue_per_user: integer() | float() | nil,
+          average_seats_per_customer: integer() | float() | nil,
           canceled_subscriptions: integer() | float() | nil,
           canceled_subscriptions_customer_service: integer() | float() | nil,
           canceled_subscriptions_low_quality: integer() | float() | nil,
@@ -67,7 +81,9 @@ defmodule PolarExpress.Schemas.MetricsTotals do
           checkouts: integer() | float() | nil,
           checkouts_conversion: integer() | float() | nil,
           churn_rate: integer() | float() | nil,
+          churned_seat_customers: integer() | float() | nil,
           churned_subscriptions: integer() | float() | nil,
+          committed_annual_recurring_revenue: integer() | float() | nil,
           committed_monthly_recurring_revenue: integer() | float() | nil,
           committed_subscriptions: integer() | float() | nil,
           cost_per_user: integer() | float() | nil,
@@ -81,6 +97,7 @@ defmodule PolarExpress.Schemas.MetricsTotals do
           net_average_order_value: integer() | float() | nil,
           net_cumulative_revenue: integer() | float() | nil,
           net_revenue: integer() | float() | nil,
+          new_seat_customers: integer() | float() | nil,
           new_subscriptions: integer() | float() | nil,
           new_subscriptions_net_revenue: integer() | float() | nil,
           new_subscriptions_revenue: integer() | float() | nil,
@@ -92,14 +109,23 @@ defmodule PolarExpress.Schemas.MetricsTotals do
           renewed_subscriptions_net_revenue: integer() | float() | nil,
           renewed_subscriptions_revenue: integer() | float() | nil,
           revenue: integer() | float() | nil,
-          succeeded_checkouts: integer() | float() | nil
+          seat_customers: integer() | float() | nil,
+          seat_utilization_rate: integer() | float() | nil,
+          seats_claimed: integer() | float() | nil,
+          seats_pending: integer() | float() | nil,
+          seats_total: integer() | float() | nil,
+          succeeded_checkouts: integer() | float() | nil,
+          trial_committed_monthly_recurring_revenue: integer() | float() | nil,
+          trial_monthly_recurring_revenue: integer() | float() | nil
         }
 
   defstruct [
     :active_subscriptions,
     :active_user_by_event,
+    :annual_recurring_revenue,
     :average_order_value,
     :average_revenue_per_user,
+    :average_seats_per_customer,
     :canceled_subscriptions,
     :canceled_subscriptions_customer_service,
     :canceled_subscriptions_low_quality,
@@ -113,7 +139,9 @@ defmodule PolarExpress.Schemas.MetricsTotals do
     :checkouts,
     :checkouts_conversion,
     :churn_rate,
+    :churned_seat_customers,
     :churned_subscriptions,
+    :committed_annual_recurring_revenue,
     :committed_monthly_recurring_revenue,
     :committed_subscriptions,
     :cost_per_user,
@@ -127,6 +155,7 @@ defmodule PolarExpress.Schemas.MetricsTotals do
     :net_average_order_value,
     :net_cumulative_revenue,
     :net_revenue,
+    :new_seat_customers,
     :new_subscriptions,
     :new_subscriptions_net_revenue,
     :new_subscriptions_revenue,
@@ -138,7 +167,14 @@ defmodule PolarExpress.Schemas.MetricsTotals do
     :renewed_subscriptions_net_revenue,
     :renewed_subscriptions_revenue,
     :revenue,
-    :succeeded_checkouts
+    :seat_customers,
+    :seat_utilization_rate,
+    :seats_claimed,
+    :seats_pending,
+    :seats_total,
+    :succeeded_checkouts,
+    :trial_committed_monthly_recurring_revenue,
+    :trial_monthly_recurring_revenue
   ]
 
   @schema_name "MetricsTotals"
