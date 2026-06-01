@@ -1,9 +1,9 @@
 # File generated from our OpenAPI spec
-defmodule PolarExpress.Schemas.DiscountPercentageOnceForeverDurationCreate do
+defmodule PolarExpress.Schemas.DiscountPercentageCreate do
   @moduledoc """
-  DiscountPercentageOnceForeverDurationCreate
+  DiscountPercentageCreate
 
-  Schema to create a percentage discount that is applied once or forever.
+  Schema to create a percentage discount.
   """
 
   @typedoc """
@@ -12,7 +12,13 @@ defmodule PolarExpress.Schemas.DiscountPercentageOnceForeverDurationCreate do
   A basis point is 1/100th of a percent.
   For example, to create a 25.5% discount, set this to 2550.
   * `code` - Code customers can use to apply the discount during checkout. Must be between 3 and 256 characters long and contain only alphanumeric characters.If not provided, the discount can only be applied via the API. Nullable.
-  * `duration`
+  * `duration` - For subscriptions, determines if the discount should be applied once on the first invoice, forever, or for a certain number of months determined by `duration_in_months`.
+  * `duration_in_months` - Number of months the discount should be applied.
+
+  Required when `duration` is `repeating`. Must be omitted otherwise.
+
+  For this to work on yearly pricing, you should multiply this by 12.
+  For example, to apply the discount for 2 years, set this to 24. Nullable.
   * `ends_at` - Optional timestamp after which the discount is no longer redeemable. Nullable.
   * `max_redemptions` - Optional maximum number of times the discount can be redeemed. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
@@ -30,12 +36,13 @@ defmodule PolarExpress.Schemas.DiscountPercentageOnceForeverDurationCreate do
   * `organization_id` - The ID of the organization owning the discount. **Required unless you use an organization token.** Nullable.
   * `products` - Nullable.
   * `starts_at` - Optional timestamp after which the discount is redeemable. Nullable.
-  * `type` - Type of the discount.
+  * `type`
   """
   @type t :: %__MODULE__{
           basis_points: integer() | nil,
           code: String.t() | nil,
           duration: PolarExpress.Schemas.DiscountDuration.t() | nil,
+          duration_in_months: integer() | nil,
           ends_at: DateTime.t() | nil,
           max_redemptions: integer() | nil,
           metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
@@ -43,13 +50,14 @@ defmodule PolarExpress.Schemas.DiscountPercentageOnceForeverDurationCreate do
           organization_id: String.t() | nil,
           products: [String.t()] | nil,
           starts_at: DateTime.t() | nil,
-          type: PolarExpress.Schemas.DiscountType.t() | nil
+          type: String.t() | nil
         }
 
   defstruct [
     :basis_points,
     :code,
     :duration,
+    :duration_in_months,
     :ends_at,
     :max_redemptions,
     :metadata,
@@ -60,13 +68,12 @@ defmodule PolarExpress.Schemas.DiscountPercentageOnceForeverDurationCreate do
     :type
   ]
 
-  @schema_name "DiscountPercentageOnceForeverDurationCreate"
+  @schema_name "DiscountPercentageCreate"
   def schema_name, do: @schema_name
 
   def __inner_types__ do
     %{
-      "duration" => PolarExpress.Schemas.DiscountDuration,
-      "type" => PolarExpress.Schemas.DiscountType
+      "duration" => PolarExpress.Schemas.DiscountDuration
     }
   end
 

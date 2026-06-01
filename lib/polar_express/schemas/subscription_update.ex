@@ -10,6 +10,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdate do
           | PolarExpress.Schemas.SubscriptionUpdateBillingPeriod.t()
           | PolarExpress.Schemas.SubscriptionCancel.t()
           | PolarExpress.Schemas.SubscriptionRevoke.t()
+          | PolarExpress.Schemas.SubscriptionUpdateClear.t()
 
   @schema_name "SubscriptionUpdate"
   def schema_name, do: @schema_name
@@ -22,7 +23,8 @@ defmodule PolarExpress.Schemas.SubscriptionUpdate do
       PolarExpress.Schemas.SubscriptionUpdateSeats,
       PolarExpress.Schemas.SubscriptionUpdateBillingPeriod,
       PolarExpress.Schemas.SubscriptionCancel,
-      PolarExpress.Schemas.SubscriptionRevoke
+      PolarExpress.Schemas.SubscriptionRevoke,
+      PolarExpress.Schemas.SubscriptionUpdateClear
     ]
   end
 end
