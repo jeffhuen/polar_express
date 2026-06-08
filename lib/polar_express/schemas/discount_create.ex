@@ -3,20 +3,24 @@ defmodule PolarExpress.Schemas.DiscountCreate do
   @moduledoc "DiscountCreate union type."
 
   @type t ::
-          PolarExpress.Schemas.DiscountFixedOnceForeverDurationCreate.t()
-          | PolarExpress.Schemas.DiscountFixedRepeatDurationCreate.t()
-          | PolarExpress.Schemas.DiscountPercentageOnceForeverDurationCreate.t()
-          | PolarExpress.Schemas.DiscountPercentageRepeatDurationCreate.t()
+          PolarExpress.Schemas.DiscountFixedCreate.t()
+          | PolarExpress.Schemas.DiscountPercentageCreate.t()
 
   @schema_name "DiscountCreate"
   def schema_name, do: @schema_name
 
   def __variants__ do
     [
-      PolarExpress.Schemas.DiscountFixedOnceForeverDurationCreate,
-      PolarExpress.Schemas.DiscountFixedRepeatDurationCreate,
-      PolarExpress.Schemas.DiscountPercentageOnceForeverDurationCreate,
-      PolarExpress.Schemas.DiscountPercentageRepeatDurationCreate
+      PolarExpress.Schemas.DiscountFixedCreate,
+      PolarExpress.Schemas.DiscountPercentageCreate
     ]
+  end
+
+  def __discriminator__ do
+    {"type",
+     %{
+       "fixed" => PolarExpress.Schemas.DiscountFixedCreate,
+       "percentage" => PolarExpress.Schemas.DiscountPercentageCreate
+     }}
   end
 end
