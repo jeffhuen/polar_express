@@ -17,7 +17,7 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
   * `legal_entity` - Nullable.
   * `name`
   * `notification_settings` - Nullable.
-  * `slug`
+  * `slug` - Max length: 64.
   * `socials` - Link to social profiles. Nullable.
   * `subscription_settings` - Nullable.
   * `website` - Official website of the organization. Nullable.

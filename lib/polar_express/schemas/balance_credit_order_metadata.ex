@@ -7,6 +7,7 @@ defmodule PolarExpress.Schemas.BalanceCreditOrderMetadata do
   @typedoc """
   * `amount`
   * `currency`
+  * `exchange_rate`
   * `fee`
   * `order_id`
   * `product_id`
@@ -18,6 +19,7 @@ defmodule PolarExpress.Schemas.BalanceCreditOrderMetadata do
   @type t :: %__MODULE__{
           amount: integer() | nil,
           currency: String.t() | nil,
+          exchange_rate: float() | nil,
           fee: integer() | nil,
           order_id: String.t() | nil,
           product_id: String.t() | nil,
@@ -30,6 +32,7 @@ defmodule PolarExpress.Schemas.BalanceCreditOrderMetadata do
   defstruct [
     :amount,
     :currency,
+    :exchange_rate,
     :fee,
     :order_id,
     :product_id,
