@@ -31,7 +31,7 @@ defmodule PolarExpress.Schemas.OrganizationUpdate do
           default_tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil,
           details: PolarExpress.Schemas.OrganizationDetails.t() | nil,
           email: String.t() | nil,
-          feature_settings: PolarExpress.Schemas.OrganizationFeatureSettings.t() | nil,
+          feature_settings: PolarExpress.Schemas.OrganizationFeatureSettingsUpdate.t() | nil,
           name: String.t() | nil,
           notification_settings: PolarExpress.Schemas.OrganizationNotificationSettings.t() | nil,
           socials: [PolarExpress.Schemas.OrganizationSocialLink.t()] | nil,
@@ -66,7 +66,7 @@ defmodule PolarExpress.Schemas.OrganizationUpdate do
       "default_presentment_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "default_tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption,
       "details" => PolarExpress.Schemas.OrganizationDetails,
-      "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettings,
+      "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettingsUpdate,
       "notification_settings" => PolarExpress.Schemas.OrganizationNotificationSettings,
       "socials" => PolarExpress.Schemas.OrganizationSocialLink,
       "subscription_settings" => PolarExpress.Schemas.OrganizationSubscriptionSettings

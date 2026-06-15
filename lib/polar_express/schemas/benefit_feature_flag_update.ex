@@ -19,22 +19,25 @@ defmodule PolarExpress.Schemas.BenefitFeatureFlagUpdate do
   You can store up to **50 key-value pairs**.
   * `properties` - Nullable.
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal. Nullable.
   """
   @type t :: %__MODULE__{
           description: String.t() | nil,
           metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
           properties: PolarExpress.Schemas.BenefitFeatureFlagProperties.t() | nil,
-          type: String.t() | nil
+          type: String.t() | nil,
+          visibility: PolarExpress.Schemas.BenefitVisibility.t() | nil
         }
 
-  defstruct [:description, :metadata, :properties, :type]
+  defstruct [:description, :metadata, :properties, :type, :visibility]
 
   @schema_name "BenefitFeatureFlagUpdate"
   def schema_name, do: @schema_name
 
   def __inner_types__ do
     %{
-      "properties" => PolarExpress.Schemas.BenefitFeatureFlagProperties
+      "properties" => PolarExpress.Schemas.BenefitFeatureFlagProperties,
+      "visibility" => PolarExpress.Schemas.BenefitVisibility
     }
   end
 end

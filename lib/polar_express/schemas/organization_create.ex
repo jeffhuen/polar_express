@@ -17,7 +17,7 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
   * `legal_entity` - Nullable.
   * `name`
   * `notification_settings` - Nullable.
-  * `slug`
+  * `slug` - Max length: 64.
   * `socials` - Link to social profiles. Nullable.
   * `subscription_settings` - Nullable.
   * `website` - Official website of the organization. Nullable.
@@ -33,7 +33,7 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
           default_tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil,
           details: PolarExpress.Schemas.OrganizationDetails.t() | nil,
           email: String.t() | nil,
-          feature_settings: PolarExpress.Schemas.OrganizationFeatureSettings.t() | nil,
+          feature_settings: PolarExpress.Schemas.OrganizationFeatureSettingsUpdate.t() | nil,
           legal_entity:
             PolarExpress.Schemas.OrganizationIndividualLegalEntitySchema.t()
             | PolarExpress.Schemas.OrganizationCompanyLegalEntitySchema.t()
@@ -75,7 +75,7 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
       "default_presentment_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "default_tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption,
       "details" => PolarExpress.Schemas.OrganizationDetails,
-      "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettings,
+      "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettingsUpdate,
       "legal_entity" =>
         {:union, :discriminated, "type",
          %{

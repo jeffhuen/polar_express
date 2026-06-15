@@ -20,6 +20,8 @@ defmodule PolarExpress.Schemas.BenefitCustom do
   * `properties`
   * `selectable` - Whether the benefit is selectable when creating a product.
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal.
+  * `visibility_configurable`
   """
   @type t :: %__MODULE__{
           created_at: DateTime.t() | nil,
@@ -32,7 +34,9 @@ defmodule PolarExpress.Schemas.BenefitCustom do
           organization_id: String.t() | nil,
           properties: PolarExpress.Schemas.BenefitCustomProperties.t() | nil,
           selectable: boolean() | nil,
-          type: String.t() | nil
+          type: String.t() | nil,
+          visibility: PolarExpress.Schemas.BenefitVisibility.t() | nil,
+          visibility_configurable: boolean() | nil
         }
 
   defstruct [
@@ -46,7 +50,9 @@ defmodule PolarExpress.Schemas.BenefitCustom do
     :organization_id,
     :properties,
     :selectable,
-    :type
+    :type,
+    :visibility,
+    :visibility_configurable
   ]
 
   @schema_name "BenefitCustom"
@@ -55,7 +61,8 @@ defmodule PolarExpress.Schemas.BenefitCustom do
   def __inner_types__ do
     %{
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
-      "properties" => PolarExpress.Schemas.BenefitCustomProperties
+      "properties" => PolarExpress.Schemas.BenefitCustomProperties,
+      "visibility" => PolarExpress.Schemas.BenefitVisibility
     }
   end
 

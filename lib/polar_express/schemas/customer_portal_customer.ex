@@ -12,6 +12,7 @@ defmodule PolarExpress.Schemas.CustomerPortalCustomer do
   * `email` - Nullable.
   * `email_verified`
   * `id` - The ID of the object. Format: uuid4.
+  * `locale` - Nullable.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `name` - Nullable.
   * `oauth_accounts`
@@ -26,6 +27,7 @@ defmodule PolarExpress.Schemas.CustomerPortalCustomer do
           email: String.t() | nil,
           email_verified: boolean() | nil,
           id: String.t() | nil,
+          locale: String.t() | nil,
           modified_at: DateTime.t() | nil,
           name: String.t() | nil,
           oauth_accounts:
@@ -42,6 +44,7 @@ defmodule PolarExpress.Schemas.CustomerPortalCustomer do
     :email,
     :email_verified,
     :id,
+    :locale,
     :modified_at,
     :name,
     :oauth_accounts,

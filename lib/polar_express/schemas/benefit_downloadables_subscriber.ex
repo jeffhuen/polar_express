@@ -10,7 +10,6 @@ defmodule PolarExpress.Schemas.BenefitDownloadablesSubscriber do
   * `description` - The description of the benefit.
   * `id` - The ID of the benefit. Format: uuid4.
   * `is_deleted` - Whether the benefit is deleted.
-  * `metadata`
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `organization`
   * `organization_id` - The ID of the organization owning the benefit. Format: uuid4.
@@ -24,7 +23,6 @@ defmodule PolarExpress.Schemas.BenefitDownloadablesSubscriber do
           description: String.t() | nil,
           id: String.t() | nil,
           is_deleted: boolean() | nil,
-          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
           modified_at: DateTime.t() | nil,
           organization: PolarExpress.Schemas.BenefitSubscriberOrganization.t() | nil,
           organization_id: String.t() | nil,
@@ -39,7 +37,6 @@ defmodule PolarExpress.Schemas.BenefitDownloadablesSubscriber do
     :description,
     :id,
     :is_deleted,
-    :metadata,
     :modified_at,
     :organization,
     :organization_id,
@@ -53,7 +50,6 @@ defmodule PolarExpress.Schemas.BenefitDownloadablesSubscriber do
 
   def __inner_types__ do
     %{
-      "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "organization" => PolarExpress.Schemas.BenefitSubscriberOrganization,
       "properties" => PolarExpress.Schemas.BenefitDownloadablesSubscriberProperties
     }

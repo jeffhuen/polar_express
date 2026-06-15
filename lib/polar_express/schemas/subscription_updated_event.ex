@@ -31,13 +31,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdatedEvent do
           id: String.t() | nil,
           label: String.t() | nil,
           member_id: String.t() | nil,
-          metadata:
-            PolarExpress.Schemas.SubscriptionUpdatedProductMetadata.t()
-            | PolarExpress.Schemas.SubscriptionUpdatedDiscountMetadata.t()
-            | PolarExpress.Schemas.SubscriptionUpdatedTrialMetadata.t()
-            | PolarExpress.Schemas.SubscriptionUpdatedSeatsMetadata.t()
-            | PolarExpress.Schemas.SubscriptionUpdatedBillingPeriodMetadata.t()
-            | nil,
+          metadata: PolarExpress.Schemas.SubscriptionUpdatedMetadata.t() | nil,
           name: String.t() | nil,
           organization_id: String.t() | nil,
           parent_id: String.t() | nil,
@@ -68,15 +62,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdatedEvent do
   def __inner_types__ do
     %{
       "customer" => PolarExpress.Schemas.Customer,
-      "metadata" =>
-        {:union, :variants,
-         [
-           PolarExpress.Schemas.SubscriptionUpdatedProductMetadata,
-           PolarExpress.Schemas.SubscriptionUpdatedDiscountMetadata,
-           PolarExpress.Schemas.SubscriptionUpdatedTrialMetadata,
-           PolarExpress.Schemas.SubscriptionUpdatedSeatsMetadata,
-           PolarExpress.Schemas.SubscriptionUpdatedBillingPeriodMetadata
-         ]}
+      "metadata" => PolarExpress.Schemas.SubscriptionUpdatedMetadata
     }
   end
 
