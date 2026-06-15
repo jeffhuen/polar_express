@@ -18,6 +18,8 @@ defmodule PolarExpress.Resources.Benefits do
   * `properties`
   * `selectable` - Whether the benefit is selectable when creating a product.
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal.
+  * `visibility_configurable`
   """
   @type t :: %__MODULE__{
           created_at: String.t() | nil,
@@ -30,7 +32,9 @@ defmodule PolarExpress.Resources.Benefits do
           organization_id: String.t() | nil,
           properties: map() | nil,
           selectable: boolean() | nil,
-          type: String.t() | nil
+          type: String.t() | nil,
+          visibility: map() | nil,
+          visibility_configurable: boolean() | nil
         }
 
   defstruct [
@@ -44,7 +48,9 @@ defmodule PolarExpress.Resources.Benefits do
     :organization_id,
     :properties,
     :selectable,
-    :type
+    :type,
+    :visibility,
+    :visibility_configurable
   ]
 
   @object_name "benefits"

@@ -188,6 +188,46 @@ defmodule PolarExpress.Services.CustomersService do
   end
 
   @doc """
+  List Customer Payment Methods
+
+  Get saved payment methods of a customer.
+
+  **Scopes**: `customers:read` `customers:write`
+
+  See `PolarExpress.Params.CustomersListCustomerPaymentMethodsParams` for parameter details.
+  """
+  @spec list_customer_payment_methods(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.ListObject.t()} | {:error, PolarExpress.Error.t()}
+  def list_customer_payment_methods(client, id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :get,
+      "/v1/customers/#{id}/payment-methods",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.PaymentMethod)
+    )
+  end
+
+  @doc """
+  List Customer Payment Methods by External ID
+
+  Get saved payment methods of a customer by external ID.
+
+  **Scopes**: `customers:read` `customers:write`
+
+  See `PolarExpress.Params.CustomersListCustomerPaymentMethodsByExternalIdParams` for parameter details.
+  """
+  @spec list_customer_payment_methods_by_external_id(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.ListObject.t()} | {:error, PolarExpress.Error.t()}
+  def list_customer_payment_methods_by_external_id(client, external_id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :get,
+      "/v1/customers/external/#{external_id}/payment-methods",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.PaymentMethod)
+    )
+  end
+
+  @doc """
   List Customers
 
   List customers.

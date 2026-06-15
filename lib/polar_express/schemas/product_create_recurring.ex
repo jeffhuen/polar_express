@@ -21,7 +21,7 @@ defmodule PolarExpress.Schemas.ProductCreateRecurring do
   You can store up to **50 key-value pairs**.
   * `name` - The name of the product. Max length: 64.
   * `organization_id` - The ID of the organization owning the product. **Required unless you use an organization token.** Nullable.
-  * `prices` - List of available prices for this product. It should contain at most one static price (fixed, custom or free), and any number of metered prices. Metered prices are not supported on one-time purchase products.
+  * `prices` - List of available prices for this product. It may combine at most one fixed price with one seat-based price (billed as `fixed + seat_charge`), or contain a single custom or free price, plus any number of metered prices. A free price cannot be combined with other prices, and a custom price cannot be combined with a fixed or seat-based price. Metered prices are not supported on one-time purchase products.
   * `recurring_interval` - The recurring interval of the product.
   * `recurring_interval_count` - Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on.
   * `trial_interval` - The interval unit for the trial period. Nullable.

@@ -45,6 +45,7 @@ defmodule PolarExpress.Schemas.BenefitGrant do
             | PolarExpress.Schemas.BenefitGrantLicenseKeysProperties.t()
             | PolarExpress.Schemas.BenefitGrantCustomProperties.t()
             | PolarExpress.Schemas.BenefitGrantFeatureFlagProperties.t()
+            | PolarExpress.Schemas.BenefitGrantSlackSharedChannelProperties.t()
             | nil,
           revoked_at: DateTime.t() | nil,
           subscription_id: String.t() | nil
@@ -87,7 +88,8 @@ defmodule PolarExpress.Schemas.BenefitGrant do
            PolarExpress.Schemas.BenefitGrantDownloadablesProperties,
            PolarExpress.Schemas.BenefitGrantLicenseKeysProperties,
            PolarExpress.Schemas.BenefitGrantCustomProperties,
-           PolarExpress.Schemas.BenefitGrantFeatureFlagProperties
+           PolarExpress.Schemas.BenefitGrantFeatureFlagProperties,
+           PolarExpress.Schemas.BenefitGrantSlackSharedChannelProperties
          ]}
     }
   end

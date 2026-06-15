@@ -22,23 +22,26 @@ defmodule PolarExpress.Schemas.BenefitFeatureFlagCreate do
   * `organization_id` - The ID of the organization owning the benefit. **Required unless you use an organization token.** Nullable.
   * `properties`
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal. Nullable.
   """
   @type t :: %__MODULE__{
           description: String.t() | nil,
           metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
           organization_id: String.t() | nil,
           properties: PolarExpress.Schemas.BenefitFeatureFlagCreateProperties.t() | nil,
-          type: String.t() | nil
+          type: String.t() | nil,
+          visibility: PolarExpress.Schemas.BenefitVisibility.t() | nil
         }
 
-  defstruct [:description, :metadata, :organization_id, :properties, :type]
+  defstruct [:description, :metadata, :organization_id, :properties, :type, :visibility]
 
   @schema_name "BenefitFeatureFlagCreate"
   def schema_name, do: @schema_name
 
   def __inner_types__ do
     %{
-      "properties" => PolarExpress.Schemas.BenefitFeatureFlagCreateProperties
+      "properties" => PolarExpress.Schemas.BenefitFeatureFlagCreateProperties,
+      "visibility" => PolarExpress.Schemas.BenefitVisibility
     }
   end
 end

@@ -10,6 +10,7 @@ defmodule PolarExpress.Schemas.BenefitGrantWebhook do
           | PolarExpress.Schemas.BenefitGrantLicenseKeysWebhook.t()
           | PolarExpress.Schemas.BenefitGrantMeterCreditWebhook.t()
           | PolarExpress.Schemas.BenefitGrantFeatureFlagWebhook.t()
+          | PolarExpress.Schemas.BenefitGrantSlackSharedChannelWebhook.t()
 
   @schema_name "BenefitGrantWebhook"
   def schema_name, do: @schema_name
@@ -22,7 +23,8 @@ defmodule PolarExpress.Schemas.BenefitGrantWebhook do
       PolarExpress.Schemas.BenefitGrantDownloadablesWebhook,
       PolarExpress.Schemas.BenefitGrantLicenseKeysWebhook,
       PolarExpress.Schemas.BenefitGrantMeterCreditWebhook,
-      PolarExpress.Schemas.BenefitGrantFeatureFlagWebhook
+      PolarExpress.Schemas.BenefitGrantFeatureFlagWebhook,
+      PolarExpress.Schemas.BenefitGrantSlackSharedChannelWebhook
     ]
   end
 end

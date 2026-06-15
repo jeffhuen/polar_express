@@ -14,6 +14,7 @@ defmodule PolarExpress.Schemas.ListResource_FileRead_ do
               PolarExpress.Schemas.DownloadableFileRead.t()
               | PolarExpress.Schemas.ProductMediaFileRead.t()
               | PolarExpress.Schemas.OrganizationAvatarFileRead.t()
+              | PolarExpress.Schemas.SupportCaseAttachmentFileRead.t()
             ]
             | nil,
           pagination: PolarExpress.Schemas.Pagination.t() | nil
@@ -31,7 +32,8 @@ defmodule PolarExpress.Schemas.ListResource_FileRead_ do
          %{
            "downloadable" => PolarExpress.Schemas.DownloadableFileRead,
            "organization_avatar" => PolarExpress.Schemas.OrganizationAvatarFileRead,
-           "product_media" => PolarExpress.Schemas.ProductMediaFileRead
+           "product_media" => PolarExpress.Schemas.ProductMediaFileRead,
+           "support_case_attachment" => PolarExpress.Schemas.SupportCaseAttachmentFileRead
          }},
       "pagination" => PolarExpress.Schemas.Pagination
     }
