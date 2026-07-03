@@ -93,6 +93,7 @@ defmodule PolarExpress.ParityTest do
   # - `clients` → covered by `oauth2` service (OAuth client management)
   # - `customersession` → singular alias, we have `customersessions` (plural)
   # - `downloadables` → covered by benefit grants
+  # - `organizationaccesstokens` → present in polar-js main, absent from the public OpenAPI spec
   # - `polar*` customer portal sub-services → consolidated into `customerportal`
   # - `seats` → covered by `customerseats`
   # - `wallets` → not in Polar OpenAPI spec (legacy JS SDK artifact)
@@ -104,6 +105,9 @@ defmodule PolarExpress.ParityTest do
     "seats" => "customerseats",
     "wallets" => "customerportal"
   }
+
+  @js_openapi_gaps ~w(organizationaccesstokens)
+
   # Customer portal sub-services consolidated into customer_portal_service.ex
   @js_portal_services ~w(polarbenefitgrants polarcustomermeters polarcustomers polarlicensekeys polarmembers polarorders polarorganizations polarsubscriptions)
 
@@ -113,7 +117,10 @@ defmodule PolarExpress.ParityTest do
       name = path |> Path.basename(".ts") |> String.downcase()
       Map.get(@js_aliases, name, name)
     end)
-    |> Enum.reject(&(&1 in ["polar", "types", "index", "sdk"] or &1 in @js_portal_services))
+    |> Enum.reject(
+      &(&1 in ["polar", "types", "index", "sdk"] or &1 in @js_portal_services or
+          &1 in @js_openapi_gaps)
+    )
     |> MapSet.new()
   end
 
