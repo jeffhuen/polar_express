@@ -1,6 +1,14 @@
 defmodule PolarExpress.Generator.OpenAPI do
   @moduledoc false
 
+  @http_methods %{
+    "delete" => :delete,
+    "get" => :get,
+    "patch" => :patch,
+    "post" => :post,
+    "put" => :put
+  }
+
   @doc """
   Parse the Polar OpenAPI spec into a normalized structure.
 
@@ -56,14 +64,14 @@ defmodule PolarExpress.Generator.OpenAPI do
       paths
       |> Enum.flat_map(fn {path, methods} ->
         methods
-        |> Enum.filter(fn {method, _} -> method in ["get", "post", "delete", "put", "patch"] end)
+        |> Enum.filter(fn {method, _} -> Map.has_key?(@http_methods, method) end)
         |> Enum.map(fn {method, spec} ->
           tags = spec["tags"] || []
           primary_tag = hd(tags) || "default"
 
           %{
             path: path,
-            method: String.to_atom(method),
+            method: Map.fetch!(@http_methods, method),
             summary: spec["summary"],
             description: spec["description"],
             tags: tags,

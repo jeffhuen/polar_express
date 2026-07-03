@@ -350,9 +350,6 @@ defmodule PolarExpress.Generator.SchemaGenerator do
   # Returns nil, a module name string, or a union tuple
   # ({:union, :discriminated, prop, mapping} or {:union, :variants, [modules]})
 
-  # Returns nil, a module name string, or a union tuple
-  # ({:union, :discriminated, prop, mapping} or {:union, :variants, [modules]})
-
   defp resolve_inner_type(%{"$ref" => ref}, _schema_index) do
     ref_name = ref_to_name(ref)
 

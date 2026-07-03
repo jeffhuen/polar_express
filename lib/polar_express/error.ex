@@ -20,13 +20,21 @@ defmodule PolarExpress.Error do
   @type error_type ::
           :api_error
           | :authentication_error
+          | :already_canceled_subscription
           | :forbidden_error
+          | :resource_not_found
           | :validation_error
           | :not_found_error
           | :rate_limit_error
           | :api_connection_error
           | :invalid_response_error
           | :signature_verification_error
+
+  @body_error_types %{
+    "AlreadyCanceledSubscription" => :already_canceled_subscription,
+    "HttpValidationError" => :validation_error,
+    "ResourceNotFound" => :resource_not_found
+  }
 
   @type t :: %__MODULE__{
           type: error_type(),
@@ -113,26 +121,12 @@ defmodule PolarExpress.Error do
   def retryable?(%__MODULE__{http_status: 429}), do: true
   def retryable?(_), do: false
 
-  # Map HTTP status + error body to our error type.
-  # Polar API returns domain-specific error types in the "type" field of the body.
-  # We use those when present, falling back to HTTP status-based mapping.
+  # Map known Polar body error types explicitly; preserve unknown body codes in error_code.
   defp error_type_from_response(status, data) do
     case data["type"] do
-      # FastAPI's default validation error type → our canonical :validation_error
-      "HttpValidationError" ->
-        :validation_error
-
-      # Domain-specific error types (e.g. "ResourceNotFound" → :resource_not_found)
       type when is_binary(type) and type != "" ->
-        underscored = Macro.underscore(type)
+        Map.get(@body_error_types, type, status_to_error_type(status))
 
-        try do
-          String.to_existing_atom(underscored)
-        rescue
-          ArgumentError -> status_to_error_type(status)
-        end
-
-      # No body type → fall back to HTTP status
       _ ->
         status_to_error_type(status)
     end

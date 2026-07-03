@@ -66,6 +66,13 @@ defmodule PolarExpress.ErrorTest do
       assert error.type == :api_error
     end
 
+    test "falls back to status for unknown response body types" do
+      body = JSON.encode!(%{"type" => "BrandNewPolarError", "detail" => "Not found"})
+      error = Error.from_response(404, body, [])
+      assert error.type == :not_found_error
+      assert error.error_code == "BrandNewPolarError"
+    end
+
     test "handles unparseable body gracefully" do
       error = Error.from_response(500, "not json", [])
       assert error.type == :api_error
