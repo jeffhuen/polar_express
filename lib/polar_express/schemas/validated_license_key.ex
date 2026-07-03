@@ -23,25 +23,7 @@ defmodule PolarExpress.Schemas.ValidatedLicenseKey do
   * `usage`
   * `validations`
   """
-  @type t :: %__MODULE__{
-          activation: PolarExpress.Schemas.LicenseKeyActivationBase.t() | nil,
-          benefit_id: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          customer: PolarExpress.Schemas.LicenseKeyCustomer.t() | nil,
-          customer_id: String.t() | nil,
-          display_key: String.t() | nil,
-          expires_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          key: String.t() | nil,
-          last_validated_at: DateTime.t() | nil,
-          limit_activations: integer() | nil,
-          limit_usage: integer() | nil,
-          modified_at: DateTime.t() | nil,
-          organization_id: String.t() | nil,
-          status: PolarExpress.Schemas.LicenseKeyStatus.t() | nil,
-          usage: integer() | nil,
-          validations: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :activation,

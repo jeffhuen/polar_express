@@ -13,15 +13,7 @@ defmodule PolarExpress.Schemas.WebTokenRequest do
   * `sub` - Nullable.
   * `sub_type` - Possible values: `user`, `organization`.
   """
-  @type t :: %__MODULE__{
-          client_id: String.t() | nil,
-          client_secret: String.t() | nil,
-          grant_type: String.t() | nil,
-          scope: String.t() | nil,
-          session_token: String.t() | nil,
-          sub: String.t() | nil,
-          sub_type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:client_id, :client_secret, :grant_type, :scope, :session_token, :sub, :sub_type]
 

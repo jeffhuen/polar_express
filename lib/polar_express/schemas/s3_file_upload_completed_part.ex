@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.S3FileUploadCompletedPart do
   * `checksum_sha256_base64` - Nullable.
   * `number`
   """
-  @type t :: %__MODULE__{
-          checksum_etag: String.t() | nil,
-          checksum_sha256_base64: String.t() | nil,
-          number: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:checksum_etag, :checksum_sha256_base64, :number]
 

@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.OrganizationCustomerPortalSettings do
   * `subscription`
   * `usage`
   """
-  @type t :: %__MODULE__{
-          customer: PolarExpress.Schemas.CustomerPortalCustomerSettings.t() | nil,
-          subscription: PolarExpress.Schemas.CustomerPortalSubscriptionSettings.t() | nil,
-          usage: PolarExpress.Schemas.CustomerPortalUsageSettings.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:customer, :subscription, :usage]
 

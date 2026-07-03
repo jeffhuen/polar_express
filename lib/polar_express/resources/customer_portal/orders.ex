@@ -39,39 +39,7 @@ defmodule PolarExpress.Resources.CustomerPortal.Orders do
   * `tax_amount` - Sales tax amount in cents.
   * `total_amount` - Amount in cents, after discounts and taxes.
   """
-  @type t :: %__MODULE__{
-          applied_balance_amount: integer() | nil,
-          billing_address: term() | nil,
-          billing_name: term() | nil,
-          billing_reason: map() | nil,
-          checkout_id: term() | nil,
-          created_at: String.t() | nil,
-          currency: String.t() | nil,
-          customer_id: String.t() | nil,
-          description: String.t() | nil,
-          discount_amount: integer() | nil,
-          discount_id: term() | nil,
-          due_amount: integer() | nil,
-          id: String.t() | nil,
-          invoice_number: String.t() | nil,
-          is_invoice_generated: boolean() | nil,
-          items: [map()] | nil,
-          modified_at: term() | nil,
-          net_amount: integer() | nil,
-          next_payment_attempt_at: term() | nil,
-          paid: boolean() | nil,
-          product: term() | nil,
-          product_id: term() | nil,
-          refunded_amount: integer() | nil,
-          refunded_tax_amount: integer() | nil,
-          seats: term() | nil,
-          status: map() | nil,
-          subscription: term() | nil,
-          subscription_id: term() | nil,
-          subtotal_amount: integer() | nil,
-          tax_amount: integer() | nil,
-          total_amount: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :applied_balance_amount,

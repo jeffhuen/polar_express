@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.OrganizationCompanyLegalEntitySchema do
   * `registered_name`
   * `type`
   """
-  @type t :: %__MODULE__{
-          registered_name: String.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:registered_name, :type]
 

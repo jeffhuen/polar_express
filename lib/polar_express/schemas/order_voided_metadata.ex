@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.OrderVoidedMetadata do
   * `currency`
   * `order_id`
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          currency: String.t() | nil,
-          order_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:amount, :currency, :order_id]
 

@@ -18,11 +18,7 @@ defmodule PolarExpress.Schemas.WebhookOrderUpdatedPayload do
   * `timestamp` - Format: date-time.
   * `type`
   """
-  @type t :: %__MODULE__{
-          data: PolarExpress.Schemas.Order.t() | nil,
-          timestamp: DateTime.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:data, :timestamp, :type]
 

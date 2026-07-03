@@ -11,11 +11,7 @@ defmodule PolarExpress.Schemas.MetricsResponse do
   * `periods` - List of data for each timestamp.
   * `totals` - Totals for the whole selected period.
   """
-  @type t :: %__MODULE__{
-          metrics: PolarExpress.Schemas.Metrics.t() | nil,
-          periods: [PolarExpress.Schemas.MetricPeriod.t()] | nil,
-          totals: PolarExpress.Schemas.MetricsTotals.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:metrics, :periods, :totals]
 

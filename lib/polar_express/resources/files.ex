@@ -24,24 +24,7 @@ defmodule PolarExpress.Resources.Files do
   * `upload`
   * `version`
   """
-  @type t :: %__MODULE__{
-          checksum_etag: term() | nil,
-          checksum_sha256_base64: term() | nil,
-          checksum_sha256_hex: term() | nil,
-          id: String.t() | nil,
-          is_uploaded: boolean() | nil,
-          last_modified_at: term() | nil,
-          mime_type: String.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          path: String.t() | nil,
-          service: map() | nil,
-          size: integer() | nil,
-          size_readable: String.t() | nil,
-          storage_version: term() | nil,
-          upload: map() | nil,
-          version: term() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :checksum_etag,

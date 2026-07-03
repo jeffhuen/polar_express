@@ -23,32 +23,7 @@ defmodule PolarExpress.Schemas.BenefitGrant do
   * `revoked_at` - The timestamp when the benefit was revoked. If `None`, the benefit is not revoked. Nullable.
   * `subscription_id` - The ID of the subscription that granted this benefit. Nullable.
   """
-  @type t :: %__MODULE__{
-          benefit: PolarExpress.Schemas.Benefit.t() | nil,
-          benefit_id: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          customer: PolarExpress.Schemas.Customer.t() | nil,
-          customer_id: String.t() | nil,
-          error: PolarExpress.Schemas.BenefitGrantError.t() | nil,
-          granted_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          is_granted: boolean() | nil,
-          is_revoked: boolean() | nil,
-          member: PolarExpress.Schemas.Member.t() | nil,
-          member_id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          order_id: String.t() | nil,
-          properties:
-            PolarExpress.Schemas.BenefitGrantDiscordProperties.t()
-            | PolarExpress.Schemas.BenefitGrantGitHubRepositoryProperties.t()
-            | PolarExpress.Schemas.BenefitGrantDownloadablesProperties.t()
-            | PolarExpress.Schemas.BenefitGrantLicenseKeysProperties.t()
-            | PolarExpress.Schemas.BenefitGrantCustomProperties.t()
-            | PolarExpress.Schemas.BenefitGrantFeatureFlagProperties.t()
-            | nil,
-          revoked_at: DateTime.t() | nil,
-          subscription_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :benefit,

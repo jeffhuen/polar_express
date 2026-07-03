@@ -14,14 +14,7 @@ defmodule PolarExpress.Resources.Oauth2 do
   * `scope`
   * `token_type`
   """
-  @type t :: %__MODULE__{
-          access_token: String.t() | nil,
-          expires_in: integer() | nil,
-          id_token: term() | nil,
-          refresh_token: term() | nil,
-          scope: String.t() | nil,
-          token_type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:access_token, :expires_in, :id_token, :refresh_token, :scope, :token_type]
 

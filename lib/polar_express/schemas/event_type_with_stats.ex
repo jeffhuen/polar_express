@@ -17,19 +17,7 @@ defmodule PolarExpress.Schemas.EventTypeWithStats do
   * `organization_id` - The ID of the organization owning the event type. Format: uuid4.
   * `source` - The source of the events (system or user).
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          first_seen: DateTime.t() | nil,
-          id: String.t() | nil,
-          label: String.t() | nil,
-          label_property_selector: String.t() | nil,
-          last_seen: DateTime.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          occurrences: integer() | nil,
-          organization_id: String.t() | nil,
-          source: PolarExpress.Schemas.EventSource.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :created_at,

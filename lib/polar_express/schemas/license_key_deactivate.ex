@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.LicenseKeyDeactivate do
   * `key`
   * `organization_id` - Format: uuid4.
   """
-  @type t :: %__MODULE__{
-          activation_id: String.t() | nil,
-          key: String.t() | nil,
-          organization_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:activation_id, :key, :organization_id]
 

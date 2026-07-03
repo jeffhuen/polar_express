@@ -16,16 +16,7 @@ defmodule PolarExpress.Resources.OrganizationAccessTokens do
   * `organization_id` - The organization ID. Format: uuid4.
   * `scopes`
   """
-  @type t :: %__MODULE__{
-          comment: String.t() | nil,
-          created_at: String.t() | nil,
-          expires_at: term() | nil,
-          id: String.t() | nil,
-          last_used_at: term() | nil,
-          modified_at: term() | nil,
-          organization_id: String.t() | nil,
-          scopes: [map()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :comment,

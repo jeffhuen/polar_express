@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.CursorPagination do
   @typedoc """
   * `has_next_page`
   """
-  @type t :: %__MODULE__{
-          has_next_page: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:has_next_page]
 

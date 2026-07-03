@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.S3DownloadURL do
   * `headers`
   * `url`
   """
-  @type t :: %__MODULE__{
-          expires_at: DateTime.t() | nil,
-          headers: %{String.t() => String.t()} | nil,
-          url: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:expires_at, :headers, :url]
 

@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.OrganizationIndividualLegalEntitySchema do
   @typedoc """
   * `type`
   """
-  @type t :: %__MODULE__{
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:type]
 

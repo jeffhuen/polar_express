@@ -44,12 +44,7 @@ defmodule PolarExpress.Schemas.ProductPriceFixedCreate do
   * `price_currency` - The currency in which the customer will be charged.
   * `tax_behavior` - The tax behavior of the price. If not set, it will default to the organization's default tax behavior. Nullable.
   """
-  @type t :: %__MODULE__{
-          amount_type: String.t() | nil,
-          price_amount: integer() | nil,
-          price_currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
-          tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:amount_type, :price_amount, :price_currency, :tax_behavior]
 

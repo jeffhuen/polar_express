@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantDiscordUpdate do
   * `benefit_type`
   * `properties`
   """
-  @type t :: %__MODULE__{
-          benefit_type: String.t() | nil,
-          properties: PolarExpress.Schemas.CustomerBenefitGrantDiscordPropertiesUpdate.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:benefit_type, :properties]
 

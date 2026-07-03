@@ -27,14 +27,7 @@ defmodule PolarExpress.Schemas.RefundCreate do
   Subscriptions automatically revoke customer benefits once the
   subscription itself is revoked, i.e fully canceled.
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          comment: String.t() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          order_id: String.t() | nil,
-          reason: PolarExpress.Schemas.RefundReason.t() | nil,
-          revoke_benefits: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:amount, :comment, :metadata, :order_id, :reason, :revoke_benefits]
 

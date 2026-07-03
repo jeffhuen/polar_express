@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.BenefitDownloadablesProperties do
   * `archived`
   * `files`
   """
-  @type t :: %__MODULE__{
-          archived: %{String.t() => boolean()} | nil,
-          files: [String.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:archived, :files]
 

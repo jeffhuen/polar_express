@@ -27,27 +27,7 @@ defmodule PolarExpress.Resources.Discounts do
   * `starts_at` - Timestamp after which the discount is redeemable.
   * `type`
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          amounts: term() | nil,
-          basis_points: integer() | nil,
-          code: term() | nil,
-          created_at: String.t() | nil,
-          currency: String.t() | nil,
-          duration: map() | nil,
-          duration_in_months: integer() | nil,
-          ends_at: term() | nil,
-          id: String.t() | nil,
-          max_redemptions: term() | nil,
-          metadata: map() | nil,
-          modified_at: term() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          products: [map()] | nil,
-          redemptions_count: integer() | nil,
-          starts_at: term() | nil,
-          type: map() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

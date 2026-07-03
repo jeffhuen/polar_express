@@ -12,14 +12,7 @@ defmodule PolarExpress.Schemas.CheckoutBillingAddressFields do
   * `postal_code`
   * `state`
   """
-  @type t :: %__MODULE__{
-          city: PolarExpress.Schemas.BillingAddressFieldMode.t() | nil,
-          country: PolarExpress.Schemas.BillingAddressFieldMode.t() | nil,
-          line1: PolarExpress.Schemas.BillingAddressFieldMode.t() | nil,
-          line2: PolarExpress.Schemas.BillingAddressFieldMode.t() | nil,
-          postal_code: PolarExpress.Schemas.BillingAddressFieldMode.t() | nil,
-          state: PolarExpress.Schemas.BillingAddressFieldMode.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:city, :country, :line1, :line2, :postal_code, :state]
 

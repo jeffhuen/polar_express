@@ -9,9 +9,7 @@ defmodule PolarExpress.Schemas.CustomerPortalMemberUpdate do
   @typedoc """
   * `role` - The new role for the member. Nullable.
   """
-  @type t :: %__MODULE__{
-          role: PolarExpress.Schemas.MemberRole.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:role]
 

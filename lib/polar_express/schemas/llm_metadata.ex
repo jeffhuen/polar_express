@@ -14,16 +14,7 @@ defmodule PolarExpress.Schemas.LLMMetadata do
   * `total_tokens` - The total number of LLM tokens used for the event.
   * `vendor` - The vendor of the event.
   """
-  @type t :: %__MODULE__{
-          cached_input_tokens: integer() | nil,
-          input_tokens: integer() | nil,
-          model: String.t() | nil,
-          output_tokens: integer() | nil,
-          prompt: String.t() | nil,
-          response: String.t() | nil,
-          total_tokens: integer() | nil,
-          vendor: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :cached_input_tokens,

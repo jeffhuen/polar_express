@@ -18,21 +18,7 @@ defmodule PolarExpress.Schemas.CustomerPortalCustomer do
   * `tax_id` - Nullable.
   * `type` - Nullable.
   """
-  @type t :: %__MODULE__{
-          billing_address: PolarExpress.Schemas.Address.t() | nil,
-          billing_name: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          default_payment_method_id: String.t() | nil,
-          email: String.t() | nil,
-          email_verified: boolean() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          oauth_accounts:
-            %{String.t() => PolarExpress.Schemas.CustomerPortalOAuthAccount.t()} | nil,
-          tax_id: [String.t() | PolarExpress.Schemas.TaxIDFormat.t()] | nil,
-          type: PolarExpress.Schemas.CustomerType.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :billing_address,

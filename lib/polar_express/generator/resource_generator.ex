@@ -11,40 +11,21 @@ defmodule PolarExpress.Generator.ResourceGenerator do
   Returns `[{file_path, content}]`.
   """
   def generate(spec) do
-    # Build a set of resource schema IDs for ref resolution
-    resource_ids = MapSet.new(spec.resources, & &1.schema_id)
-
     spec.resources
     |> Enum.filter(& &1.is_primary)
     |> Enum.map(fn resource ->
-      generate_resource(resource, resource_ids)
+      generate_resource(resource)
     end)
   end
 
-  defp generate_resource(resource, resource_ids) do
+  defp generate_resource(resource) do
     module = Naming.resource_module(resource.class_name, resource.package)
     path = Naming.module_to_path(module)
 
     props = resource.properties
-    required = resource.required
     expandable_set = MapSet.new(resource.expandable_fields)
 
     struct_fields = Enum.map_join(props, ", ", fn p -> ":#{p.name}" end)
-
-    type_fields =
-      props
-      |> Enum.map_join(",\n", fn p ->
-        type_str = type_to_typespec(p.type, p.name, resource, resource_ids)
-
-        type_str =
-          if MapSet.member?(required, p.name) do
-            type_str
-          else
-            "#{type_str} | nil"
-          end
-
-        "          #{p.name}: #{type_str}"
-      end)
 
     expandable_line =
       if resource.expandable_fields != [] do
@@ -101,9 +82,7 @@ defmodule PolarExpress.Generator.ResourceGenerator do
     defmodule #{inspect(module)} do
     #{moduledoc}
     #{typedoc}
-      @type t :: %__MODULE__{
-    #{type_fields}
-        }
+      @type t :: %__MODULE__{}
 
       defstruct [#{struct_fields}]
 
@@ -132,13 +111,6 @@ defmodule PolarExpress.Generator.ResourceGenerator do
     props = Enum.sort_by(inner.properties, & &1.name)
     struct_fields = Enum.map_join(props, ", ", fn p -> ":#{p.name}" end)
 
-    type_fields =
-      props
-      |> Enum.map_join(",\n", fn p ->
-        type_str = simple_typespec(p.type)
-        "#{indent}        #{p.name}: #{type_str} | nil"
-      end)
-
     nested_blocks = generate_inner_types(inner[:inner_types] || inner.inner_types, indent <> "  ")
 
     typedoc =
@@ -152,54 +124,9 @@ defmodule PolarExpress.Generator.ResourceGenerator do
     #{indent}defmodule #{inner.class_name} do
     #{indent}  @moduledoc false
     #{typedoc}
-    #{indent}  @type t :: %__MODULE__{
-    #{type_fields}
-    #{indent}    }
+    #{indent}  @type t :: %__MODULE__{}
     #{indent}  defstruct [#{struct_fields}]
     #{nested_blocks}#{indent}end
     """
   end
-
-  # -- Type specs -------------------------------------------------------------
-
-  defp type_to_typespec({:ref, ref_name}, field_name, resource, resource_ids) do
-    if MapSet.member?(resource_ids, ref_name) do
-      # Expandable field check
-      if field_name in resource.expandable_fields do
-        "String.t() | map()"
-      else
-        "map()"
-      end
-    else
-      "map()"
-    end
-  end
-
-  defp type_to_typespec({:list, inner}, field_name, resource, resource_ids) do
-    inner_spec = type_to_typespec(inner, field_name, resource, resource_ids)
-    "[#{inner_spec}]"
-  end
-
-  defp type_to_typespec({:nullable, inner}, field_name, resource, resource_ids) do
-    type_to_typespec(inner, field_name, resource, resource_ids)
-  end
-
-  defp type_to_typespec({:inner, _name}, _field_name, _resource, _resource_ids), do: "map()"
-  defp type_to_typespec(:string, _, _, _), do: "String.t()"
-  defp type_to_typespec(:integer, _, _, _), do: "integer()"
-  defp type_to_typespec(:float, _, _, _), do: "float()"
-  defp type_to_typespec(:boolean, _, _, _), do: "boolean()"
-  defp type_to_typespec(:map, _, _, _), do: "map()"
-  defp type_to_typespec(_, _, _, _), do: "term()"
-
-  defp simple_typespec(:string), do: "String.t()"
-  defp simple_typespec(:integer), do: "integer()"
-  defp simple_typespec(:float), do: "float()"
-  defp simple_typespec(:boolean), do: "boolean()"
-  defp simple_typespec(:map), do: "map()"
-  defp simple_typespec({:list, inner}), do: "[#{simple_typespec(inner)}]"
-  defp simple_typespec({:nullable, inner}), do: simple_typespec(inner)
-  defp simple_typespec({:ref, _}), do: "map()"
-  defp simple_typespec({:inner, _}), do: "map()"
-  defp simple_typespec(_), do: "term()"
 end

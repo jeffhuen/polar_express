@@ -17,17 +17,7 @@ defmodule PolarExpress.Schemas.CustomerSession do
   * `return_url` - Nullable.
   * `token`
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          customer: PolarExpress.Schemas.Customer.t() | nil,
-          customer_id: String.t() | nil,
-          customer_portal_url: String.t() | nil,
-          expires_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          return_url: String.t() | nil,
-          token: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :created_at,

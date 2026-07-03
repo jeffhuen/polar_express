@@ -24,20 +24,7 @@ defmodule PolarExpress.Schemas.MeterUpdate do
   * `name` - The name of the meter. Will be shown on customer's invoices and usage. Nullable.
   * `unit` - The unit of the meter. Nullable.
   """
-  @type t :: %__MODULE__{
-          aggregation:
-            PolarExpress.Schemas.CountAggregation.t()
-            | PolarExpress.Schemas.PropertyAggregation.t()
-            | PolarExpress.Schemas.UniqueAggregation.t()
-            | nil,
-          custom_label: String.t() | nil,
-          custom_multiplier: integer() | nil,
-          filter: PolarExpress.Schemas.Filter.t() | nil,
-          is_archived: boolean() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          name: String.t() | nil,
-          unit: PolarExpress.Schemas.MeterUnit.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :aggregation,

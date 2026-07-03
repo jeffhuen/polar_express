@@ -16,16 +16,7 @@ defmodule PolarExpress.Schemas.OrderItemSchema do
   * `proration` - Whether this charge is due to a proration.
   * `tax_amount` - Sales tax amount in cents.
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          created_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          label: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          product_price_id: String.t() | nil,
-          proration: boolean() | nil,
-          tax_amount: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

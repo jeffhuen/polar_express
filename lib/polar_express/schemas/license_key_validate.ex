@@ -23,15 +23,7 @@ defmodule PolarExpress.Schemas.LicenseKeyValidate do
   * `key`
   * `organization_id` - Format: uuid4.
   """
-  @type t :: %__MODULE__{
-          activation_id: String.t() | nil,
-          benefit_id: String.t() | nil,
-          conditions: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          customer_id: String.t() | nil,
-          increment_usage: integer() | nil,
-          key: String.t() | nil,
-          organization_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :activation_id,

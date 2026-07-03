@@ -18,20 +18,7 @@ defmodule PolarExpress.Schemas.OAuth2ClientConfigurationUpdate do
   * `token_endpoint_auth_method` - Possible values: `client_secret_basic`, `client_secret_post`, `none`.
   * `tos_uri` - Nullable.
   """
-  @type t :: %__MODULE__{
-          client_id: String.t() | nil,
-          client_name: String.t() | nil,
-          client_uri: String.t() | nil,
-          default_sub_type: PolarExpress.Schemas.SubType.t() | nil,
-          grant_types: [String.t()] | nil,
-          logo_uri: String.t() | nil,
-          policy_uri: String.t() | nil,
-          redirect_uris: [String.t()] | nil,
-          response_types: [String.t()] | nil,
-          scope: String.t() | nil,
-          token_endpoint_auth_method: String.t() | nil,
-          tos_uri: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :client_id,

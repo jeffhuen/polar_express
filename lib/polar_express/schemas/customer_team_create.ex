@@ -26,18 +26,7 @@ defmodule PolarExpress.Schemas.CustomerTeamCreate do
   * `tax_id` - Nullable.
   * `type`
   """
-  @type t :: %__MODULE__{
-          billing_address: PolarExpress.Schemas.AddressInput.t() | nil,
-          email: String.t() | nil,
-          external_id: String.t() | nil,
-          locale: String.t() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          owner: PolarExpress.Schemas.MemberOwnerCreate.t() | nil,
-          tax_id: String.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :billing_address,

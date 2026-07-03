@@ -22,24 +22,7 @@ defmodule PolarExpress.Schemas.FileDownload do
   * `storage_version` - Nullable.
   * `version` - Nullable.
   """
-  @type t :: %__MODULE__{
-          checksum_etag: String.t() | nil,
-          checksum_sha256_base64: String.t() | nil,
-          checksum_sha256_hex: String.t() | nil,
-          download: PolarExpress.Schemas.S3DownloadURL.t() | nil,
-          id: String.t() | nil,
-          is_uploaded: boolean() | nil,
-          last_modified_at: DateTime.t() | nil,
-          mime_type: String.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          path: String.t() | nil,
-          service: PolarExpress.Schemas.FileServiceTypes.t() | nil,
-          size: integer() | nil,
-          size_readable: String.t() | nil,
-          storage_version: String.t() | nil,
-          version: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :checksum_etag,

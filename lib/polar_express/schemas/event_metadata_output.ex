@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.EventMetadataOutput do
   * `_cost`
   * `_llm`
   """
-  @type t :: %__MODULE__{
-          _cost: PolarExpress.Schemas.CostMetadataOutput.t() | nil,
-          _llm: PolarExpress.Schemas.LLMMetadata.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:_cost, :_llm]
 

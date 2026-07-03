@@ -22,23 +22,7 @@ defmodule PolarExpress.Schemas.CheckoutUpdatePublic do
   * `product_price_id` - ID of the product price to checkout. Must correspond to a price present in the checkout's product list. Nullable. **Deprecated.**
   * `seats` - Number of seats for seat-based pricing. Nullable.
   """
-  @type t :: %__MODULE__{
-          allow_trial: boolean() | nil,
-          amount: integer() | nil,
-          custom_field_data:
-            %{String.t() => String.t() | integer() | boolean() | DateTime.t() | nil} | nil,
-          customer_billing_address: PolarExpress.Schemas.AddressInput.t() | nil,
-          customer_billing_name: String.t() | nil,
-          customer_email: String.t() | nil,
-          customer_name: String.t() | nil,
-          customer_tax_id: String.t() | nil,
-          discount_code: String.t() | nil,
-          is_business_customer: boolean() | nil,
-          locale: String.t() | nil,
-          product_id: String.t() | nil,
-          product_price_id: String.t() | nil,
-          seats: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :allow_trial,

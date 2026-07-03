@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.CustomerEmailUpdateVerifyRequest do
   @typedoc """
   * `token`
   """
-  @type t :: %__MODULE__{
-          token: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:token]
 

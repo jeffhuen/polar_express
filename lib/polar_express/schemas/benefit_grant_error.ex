@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.BenefitGrantError do
   * `timestamp`
   * `type`
   """
-  @type t :: %__MODULE__{
-          message: String.t() | nil,
-          timestamp: String.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:message, :timestamp, :type]
 

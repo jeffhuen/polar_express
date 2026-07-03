@@ -24,20 +24,7 @@ defmodule PolarExpress.Schemas.MeterCreate do
   * `organization_id` - The ID of the organization owning the meter. **Required unless you use an organization token.** Nullable.
   * `unit` - The unit of the meter.
   """
-  @type t :: %__MODULE__{
-          aggregation:
-            PolarExpress.Schemas.CountAggregation.t()
-            | PolarExpress.Schemas.PropertyAggregation.t()
-            | PolarExpress.Schemas.UniqueAggregation.t()
-            | nil,
-          custom_label: String.t() | nil,
-          custom_multiplier: integer() | nil,
-          filter: PolarExpress.Schemas.Filter.t() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          unit: PolarExpress.Schemas.MeterUnit.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :aggregation,

@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdateProduct do
   * `product_id` - Update subscription to another product. Format: uuid4.
   * `proration_behavior` - Determine how to handle the proration billing. If not provided, will use the default organization setting. Nullable.
   """
-  @type t :: %__MODULE__{
-          product_id: String.t() | nil,
-          proration_behavior: PolarExpress.Schemas.SubscriptionProrationBehavior.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:product_id, :proration_behavior]
 

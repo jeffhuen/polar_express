@@ -49,51 +49,7 @@ defmodule PolarExpress.Schemas.Metrics do
   * `revenue` - Nullable.
   * `succeeded_checkouts` - Nullable.
   """
-  @type t :: %__MODULE__{
-          active_subscriptions: PolarExpress.Schemas.Metric.t() | nil,
-          active_user_by_event: PolarExpress.Schemas.Metric.t() | nil,
-          average_order_value: PolarExpress.Schemas.Metric.t() | nil,
-          average_revenue_per_user: PolarExpress.Schemas.Metric.t() | nil,
-          canceled_subscriptions: PolarExpress.Schemas.Metric.t() | nil,
-          canceled_subscriptions_customer_service: PolarExpress.Schemas.Metric.t() | nil,
-          canceled_subscriptions_low_quality: PolarExpress.Schemas.Metric.t() | nil,
-          canceled_subscriptions_missing_features: PolarExpress.Schemas.Metric.t() | nil,
-          canceled_subscriptions_other: PolarExpress.Schemas.Metric.t() | nil,
-          canceled_subscriptions_switched_service: PolarExpress.Schemas.Metric.t() | nil,
-          canceled_subscriptions_too_complex: PolarExpress.Schemas.Metric.t() | nil,
-          canceled_subscriptions_too_expensive: PolarExpress.Schemas.Metric.t() | nil,
-          canceled_subscriptions_unused: PolarExpress.Schemas.Metric.t() | nil,
-          cashflow: PolarExpress.Schemas.Metric.t() | nil,
-          checkouts: PolarExpress.Schemas.Metric.t() | nil,
-          checkouts_conversion: PolarExpress.Schemas.Metric.t() | nil,
-          churn_rate: PolarExpress.Schemas.Metric.t() | nil,
-          churned_subscriptions: PolarExpress.Schemas.Metric.t() | nil,
-          committed_monthly_recurring_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          committed_subscriptions: PolarExpress.Schemas.Metric.t() | nil,
-          cost_per_user: PolarExpress.Schemas.Metric.t() | nil,
-          costs: PolarExpress.Schemas.Metric.t() | nil,
-          cumulative_costs: PolarExpress.Schemas.Metric.t() | nil,
-          cumulative_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          gross_margin: PolarExpress.Schemas.Metric.t() | nil,
-          gross_margin_percentage: PolarExpress.Schemas.Metric.t() | nil,
-          ltv: PolarExpress.Schemas.Metric.t() | nil,
-          monthly_recurring_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          net_average_order_value: PolarExpress.Schemas.Metric.t() | nil,
-          net_cumulative_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          net_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          new_subscriptions: PolarExpress.Schemas.Metric.t() | nil,
-          new_subscriptions_net_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          new_subscriptions_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          one_time_products: PolarExpress.Schemas.Metric.t() | nil,
-          one_time_products_net_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          one_time_products_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          orders: PolarExpress.Schemas.Metric.t() | nil,
-          renewed_subscriptions: PolarExpress.Schemas.Metric.t() | nil,
-          renewed_subscriptions_net_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          renewed_subscriptions_revenue: PolarExpress.Schemas.Metric.t() | nil,
-          revenue: PolarExpress.Schemas.Metric.t() | nil,
-          succeeded_checkouts: PolarExpress.Schemas.Metric.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :active_subscriptions,

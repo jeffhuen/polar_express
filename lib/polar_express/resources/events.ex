@@ -22,22 +22,7 @@ defmodule PolarExpress.Resources.Events do
   * `source` - The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
   * `timestamp` - The timestamp of the event. Format: date-time.
   """
-  @type t :: %__MODULE__{
-          child_count: integer() | nil,
-          customer: term() | nil,
-          customer_id: term() | nil,
-          external_customer_id: term() | nil,
-          external_member_id: term() | nil,
-          id: String.t() | nil,
-          label: String.t() | nil,
-          member_id: term() | nil,
-          metadata: map() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          parent_id: term() | nil,
-          source: String.t() | nil,
-          timestamp: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :child_count,

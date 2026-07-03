@@ -26,31 +26,7 @@ defmodule PolarExpress.Schemas.CheckoutLink do
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
   * `url`
   """
-  @type t :: %__MODULE__{
-          allow_discount_codes: boolean() | nil,
-          client_secret: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          discount:
-            PolarExpress.Schemas.DiscountFixedOnceForeverDurationBase.t()
-            | PolarExpress.Schemas.DiscountFixedRepeatDurationBase.t()
-            | PolarExpress.Schemas.DiscountPercentageOnceForeverDurationBase.t()
-            | PolarExpress.Schemas.DiscountPercentageRepeatDurationBase.t()
-            | nil,
-          discount_id: String.t() | nil,
-          id: String.t() | nil,
-          label: String.t() | nil,
-          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
-          modified_at: DateTime.t() | nil,
-          organization_id: String.t() | nil,
-          payment_processor: PolarExpress.Schemas.PaymentProcessor.t() | nil,
-          products: [PolarExpress.Schemas.CheckoutLinkProduct.t()] | nil,
-          require_billing_address: boolean() | nil,
-          return_url: String.t() | nil,
-          success_url: String.t() | nil,
-          trial_interval: PolarExpress.Schemas.TrialInterval.t() | nil,
-          trial_interval_count: integer() | nil,
-          url: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :allow_discount_codes,

@@ -9,9 +9,7 @@ defmodule PolarExpress.Schemas.CustomerOrganizationFeatureSettings do
   @typedoc """
   * `member_model_enabled` - Whether the member model is enabled for this organization.
   """
-  @type t :: %__MODULE__{
-          member_model_enabled: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:member_model_enabled]
 

@@ -13,13 +13,7 @@ defmodule PolarExpress.Schemas.ProductPriceMeter do
   * `name` - The name of the meter.
   * `unit` - The unit of the meter.
   """
-  @type t :: %__MODULE__{
-          custom_label: String.t() | nil,
-          custom_multiplier: integer() | nil,
-          id: String.t() | nil,
-          name: String.t() | nil,
-          unit: PolarExpress.Schemas.MeterUnit.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:custom_label, :custom_multiplier, :id, :name, :unit]
 

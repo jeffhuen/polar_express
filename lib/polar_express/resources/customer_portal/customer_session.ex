@@ -10,10 +10,7 @@ defmodule PolarExpress.Resources.CustomerPortal.CustomerSession do
   * `expires_at` - Format: date-time.
   * `return_url`
   """
-  @type t :: %__MODULE__{
-          expires_at: String.t() | nil,
-          return_url: term() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:expires_at, :return_url]
 

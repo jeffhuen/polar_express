@@ -22,29 +22,7 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
   * `subscription_settings` - Nullable.
   * `website` - Official website of the organization. Nullable.
   """
-  @type t :: %__MODULE__{
-          avatar_url: String.t() | nil,
-          country: String.t() | nil,
-          customer_email_settings:
-            PolarExpress.Schemas.OrganizationCustomerEmailSettings.t() | nil,
-          customer_portal_settings:
-            PolarExpress.Schemas.OrganizationCustomerPortalSettings.t() | nil,
-          default_presentment_currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
-          default_tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil,
-          details: PolarExpress.Schemas.OrganizationDetails.t() | nil,
-          email: String.t() | nil,
-          feature_settings: PolarExpress.Schemas.OrganizationFeatureSettings.t() | nil,
-          legal_entity:
-            PolarExpress.Schemas.OrganizationIndividualLegalEntitySchema.t()
-            | PolarExpress.Schemas.OrganizationCompanyLegalEntitySchema.t()
-            | nil,
-          name: String.t() | nil,
-          notification_settings: PolarExpress.Schemas.OrganizationNotificationSettings.t() | nil,
-          slug: String.t() | nil,
-          socials: [PolarExpress.Schemas.OrganizationSocialLink.t()] | nil,
-          subscription_settings: PolarExpress.Schemas.OrganizationSubscriptionSettings.t() | nil,
-          website: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :avatar_url,

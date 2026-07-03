@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.ListResource_Refund_ do
   * `items`
   * `pagination`
   """
-  @type t :: %__MODULE__{
-          items: [PolarExpress.Schemas.Refund.t()] | nil,
-          pagination: PolarExpress.Schemas.Pagination.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:items, :pagination]
 

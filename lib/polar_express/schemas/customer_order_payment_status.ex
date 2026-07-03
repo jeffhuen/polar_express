@@ -10,10 +10,7 @@ defmodule PolarExpress.Schemas.CustomerOrderPaymentStatus do
   * `error` - Error message if payment failed. Nullable.
   * `status` - Current payment status.
   """
-  @type t :: %__MODULE__{
-          error: String.t() | nil,
-          status: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:error, :status]
 

@@ -13,15 +13,7 @@ defmodule PolarExpress.Schemas.S3FileUploadPart do
   * `number`
   * `url`
   """
-  @type t :: %__MODULE__{
-          checksum_sha256_base64: String.t() | nil,
-          chunk_end: integer() | nil,
-          chunk_start: integer() | nil,
-          expires_at: DateTime.t() | nil,
-          headers: %{String.t() => String.t()} | nil,
-          number: integer() | nil,
-          url: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :checksum_sha256_base64,

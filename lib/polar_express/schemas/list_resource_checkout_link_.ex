@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.ListResource_CheckoutLink_ do
   * `items`
   * `pagination`
   """
-  @type t :: %__MODULE__{
-          items: [PolarExpress.Schemas.CheckoutLink.t()] | nil,
-          pagination: PolarExpress.Schemas.Pagination.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:items, :pagination]
 

@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.ListResourceWithCursorPagination_Event_ do
   * `items`
   * `pagination`
   """
-  @type t :: %__MODULE__{
-          items: [PolarExpress.Schemas.Event.t()] | nil,
-          pagination: PolarExpress.Schemas.CursorPagination.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:items, :pagination]
 

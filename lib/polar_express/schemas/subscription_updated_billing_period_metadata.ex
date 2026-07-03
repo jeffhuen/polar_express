@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdatedBillingPeriodMetadata do
   * `billing_period_end`
   * `subscription_id`
   """
-  @type t :: %__MODULE__{
-          billing_period_end: String.t() | nil,
-          subscription_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:billing_period_end, :subscription_id]
 

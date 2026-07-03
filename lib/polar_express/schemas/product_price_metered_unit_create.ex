@@ -14,14 +14,7 @@ defmodule PolarExpress.Schemas.ProductPriceMeteredUnitCreate do
   * `tax_behavior` - The tax behavior of the price. If not set, it will default to the organization's default tax behavior. Nullable.
   * `unit_amount` - The price per unit in cents. Supports up to 12 decimal places.
   """
-  @type t :: %__MODULE__{
-          amount_type: String.t() | nil,
-          cap_amount: integer() | nil,
-          meter_id: String.t() | nil,
-          price_currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
-          tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil,
-          unit_amount: float() | String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:amount_type, :cap_amount, :meter_id, :price_currency, :tax_behavior, :unit_amount]
 

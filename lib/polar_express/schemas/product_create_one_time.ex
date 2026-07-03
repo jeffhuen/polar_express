@@ -26,26 +26,7 @@ defmodule PolarExpress.Schemas.ProductCreateOneTime do
   * `recurring_interval_count` - One-time products don't have a recurring interval count.
   * `visibility` - The visibility of the product.
   """
-  @type t :: %__MODULE__{
-          attached_custom_fields: [PolarExpress.Schemas.AttachedCustomFieldCreate.t()] | nil,
-          description: String.t() | nil,
-          medias: [String.t()] | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          prices:
-            [
-              PolarExpress.Schemas.ProductPriceFixedCreate.t()
-              | PolarExpress.Schemas.ProductPriceCustomCreate.t()
-              | PolarExpress.Schemas.ProductPriceFreeCreate.t()
-              | PolarExpress.Schemas.ProductPriceSeatBasedCreate.t()
-              | PolarExpress.Schemas.ProductPriceMeteredUnitCreate.t()
-            ]
-            | nil,
-          recurring_interval: term(),
-          recurring_interval_count: term(),
-          visibility: PolarExpress.Schemas.ProductVisibility.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :attached_custom_fields,

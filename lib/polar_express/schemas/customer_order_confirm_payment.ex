@@ -11,11 +11,7 @@ defmodule PolarExpress.Schemas.CustomerOrderConfirmPayment do
   * `payment_method_id` - ID of an existing saved payment method. Nullable.
   * `payment_processor` - Payment processor used.
   """
-  @type t :: %__MODULE__{
-          confirmation_token_id: String.t() | nil,
-          payment_method_id: String.t() | nil,
-          payment_processor: PolarExpress.Schemas.PaymentProcessor.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:confirmation_token_id, :payment_method_id, :payment_processor]
 

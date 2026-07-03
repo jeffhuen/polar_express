@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.EventName do
   * `occurrences` - Number of times the event has occurred.
   * `source` - The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
   """
-  @type t :: %__MODULE__{
-          first_seen: DateTime.t() | nil,
-          last_seen: DateTime.t() | nil,
-          name: String.t() | nil,
-          occurrences: integer() | nil,
-          source: PolarExpress.Schemas.EventSource.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:first_seen, :last_seen, :name, :occurrences, :source]
 

@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdatedTrialMetadata do
   * `subscription_id`
   * `trial_end`
   """
-  @type t :: %__MODULE__{
-          subscription_id: String.t() | nil,
-          trial_end: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:subscription_id, :trial_end]
 

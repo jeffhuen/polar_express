@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.CustomFieldDateProperties do
   * `ge`
   * `le`
   """
-  @type t :: %__MODULE__{
-          form_help_text: String.t() | nil,
-          form_label: String.t() | nil,
-          form_placeholder: String.t() | nil,
-          ge: integer() | nil,
-          le: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:form_help_text, :form_label, :form_placeholder, :ge, :le]
 

@@ -10,10 +10,7 @@ defmodule PolarExpress.Schemas.CustomerOrderUpdate do
   * `billing_address` - The address of the customer that should appear on the invoice. Country and state fields cannot be updated. Nullable.
   * `billing_name` - The name of the customer that should appear on the invoice. Nullable.
   """
-  @type t :: %__MODULE__{
-          billing_address: PolarExpress.Schemas.AddressInput.t() | nil,
-          billing_name: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:billing_address, :billing_name]
 

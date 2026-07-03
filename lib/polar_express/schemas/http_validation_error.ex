@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.HTTPValidationError do
   @typedoc """
   * `detail`
   """
-  @type t :: %__MODULE__{
-          detail: [PolarExpress.Schemas.ValidationError.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:detail]
 

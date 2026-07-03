@@ -10,12 +10,7 @@ defmodule PolarExpress.Schemas.CustomFieldSelectProperties do
   * `form_placeholder`
   * `options`
   """
-  @type t :: %__MODULE__{
-          form_help_text: String.t() | nil,
-          form_label: String.t() | nil,
-          form_placeholder: String.t() | nil,
-          options: [PolarExpress.Schemas.CustomFieldSelectOption.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:form_help_text, :form_label, :form_placeholder, :options]
 

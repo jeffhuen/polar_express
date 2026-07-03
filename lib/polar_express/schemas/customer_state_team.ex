@@ -30,26 +30,7 @@ defmodule PolarExpress.Schemas.CustomerStateTeam do
   * `tax_id` - Nullable.
   * `type` - The type of customer. Team customers can have multiple members.
   """
-  @type t :: %__MODULE__{
-          active_meters: [PolarExpress.Schemas.CustomerStateMeter.t()] | nil,
-          active_subscriptions: [PolarExpress.Schemas.CustomerStateSubscription.t()] | nil,
-          avatar_url: String.t() | nil,
-          billing_address: PolarExpress.Schemas.Address.t() | nil,
-          created_at: DateTime.t() | nil,
-          deleted_at: DateTime.t() | nil,
-          email: String.t() | nil,
-          email_verified: boolean() | nil,
-          external_id: String.t() | nil,
-          granted_benefits: [PolarExpress.Schemas.CustomerStateBenefitGrant.t()] | nil,
-          id: String.t() | nil,
-          locale: String.t() | nil,
-          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          tax_id: [String.t() | PolarExpress.Schemas.TaxIDFormat.t()] | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :active_meters,

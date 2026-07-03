@@ -13,15 +13,7 @@ defmodule PolarExpress.Schemas.SubscriptionCreatedMetadata do
   * `started_at`
   * `subscription_id`
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          currency: String.t() | nil,
-          product_id: String.t() | nil,
-          recurring_interval: String.t() | nil,
-          recurring_interval_count: integer() | nil,
-          started_at: String.t() | nil,
-          subscription_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

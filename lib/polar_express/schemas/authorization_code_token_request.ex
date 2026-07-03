@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.AuthorizationCodeTokenRequest do
   * `grant_type`
   * `redirect_uri` - Format: uri. Max length: 2083.
   """
-  @type t :: %__MODULE__{
-          client_id: String.t() | nil,
-          client_secret: String.t() | nil,
-          code: String.t() | nil,
-          grant_type: String.t() | nil,
-          redirect_uri: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:client_id, :client_secret, :code, :grant_type, :redirect_uri]
 

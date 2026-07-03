@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.BenefitLicenseKeyExpirationProperties do
   * `timeframe` - Possible values: `year`, `month`, `day`.
   * `ttl`
   """
-  @type t :: %__MODULE__{
-          timeframe: String.t() | nil,
-          ttl: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:timeframe, :ttl]
 

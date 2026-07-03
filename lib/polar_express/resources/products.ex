@@ -26,26 +26,7 @@ defmodule PolarExpress.Resources.Products do
   * `trial_interval_count` - The number of interval units for the trial period.
   * `visibility` - The visibility of the product.
   """
-  @type t :: %__MODULE__{
-          attached_custom_fields: [map()] | nil,
-          benefits: [map()] | nil,
-          created_at: String.t() | nil,
-          description: term() | nil,
-          id: String.t() | nil,
-          is_archived: boolean() | nil,
-          is_recurring: boolean() | nil,
-          medias: [map()] | nil,
-          metadata: map() | nil,
-          modified_at: term() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          prices: [term()] | nil,
-          recurring_interval: term() | nil,
-          recurring_interval_count: term() | nil,
-          trial_interval: term() | nil,
-          trial_interval_count: term() | nil,
-          visibility: map() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :attached_custom_fields,

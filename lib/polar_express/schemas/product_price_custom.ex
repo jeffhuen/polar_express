@@ -20,20 +20,7 @@ defmodule PolarExpress.Schemas.ProductPriceCustom do
   * `source` - The source of the price . `catalog` is a predefined price, while `ad_hoc` is a price created dynamically on a Checkout session.
   * `tax_behavior` - The tax behavior of the price. If null, it defaults to the organization's default tax behavior. Nullable.
   """
-  @type t :: %__MODULE__{
-          amount_type: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          is_archived: boolean() | nil,
-          maximum_amount: integer() | nil,
-          minimum_amount: integer() | nil,
-          modified_at: DateTime.t() | nil,
-          preset_amount: integer() | nil,
-          price_currency: String.t() | nil,
-          product_id: String.t() | nil,
-          source: PolarExpress.Schemas.ProductPriceSource.t() | nil,
-          tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount_type,

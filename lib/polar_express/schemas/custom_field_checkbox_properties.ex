@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.CustomFieldCheckboxProperties do
   * `form_label`
   * `form_placeholder`
   """
-  @type t :: %__MODULE__{
-          form_help_text: String.t() | nil,
-          form_label: String.t() | nil,
-          form_placeholder: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:form_help_text, :form_label, :form_placeholder]
 

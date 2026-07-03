@@ -15,17 +15,7 @@ defmodule PolarExpress.Schemas.BenefitPublic do
   * `selectable` - Whether the benefit is selectable when creating a product.
   * `type` - The type of the benefit.
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          deletable: boolean() | nil,
-          description: String.t() | nil,
-          id: String.t() | nil,
-          is_deleted: boolean() | nil,
-          modified_at: DateTime.t() | nil,
-          organization_id: String.t() | nil,
-          selectable: boolean() | nil,
-          type: PolarExpress.Schemas.BenefitType.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :created_at,

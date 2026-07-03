@@ -50,52 +50,7 @@ defmodule PolarExpress.Schemas.MetricPeriod do
   * `succeeded_checkouts` - Nullable.
   * `timestamp` - Timestamp of this period data. Format: date-time.
   """
-  @type t :: %__MODULE__{
-          active_subscriptions: integer() | float() | nil,
-          active_user_by_event: integer() | float() | nil,
-          average_order_value: integer() | float() | nil,
-          average_revenue_per_user: integer() | float() | nil,
-          canceled_subscriptions: integer() | float() | nil,
-          canceled_subscriptions_customer_service: integer() | float() | nil,
-          canceled_subscriptions_low_quality: integer() | float() | nil,
-          canceled_subscriptions_missing_features: integer() | float() | nil,
-          canceled_subscriptions_other: integer() | float() | nil,
-          canceled_subscriptions_switched_service: integer() | float() | nil,
-          canceled_subscriptions_too_complex: integer() | float() | nil,
-          canceled_subscriptions_too_expensive: integer() | float() | nil,
-          canceled_subscriptions_unused: integer() | float() | nil,
-          cashflow: integer() | float() | nil,
-          checkouts: integer() | float() | nil,
-          checkouts_conversion: integer() | float() | nil,
-          churn_rate: integer() | float() | nil,
-          churned_subscriptions: integer() | float() | nil,
-          committed_monthly_recurring_revenue: integer() | float() | nil,
-          committed_subscriptions: integer() | float() | nil,
-          cost_per_user: integer() | float() | nil,
-          costs: integer() | float() | nil,
-          cumulative_costs: integer() | float() | nil,
-          cumulative_revenue: integer() | float() | nil,
-          gross_margin: integer() | float() | nil,
-          gross_margin_percentage: integer() | float() | nil,
-          ltv: integer() | float() | nil,
-          monthly_recurring_revenue: integer() | float() | nil,
-          net_average_order_value: integer() | float() | nil,
-          net_cumulative_revenue: integer() | float() | nil,
-          net_revenue: integer() | float() | nil,
-          new_subscriptions: integer() | float() | nil,
-          new_subscriptions_net_revenue: integer() | float() | nil,
-          new_subscriptions_revenue: integer() | float() | nil,
-          one_time_products: integer() | float() | nil,
-          one_time_products_net_revenue: integer() | float() | nil,
-          one_time_products_revenue: integer() | float() | nil,
-          orders: integer() | float() | nil,
-          renewed_subscriptions: integer() | float() | nil,
-          renewed_subscriptions_net_revenue: integer() | float() | nil,
-          renewed_subscriptions_revenue: integer() | float() | nil,
-          revenue: integer() | float() | nil,
-          succeeded_checkouts: integer() | float() | nil,
-          timestamp: DateTime.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :active_subscriptions,

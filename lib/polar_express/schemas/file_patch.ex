@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.FilePatch do
   * `name` - Nullable.
   * `version` - Nullable.
   """
-  @type t :: %__MODULE__{
-          name: String.t() | nil,
-          version: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:name, :version]
 

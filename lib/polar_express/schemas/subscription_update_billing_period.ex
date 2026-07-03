@@ -9,9 +9,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdateBillingPeriod do
 
   It is not possible to update the current billing period on a canceled subscription. Format: date-time.
   """
-  @type t :: %__MODULE__{
-          current_billing_period_end: DateTime.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:current_billing_period_end]
 

@@ -10,10 +10,7 @@ defmodule PolarExpress.Schemas.MemberUpdate do
   * `name` - Nullable.
   * `role` - The role of the member within the customer. Nullable.
   """
-  @type t :: %__MODULE__{
-          name: String.t() | nil,
-          role: PolarExpress.Schemas.MemberRole.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:name, :role]
 

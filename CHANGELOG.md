@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.1] - 2026-07-03
+
+### Changed
+
+- Simplify generated schema/resource `t()` specs to `%__MODULE__{}` to cut recursive typespec load while preserving docs, structs, params, deserialization metadata, and service return specs ([0.2.1])
+
 ## [0.2.0] - 2026-05-22
 
 ### Changed
@@ -117,6 +123,7 @@ _Initial release._
 - Add list pagination, raw requests, streaming requests, retries, telemetry, OAuth, webhooks, and test stubs ([`693a87e`])
 - Add Finch-backed HTTP client and RustyJSON-backed JSON decoding ([`693a87e`])
 
+[0.2.1]: https://github.com/jeffhuen/polar_express/compare/0.2.0...HEAD
 [0.2.0]: https://github.com/jeffhuen/polar_express/compare/66d43a5...HEAD
 [0.1.6]: https://github.com/jeffhuen/polar_express/commit/7d439c227951918e05277783dc55c7f5ab1b1359
 [0.1.5]: https://github.com/jeffhuen/polar_express/commit/4b198081298905870f66c02cd8d7458a99a2083b

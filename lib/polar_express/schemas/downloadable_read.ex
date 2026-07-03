@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.DownloadableRead do
   * `file`
   * `id` - Format: uuid4.
   """
-  @type t :: %__MODULE__{
-          benefit_id: String.t() | nil,
-          file: PolarExpress.Schemas.FileDownload.t() | nil,
-          id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:benefit_id, :file, :id]
 

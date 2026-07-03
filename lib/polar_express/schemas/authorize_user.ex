@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.AuthorizeUser do
   * `email` - Format: email.
   * `id` - Format: uuid4.
   """
-  @type t :: %__MODULE__{
-          avatar_url: String.t() | nil,
-          email: String.t() | nil,
-          id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:avatar_url, :email, :id]
 

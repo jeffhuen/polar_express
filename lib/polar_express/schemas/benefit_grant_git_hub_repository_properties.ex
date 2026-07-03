@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.BenefitGrantGitHubRepositoryProperties do
   * `repository_name`
   * `repository_owner`
   """
-  @type t :: %__MODULE__{
-          account_id: String.t() | nil,
-          granted_account_id: String.t() | nil,
-          permission: String.t() | nil,
-          repository_name: String.t() | nil,
-          repository_owner: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:account_id, :granted_account_id, :permission, :repository_name, :repository_owner]
 

@@ -8,11 +8,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantGitHubRepositoryUpdate do
   * `benefit_type`
   * `properties`
   """
-  @type t :: %__MODULE__{
-          benefit_type: String.t() | nil,
-          properties:
-            PolarExpress.Schemas.CustomerBenefitGrantGitHubRepositoryPropertiesUpdate.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:benefit_type, :properties]
 

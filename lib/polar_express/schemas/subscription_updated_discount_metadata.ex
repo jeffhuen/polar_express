@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdatedDiscountMetadata do
   * `discount_id` - Nullable.
   * `subscription_id`
   """
-  @type t :: %__MODULE__{
-          discount_id: String.t() | nil,
-          subscription_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:discount_id, :subscription_id]
 

@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantLicenseKeysUpdate do
   @typedoc """
   * `benefit_type`
   """
-  @type t :: %__MODULE__{
-          benefit_type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:benefit_type]
 

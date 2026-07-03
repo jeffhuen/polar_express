@@ -9,9 +9,7 @@ defmodule PolarExpress.Schemas.BenefitCustomSubscriberProperties do
   @typedoc """
   * `note` - Nullable.
   """
-  @type t :: %__MODULE__{
-          note: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:note]
 

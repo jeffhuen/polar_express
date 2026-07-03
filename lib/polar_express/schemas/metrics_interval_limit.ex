@@ -10,10 +10,7 @@ defmodule PolarExpress.Schemas.MetricsIntervalLimit do
   * `max_days` - Maximum number of days for this interval.
   * `min_days` - Minimum number of days for this interval.
   """
-  @type t :: %__MODULE__{
-          max_days: integer() | nil,
-          min_days: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:max_days, :min_days]
 

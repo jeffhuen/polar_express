@@ -31,31 +31,7 @@ defmodule PolarExpress.Resources.Organizations do
   * `subscription_settings` - Settings related to subscriptions management
   * `website` - Official website of the organization.
   """
-  @type t :: %__MODULE__{
-          account_id: term() | nil,
-          allow_customer_updates: boolean() | nil,
-          avatar_url: term() | nil,
-          country: term() | nil,
-          created_at: String.t() | nil,
-          customer_email_settings: map() | nil,
-          customer_portal_settings: map() | nil,
-          default_presentment_currency: String.t() | nil,
-          default_tax_behavior: map() | nil,
-          details_submitted_at: term() | nil,
-          email: term() | nil,
-          feature_settings: term() | nil,
-          id: String.t() | nil,
-          modified_at: term() | nil,
-          name: String.t() | nil,
-          notification_settings: map() | nil,
-          payout_account_id: term() | nil,
-          proration_behavior: map() | nil,
-          slug: String.t() | nil,
-          socials: [map()] | nil,
-          status: map() | nil,
-          subscription_settings: map() | nil,
-          website: term() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :account_id,

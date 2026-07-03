@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.LicenseKeyUpdate do
   * `status` - Nullable.
   * `usage`
   """
-  @type t :: %__MODULE__{
-          expires_at: DateTime.t() | nil,
-          limit_activations: integer() | nil,
-          limit_usage: integer() | nil,
-          status: PolarExpress.Schemas.LicenseKeyStatus.t() | nil,
-          usage: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:expires_at, :limit_activations, :limit_usage, :status, :usage]
 

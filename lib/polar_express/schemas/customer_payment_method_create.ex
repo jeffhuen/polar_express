@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.CustomerPaymentMethodCreate do
   * `return_url`
   * `set_default`
   """
-  @type t :: %__MODULE__{
-          confirmation_token_id: String.t() | nil,
-          return_url: String.t() | nil,
-          set_default: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:confirmation_token_id, :return_url, :set_default]
 

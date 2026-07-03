@@ -10,12 +10,7 @@ defmodule PolarExpress.Schemas.BenefitLicenseKeysSubscriberProperties do
   * `limit_usage` - Nullable.
   * `prefix` - Nullable.
   """
-  @type t :: %__MODULE__{
-          activations: PolarExpress.Schemas.BenefitLicenseKeyActivationProperties.t() | nil,
-          expires: PolarExpress.Schemas.BenefitLicenseKeyExpirationProperties.t() | nil,
-          limit_usage: integer() | nil,
-          prefix: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:activations, :expires, :limit_usage, :prefix]
 

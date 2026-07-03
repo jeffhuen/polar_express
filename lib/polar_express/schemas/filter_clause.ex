@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.FilterClause do
   * `property`
   * `value`
   """
-  @type t :: %__MODULE__{
-          operator: PolarExpress.Schemas.FilterOperator.t() | nil,
-          property: String.t() | nil,
-          value: String.t() | integer() | boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:operator, :property, :value]
 

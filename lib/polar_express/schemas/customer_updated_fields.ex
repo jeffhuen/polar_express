@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.CustomerUpdatedFields do
   * `name` - Nullable.
   * `tax_id` - Nullable.
   """
-  @type t :: %__MODULE__{
-          billing_address: PolarExpress.Schemas.AddressDict.t() | nil,
-          email: String.t() | nil,
-          metadata: %{String.t() => String.t() | integer() | boolean() | nil} | nil,
-          name: String.t() | nil,
-          tax_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:billing_address, :email, :metadata, :name, :tax_id]
 

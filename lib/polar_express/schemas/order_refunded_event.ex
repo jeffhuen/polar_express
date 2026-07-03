@@ -22,22 +22,7 @@ defmodule PolarExpress.Schemas.OrderRefundedEvent do
   * `source` - The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
   * `timestamp` - The timestamp of the event. Format: date-time.
   """
-  @type t :: %__MODULE__{
-          child_count: integer() | nil,
-          customer: PolarExpress.Schemas.Customer.t() | nil,
-          customer_id: String.t() | nil,
-          external_customer_id: String.t() | nil,
-          external_member_id: String.t() | nil,
-          id: String.t() | nil,
-          label: String.t() | nil,
-          member_id: String.t() | nil,
-          metadata: PolarExpress.Schemas.OrderRefundedMetadata.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          parent_id: String.t() | nil,
-          source: String.t() | nil,
-          timestamp: DateTime.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :child_count,

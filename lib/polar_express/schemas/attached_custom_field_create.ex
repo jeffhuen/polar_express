@@ -10,10 +10,7 @@ defmodule PolarExpress.Schemas.AttachedCustomFieldCreate do
   * `custom_field_id` - ID of the custom field to attach. Format: uuid4.
   * `required` - Whether the value is required for this custom field.
   """
-  @type t :: %__MODULE__{
-          custom_field_id: String.t() | nil,
-          required: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:custom_field_id, :required]
 

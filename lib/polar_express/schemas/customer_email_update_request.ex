@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.CustomerEmailUpdateRequest do
   @typedoc """
   * `email` - Format: email.
   """
-  @type t :: %__MODULE__{
-          email: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:email]
 

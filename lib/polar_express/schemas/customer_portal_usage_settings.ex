@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.CustomerPortalUsageSettings do
   @typedoc """
   * `show`
   """
-  @type t :: %__MODULE__{
-          show: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:show]
 

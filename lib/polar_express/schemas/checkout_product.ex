@@ -24,29 +24,7 @@ defmodule PolarExpress.Schemas.CheckoutProduct do
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
   * `visibility` - The visibility of the product.
   """
-  @type t :: %__MODULE__{
-          benefits: [PolarExpress.Schemas.BenefitPublic.t()] | nil,
-          created_at: DateTime.t() | nil,
-          description: String.t() | nil,
-          id: String.t() | nil,
-          is_archived: boolean() | nil,
-          is_recurring: boolean() | nil,
-          medias: [PolarExpress.Schemas.ProductMediaFileRead.t()] | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          prices:
-            [
-              PolarExpress.Schemas.LegacyRecurringProductPrice.t()
-              | PolarExpress.Schemas.ProductPrice.t()
-            ]
-            | nil,
-          recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
-          recurring_interval_count: integer() | nil,
-          trial_interval: PolarExpress.Schemas.TrialInterval.t() | nil,
-          trial_interval_count: integer() | nil,
-          visibility: PolarExpress.Schemas.ProductVisibility.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :benefits,

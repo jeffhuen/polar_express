@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.UserInfoOrganization do
   * `name` - Nullable.
   * `sub`
   """
-  @type t :: %__MODULE__{
-          name: String.t() | nil,
-          sub: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:name, :sub]
 

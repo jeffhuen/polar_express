@@ -12,14 +12,7 @@ defmodule PolarExpress.Schemas.AddressDict do
   * `postal_code`
   * `state`
   """
-  @type t :: %__MODULE__{
-          city: String.t() | nil,
-          country: String.t() | nil,
-          line1: String.t() | nil,
-          line2: String.t() | nil,
-          postal_code: String.t() | nil,
-          state: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:city, :country, :line1, :line2, :postal_code, :state]
 

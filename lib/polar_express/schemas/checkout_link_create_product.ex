@@ -31,19 +31,7 @@ defmodule PolarExpress.Schemas.CheckoutLinkCreateProduct do
   * `trial_interval` - The interval unit for the trial period. Nullable.
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
   """
-  @type t :: %__MODULE__{
-          allow_discount_codes: boolean() | nil,
-          discount_id: String.t() | nil,
-          label: String.t() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          payment_processor: String.t() | nil,
-          product_id: String.t() | nil,
-          require_billing_address: boolean() | nil,
-          return_url: String.t() | nil,
-          success_url: String.t() | nil,
-          trial_interval: PolarExpress.Schemas.TrialInterval.t() | nil,
-          trial_interval_count: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :allow_discount_codes,

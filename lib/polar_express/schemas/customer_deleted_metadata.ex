@@ -10,12 +10,7 @@ defmodule PolarExpress.Schemas.CustomerDeletedMetadata do
   * `customer_id`
   * `customer_name` - Nullable.
   """
-  @type t :: %__MODULE__{
-          customer_email: String.t() | nil,
-          customer_external_id: String.t() | nil,
-          customer_id: String.t() | nil,
-          customer_name: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:customer_email, :customer_external_id, :customer_id, :customer_name]
 

@@ -17,17 +17,7 @@ defmodule PolarExpress.Schemas.CustomFieldNumber do
   * `slug` - Identifier of the custom field. It'll be used as key when storing the value.
   * `type`
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          properties: PolarExpress.Schemas.CustomFieldNumberProperties.t() | nil,
-          slug: String.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :created_at,

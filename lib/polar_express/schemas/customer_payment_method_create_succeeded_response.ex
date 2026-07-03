@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.CustomerPaymentMethodCreateSucceededResponse do
   * `payment_method`
   * `status`
   """
-  @type t :: %__MODULE__{
-          payment_method: PolarExpress.Schemas.CustomerPaymentMethod.t() | nil,
-          status: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:payment_method, :status]
 

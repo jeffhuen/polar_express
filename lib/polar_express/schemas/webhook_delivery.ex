@@ -15,15 +15,7 @@ defmodule PolarExpress.Schemas.WebhookDelivery do
   * `succeeded` - Whether the delivery was successful.
   * `webhook_event` - The webhook event sent by this delivery.
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          http_code: integer() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          response: String.t() | nil,
-          succeeded: boolean() | nil,
-          webhook_event: PolarExpress.Schemas.WebhookEvent.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:created_at, :http_code, :id, :modified_at, :response, :succeeded, :webhook_event]
 

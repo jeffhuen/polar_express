@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.OrganizationAccessTokenUpdate do
   * `comment` - Nullable.
   * `scopes` - Nullable.
   """
-  @type t :: %__MODULE__{
-          comment: String.t() | nil,
-          scopes: [PolarExpress.Schemas.AvailableScope.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:comment, :scopes]
 

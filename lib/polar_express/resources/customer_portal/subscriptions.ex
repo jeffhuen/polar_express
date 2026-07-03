@@ -10,10 +10,7 @@ defmodule PolarExpress.Resources.CustomerPortal.Subscriptions do
   * `detail`
   * `error`
   """
-  @type t :: %__MODULE__{
-          detail: String.t() | nil,
-          error: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:detail, :error]
 

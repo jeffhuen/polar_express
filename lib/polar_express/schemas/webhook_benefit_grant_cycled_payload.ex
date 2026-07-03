@@ -14,11 +14,7 @@ defmodule PolarExpress.Schemas.WebhookBenefitGrantCycledPayload do
   * `timestamp` - Format: date-time.
   * `type`
   """
-  @type t :: %__MODULE__{
-          data: PolarExpress.Schemas.BenefitGrantWebhook.t() | nil,
-          timestamp: DateTime.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:data, :timestamp, :type]
 

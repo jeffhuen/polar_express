@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.CheckoutCreatedMetadata do
   * `checkout_status`
   * `product_id`
   """
-  @type t :: %__MODULE__{
-          checkout_id: String.t() | nil,
-          checkout_status: String.t() | nil,
-          product_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:checkout_id, :checkout_status, :product_id]
 

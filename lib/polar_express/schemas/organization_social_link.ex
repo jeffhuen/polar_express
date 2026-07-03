@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.OrganizationSocialLink do
   * `platform` - The social platform of the URL
   * `url` - The URL to the organization profile Format: uri. Max length: 2083.
   """
-  @type t :: %__MODULE__{
-          platform: PolarExpress.Schemas.OrganizationSocialPlatforms.t() | nil,
-          url: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:platform, :url]
 

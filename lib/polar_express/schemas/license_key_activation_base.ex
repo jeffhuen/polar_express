@@ -12,14 +12,7 @@ defmodule PolarExpress.Schemas.LicenseKeyActivationBase do
   * `meta`
   * `modified_at` - Nullable.
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          label: String.t() | nil,
-          license_key_id: String.t() | nil,
-          meta: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          modified_at: DateTime.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:created_at, :id, :label, :license_key_id, :meta, :modified_at]
 

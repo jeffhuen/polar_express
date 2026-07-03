@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.MeterQuantities do
   * `quantities`
   * `total` - The total quantity for the period.
   """
-  @type t :: %__MODULE__{
-          quantities: [PolarExpress.Schemas.MeterQuantity.t()] | nil,
-          total: float() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:quantities, :total]
 

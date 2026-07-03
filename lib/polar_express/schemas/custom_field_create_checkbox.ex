@@ -24,14 +24,7 @@ defmodule PolarExpress.Schemas.CustomFieldCreateCheckbox do
   * `slug` - Identifier of the custom field. It'll be used as key when storing the value. Must be unique across the organization.It can only contain ASCII letters, numbers and hyphens.
   * `type`
   """
-  @type t :: %__MODULE__{
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          properties: PolarExpress.Schemas.CustomFieldCheckboxProperties.t() | nil,
-          slug: String.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:metadata, :name, :organization_id, :properties, :slug, :type]
 

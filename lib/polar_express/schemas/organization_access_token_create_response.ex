@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.OrganizationAccessTokenCreateResponse do
   * `organization_access_token`
   * `token`
   """
-  @type t :: %__MODULE__{
-          organization_access_token: PolarExpress.Schemas.OrganizationAccessToken.t() | nil,
-          token: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:organization_access_token, :token]
 

@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.CustomerPortalOAuthAccount do
   * `account_id`
   * `account_username` - Nullable.
   """
-  @type t :: %__MODULE__{
-          account_id: String.t() | nil,
-          account_username: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:account_id, :account_username]
 

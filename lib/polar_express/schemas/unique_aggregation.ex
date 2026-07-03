@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.UniqueAggregation do
   * `func`
   * `property`
   """
-  @type t :: %__MODULE__{
-          func: String.t() | nil,
-          property: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:func, :property]
 

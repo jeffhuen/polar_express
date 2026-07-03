@@ -10,12 +10,7 @@ defmodule PolarExpress.Schemas.OrganizationAccessTokenCreate do
   * `organization_id` - Nullable.
   * `scopes`
   """
-  @type t :: %__MODULE__{
-          comment: String.t() | nil,
-          expires_in: String.t() | nil,
-          organization_id: String.t() | nil,
-          scopes: [PolarExpress.Schemas.AvailableScope.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:comment, :expires_in, :organization_id, :scopes]
 

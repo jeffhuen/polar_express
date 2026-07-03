@@ -12,12 +12,7 @@ defmodule PolarExpress.Schemas.ProductPriceSeatBasedCreate do
   * `seat_tiers` - Tiered pricing based on seat quantity
   * `tax_behavior` - The tax behavior of the price. If not set, it will default to the organization's default tax behavior. Nullable.
   """
-  @type t :: %__MODULE__{
-          amount_type: String.t() | nil,
-          price_currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
-          seat_tiers: PolarExpress.Schemas.ProductPriceSeatTiersInput.t() | nil,
-          tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:amount_type, :price_currency, :seat_tiers, :tax_behavior]
 

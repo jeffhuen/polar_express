@@ -13,13 +13,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointUpdate do
   * `name` - An optional name for the webhook endpoint to help organize and identify it. Nullable.
   * `url` - Nullable.
   """
-  @type t :: %__MODULE__{
-          enabled: boolean() | nil,
-          events: [PolarExpress.Schemas.WebhookEventType.t()] | nil,
-          format: PolarExpress.Schemas.WebhookFormat.t() | nil,
-          name: String.t() | nil,
-          url: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:enabled, :events, :format, :name, :url]
 

@@ -12,14 +12,7 @@ defmodule PolarExpress.Schemas.AuthorizeResponseOrganization do
   * `sub` - Nullable.
   * `sub_type`
   """
-  @type t :: %__MODULE__{
-          client: PolarExpress.Schemas.OAuth2ClientPublic.t() | nil,
-          organizations: [PolarExpress.Schemas.AuthorizeOrganization.t()] | nil,
-          scope_display_names: %{String.t() => String.t()} | nil,
-          scopes: [PolarExpress.Schemas.Scope.t()] | nil,
-          sub: PolarExpress.Schemas.AuthorizeOrganization.t() | nil,
-          sub_type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:client, :organizations, :scope_display_names, :scopes, :sub, :sub_type]
 

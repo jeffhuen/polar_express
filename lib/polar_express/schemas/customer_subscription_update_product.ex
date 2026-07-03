@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.CustomerSubscriptionUpdateProduct do
   @typedoc """
   * `product_id` - Update subscription to another product. Format: uuid4.
   """
-  @type t :: %__MODULE__{
-          product_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:product_id]
 

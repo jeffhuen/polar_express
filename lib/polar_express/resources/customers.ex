@@ -23,23 +23,7 @@ defmodule PolarExpress.Resources.Customers do
   * `tax_id`
   * `type` - The type of customer. Team customers can have multiple members.
   """
-  @type t :: %__MODULE__{
-          avatar_url: String.t() | nil,
-          billing_address: term() | nil,
-          created_at: String.t() | nil,
-          deleted_at: term() | nil,
-          email: term() | nil,
-          email_verified: boolean() | nil,
-          external_id: term() | nil,
-          id: String.t() | nil,
-          locale: term() | nil,
-          metadata: map() | nil,
-          modified_at: term() | nil,
-          name: term() | nil,
-          organization_id: String.t() | nil,
-          tax_id: term() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :avatar_url,

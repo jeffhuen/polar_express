@@ -19,19 +19,7 @@ defmodule PolarExpress.Resources.Benefits do
   * `selectable` - Whether the benefit is selectable when creating a product.
   * `type`
   """
-  @type t :: %__MODULE__{
-          created_at: String.t() | nil,
-          deletable: boolean() | nil,
-          description: String.t() | nil,
-          id: String.t() | nil,
-          is_deleted: boolean() | nil,
-          metadata: map() | nil,
-          modified_at: term() | nil,
-          organization_id: String.t() | nil,
-          properties: map() | nil,
-          selectable: boolean() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :created_at,

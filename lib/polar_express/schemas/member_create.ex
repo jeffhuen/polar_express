@@ -13,13 +13,7 @@ defmodule PolarExpress.Schemas.MemberCreate do
   * `name` - Nullable.
   * `role` - The role of the member within the customer.
   """
-  @type t :: %__MODULE__{
-          customer_id: String.t() | nil,
-          email: String.t() | nil,
-          external_id: String.t() | nil,
-          name: String.t() | nil,
-          role: PolarExpress.Schemas.MemberRole.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:customer_id, :email, :external_id, :name, :role]
 

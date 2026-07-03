@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.CustomerPortalCustomerUpdate do
   * `billing_name` - Nullable.
   * `tax_id` - Nullable.
   """
-  @type t :: %__MODULE__{
-          billing_address: PolarExpress.Schemas.AddressInput.t() | nil,
-          billing_name: String.t() | nil,
-          tax_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:billing_address, :billing_name, :tax_id]
 

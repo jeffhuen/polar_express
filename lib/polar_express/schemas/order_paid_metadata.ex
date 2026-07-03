@@ -20,22 +20,7 @@ defmodule PolarExpress.Schemas.OrderPaidMetadata do
   * `subscription_id`
   * `tax_amount`
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          applied_balance_amount: integer() | nil,
-          billing_type: String.t() | nil,
-          currency: String.t() | nil,
-          discount_amount: integer() | nil,
-          discount_id: String.t() | nil,
-          net_amount: integer() | nil,
-          order_id: String.t() | nil,
-          platform_fee: integer() | nil,
-          product_id: String.t() | nil,
-          recurring_interval: String.t() | nil,
-          recurring_interval_count: integer() | nil,
-          subscription_id: String.t() | nil,
-          tax_amount: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

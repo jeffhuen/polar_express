@@ -10,10 +10,7 @@ defmodule PolarExpress.Schemas.CustomerOrganizationData do
   * `organization`
   * `products`
   """
-  @type t :: %__MODULE__{
-          organization: PolarExpress.Schemas.CustomerOrganization.t() | nil,
-          products: [PolarExpress.Schemas.CustomerProduct.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:organization, :products]
 

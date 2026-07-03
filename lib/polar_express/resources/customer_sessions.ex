@@ -17,17 +17,7 @@ defmodule PolarExpress.Resources.CustomerSessions do
   * `return_url`
   * `token`
   """
-  @type t :: %__MODULE__{
-          created_at: String.t() | nil,
-          customer: map() | nil,
-          customer_id: String.t() | nil,
-          customer_portal_url: String.t() | nil,
-          expires_at: String.t() | nil,
-          id: String.t() | nil,
-          modified_at: term() | nil,
-          return_url: term() | nil,
-          token: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :created_at,

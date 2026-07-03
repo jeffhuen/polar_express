@@ -14,14 +14,7 @@ defmodule PolarExpress.Schemas.CheckoutDiscountPercentageOnceForeverDuration do
   * `name`
   * `type`
   """
-  @type t :: %__MODULE__{
-          basis_points: integer() | nil,
-          code: String.t() | nil,
-          duration: PolarExpress.Schemas.DiscountDuration.t() | nil,
-          id: String.t() | nil,
-          name: String.t() | nil,
-          type: PolarExpress.Schemas.DiscountType.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:basis_points, :code, :duration, :id, :name, :type]
 

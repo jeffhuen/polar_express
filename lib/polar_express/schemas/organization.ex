@@ -29,33 +29,7 @@ defmodule PolarExpress.Schemas.Organization do
   * `subscription_settings` - Settings related to subscriptions management
   * `website` - Official website of the organization. Nullable.
   """
-  @type t :: %__MODULE__{
-          account_id: String.t() | nil,
-          allow_customer_updates: boolean() | nil,
-          avatar_url: String.t() | nil,
-          country: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          customer_email_settings:
-            PolarExpress.Schemas.OrganizationCustomerEmailSettings.t() | nil,
-          customer_portal_settings:
-            PolarExpress.Schemas.OrganizationCustomerPortalSettings.t() | nil,
-          default_presentment_currency: String.t() | nil,
-          default_tax_behavior: PolarExpress.Schemas.TaxBehaviorOption.t() | nil,
-          details_submitted_at: DateTime.t() | nil,
-          email: String.t() | nil,
-          feature_settings: PolarExpress.Schemas.OrganizationFeatureSettings.t() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          notification_settings: PolarExpress.Schemas.OrganizationNotificationSettings.t() | nil,
-          payout_account_id: String.t() | nil,
-          proration_behavior: PolarExpress.Schemas.SubscriptionProrationBehavior.t() | nil,
-          slug: String.t() | nil,
-          socials: [PolarExpress.Schemas.OrganizationSocialLink.t()] | nil,
-          status: PolarExpress.Schemas.OrganizationStatus.t() | nil,
-          subscription_settings: PolarExpress.Schemas.OrganizationSubscriptionSettings.t() | nil,
-          website: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :account_id,

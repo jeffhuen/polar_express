@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.FileUploadCompleted do
   * `parts`
   * `path`
   """
-  @type t :: %__MODULE__{
-          id: String.t() | nil,
-          parts: [PolarExpress.Schemas.S3FileUploadCompletedPart.t()] | nil,
-          path: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:id, :parts, :path]
 

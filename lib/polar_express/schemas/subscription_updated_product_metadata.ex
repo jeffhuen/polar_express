@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdatedProductMetadata do
   * `proration_behavior`
   * `subscription_id`
   """
-  @type t :: %__MODULE__{
-          product_id: String.t() | nil,
-          proration_behavior: PolarExpress.Schemas.SubscriptionProrationBehavior.t() | nil,
-          subscription_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:product_id, :proration_behavior, :subscription_id]
 

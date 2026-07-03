@@ -33,11 +33,7 @@ defmodule PolarExpress.Schemas.SubscriptionRevoke do
   * `other`: Other reason(s). Nullable.
   * `revoke` - Cancel and revoke an active subscription immediately
   """
-  @type t :: %__MODULE__{
-          customer_cancellation_comment: String.t() | nil,
-          customer_cancellation_reason: PolarExpress.Schemas.CustomerCancellationReason.t() | nil,
-          revoke: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:customer_cancellation_comment, :customer_cancellation_reason, :revoke]
 

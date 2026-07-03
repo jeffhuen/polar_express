@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.CustomerPaymentMethodConfirm do
   * `set_default`
   * `setup_intent_id`
   """
-  @type t :: %__MODULE__{
-          set_default: boolean() | nil,
-          setup_intent_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:set_default, :setup_intent_id]
 

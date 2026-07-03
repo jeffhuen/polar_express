@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.BenefitGrantDownloadablesProperties do
   @typedoc """
   * `files`
   """
-  @type t :: %__MODULE__{
-          files: [String.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:files]
 

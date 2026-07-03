@@ -16,18 +16,7 @@ defmodule PolarExpress.Schemas.OrganizationDetails do
   * `switching` - Switching from another platform?
   * `switching_from` - Which platform the organization is migrating from. Nullable.
   """
-  @type t :: %__MODULE__{
-          about: String.t() | nil,
-          customer_acquisition: [String.t()] | nil,
-          future_annual_revenue: integer() | nil,
-          intended_use: String.t() | nil,
-          previous_annual_revenue: integer() | nil,
-          pricing_models: [String.t()] | nil,
-          product_description: String.t() | nil,
-          selling_categories: [String.t()] | nil,
-          switching: boolean() | nil,
-          switching_from: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :about,

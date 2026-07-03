@@ -10,10 +10,7 @@ defmodule PolarExpress.Resources.Metrics do
   * `intervals` - Limits for each interval.
   * `min_date` - Minimum date to get metrics. Format: date.
   """
-  @type t :: %__MODULE__{
-          intervals: map() | nil,
-          min_date: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:intervals, :min_date]
 

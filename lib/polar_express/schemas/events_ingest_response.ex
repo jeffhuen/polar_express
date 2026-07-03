@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.EventsIngestResponse do
   * `duplicates` - Number of duplicate events skipped.
   * `inserted` - Number of events inserted.
   """
-  @type t :: %__MODULE__{
-          duplicates: integer() | nil,
-          inserted: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:duplicates, :inserted]
 

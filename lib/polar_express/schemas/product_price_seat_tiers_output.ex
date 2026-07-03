@@ -16,12 +16,7 @@ defmodule PolarExpress.Schemas.ProductPriceSeatTiersOutput do
   * `seat_tier_type` - How tiers are applied. 'volume' prices all seats at the matching tier's rate. 'graduated' prices each tier's range independently.
   * `tiers` - List of pricing tiers
   """
-  @type t :: %__MODULE__{
-          maximum_seats: integer() | nil,
-          minimum_seats: integer() | nil,
-          seat_tier_type: PolarExpress.Schemas.SeatTierType.t() | nil,
-          tiers: [PolarExpress.Schemas.ProductPriceSeatTier.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:maximum_seats, :minimum_seats, :seat_tier_type, :tiers]
 

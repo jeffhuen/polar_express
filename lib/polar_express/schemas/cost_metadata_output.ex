@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.CostMetadataOutput do
   * `amount` - The amount in cents.
   * `currency` - The currency. Currently, only `usd` is supported.
   """
-  @type t :: %__MODULE__{
-          amount: String.t() | nil,
-          currency: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:amount, :currency]
 

@@ -16,18 +16,7 @@ defmodule PolarExpress.Schemas.IntrospectTokenResponse do
   * `sub_type`
   * `token_type` - Possible values: `access_token`, `refresh_token`.
   """
-  @type t :: %__MODULE__{
-          active: boolean() | nil,
-          aud: String.t() | nil,
-          client_id: String.t() | nil,
-          exp: integer() | nil,
-          iat: integer() | nil,
-          iss: String.t() | nil,
-          scope: String.t() | nil,
-          sub: String.t() | nil,
-          sub_type: PolarExpress.Schemas.SubType.t() | nil,
-          token_type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:active, :aud, :client_id, :exp, :iat, :iss, :scope, :sub, :sub_type, :token_type]
 

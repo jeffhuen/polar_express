@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.MeterResetMetadata do
   @typedoc """
   * `meter_id`
   """
-  @type t :: %__MODULE__{
-          meter_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:meter_id]
 

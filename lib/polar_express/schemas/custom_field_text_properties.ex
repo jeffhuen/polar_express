@@ -12,14 +12,7 @@ defmodule PolarExpress.Schemas.CustomFieldTextProperties do
   * `min_length`
   * `textarea`
   """
-  @type t :: %__MODULE__{
-          form_help_text: String.t() | nil,
-          form_label: String.t() | nil,
-          form_placeholder: String.t() | nil,
-          max_length: integer() | nil,
-          min_length: integer() | nil,
-          textarea: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:form_help_text, :form_label, :form_placeholder, :max_length, :min_length, :textarea]
 

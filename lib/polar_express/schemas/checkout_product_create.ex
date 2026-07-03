@@ -62,39 +62,7 @@ defmodule PolarExpress.Schemas.CheckoutProductCreate do
   * `trial_interval` - The interval unit for the trial period. Nullable.
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
   """
-  @type t :: %__MODULE__{
-          allow_discount_codes: boolean() | nil,
-          allow_trial: boolean() | nil,
-          amount: integer() | nil,
-          currency: PolarExpress.Schemas.PresentmentCurrency.t() | nil,
-          custom_field_data:
-            %{String.t() => String.t() | integer() | boolean() | DateTime.t() | nil} | nil,
-          customer_billing_address: PolarExpress.Schemas.AddressInput.t() | nil,
-          customer_billing_name: String.t() | nil,
-          customer_email: String.t() | nil,
-          customer_id: String.t() | nil,
-          customer_ip_address: String.t() | nil,
-          customer_metadata:
-            %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          customer_name: String.t() | nil,
-          customer_tax_id: String.t() | nil,
-          discount_id: String.t() | nil,
-          embed_origin: String.t() | nil,
-          external_customer_id: String.t() | nil,
-          is_business_customer: boolean() | nil,
-          locale: String.t() | nil,
-          max_seats: integer() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          min_seats: integer() | nil,
-          product_id: String.t() | nil,
-          require_billing_address: boolean() | nil,
-          return_url: String.t() | nil,
-          seats: integer() | nil,
-          subscription_id: String.t() | nil,
-          success_url: String.t() | nil,
-          trial_interval: PolarExpress.Schemas.TrialInterval.t() | nil,
-          trial_interval_count: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :allow_discount_codes,

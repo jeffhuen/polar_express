@@ -13,13 +13,7 @@ defmodule PolarExpress.Schemas.MetricsIntervalsLimits do
   * `week` - Limits for the week interval.
   * `year` - Limits for the year interval.
   """
-  @type t :: %__MODULE__{
-          day: PolarExpress.Schemas.MetricsIntervalLimit.t() | nil,
-          hour: PolarExpress.Schemas.MetricsIntervalLimit.t() | nil,
-          month: PolarExpress.Schemas.MetricsIntervalLimit.t() | nil,
-          week: PolarExpress.Schemas.MetricsIntervalLimit.t() | nil,
-          year: PolarExpress.Schemas.MetricsIntervalLimit.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:day, :hour, :month, :week, :year]
 

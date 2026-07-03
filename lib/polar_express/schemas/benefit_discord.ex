@@ -21,19 +21,7 @@ defmodule PolarExpress.Schemas.BenefitDiscord do
   * `selectable` - Whether the benefit is selectable when creating a product.
   * `type`
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          deletable: boolean() | nil,
-          description: String.t() | nil,
-          id: String.t() | nil,
-          is_deleted: boolean() | nil,
-          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
-          modified_at: DateTime.t() | nil,
-          organization_id: String.t() | nil,
-          properties: PolarExpress.Schemas.BenefitDiscordProperties.t() | nil,
-          selectable: boolean() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :created_at,

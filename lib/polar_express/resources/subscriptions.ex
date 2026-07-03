@@ -40,40 +40,7 @@ defmodule PolarExpress.Resources.Subscriptions do
   * `trial_end` - The end timestamp of the trial period, if any.
   * `trial_start` - The start timestamp of the trial period, if any.
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          cancel_at_period_end: boolean() | nil,
-          canceled_at: term() | nil,
-          checkout_id: term() | nil,
-          created_at: String.t() | nil,
-          currency: String.t() | nil,
-          current_period_end: String.t() | nil,
-          current_period_start: String.t() | nil,
-          custom_field_data: term() | nil,
-          customer: map() | nil,
-          customer_cancellation_comment: term() | nil,
-          customer_cancellation_reason: term() | nil,
-          customer_id: String.t() | nil,
-          discount: term() | nil,
-          discount_id: term() | nil,
-          ended_at: term() | nil,
-          ends_at: term() | nil,
-          id: String.t() | nil,
-          metadata: map() | nil,
-          meters: [map()] | nil,
-          modified_at: term() | nil,
-          pending_update: term() | nil,
-          prices: [term()] | nil,
-          product: map() | nil,
-          product_id: String.t() | nil,
-          recurring_interval: map() | nil,
-          recurring_interval_count: integer() | nil,
-          seats: term() | nil,
-          started_at: term() | nil,
-          status: map() | nil,
-          trial_end: term() | nil,
-          trial_start: term() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

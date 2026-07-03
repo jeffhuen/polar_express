@@ -10,10 +10,7 @@ defmodule PolarExpress.Resources.CustomerPortal.Organizations do
   * `organization`
   * `products`
   """
-  @type t :: %__MODULE__{
-          organization: map() | nil,
-          products: [map()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:organization, :products]
 

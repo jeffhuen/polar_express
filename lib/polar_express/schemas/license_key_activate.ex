@@ -31,13 +31,7 @@ defmodule PolarExpress.Schemas.LicenseKeyActivate do
   You can store up to **50 key-value pairs**.
   * `organization_id` - Format: uuid4.
   """
-  @type t :: %__MODULE__{
-          conditions: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          key: String.t() | nil,
-          label: String.t() | nil,
-          meta: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          organization_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:conditions, :key, :label, :meta, :organization_id]
 

@@ -13,15 +13,7 @@ defmodule PolarExpress.Schemas.EventType do
   * `name` - The name of the event type.
   * `organization_id` - The ID of the organization owning the event type. Format: uuid4.
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          label: String.t() | nil,
-          label_property_selector: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :created_at,

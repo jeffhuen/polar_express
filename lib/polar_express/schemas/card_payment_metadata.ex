@@ -10,10 +10,7 @@ defmodule PolarExpress.Schemas.CardPaymentMetadata do
   * `brand` - The brand of the card used for the payment.
   * `last4` - The last 4 digits of the card number.
   """
-  @type t :: %__MODULE__{
-          brand: String.t() | nil,
-          last4: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:brand, :last4]
 

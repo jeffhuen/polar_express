@@ -10,12 +10,7 @@ defmodule PolarExpress.Schemas.CustomerCustomerMeterMeter do
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `name` - The name of the meter. Will be shown on customer's invoices and usage.
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:created_at, :id, :modified_at, :name]
 

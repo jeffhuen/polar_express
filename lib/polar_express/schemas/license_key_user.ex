@@ -10,12 +10,7 @@ defmodule PolarExpress.Schemas.LicenseKeyUser do
   * `id` - Format: uuid4.
   * `public_name`
   """
-  @type t :: %__MODULE__{
-          avatar_url: String.t() | nil,
-          email: String.t() | nil,
-          id: String.t() | nil,
-          public_name: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:avatar_url, :email, :id, :public_name]
 

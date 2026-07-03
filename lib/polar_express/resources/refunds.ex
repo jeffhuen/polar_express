@@ -23,23 +23,7 @@ defmodule PolarExpress.Resources.Refunds do
   * `subscription_id`
   * `tax_amount`
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          created_at: String.t() | nil,
-          currency: String.t() | nil,
-          customer_id: String.t() | nil,
-          dispute: term() | nil,
-          id: String.t() | nil,
-          metadata: map() | nil,
-          modified_at: term() | nil,
-          order_id: String.t() | nil,
-          organization_id: String.t() | nil,
-          reason: map() | nil,
-          revoke_benefits: boolean() | nil,
-          status: map() | nil,
-          subscription_id: term() | nil,
-          tax_amount: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

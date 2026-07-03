@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.SeatsList do
   * `seats` - List of seats
   * `total_seats` - Total number of seats for the subscription
   """
-  @type t :: %__MODULE__{
-          available_seats: integer() | nil,
-          seats: [PolarExpress.Schemas.CustomerSeat.t()] | nil,
-          total_seats: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:available_seats, :seats, :total_seats]
 

@@ -12,12 +12,7 @@ defmodule PolarExpress.Schemas.BenefitDiscordProperties do
   * `kick_member` - Whether to kick the member from the Discord server on revocation.
   * `role_id` - The ID of the Discord role to grant.
   """
-  @type t :: %__MODULE__{
-          guild_id: String.t() | nil,
-          guild_token: String.t() | nil,
-          kick_member: boolean() | nil,
-          role_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:guild_id, :guild_token, :kick_member, :role_id]
 

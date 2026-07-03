@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.SeatClaim do
   @typedoc """
   * `invitation_token` - Invitation token to claim the seat
   """
-  @type t :: %__MODULE__{
-          invitation_token: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:invitation_token]
 

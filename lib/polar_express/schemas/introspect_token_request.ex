@@ -10,12 +10,7 @@ defmodule PolarExpress.Schemas.IntrospectTokenRequest do
   * `token`
   * `token_type_hint` - Nullable.
   """
-  @type t :: %__MODULE__{
-          client_id: String.t() | nil,
-          client_secret: String.t() | nil,
-          token: String.t() | nil,
-          token_type_hint: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:client_id, :client_secret, :token, :token_type_hint]
 

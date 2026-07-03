@@ -21,11 +21,7 @@ defmodule PolarExpress.Schemas.SubscriptionCreateExternalCustomer do
   You can store up to **50 key-value pairs**.
   * `product_id` - The ID of the recurring product to subscribe to. Must be a free product, otherwise the customer should go through a checkout flow. Format: uuid4.
   """
-  @type t :: %__MODULE__{
-          external_customer_id: String.t() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          product_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:external_customer_id, :metadata, :product_id]
 

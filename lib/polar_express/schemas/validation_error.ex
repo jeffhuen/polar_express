@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.ValidationError do
   * `msg`
   * `type`
   """
-  @type t :: %__MODULE__{
-          ctx: map() | nil,
-          input: term(),
-          loc: [String.t() | integer()] | nil,
-          msg: String.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:ctx, :input, :loc, :msg, :type]
 

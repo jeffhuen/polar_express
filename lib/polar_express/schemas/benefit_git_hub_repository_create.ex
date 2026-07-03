@@ -21,13 +21,7 @@ defmodule PolarExpress.Schemas.BenefitGitHubRepositoryCreate do
   * `properties`
   * `type`
   """
-  @type t :: %__MODULE__{
-          description: String.t() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          organization_id: String.t() | nil,
-          properties: PolarExpress.Schemas.BenefitGitHubRepositoryCreateProperties.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:description, :metadata, :organization_id, :properties, :type]
 

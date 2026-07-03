@@ -23,13 +23,7 @@ defmodule PolarExpress.Schemas.CustomFieldUpdateCheckbox do
   * `slug` - Nullable.
   * `type`
   """
-  @type t :: %__MODULE__{
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          name: String.t() | nil,
-          properties: PolarExpress.Schemas.CustomFieldCheckboxProperties.t() | nil,
-          slug: String.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:metadata, :name, :properties, :slug, :type]
 

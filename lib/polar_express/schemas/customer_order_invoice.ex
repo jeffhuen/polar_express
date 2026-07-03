@@ -9,9 +9,7 @@ defmodule PolarExpress.Schemas.CustomerOrderInvoice do
   @typedoc """
   * `url` - The URL to the invoice.
   """
-  @type t :: %__MODULE__{
-          url: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:url]
 

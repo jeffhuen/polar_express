@@ -14,14 +14,7 @@ defmodule PolarExpress.Schemas.MetricDashboardSchema do
   * `name` - Display name for the dashboard.
   * `organization_id` - The ID of the organization owning this dashboard. Format: uuid4.
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          metrics: [String.t()] | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:created_at, :id, :metrics, :modified_at, :name, :organization_id]
 

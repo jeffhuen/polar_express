@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.ListResource_DownloadableRead_ do
   * `items`
   * `pagination`
   """
-  @type t :: %__MODULE__{
-          items: [PolarExpress.Schemas.DownloadableRead.t()] | nil,
-          pagination: PolarExpress.Schemas.Pagination.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:items, :pagination]
 

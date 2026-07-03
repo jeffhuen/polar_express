@@ -37,20 +37,7 @@ defmodule PolarExpress.Schemas.DiscountPercentageRepeatDurationCreate do
   * `starts_at` - Optional timestamp after which the discount is redeemable. Nullable.
   * `type` - Type of the discount.
   """
-  @type t :: %__MODULE__{
-          basis_points: integer() | nil,
-          code: String.t() | nil,
-          duration: PolarExpress.Schemas.DiscountDuration.t() | nil,
-          duration_in_months: integer() | nil,
-          ends_at: DateTime.t() | nil,
-          max_redemptions: integer() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          products: [String.t()] | nil,
-          starts_at: DateTime.t() | nil,
-          type: PolarExpress.Schemas.DiscountType.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :basis_points,

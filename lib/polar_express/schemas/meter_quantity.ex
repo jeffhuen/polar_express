@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.MeterQuantity do
   * `quantity` - The quantity for the current period.
   * `timestamp` - The timestamp for the current period. Format: date-time.
   """
-  @type t :: %__MODULE__{
-          quantity: float() | nil,
-          timestamp: DateTime.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:quantity, :timestamp]
 

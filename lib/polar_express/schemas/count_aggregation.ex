@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.CountAggregation do
   @typedoc """
   * `func`
   """
-  @type t :: %__MODULE__{
-          func: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:func]
 

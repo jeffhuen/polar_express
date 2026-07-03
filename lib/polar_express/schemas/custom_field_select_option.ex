@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.CustomFieldSelectOption do
   * `label`
   * `value`
   """
-  @type t :: %__MODULE__{
-          label: String.t() | nil,
-          value: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:label, :value]
 

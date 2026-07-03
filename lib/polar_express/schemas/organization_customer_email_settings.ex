@@ -17,19 +17,7 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
   * `subscription_uncanceled`
   * `subscription_updated`
   """
-  @type t :: %__MODULE__{
-          order_confirmation: boolean() | nil,
-          subscription_cancellation: boolean() | nil,
-          subscription_confirmation: boolean() | nil,
-          subscription_cycled: boolean() | nil,
-          subscription_cycled_after_trial: boolean() | nil,
-          subscription_past_due: boolean() | nil,
-          subscription_renewal_reminder: boolean() | nil,
-          subscription_revoked: boolean() | nil,
-          subscription_trial_conversion_reminder: boolean() | nil,
-          subscription_uncanceled: boolean() | nil,
-          subscription_updated: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :order_confirmation,

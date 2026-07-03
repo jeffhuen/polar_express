@@ -35,11 +35,7 @@ defmodule PolarExpress.Schemas.SubscriptionCancel do
   * `too_complex`: Customer considers the service too complicated.
   * `other`: Other reason(s). Nullable.
   """
-  @type t :: %__MODULE__{
-          cancel_at_period_end: boolean() | nil,
-          customer_cancellation_comment: String.t() | nil,
-          customer_cancellation_reason: PolarExpress.Schemas.CustomerCancellationReason.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:cancel_at_period_end, :customer_cancellation_comment, :customer_cancellation_reason]
 

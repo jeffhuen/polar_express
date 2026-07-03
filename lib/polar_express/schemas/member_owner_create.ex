@@ -11,11 +11,7 @@ defmodule PolarExpress.Schemas.MemberOwnerCreate do
   * `external_id` - The ID of the member in your system. This must be unique within the customer. Nullable.
   * `name` - Nullable.
   """
-  @type t :: %__MODULE__{
-          email: String.t() | nil,
-          external_id: String.t() | nil,
-          name: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:email, :external_id, :name]
 

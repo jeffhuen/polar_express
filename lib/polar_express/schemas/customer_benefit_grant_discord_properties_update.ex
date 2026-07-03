@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantDiscordPropertiesUpdate do
   @typedoc """
   * `account_id` - Nullable.
   """
-  @type t :: %__MODULE__{
-          account_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:account_id]
 

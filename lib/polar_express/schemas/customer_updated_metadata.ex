@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.CustomerUpdatedMetadata do
   * `customer_name` - Nullable.
   * `updated_fields`
   """
-  @type t :: %__MODULE__{
-          customer_email: String.t() | nil,
-          customer_external_id: String.t() | nil,
-          customer_id: String.t() | nil,
-          customer_name: String.t() | nil,
-          updated_fields: PolarExpress.Schemas.CustomerUpdatedFields.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :customer_email,

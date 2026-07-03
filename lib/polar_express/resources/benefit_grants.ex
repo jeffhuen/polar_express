@@ -10,10 +10,7 @@ defmodule PolarExpress.Resources.BenefitGrants do
   * `items`
   * `pagination`
   """
-  @type t :: %__MODULE__{
-          items: [map()] | nil,
-          pagination: map() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:items, :pagination]
 

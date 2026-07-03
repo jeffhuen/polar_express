@@ -11,11 +11,7 @@ defmodule PolarExpress.Schemas.Metric do
   * `slug` - Unique identifier for the metric.
   * `type` - Type of the metric, useful to know the unit or format of the value.
   """
-  @type t :: %__MODULE__{
-          display_name: String.t() | nil,
-          slug: String.t() | nil,
-          type: PolarExpress.Schemas.MetricType.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:display_name, :slug, :type]
 

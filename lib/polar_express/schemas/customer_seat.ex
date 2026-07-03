@@ -21,23 +21,7 @@ defmodule PolarExpress.Schemas.CustomerSeat do
   * `status` - Status of the seat
   * `subscription_id` - The subscription ID (for recurring seats) Nullable.
   """
-  @type t :: %__MODULE__{
-          claimed_at: DateTime.t() | nil,
-          created_at: DateTime.t() | nil,
-          customer_email: String.t() | nil,
-          customer_id: String.t() | nil,
-          email: String.t() | nil,
-          id: String.t() | nil,
-          invitation_token_expires_at: DateTime.t() | nil,
-          member: PolarExpress.Schemas.Member.t() | nil,
-          member_id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          order_id: String.t() | nil,
-          revoked_at: DateTime.t() | nil,
-          seat_metadata: map() | nil,
-          status: PolarExpress.Schemas.SeatStatus.t() | nil,
-          subscription_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :claimed_at,

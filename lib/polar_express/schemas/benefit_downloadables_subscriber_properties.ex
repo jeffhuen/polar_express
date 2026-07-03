@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.BenefitDownloadablesSubscriberProperties do
   @typedoc """
   * `active_files`
   """
-  @type t :: %__MODULE__{
-          active_files: [String.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:active_files]
 

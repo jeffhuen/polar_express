@@ -14,14 +14,7 @@ defmodule PolarExpress.Schemas.CheckoutCustomerBillingAddressFields do
   * `postal_code`
   * `state`
   """
-  @type t :: %__MODULE__{
-          city: boolean() | nil,
-          country: boolean() | nil,
-          line1: boolean() | nil,
-          line2: boolean() | nil,
-          postal_code: boolean() | nil,
-          state: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:city, :country, :line1, :line2, :postal_code, :state]
 

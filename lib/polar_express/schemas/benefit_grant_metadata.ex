@@ -10,12 +10,7 @@ defmodule PolarExpress.Schemas.BenefitGrantMetadata do
   * `benefit_type`
   * `member_id`
   """
-  @type t :: %__MODULE__{
-          benefit_grant_id: String.t() | nil,
-          benefit_id: String.t() | nil,
-          benefit_type: PolarExpress.Schemas.BenefitType.t() | nil,
-          member_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:benefit_grant_id, :benefit_id, :benefit_type, :member_id]
 

@@ -9,9 +9,7 @@ defmodule PolarExpress.Schemas.ProductBenefitsUpdate do
   @typedoc """
   * `benefits` - List of benefit IDs. Each one must be on the same organization as the product.
   """
-  @type t :: %__MODULE__{
-          benefits: [String.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:benefits]
 

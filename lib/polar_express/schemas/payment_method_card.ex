@@ -13,15 +13,7 @@ defmodule PolarExpress.Schemas.PaymentMethodCard do
   * `processor`
   * `type`
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          customer_id: String.t() | nil,
-          id: String.t() | nil,
-          method_metadata: PolarExpress.Schemas.PaymentMethodCardMetadata.t() | nil,
-          modified_at: DateTime.t() | nil,
-          processor: PolarExpress.Schemas.PaymentProcessor.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:created_at, :customer_id, :id, :method_metadata, :modified_at, :processor, :type]
 

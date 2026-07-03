@@ -14,14 +14,7 @@ defmodule PolarExpress.Schemas.PendingSubscriptionUpdate do
   * `product_id` - ID of the new product to apply to the subscription. If `null`, the product won't be changed. Nullable.
   * `seats` - Number of seats to apply to the subscription. If `null`, the number of seats won't be changed. Nullable.
   """
-  @type t :: %__MODULE__{
-          applies_at: DateTime.t() | nil,
-          created_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          product_id: String.t() | nil,
-          seats: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:applies_at, :created_at, :id, :modified_at, :product_id, :seats]
 

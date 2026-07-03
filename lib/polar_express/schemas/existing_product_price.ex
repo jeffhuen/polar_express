@@ -11,9 +11,7 @@ defmodule PolarExpress.Schemas.ExistingProductPrice do
   @typedoc """
   * `id` - Format: uuid4.
   """
-  @type t :: %__MODULE__{
-          id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:id]
 

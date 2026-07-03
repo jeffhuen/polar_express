@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.OrderRefundedMetadata do
   * `order_id`
   * `refunded_amount`
   """
-  @type t :: %__MODULE__{
-          currency: String.t() | nil,
-          order_id: String.t() | nil,
-          refunded_amount: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:currency, :order_id, :refunded_amount]
 

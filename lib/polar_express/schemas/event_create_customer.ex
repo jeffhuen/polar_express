@@ -24,16 +24,7 @@ defmodule PolarExpress.Schemas.EventCreateCustomer do
   * `parent_id` - The ID of the parent event. Can be either a Polar event ID (UUID) or an external event ID. Nullable.
   * `timestamp` - The timestamp of the event. Format: date-time.
   """
-  @type t :: %__MODULE__{
-          customer_id: String.t() | nil,
-          external_id: String.t() | nil,
-          member_id: String.t() | nil,
-          metadata: PolarExpress.Schemas.EventMetadataInput.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          parent_id: String.t() | nil,
-          timestamp: DateTime.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :customer_id,

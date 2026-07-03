@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.BenefitLicenseKeyActivationProperties do
   * `enable_customer_admin`
   * `limit`
   """
-  @type t :: %__MODULE__{
-          enable_customer_admin: boolean() | nil,
-          limit: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:enable_customer_admin, :limit]
 

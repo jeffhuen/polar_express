@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.OrganizationNotificationSettings do
   * `new_order`
   * `new_subscription`
   """
-  @type t :: %__MODULE__{
-          new_order: boolean() | nil,
-          new_subscription: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:new_order, :new_subscription]
 

@@ -14,14 +14,7 @@ defmodule PolarExpress.Schemas.PortalAuthenticatedUser do
   * `role` - Member role (owner, billing_manager, member). Only set for members. Nullable.
   * `type` - Type of authenticated user: 'customer' or 'member'
   """
-  @type t :: %__MODULE__{
-          customer_id: String.t() | nil,
-          email: String.t() | nil,
-          member_id: String.t() | nil,
-          name: String.t() | nil,
-          role: String.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:customer_id, :email, :member_id, :name, :role, :type]
 

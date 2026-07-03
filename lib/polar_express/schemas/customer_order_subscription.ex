@@ -30,32 +30,7 @@ defmodule PolarExpress.Schemas.CustomerOrderSubscription do
   * `trial_end` - The end timestamp of the trial period, if any. Nullable.
   * `trial_start` - The start timestamp of the trial period, if any. Nullable.
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          cancel_at_period_end: boolean() | nil,
-          canceled_at: DateTime.t() | nil,
-          checkout_id: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          currency: String.t() | nil,
-          current_period_end: DateTime.t() | nil,
-          current_period_start: DateTime.t() | nil,
-          customer_cancellation_comment: String.t() | nil,
-          customer_cancellation_reason: PolarExpress.Schemas.CustomerCancellationReason.t() | nil,
-          customer_id: String.t() | nil,
-          discount_id: String.t() | nil,
-          ended_at: DateTime.t() | nil,
-          ends_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          product_id: String.t() | nil,
-          recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
-          recurring_interval_count: integer() | nil,
-          seats: integer() | nil,
-          started_at: DateTime.t() | nil,
-          status: PolarExpress.Schemas.SubscriptionStatus.t() | nil,
-          trial_end: DateTime.t() | nil,
-          trial_start: DateTime.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

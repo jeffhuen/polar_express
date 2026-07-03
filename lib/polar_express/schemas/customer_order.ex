@@ -37,39 +37,7 @@ defmodule PolarExpress.Schemas.CustomerOrder do
   * `tax_amount` - Sales tax amount in cents.
   * `total_amount` - Amount in cents, after discounts and taxes.
   """
-  @type t :: %__MODULE__{
-          applied_balance_amount: integer() | nil,
-          billing_address: PolarExpress.Schemas.Address.t() | nil,
-          billing_name: String.t() | nil,
-          billing_reason: PolarExpress.Schemas.OrderBillingReason.t() | nil,
-          checkout_id: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          currency: String.t() | nil,
-          customer_id: String.t() | nil,
-          description: String.t() | nil,
-          discount_amount: integer() | nil,
-          discount_id: String.t() | nil,
-          due_amount: integer() | nil,
-          id: String.t() | nil,
-          invoice_number: String.t() | nil,
-          is_invoice_generated: boolean() | nil,
-          items: [PolarExpress.Schemas.OrderItemSchema.t()] | nil,
-          modified_at: DateTime.t() | nil,
-          net_amount: integer() | nil,
-          next_payment_attempt_at: DateTime.t() | nil,
-          paid: boolean() | nil,
-          product: PolarExpress.Schemas.CustomerOrderProduct.t() | nil,
-          product_id: String.t() | nil,
-          refunded_amount: integer() | nil,
-          refunded_tax_amount: integer() | nil,
-          seats: integer() | nil,
-          status: PolarExpress.Schemas.OrderStatus.t() | nil,
-          subscription: PolarExpress.Schemas.CustomerOrderSubscription.t() | nil,
-          subscription_id: String.t() | nil,
-          subtotal_amount: integer() | nil,
-          tax_amount: integer() | nil,
-          total_amount: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :applied_balance_amount,

@@ -15,17 +15,7 @@ defmodule PolarExpress.Schemas.BalanceCreditOrderMetadata do
   * `tax_country` - Nullable.
   * `tax_state` - Nullable.
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          currency: String.t() | nil,
-          fee: integer() | nil,
-          order_id: String.t() | nil,
-          product_id: String.t() | nil,
-          subscription_id: String.t() | nil,
-          tax_amount: integer() | nil,
-          tax_country: String.t() | nil,
-          tax_state: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

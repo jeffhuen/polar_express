@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdateTrial do
   @typedoc """
   * `trial_end` - Set or extend the trial period of the subscription. If set to `now`, the trial will end immediately.
   """
-  @type t :: %__MODULE__{
-          trial_end: DateTime.t() | String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:trial_end]
 

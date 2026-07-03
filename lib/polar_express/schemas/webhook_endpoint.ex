@@ -18,18 +18,7 @@ defmodule PolarExpress.Schemas.WebhookEndpoint do
   * `secret` - The secret used to sign the webhook events.
   * `url` - The URL where the webhook events will be sent. Format: uri. Max length: 2083.
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          enabled: boolean() | nil,
-          events: [PolarExpress.Schemas.WebhookEventType.t()] | nil,
-          format: PolarExpress.Schemas.WebhookFormat.t() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          secret: String.t() | nil,
-          url: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :created_at,

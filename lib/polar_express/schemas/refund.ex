@@ -21,23 +21,7 @@ defmodule PolarExpress.Schemas.Refund do
   * `subscription_id` - Nullable.
   * `tax_amount`
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          created_at: DateTime.t() | nil,
-          currency: String.t() | nil,
-          customer_id: String.t() | nil,
-          dispute: PolarExpress.Schemas.RefundDispute.t() | nil,
-          id: String.t() | nil,
-          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
-          modified_at: DateTime.t() | nil,
-          order_id: String.t() | nil,
-          organization_id: String.t() | nil,
-          reason: PolarExpress.Schemas.RefundReason.t() | nil,
-          revoke_benefits: boolean() | nil,
-          status: PolarExpress.Schemas.RefundStatus.t() | nil,
-          subscription_id: String.t() | nil,
-          tax_amount: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

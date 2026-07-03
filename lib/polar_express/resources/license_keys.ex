@@ -10,10 +10,7 @@ defmodule PolarExpress.Resources.LicenseKeys do
   * `detail`
   * `error`
   """
-  @type t :: %__MODULE__{
-          detail: String.t() | nil,
-          error: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:detail, :error]
 

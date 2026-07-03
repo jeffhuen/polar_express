@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.CustomerPortalCustomerSettings do
   @typedoc """
   * `allow_email_change`
   """
-  @type t :: %__MODULE__{
-          allow_email_change: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:allow_email_change]
 

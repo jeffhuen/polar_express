@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.CustomerPaymentMethodCreateRequiresActionResponse
   * `client_secret`
   * `status`
   """
-  @type t :: %__MODULE__{
-          client_secret: String.t() | nil,
-          status: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:client_secret, :status]
 

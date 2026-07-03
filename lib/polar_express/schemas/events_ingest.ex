@@ -7,14 +7,7 @@ defmodule PolarExpress.Schemas.EventsIngest do
   @typedoc """
   * `events` - List of events to ingest.
   """
-  @type t :: %__MODULE__{
-          events:
-            [
-              PolarExpress.Schemas.EventCreateCustomer.t()
-              | PolarExpress.Schemas.EventCreateExternalCustomer.t()
-            ]
-            | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:events]
 

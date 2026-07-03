@@ -21,23 +21,7 @@ defmodule PolarExpress.Schemas.LicenseKeyCustomer do
   * `tax_id` - Nullable.
   * `type` - The type of customer: 'individual' for single users, 'team' for customers with multiple members.
   """
-  @type t :: %__MODULE__{
-          avatar_url: String.t() | nil,
-          billing_address: PolarExpress.Schemas.Address.t() | nil,
-          created_at: DateTime.t() | nil,
-          deleted_at: DateTime.t() | nil,
-          email: String.t() | nil,
-          email_verified: boolean() | nil,
-          external_id: String.t() | nil,
-          id: String.t() | nil,
-          locale: String.t() | nil,
-          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          tax_id: [String.t() | PolarExpress.Schemas.TaxIDFormat.t()] | nil,
-          type: PolarExpress.Schemas.CustomerType.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :avatar_url,

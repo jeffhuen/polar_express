@@ -30,29 +30,7 @@ defmodule PolarExpress.Schemas.ProductUpdate do
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
   * `visibility` - The visibility of the product. Nullable.
   """
-  @type t :: %__MODULE__{
-          attached_custom_fields: [PolarExpress.Schemas.AttachedCustomFieldCreate.t()] | nil,
-          description: String.t() | nil,
-          is_archived: boolean() | nil,
-          medias: [String.t()] | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          name: String.t() | nil,
-          prices:
-            [
-              PolarExpress.Schemas.ExistingProductPrice.t()
-              | PolarExpress.Schemas.ProductPriceFixedCreate.t()
-              | PolarExpress.Schemas.ProductPriceCustomCreate.t()
-              | PolarExpress.Schemas.ProductPriceFreeCreate.t()
-              | PolarExpress.Schemas.ProductPriceSeatBasedCreate.t()
-              | PolarExpress.Schemas.ProductPriceMeteredUnitCreate.t()
-            ]
-            | nil,
-          recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
-          recurring_interval_count: integer() | nil,
-          trial_interval: PolarExpress.Schemas.TrialInterval.t() | nil,
-          trial_interval_count: integer() | nil,
-          visibility: PolarExpress.Schemas.ProductVisibility.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :attached_custom_fields,

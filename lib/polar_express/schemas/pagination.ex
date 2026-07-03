@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.Pagination do
   * `max_page`
   * `total_count`
   """
-  @type t :: %__MODULE__{
-          max_page: integer() | nil,
-          total_count: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:max_page, :total_count]
 

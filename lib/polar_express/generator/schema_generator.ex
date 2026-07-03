@@ -76,14 +76,6 @@ defmodule PolarExpress.Generator.SchemaGenerator do
 
     struct_fields = Enum.map_join(prop_names, ", ", fn name -> ":#{name}" end)
 
-    type_fields =
-      prop_names
-      |> Enum.map_join(",\n", fn name ->
-        prop_schema = Map.get(props, name, %{})
-        type_str = property_typespec(prop_schema, schema_index)
-        "          #{name}: #{type_str}"
-      end)
-
     inner_types_fn = generate_inner_types_fn(props, schema_index)
     date_fields_fn = generate_date_fields_fn(props)
 
@@ -123,9 +115,7 @@ defmodule PolarExpress.Generator.SchemaGenerator do
     defmodule #{module_name} do
     #{moduledoc}
     #{typedoc}
-      @type t :: %__MODULE__{
-    #{type_fields}
-        }
+      @type t :: %__MODULE__{}
 
       defstruct [#{struct_fields}]
 

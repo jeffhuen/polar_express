@@ -11,11 +11,7 @@ defmodule PolarExpress.Schemas.BenefitGitHubRepositoryCreateProperties do
   * `repository_name` - The name of the repository.
   * `repository_owner` - The owner of the repository.
   """
-  @type t :: %__MODULE__{
-          permission: String.t() | nil,
-          repository_name: String.t() | nil,
-          repository_owner: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:permission, :repository_name, :repository_owner]
 

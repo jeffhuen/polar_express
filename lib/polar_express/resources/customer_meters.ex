@@ -18,18 +18,7 @@ defmodule PolarExpress.Resources.CustomerMeters do
   * `meter_id` - The ID of the meter. Format: uuid4.
   * `modified_at` - Last modification timestamp of the object.
   """
-  @type t :: %__MODULE__{
-          balance: float() | nil,
-          consumed_units: float() | nil,
-          created_at: String.t() | nil,
-          credited_units: integer() | nil,
-          customer: map() | nil,
-          customer_id: String.t() | nil,
-          id: String.t() | nil,
-          meter: map() | nil,
-          meter_id: String.t() | nil,
-          modified_at: term() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :balance,

@@ -11,11 +11,7 @@ defmodule PolarExpress.Schemas.ProductPriceSeatTier do
   * `min_seats` - Minimum number of seats (inclusive)
   * `price_per_seat` - Price per seat in cents for this tier
   """
-  @type t :: %__MODULE__{
-          max_seats: integer() | nil,
-          min_seats: integer() | nil,
-          price_per_seat: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:max_seats, :min_seats, :price_per_seat]
 

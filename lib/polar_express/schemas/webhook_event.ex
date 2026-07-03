@@ -23,17 +23,7 @@ defmodule PolarExpress.Schemas.WebhookEvent do
   * `succeeded` - Whether this event was successfully delivered. `null` if no delivery has been attempted. Nullable.
   * `type` - The type of the webhook event.
   """
-  @type t :: %__MODULE__{
-          created_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          is_archived: boolean() | nil,
-          last_http_code: integer() | nil,
-          modified_at: DateTime.t() | nil,
-          payload: String.t() | nil,
-          skipped: boolean() | nil,
-          succeeded: boolean() | nil,
-          type: PolarExpress.Schemas.WebhookEventType.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :created_at,

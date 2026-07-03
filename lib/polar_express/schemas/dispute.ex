@@ -21,19 +21,7 @@ defmodule PolarExpress.Schemas.Dispute do
   * `status` - Status of the dispute. `prevented` means we issued a refund before the dispute was escalated, avoiding any fees.
   * `tax_amount` - Tax amount in cents disputed.
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          closed: boolean() | nil,
-          created_at: DateTime.t() | nil,
-          currency: String.t() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          order_id: String.t() | nil,
-          payment_id: String.t() | nil,
-          resolved: boolean() | nil,
-          status: PolarExpress.Schemas.DisputeStatus.t() | nil,
-          tax_amount: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.PaymentMethodCardMetadata do
   * `last4`
   * `wallet` - Nullable.
   """
-  @type t :: %__MODULE__{
-          brand: String.t() | nil,
-          exp_month: integer() | nil,
-          exp_year: integer() | nil,
-          last4: String.t() | nil,
-          wallet: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:brand, :exp_month, :exp_year, :last4, :wallet]
 

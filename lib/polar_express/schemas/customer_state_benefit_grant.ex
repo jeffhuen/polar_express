@@ -16,23 +16,7 @@ defmodule PolarExpress.Schemas.CustomerStateBenefitGrant do
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `properties`
   """
-  @type t :: %__MODULE__{
-          benefit_id: String.t() | nil,
-          benefit_metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
-          benefit_type: PolarExpress.Schemas.BenefitType.t() | nil,
-          created_at: DateTime.t() | nil,
-          granted_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          properties:
-            PolarExpress.Schemas.BenefitGrantDiscordProperties.t()
-            | PolarExpress.Schemas.BenefitGrantGitHubRepositoryProperties.t()
-            | PolarExpress.Schemas.BenefitGrantDownloadablesProperties.t()
-            | PolarExpress.Schemas.BenefitGrantLicenseKeysProperties.t()
-            | PolarExpress.Schemas.BenefitGrantCustomProperties.t()
-            | PolarExpress.Schemas.BenefitGrantFeatureFlagProperties.t()
-            | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :benefit_id,

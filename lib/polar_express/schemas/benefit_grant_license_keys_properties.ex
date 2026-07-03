@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.BenefitGrantLicenseKeysProperties do
   * `license_key_id`
   * `user_provided_key`
   """
-  @type t :: %__MODULE__{
-          display_key: String.t() | nil,
-          license_key_id: String.t() | nil,
-          user_provided_key: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:display_key, :license_key_id, :user_provided_key]
 

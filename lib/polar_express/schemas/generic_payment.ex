@@ -22,22 +22,7 @@ defmodule PolarExpress.Schemas.GenericPayment do
   * `processor_metadata` - Additional metadata from the payment processor for internal use.
   * `status` - The payment status.
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          checkout_id: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          currency: String.t() | nil,
-          decline_message: String.t() | nil,
-          decline_reason: String.t() | nil,
-          id: String.t() | nil,
-          method: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          order_id: String.t() | nil,
-          organization_id: String.t() | nil,
-          processor: PolarExpress.Schemas.PaymentProcessor.t() | nil,
-          processor_metadata: map() | nil,
-          status: PolarExpress.Schemas.PaymentStatus.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

@@ -16,18 +16,7 @@ defmodule PolarExpress.Schemas.SeatAssign do
   * `order_id` - Order ID for one-time purchases. Required if subscription_id and checkout_id are not provided. Nullable.
   * `subscription_id` - Subscription ID. Required if checkout_id and order_id are not provided. Nullable.
   """
-  @type t :: %__MODULE__{
-          checkout_id: String.t() | nil,
-          customer_id: String.t() | nil,
-          email: String.t() | nil,
-          external_customer_id: String.t() | nil,
-          external_member_id: String.t() | nil,
-          immediate_claim: boolean() | nil,
-          member_id: String.t() | nil,
-          metadata: map() | nil,
-          order_id: String.t() | nil,
-          subscription_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :checkout_id,

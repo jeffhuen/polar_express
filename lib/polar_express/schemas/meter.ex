@@ -18,24 +18,7 @@ defmodule PolarExpress.Schemas.Meter do
   * `organization_id` - The ID of the organization owning the meter. Format: uuid4.
   * `unit` - The unit of the meter.
   """
-  @type t :: %__MODULE__{
-          aggregation:
-            PolarExpress.Schemas.CountAggregation.t()
-            | PolarExpress.Schemas.PropertyAggregation.t()
-            | PolarExpress.Schemas.UniqueAggregation.t()
-            | nil,
-          archived_at: DateTime.t() | nil,
-          created_at: DateTime.t() | nil,
-          custom_label: String.t() | nil,
-          custom_multiplier: integer() | nil,
-          filter: PolarExpress.Schemas.Filter.t() | nil,
-          id: String.t() | nil,
-          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          unit: PolarExpress.Schemas.MeterUnit.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :aggregation,

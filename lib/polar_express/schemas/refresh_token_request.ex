@@ -10,12 +10,7 @@ defmodule PolarExpress.Schemas.RefreshTokenRequest do
   * `grant_type`
   * `refresh_token`
   """
-  @type t :: %__MODULE__{
-          client_id: String.t() | nil,
-          client_secret: String.t() | nil,
-          grant_type: String.t() | nil,
-          refresh_token: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:client_id, :client_secret, :grant_type, :refresh_token]
 

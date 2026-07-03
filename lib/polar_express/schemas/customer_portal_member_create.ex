@@ -11,11 +11,7 @@ defmodule PolarExpress.Schemas.CustomerPortalMemberCreate do
   * `name` - The name of the new member (optional). Nullable.
   * `role` - The role for the new member. Defaults to 'member'.
   """
-  @type t :: %__MODULE__{
-          email: String.t() | nil,
-          name: String.t() | nil,
-          role: PolarExpress.Schemas.MemberRole.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:email, :name, :role]
 

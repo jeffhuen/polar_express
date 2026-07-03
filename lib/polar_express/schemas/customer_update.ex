@@ -24,16 +24,7 @@ defmodule PolarExpress.Schemas.CustomerUpdate do
   * `tax_id` - Nullable.
   * `type` - The customer type. Can only be upgraded from 'individual' to 'team', never downgraded. Nullable.
   """
-  @type t :: %__MODULE__{
-          billing_address: PolarExpress.Schemas.AddressInput.t() | nil,
-          email: String.t() | nil,
-          external_id: String.t() | nil,
-          locale: String.t() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          name: String.t() | nil,
-          tax_id: String.t() | nil,
-          type: PolarExpress.Schemas.CustomerType.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:billing_address, :email, :external_id, :locale, :metadata, :name, :tax_id, :type]
 

@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.OrganizationSubscriptionSettings do
   * `prevent_trial_abuse`
   * `proration_behavior` - Possible values: `invoice`, `prorate`, `next_period`.
   """
-  @type t :: %__MODULE__{
-          allow_customer_updates: boolean() | nil,
-          allow_multiple_subscriptions: boolean() | nil,
-          benefit_revocation_grace_period: integer() | nil,
-          prevent_trial_abuse: boolean() | nil,
-          proration_behavior: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :allow_customer_updates,

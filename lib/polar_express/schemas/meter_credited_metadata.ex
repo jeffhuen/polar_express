@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.MeterCreditedMetadata do
   * `rollover`
   * `units`
   """
-  @type t :: %__MODULE__{
-          meter_id: String.t() | nil,
-          rollover: boolean() | nil,
-          units: integer() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:meter_id, :rollover, :units]
 

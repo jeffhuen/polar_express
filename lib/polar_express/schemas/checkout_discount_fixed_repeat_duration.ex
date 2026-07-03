@@ -18,17 +18,7 @@ defmodule PolarExpress.Schemas.CheckoutDiscountFixedRepeatDuration do
   * `name`
   * `type`
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          amounts: %{String.t() => integer()} | nil,
-          code: String.t() | nil,
-          currency: String.t() | nil,
-          duration: PolarExpress.Schemas.DiscountDuration.t() | nil,
-          duration_in_months: integer() | nil,
-          id: String.t() | nil,
-          name: String.t() | nil,
-          type: PolarExpress.Schemas.DiscountType.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

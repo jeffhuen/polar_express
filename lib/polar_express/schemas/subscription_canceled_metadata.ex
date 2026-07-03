@@ -17,19 +17,7 @@ defmodule PolarExpress.Schemas.SubscriptionCanceledMetadata do
   * `recurring_interval_count`
   * `subscription_id`
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          cancel_at_period_end: boolean() | nil,
-          canceled_at: String.t() | nil,
-          currency: String.t() | nil,
-          customer_cancellation_comment: String.t() | nil,
-          customer_cancellation_reason: String.t() | nil,
-          ends_at: String.t() | nil,
-          product_id: String.t() | nil,
-          recurring_interval: String.t() | nil,
-          recurring_interval_count: integer() | nil,
-          subscription_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

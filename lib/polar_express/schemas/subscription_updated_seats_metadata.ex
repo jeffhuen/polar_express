@@ -9,11 +9,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdatedSeatsMetadata do
   * `seats`
   * `subscription_id`
   """
-  @type t :: %__MODULE__{
-          proration_behavior: PolarExpress.Schemas.SubscriptionProrationBehavior.t() | nil,
-          seats: integer() | nil,
-          subscription_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:proration_behavior, :seats, :subscription_id]
 

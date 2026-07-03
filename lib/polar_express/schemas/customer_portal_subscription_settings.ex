@@ -8,10 +8,7 @@ defmodule PolarExpress.Schemas.CustomerPortalSubscriptionSettings do
   * `update_plan`
   * `update_seats`
   """
-  @type t :: %__MODULE__{
-          update_plan: boolean() | nil,
-          update_seats: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:update_plan, :update_seats]
 

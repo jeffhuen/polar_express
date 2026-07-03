@@ -15,17 +15,7 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
   * `tinybird_read` - If this organization reads from Tinybird
   * `wallets_enabled` - If this organization has Wallets enabled
   """
-  @type t :: %__MODULE__{
-          checkout_localization_enabled: boolean() | nil,
-          issue_funding_enabled: boolean() | nil,
-          member_model_enabled: boolean() | nil,
-          overview_metrics: [String.t()] | nil,
-          reset_proration_behavior_enabled: boolean() | nil,
-          seat_based_pricing_enabled: boolean() | nil,
-          tinybird_compare: boolean() | nil,
-          tinybird_read: boolean() | nil,
-          wallets_enabled: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :checkout_localization_enabled,

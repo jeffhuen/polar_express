@@ -13,13 +13,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointCreate do
   * `organization_id` - The organization ID associated with the webhook endpoint. **Required unless you use an organization token.** Nullable.
   * `url` - The URL where the webhook events will be sent. Format: uri. Max length: 2083.
   """
-  @type t :: %__MODULE__{
-          events: [PolarExpress.Schemas.WebhookEventType.t()] | nil,
-          format: PolarExpress.Schemas.WebhookFormat.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          url: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:events, :format, :name, :organization_id, :url]
 

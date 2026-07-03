@@ -20,20 +20,7 @@ defmodule PolarExpress.Resources.Meters do
   * `organization_id` - The ID of the organization owning the meter. Format: uuid4.
   * `unit` - The unit of the meter.
   """
-  @type t :: %__MODULE__{
-          aggregation: term() | nil,
-          archived_at: term() | nil,
-          created_at: String.t() | nil,
-          custom_label: term() | nil,
-          custom_multiplier: term() | nil,
-          filter: map() | nil,
-          id: String.t() | nil,
-          metadata: map() | nil,
-          modified_at: term() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          unit: map() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :aggregation,

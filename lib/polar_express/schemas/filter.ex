@@ -8,11 +8,7 @@ defmodule PolarExpress.Schemas.Filter do
   * `clauses`
   * `conjunction`
   """
-  @type t :: %__MODULE__{
-          clauses:
-            [PolarExpress.Schemas.FilterClause.t() | PolarExpress.Schemas.Filter.t()] | nil,
-          conjunction: PolarExpress.Schemas.FilterConjunction.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:clauses, :conjunction]
 

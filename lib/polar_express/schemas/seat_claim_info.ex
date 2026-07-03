@@ -15,14 +15,7 @@ defmodule PolarExpress.Schemas.SeatClaimInfo do
   * `product_id` - ID of the product Format: uuid.
   * `product_name` - Name of the product
   """
-  @type t :: %__MODULE__{
-          can_claim: boolean() | nil,
-          customer_email: String.t() | nil,
-          organization_name: String.t() | nil,
-          organization_slug: String.t() | nil,
-          product_id: String.t() | nil,
-          product_name: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :can_claim,

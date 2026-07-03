@@ -16,20 +16,7 @@ defmodule PolarExpress.Schemas.CustomerOrganization do
   * `proration_behavior` - Proration behavior applied when customer updates their subscription from the portal.
   * `slug` - Unique organization slug in checkout, customer portal and credit card statements.
   """
-  @type t :: %__MODULE__{
-          allow_customer_updates: boolean() | nil,
-          avatar_url: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          customer_portal_settings:
-            PolarExpress.Schemas.OrganizationCustomerPortalSettings.t() | nil,
-          id: String.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          organization_features:
-            PolarExpress.Schemas.CustomerOrganizationFeatureSettings.t() | nil,
-          proration_behavior: PolarExpress.Schemas.SubscriptionProrationBehavior.t() | nil,
-          slug: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :allow_customer_updates,

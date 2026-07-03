@@ -23,23 +23,7 @@ defmodule PolarExpress.Resources.Payments do
   * `processor_metadata` - Additional metadata from the payment processor for internal use.
   * `status` - The payment status.
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          checkout_id: term() | nil,
-          created_at: String.t() | nil,
-          currency: String.t() | nil,
-          decline_message: term() | nil,
-          decline_reason: term() | nil,
-          id: String.t() | nil,
-          method: String.t() | nil,
-          method_metadata: map() | nil,
-          modified_at: term() | nil,
-          order_id: term() | nil,
-          organization_id: String.t() | nil,
-          processor: map() | nil,
-          processor_metadata: map() | nil,
-          status: map() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

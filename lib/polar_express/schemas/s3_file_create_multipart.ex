@@ -7,9 +7,7 @@ defmodule PolarExpress.Schemas.S3FileCreateMultipart do
   @typedoc """
   * `parts`
   """
-  @type t :: %__MODULE__{
-          parts: [PolarExpress.Schemas.S3FileCreatePart.t()] | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:parts]
 

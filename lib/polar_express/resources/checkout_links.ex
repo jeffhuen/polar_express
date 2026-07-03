@@ -26,26 +26,7 @@ defmodule PolarExpress.Resources.CheckoutLinks do
   * `trial_interval_count` - The number of interval units for the trial period.
   * `url`
   """
-  @type t :: %__MODULE__{
-          allow_discount_codes: boolean() | nil,
-          client_secret: String.t() | nil,
-          created_at: String.t() | nil,
-          discount: term() | nil,
-          discount_id: term() | nil,
-          id: String.t() | nil,
-          label: term() | nil,
-          metadata: map() | nil,
-          modified_at: term() | nil,
-          organization_id: String.t() | nil,
-          payment_processor: map() | nil,
-          products: [map()] | nil,
-          require_billing_address: boolean() | nil,
-          return_url: term() | nil,
-          success_url: term() | nil,
-          trial_interval: term() | nil,
-          trial_interval_count: term() | nil,
-          url: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :allow_discount_codes,

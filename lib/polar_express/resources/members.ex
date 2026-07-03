@@ -16,16 +16,7 @@ defmodule PolarExpress.Resources.Members do
   * `name` - The name of the member.
   * `role` - The role of the member within the customer.
   """
-  @type t :: %__MODULE__{
-          created_at: String.t() | nil,
-          customer_id: String.t() | nil,
-          email: String.t() | nil,
-          external_id: term() | nil,
-          id: String.t() | nil,
-          modified_at: term() | nil,
-          name: term() | nil,
-          role: map() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:created_at, :customer_id, :email, :external_id, :id, :modified_at, :name, :role]
 

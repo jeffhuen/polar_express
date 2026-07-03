@@ -12,12 +12,7 @@ defmodule PolarExpress.Schemas.AttachedCustomField do
   * `order` - Order of the custom field in the resource.
   * `required` - Whether the value is required for this custom field.
   """
-  @type t :: %__MODULE__{
-          custom_field: PolarExpress.Schemas.CustomField.t() | nil,
-          custom_field_id: String.t() | nil,
-          order: integer() | nil,
-          required: boolean() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:custom_field, :custom_field_id, :order, :required]
 

@@ -22,24 +22,7 @@ defmodule PolarExpress.Schemas.DiscountFixedOnceForeverDurationBase do
   * `starts_at` - Timestamp after which the discount is redeemable. Nullable.
   * `type`
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          amounts: %{String.t() => integer()} | nil,
-          code: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          currency: String.t() | nil,
-          duration: PolarExpress.Schemas.DiscountDuration.t() | nil,
-          ends_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          max_redemptions: integer() | nil,
-          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
-          modified_at: DateTime.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          redemptions_count: integer() | nil,
-          starts_at: DateTime.t() | nil,
-          type: PolarExpress.Schemas.DiscountType.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

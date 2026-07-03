@@ -9,9 +9,7 @@ defmodule PolarExpress.Schemas.BenefitDiscordSubscriberProperties do
   @typedoc """
   * `guild_id` - The ID of the Discord server.
   """
-  @type t :: %__MODULE__{
-          guild_id: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:guild_id]
 

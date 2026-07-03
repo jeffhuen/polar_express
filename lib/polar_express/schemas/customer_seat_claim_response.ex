@@ -10,10 +10,7 @@ defmodule PolarExpress.Schemas.CustomerSeatClaimResponse do
   * `customer_session_token` - Session token for immediate customer portal access
   * `seat` - The claimed seat
   """
-  @type t :: %__MODULE__{
-          customer_session_token: String.t() | nil,
-          seat: PolarExpress.Schemas.CustomerSeat.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:customer_session_token, :seat]
 

@@ -20,12 +20,7 @@ defmodule PolarExpress.Schemas.BenefitDiscordUpdate do
   * `properties` - Nullable.
   * `type`
   """
-  @type t :: %__MODULE__{
-          description: String.t() | nil,
-          metadata: %{String.t() => String.t() | integer() | float() | boolean() | nil} | nil,
-          properties: PolarExpress.Schemas.BenefitDiscordCreateProperties.t() | nil,
-          type: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:description, :metadata, :properties, :type]
 

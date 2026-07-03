@@ -16,16 +16,7 @@ defmodule PolarExpress.Schemas.ProductMediaFileCreate do
   * `upload`
   * `version` - Nullable.
   """
-  @type t :: %__MODULE__{
-          checksum_sha256_base64: String.t() | nil,
-          mime_type: String.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          service: String.t() | nil,
-          size: integer() | nil,
-          upload: PolarExpress.Schemas.S3FileCreateMultipart.t() | nil,
-          version: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :checksum_sha256_base64,

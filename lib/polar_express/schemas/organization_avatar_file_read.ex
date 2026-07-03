@@ -25,25 +25,7 @@ defmodule PolarExpress.Schemas.OrganizationAvatarFileRead do
   * `storage_version` - Nullable.
   * `version` - Nullable.
   """
-  @type t :: %__MODULE__{
-          checksum_etag: String.t() | nil,
-          checksum_sha256_base64: String.t() | nil,
-          checksum_sha256_hex: String.t() | nil,
-          created_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          is_uploaded: boolean() | nil,
-          last_modified_at: DateTime.t() | nil,
-          mime_type: String.t() | nil,
-          name: String.t() | nil,
-          organization_id: String.t() | nil,
-          path: String.t() | nil,
-          public_url: String.t() | nil,
-          service: String.t() | nil,
-          size: integer() | nil,
-          size_readable: String.t() | nil,
-          storage_version: String.t() | nil,
-          version: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :checksum_etag,

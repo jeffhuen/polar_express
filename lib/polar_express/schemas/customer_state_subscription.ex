@@ -28,29 +28,7 @@ defmodule PolarExpress.Schemas.CustomerStateSubscription do
   * `trial_end` - The end timestamp of the trial period, if any. Nullable.
   * `trial_start` - The start timestamp of the trial period, if any. Nullable.
   """
-  @type t :: %__MODULE__{
-          amount: integer() | nil,
-          cancel_at_period_end: boolean() | nil,
-          canceled_at: DateTime.t() | nil,
-          created_at: DateTime.t() | nil,
-          currency: String.t() | nil,
-          current_period_end: DateTime.t() | nil,
-          current_period_start: DateTime.t() | nil,
-          custom_field_data:
-            %{String.t() => String.t() | integer() | boolean() | DateTime.t() | nil} | nil,
-          discount_id: String.t() | nil,
-          ends_at: DateTime.t() | nil,
-          id: String.t() | nil,
-          metadata: PolarExpress.Schemas.MetadataOutputType.t() | nil,
-          meters: [PolarExpress.Schemas.CustomerStateSubscriptionMeter.t()] | nil,
-          modified_at: DateTime.t() | nil,
-          product_id: String.t() | nil,
-          recurring_interval: PolarExpress.Schemas.SubscriptionRecurringInterval.t() | nil,
-          started_at: DateTime.t() | nil,
-          status: String.t() | nil,
-          trial_end: DateTime.t() | nil,
-          trial_start: DateTime.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [
     :amount,

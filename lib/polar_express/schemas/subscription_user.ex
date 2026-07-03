@@ -11,13 +11,7 @@ defmodule PolarExpress.Schemas.SubscriptionUser do
   * `id` - Format: uuid4.
   * `public_name`
   """
-  @type t :: %__MODULE__{
-          avatar_url: String.t() | nil,
-          email: String.t() | nil,
-          github_username: String.t() | nil,
-          id: String.t() | nil,
-          public_name: String.t() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:avatar_url, :email, :github_username, :id, :public_name]
 

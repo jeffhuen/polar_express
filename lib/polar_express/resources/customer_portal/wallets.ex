@@ -14,14 +14,7 @@ defmodule PolarExpress.Resources.CustomerPortal.Wallets do
   * `id` - The ID of the object. Format: uuid4.
   * `modified_at` - Last modification timestamp of the object.
   """
-  @type t :: %__MODULE__{
-          balance: integer() | nil,
-          created_at: String.t() | nil,
-          currency: String.t() | nil,
-          customer_id: String.t() | nil,
-          id: String.t() | nil,
-          modified_at: term() | nil
-        }
+  @type t :: %__MODULE__{}
 
   defstruct [:balance, :created_at, :currency, :customer_id, :id, :modified_at]
 
