@@ -60,7 +60,7 @@ defmodule PolarExpress.Schemas.CustomerStateSubscription do
     %{
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "meters" => PolarExpress.Schemas.CustomerStateSubscriptionMeter,
-      "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval
+      "recurring_interval" => PolarExpress.Schemas.RecurringInterval
     }
   end
 

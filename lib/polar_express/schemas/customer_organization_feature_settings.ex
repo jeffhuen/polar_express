@@ -7,11 +7,12 @@ defmodule PolarExpress.Schemas.CustomerOrganizationFeatureSettings do
   """
 
   @typedoc """
+  * `checkout_localization_enabled` - Whether localization is enabled for this organization.
   * `member_model_enabled` - Whether the member model is enabled for this organization.
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:member_model_enabled]
+  defstruct [:checkout_localization_enabled, :member_model_enabled]
 
   @schema_name "CustomerOrganizationFeatureSettings"
   def schema_name, do: @schema_name

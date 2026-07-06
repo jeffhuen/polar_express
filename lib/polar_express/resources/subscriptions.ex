@@ -13,6 +13,8 @@ defmodule PolarExpress.Resources.Subscriptions do
   * `checkout_id`
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `currency` - The currency of the subscription.
+  * `current_meter_period_end` - The end timestamp of the current meter period, if the product has a meter cycle set. This is when credits next renew.
+  * `current_meter_period_start` - The start timestamp of the current meter period, if the product has a meter cycle set. Metered credits are granted and overage is settled on this cadence.
   * `current_period_end` - The end timestamp of the current billing period. Format: date-time.
   * `current_period_start` - The start timestamp of the current billing period. Format: date-time.
   * `custom_field_data` - Key-value object storing custom field values.
@@ -28,6 +30,7 @@ defmodule PolarExpress.Resources.Subscriptions do
   * `metadata`
   * `meters` - List of meters associated with the subscription.
   * `modified_at` - Last modification timestamp of the object.
+  * `past_due_at` - The timestamp when the subscription entered `past_due` status.
   * `pending_update` - Pending subscription update that will be applied at the beginning of the next period. If `null`, there is no pending update.
   * `prices` - List of enabled prices for the subscription.
   * `product`
@@ -49,6 +52,8 @@ defmodule PolarExpress.Resources.Subscriptions do
     :checkout_id,
     :created_at,
     :currency,
+    :current_meter_period_end,
+    :current_meter_period_start,
     :current_period_end,
     :current_period_start,
     :custom_field_data,
@@ -64,6 +69,7 @@ defmodule PolarExpress.Resources.Subscriptions do
     :metadata,
     :meters,
     :modified_at,
+    :past_due_at,
     :pending_update,
     :prices,
     :product,

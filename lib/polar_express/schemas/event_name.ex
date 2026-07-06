@@ -6,6 +6,7 @@ defmodule PolarExpress.Schemas.EventName do
 
   @typedoc """
   * `first_seen` - The first time the event occurred. Format: date-time.
+  * `label` - Human readable label of the event.
   * `last_seen` - The last time the event occurred. Format: date-time.
   * `name` - The name of the event.
   * `occurrences` - Number of times the event has occurred.
@@ -13,7 +14,7 @@ defmodule PolarExpress.Schemas.EventName do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:first_seen, :last_seen, :name, :occurrences, :source]
+  defstruct [:first_seen, :label, :last_seen, :name, :occurrences, :source]
 
   @schema_name "EventName"
   def schema_name, do: @schema_name

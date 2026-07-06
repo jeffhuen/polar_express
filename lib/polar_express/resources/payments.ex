@@ -22,6 +22,7 @@ defmodule PolarExpress.Resources.Payments do
   * `processor` - The payment processor.
   * `processor_metadata` - Additional metadata from the payment processor for internal use.
   * `status` - The payment status.
+  * `trigger` - What initiated this payment attempt, e.g. initial purchase, subscription renewal, or an automated dunning retry.
   """
   @type t :: %__MODULE__{}
 
@@ -40,7 +41,8 @@ defmodule PolarExpress.Resources.Payments do
     :organization_id,
     :processor,
     :processor_metadata,
-    :status
+    :status,
+    :trigger
   ]
 
   @object_name "payments"

@@ -8,6 +8,7 @@ defmodule PolarExpress.Schemas.Organization do
   * `account_id` - ID of the transactions account. Nullable.
   * `allow_customer_updates` - Whether customers can update their subscriptions from the customer portal.
   * `avatar_url` - Avatar URL shown in checkout, customer portal, emails etc. Nullable.
+  * `capabilities` - Capabilities currently granted to the organization.
   * `country` - Two-letter country code (ISO 3166-1 alpha-2). Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `customer_email_settings` - Settings related to customer emails
@@ -20,11 +21,11 @@ defmodule PolarExpress.Schemas.Organization do
   * `id` - The ID of the object. Format: uuid4.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `name` - Organization name shown in checkout, customer portal, emails etc.
-  * `notification_settings` - Settings related to notifications
   * `payout_account_id` - ID of the payout account. Nullable.
   * `proration_behavior` - Proration behavior applied when customer updates their subscription from the portal.
   * `slug` - Unique organization slug in checkout, customer portal and credit card statements.
   * `socials` - Links to social profiles.
+  * `sso_enforced` - Whether members must access this organization through its SSO connection.
   * `status` - Current organization status
   * `subscription_settings` - Settings related to subscriptions management
   * `website` - Official website of the organization. Nullable.
@@ -35,6 +36,7 @@ defmodule PolarExpress.Schemas.Organization do
     :account_id,
     :allow_customer_updates,
     :avatar_url,
+    :capabilities,
     :country,
     :created_at,
     :customer_email_settings,
@@ -47,11 +49,11 @@ defmodule PolarExpress.Schemas.Organization do
     :id,
     :modified_at,
     :name,
-    :notification_settings,
     :payout_account_id,
     :proration_behavior,
     :slug,
     :socials,
+    :sso_enforced,
     :status,
     :subscription_settings,
     :website
@@ -62,11 +64,11 @@ defmodule PolarExpress.Schemas.Organization do
 
   def __inner_types__ do
     %{
+      "capabilities" => PolarExpress.Schemas.OrganizationCapabilities,
       "customer_email_settings" => PolarExpress.Schemas.OrganizationCustomerEmailSettings,
       "customer_portal_settings" => PolarExpress.Schemas.OrganizationCustomerPortalSettings,
       "default_tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption,
       "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettings,
-      "notification_settings" => PolarExpress.Schemas.OrganizationNotificationSettings,
       "proration_behavior" => PolarExpress.Schemas.SubscriptionProrationBehavior,
       "socials" => PolarExpress.Schemas.OrganizationSocialLink,
       "status" => PolarExpress.Schemas.OrganizationStatus,

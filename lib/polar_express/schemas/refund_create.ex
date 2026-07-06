@@ -19,7 +19,7 @@ defmodule PolarExpress.Schemas.RefundCreate do
 
   You can store up to **50 key-value pairs**.
   * `order_id` - Format: uuid4.
-  * `reason`
+  * `reason` - Reason for the refund. Possible values: `duplicate`, `fraudulent`, `customer_request`, `service_disruption`, `satisfaction_guarantee`, `other`.
   * `revoke_benefits` - Should this refund trigger the associated customer benefits to be revoked?
 
   **Note:**
@@ -33,10 +33,4 @@ defmodule PolarExpress.Schemas.RefundCreate do
 
   @schema_name "RefundCreate"
   def schema_name, do: @schema_name
-
-  def __inner_types__ do
-    %{
-      "reason" => PolarExpress.Schemas.RefundReason
-    }
-  end
 end

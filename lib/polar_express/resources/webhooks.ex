@@ -16,7 +16,7 @@ defmodule PolarExpress.Resources.Webhooks do
   * `name` - An optional name for the webhook endpoint to help organize and identify it.
   * `organization_id` - The organization ID associated with the webhook endpoint. Format: uuid4.
   * `secret` - The secret used to sign the webhook events.
-  * `url` - The URL where the webhook events will be sent. Format: uri. Max length: 2083.
+  * `url` - The URL where the webhook events will be sent.
   """
   @type t :: %__MODULE__{}
 

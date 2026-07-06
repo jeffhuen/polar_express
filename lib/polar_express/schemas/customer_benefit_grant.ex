@@ -10,6 +10,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrant do
           | PolarExpress.Schemas.CustomerBenefitGrantCustom.t()
           | PolarExpress.Schemas.CustomerBenefitGrantMeterCredit.t()
           | PolarExpress.Schemas.CustomerBenefitGrantFeatureFlag.t()
+          | PolarExpress.Schemas.CustomerBenefitGrantSlackSharedChannel.t()
 
   @schema_name "CustomerBenefitGrant"
   def schema_name, do: @schema_name
@@ -22,7 +23,8 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrant do
       PolarExpress.Schemas.CustomerBenefitGrantLicenseKeys,
       PolarExpress.Schemas.CustomerBenefitGrantCustom,
       PolarExpress.Schemas.CustomerBenefitGrantMeterCredit,
-      PolarExpress.Schemas.CustomerBenefitGrantFeatureFlag
+      PolarExpress.Schemas.CustomerBenefitGrantFeatureFlag,
+      PolarExpress.Schemas.CustomerBenefitGrantSlackSharedChannel
     ]
   end
 end

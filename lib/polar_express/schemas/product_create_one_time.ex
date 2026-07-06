@@ -21,7 +21,7 @@ defmodule PolarExpress.Schemas.ProductCreateOneTime do
   You can store up to **50 key-value pairs**.
   * `name` - The name of the product. Max length: 64.
   * `organization_id` - The ID of the organization owning the product. **Required unless you use an organization token.** Nullable.
-  * `prices` - List of available prices for this product. It should contain at most one static price (fixed, custom or free), and any number of metered prices. Metered prices are not supported on one-time purchase products.
+  * `prices` - List of available prices for this product. It may combine at most one fixed price with one seat-based price (billed as `fixed + seat_charge`), or contain a single custom or free price, plus any number of metered prices. A free price cannot be combined with other prices, and a custom price cannot be combined with a fixed or seat-based price. Metered prices are not supported on one-time purchase products.
   * `recurring_interval` - States that the product is a one-time purchase.
   * `recurring_interval_count` - One-time products don't have a recurring interval count.
   * `visibility` - The visibility of the product.
@@ -52,7 +52,6 @@ defmodule PolarExpress.Schemas.ProductCreateOneTime do
          %{
            "custom" => PolarExpress.Schemas.ProductPriceCustomCreate,
            "fixed" => PolarExpress.Schemas.ProductPriceFixedCreate,
-           "free" => PolarExpress.Schemas.ProductPriceFreeCreate,
            "metered_unit" => PolarExpress.Schemas.ProductPriceMeteredUnitCreate,
            "seat_based" => PolarExpress.Schemas.ProductPriceSeatBasedCreate
          }},

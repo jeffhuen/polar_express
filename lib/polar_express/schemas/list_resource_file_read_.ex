@@ -17,13 +17,7 @@ defmodule PolarExpress.Schemas.ListResource_FileRead_ do
 
   def __inner_types__ do
     %{
-      "items" =>
-        {:union, :discriminated, "service",
-         %{
-           "downloadable" => PolarExpress.Schemas.DownloadableFileRead,
-           "organization_avatar" => PolarExpress.Schemas.OrganizationAvatarFileRead,
-           "product_media" => PolarExpress.Schemas.ProductMediaFileRead
-         }},
+      "items" => PolarExpress.Schemas.FileRead,
       "pagination" => PolarExpress.Schemas.Pagination
     }
   end
