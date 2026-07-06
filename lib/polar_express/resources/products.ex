@@ -16,6 +16,8 @@ defmodule PolarExpress.Resources.Products do
   * `is_recurring` - Whether the product is a subscription.
   * `medias` - List of medias associated to the product.
   * `metadata`
+  * `meter_interval` - The meter cycle of the product, independent of the billing interval. If `None`, metered concerns follow the billing interval.
+  * `meter_interval_count` - Number of meter interval units. None when no meter cycle is set.
   * `modified_at` - Last modification timestamp of the object.
   * `name` - The name of the product.
   * `organization_id` - The ID of the organization owning the product. Format: uuid4.
@@ -38,6 +40,8 @@ defmodule PolarExpress.Resources.Products do
     :is_recurring,
     :medias,
     :metadata,
+    :meter_interval,
+    :meter_interval_count,
     :modified_at,
     :name,
     :organization_id,

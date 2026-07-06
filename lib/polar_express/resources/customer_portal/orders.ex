@@ -20,15 +20,18 @@ defmodule PolarExpress.Resources.CustomerPortal.Orders do
   * `discount_id`
   * `due_amount` - Amount in cents that is due for this order.
   * `id` - The ID of the object. Format: uuid4.
-  * `invoice_number` - The invoice number associated with this order.
+  * `invoice_number` - The invoice number associated with this order. `null` while the order is in `draft` status; assigned at finalize.
   * `is_invoice_generated` - Whether an invoice has been generated for this order.
   * `items` - Line items composing the order.
   * `modified_at` - Last modification timestamp of the object.
   * `net_amount` - Amount in cents, after discounts but before taxes.
-  * `next_payment_attempt_at` - When the next payment retry is scheduled
+  * `next_payment_attempt_at` - When the next automatic payment retry is scheduled. `null` if the order is not in dunning or all retries have been exhausted.
   * `paid` - Whether the order has been paid for.
   * `product`
   * `product_id`
+  * `receipt_number` - The receipt number for this order. Set once the order is paid for organizations with receipts enabled. When set, a downloadable receipt PDF can be obtained via the receipt endpoint.
+  * `refundable_amount` - Amount in cents that can still be refunded (net, before taxes). Accounts for any applied customer balance and previous refunds.
+  * `refundable_tax_amount` - Sales tax in cents that would be refunded if the full refundable amount is refunded.
   * `refunded_amount` - Amount refunded in cents.
   * `refunded_tax_amount` - Sales tax refunded in cents.
   * `seats` - Number of seats purchased (for seat-based one-time orders).
@@ -64,6 +67,9 @@ defmodule PolarExpress.Resources.CustomerPortal.Orders do
     :paid,
     :product,
     :product_id,
+    :receipt_number,
+    :refundable_amount,
+    :refundable_tax_amount,
     :refunded_amount,
     :refunded_tax_amount,
     :seats,

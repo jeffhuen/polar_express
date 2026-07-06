@@ -11,6 +11,8 @@ defmodule PolarExpress.Schemas.Subscription do
   * `checkout_id` - Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `currency` - The currency of the subscription.
+  * `current_meter_period_end` - The end timestamp of the current meter period, if the product has a meter cycle set. This is when credits next renew. Nullable.
+  * `current_meter_period_start` - The start timestamp of the current meter period, if the product has a meter cycle set. Metered credits are granted and overage is settled on this cadence. Nullable.
   * `current_period_end` - The end timestamp of the current billing period. Format: date-time.
   * `current_period_start` - The start timestamp of the current billing period. Format: date-time.
   * `custom_field_data` - Key-value object storing custom field values.
@@ -26,6 +28,7 @@ defmodule PolarExpress.Schemas.Subscription do
   * `metadata`
   * `meters` - List of meters associated with the subscription.
   * `modified_at` - Last modification timestamp of the object. Nullable.
+  * `past_due_at` - The timestamp when the subscription entered `past_due` status. Nullable.
   * `pending_update` - Pending subscription update that will be applied at the beginning of the next period. If `null`, there is no pending update. Nullable.
   * `prices` - List of enabled prices for the subscription.
   * `product`
@@ -47,6 +50,8 @@ defmodule PolarExpress.Schemas.Subscription do
     :checkout_id,
     :created_at,
     :currency,
+    :current_meter_period_end,
+    :current_meter_period_start,
     :current_period_end,
     :current_period_start,
     :custom_field_data,
@@ -62,6 +67,7 @@ defmodule PolarExpress.Schemas.Subscription do
     :metadata,
     :meters,
     :modified_at,
+    :past_due_at,
     :pending_update,
     :prices,
     :product,
@@ -97,7 +103,7 @@ defmodule PolarExpress.Schemas.Subscription do
         {:union, :variants,
          [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
       "product" => PolarExpress.Schemas.Product,
-      "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
+      "recurring_interval" => PolarExpress.Schemas.RecurringInterval,
       "status" => PolarExpress.Schemas.SubscriptionStatus
     }
   end
@@ -106,11 +112,14 @@ defmodule PolarExpress.Schemas.Subscription do
     do: [
       :canceled_at,
       :created_at,
+      :current_meter_period_end,
+      :current_meter_period_start,
       :current_period_end,
       :current_period_start,
       :ended_at,
       :ends_at,
       :modified_at,
+      :past_due_at,
       :started_at,
       :trial_end,
       :trial_start

@@ -21,17 +21,21 @@ defmodule PolarExpress.Schemas.Order do
   * `discount_id` - Nullable.
   * `due_amount` - Amount in cents that is due for this order.
   * `id` - The ID of the object. Format: uuid4.
-  * `invoice_number` - The invoice number associated with this order.
+  * `invoice_number` - The invoice number associated with this order. `null` while the order is in `draft` status; assigned at finalize. Nullable.
   * `is_invoice_generated` - Whether an invoice has been generated for this order.
   * `items` - Line items composing the order.
   * `metadata`
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `net_amount` - Amount in cents, after discounts but before taxes.
+  * `next_payment_attempt_at` - When the next automatic payment retry is scheduled. `null` if the order is not in dunning or all retries have been exhausted. Nullable.
   * `paid` - Whether the order has been paid for.
   * `platform_fee_amount` - Platform fee amount in cents.
   * `platform_fee_currency` - Currency of the platform fee. Nullable.
   * `product` - Nullable.
   * `product_id` - Nullable.
+  * `receipt_number` - The receipt number for this order. Set once the order is paid for organizations with receipts enabled. When set, a downloadable receipt PDF can be obtained via the receipt endpoint. Nullable.
+  * `refundable_amount` - Amount in cents that can still be refunded (net, before taxes). Accounts for any applied customer balance and previous refunds.
+  * `refundable_tax_amount` - Sales tax in cents that would be refunded if the full refundable amount is refunded.
   * `refunded_amount` - Amount refunded in cents.
   * `refunded_tax_amount` - Sales tax refunded in cents.
   * `seats` - Number of seats purchased (for seat-based one-time orders). Nullable.
@@ -67,11 +71,15 @@ defmodule PolarExpress.Schemas.Order do
     :metadata,
     :modified_at,
     :net_amount,
+    :next_payment_attempt_at,
     :paid,
     :platform_fee_amount,
     :platform_fee_currency,
     :product,
     :product_id,
+    :receipt_number,
+    :refundable_amount,
+    :refundable_tax_amount,
     :refunded_amount,
     :refunded_tax_amount,
     :seats,
@@ -107,5 +115,5 @@ defmodule PolarExpress.Schemas.Order do
     }
   end
 
-  def __date_fields__, do: [:created_at, :modified_at]
+  def __date_fields__, do: [:created_at, :modified_at, :next_payment_attempt_at]
 end

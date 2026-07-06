@@ -12,7 +12,7 @@ defmodule PolarExpress.Schemas.ProductPriceCustom do
   * `id` - The ID of the price. Format: uuid4.
   * `is_archived` - Whether the price is archived and no longer available.
   * `maximum_amount` - The maximum amount the customer can pay. Nullable.
-  * `minimum_amount` - The minimum amount the customer can pay. If 0, the price is 'free or pay what you want'. Defaults to 50 cents.
+  * `minimum_amount` - The minimum amount the customer can pay. If 0, the price is 'free or pay what you want'.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `preset_amount` - The initial amount shown to the customer. Nullable.
   * `price_currency` - The currency in which the customer will be charged.
