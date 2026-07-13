@@ -35,6 +35,8 @@ defmodule PolarExpress.Events do
     "subscription.canceled",
     "subscription.created",
     "subscription.past_due",
+    "subscription.paused",
+    "subscription.resumed",
     "subscription.revoked",
     "subscription.uncanceled",
     "subscription.updated"

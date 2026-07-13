@@ -11,6 +11,8 @@ defmodule PolarExpress.Schemas.OrderSubscription do
   * `checkout_id` - Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `currency` - The currency of the subscription.
+  * `current_meter_period_end` - The end timestamp of the current meter period, if the product has a meter cycle set. This is when credits next renew. Nullable.
+  * `current_meter_period_start` - The start timestamp of the current meter period, if the product has a meter cycle set. Metered credits are granted and overage is settled on this cadence. Nullable.
   * `current_period_end` - The end timestamp of the current billing period. Format: date-time.
   * `current_period_start` - The start timestamp of the current billing period. Format: date-time.
   * `customer_cancellation_comment` - Nullable.
@@ -22,9 +24,13 @@ defmodule PolarExpress.Schemas.OrderSubscription do
   * `id` - The ID of the object. Format: uuid4.
   * `metadata`
   * `modified_at` - Last modification timestamp of the object. Nullable.
+  * `past_due_at` - The timestamp when the subscription entered `past_due` status. Nullable.
+  * `pause_at_period_end` - Whether the subscription will be paused at the end of the current period.
+  * `paused_at` - The timestamp when the subscription was paused. Nullable.
   * `product_id` - The ID of the subscribed product. Format: uuid4.
   * `recurring_interval` - The interval at which the subscription recurs.
   * `recurring_interval_count` - Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on.
+  * `resumes_at` - The timestamp when a paused subscription is scheduled to automatically resume, if set. Nullable.
   * `seats` - The number of seats for seat-based subscriptions. None for non-seat subscriptions. Nullable.
   * `started_at` - The timestamp when the subscription started. Nullable.
   * `status` - The status of the subscription.
@@ -40,6 +46,8 @@ defmodule PolarExpress.Schemas.OrderSubscription do
     :checkout_id,
     :created_at,
     :currency,
+    :current_meter_period_end,
+    :current_meter_period_start,
     :current_period_end,
     :current_period_start,
     :customer_cancellation_comment,
@@ -51,9 +59,13 @@ defmodule PolarExpress.Schemas.OrderSubscription do
     :id,
     :metadata,
     :modified_at,
+    :past_due_at,
+    :pause_at_period_end,
+    :paused_at,
     :product_id,
     :recurring_interval,
     :recurring_interval_count,
+    :resumes_at,
     :seats,
     :started_at,
     :status,
@@ -68,7 +80,7 @@ defmodule PolarExpress.Schemas.OrderSubscription do
     %{
       "customer_cancellation_reason" => PolarExpress.Schemas.CustomerCancellationReason,
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
-      "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
+      "recurring_interval" => PolarExpress.Schemas.RecurringInterval,
       "status" => PolarExpress.Schemas.SubscriptionStatus
     }
   end
@@ -77,11 +89,16 @@ defmodule PolarExpress.Schemas.OrderSubscription do
     do: [
       :canceled_at,
       :created_at,
+      :current_meter_period_end,
+      :current_meter_period_start,
       :current_period_end,
       :current_period_start,
       :ended_at,
       :ends_at,
       :modified_at,
+      :past_due_at,
+      :paused_at,
+      :resumes_at,
       :started_at,
       :trial_end,
       :trial_start

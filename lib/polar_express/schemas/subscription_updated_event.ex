@@ -47,15 +47,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdatedEvent do
   def __inner_types__ do
     %{
       "customer" => PolarExpress.Schemas.Customer,
-      "metadata" =>
-        {:union, :variants,
-         [
-           PolarExpress.Schemas.SubscriptionUpdatedProductMetadata,
-           PolarExpress.Schemas.SubscriptionUpdatedDiscountMetadata,
-           PolarExpress.Schemas.SubscriptionUpdatedTrialMetadata,
-           PolarExpress.Schemas.SubscriptionUpdatedSeatsMetadata,
-           PolarExpress.Schemas.SubscriptionUpdatedBillingPeriodMetadata
-         ]}
+      "metadata" => PolarExpress.Schemas.SubscriptionUpdatedMetadata
     }
   end
 

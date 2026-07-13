@@ -7,12 +7,13 @@ defmodule PolarExpress.Schemas.MemberUpdate do
   """
 
   @typedoc """
+  * `email` - Nullable.
   * `name` - Nullable.
   * `role` - The role of the member within the customer. Nullable.
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:name, :role]
+  defstruct [:email, :name, :role]
 
   @schema_name "MemberUpdate"
   def schema_name, do: @schema_name

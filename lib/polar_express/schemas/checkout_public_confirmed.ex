@@ -62,6 +62,7 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
   * `status`
   * `success_url` - URL where the customer will be redirected after a successful payment.
   * `tax_amount` - Sales tax amount in cents. If `null`, it means there is no enough information yet to calculate it. Nullable.
+  * `tax_behavior` - Tax behavior of the checkout. `inclusive` means the price includes tax, `exclusive` means tax is added on top. If `null`, tax is not yet calculated. Nullable.
   * `total_amount` - Amount in cents, after discounts and taxes.
   * `trial_end` - End date and time of the trial period, if any. Nullable.
   * `url` - URL where the customer can access the checkout session.
@@ -121,6 +122,7 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
     :status,
     :success_url,
     :tax_amount,
+    :tax_behavior,
     :total_amount,
     :trial_end,
     :url
@@ -153,7 +155,8 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
       "product_price" =>
         {:union, :variants,
          [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
-      "products" => PolarExpress.Schemas.CheckoutProduct
+      "products" => PolarExpress.Schemas.CheckoutProduct,
+      "tax_behavior" => PolarExpress.Schemas.TaxBehavior
     }
   end
 

@@ -6,6 +6,9 @@ defmodule PolarExpress.Schemas.CustomerSubscriptionUpdate do
           PolarExpress.Schemas.CustomerSubscriptionUpdateProduct.t()
           | PolarExpress.Schemas.CustomerSubscriptionUpdateSeats.t()
           | PolarExpress.Schemas.CustomerSubscriptionCancel.t()
+          | PolarExpress.Schemas.CustomerSubscriptionPause.t()
+          | PolarExpress.Schemas.CustomerSubscriptionResume.t()
+          | PolarExpress.Schemas.CustomerSubscriptionUpdateClear.t()
 
   @schema_name "CustomerSubscriptionUpdate"
   def schema_name, do: @schema_name
@@ -14,7 +17,10 @@ defmodule PolarExpress.Schemas.CustomerSubscriptionUpdate do
     [
       PolarExpress.Schemas.CustomerSubscriptionUpdateProduct,
       PolarExpress.Schemas.CustomerSubscriptionUpdateSeats,
-      PolarExpress.Schemas.CustomerSubscriptionCancel
+      PolarExpress.Schemas.CustomerSubscriptionCancel,
+      PolarExpress.Schemas.CustomerSubscriptionPause,
+      PolarExpress.Schemas.CustomerSubscriptionResume,
+      PolarExpress.Schemas.CustomerSubscriptionUpdateClear
     ]
   end
 end

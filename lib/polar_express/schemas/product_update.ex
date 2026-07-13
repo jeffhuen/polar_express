@@ -54,7 +54,7 @@ defmodule PolarExpress.Schemas.ProductUpdate do
     %{
       "attached_custom_fields" => PolarExpress.Schemas.AttachedCustomFieldCreate,
       "prices" => {:union, :variants, [PolarExpress.Schemas.ExistingProductPrice]},
-      "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
+      "recurring_interval" => PolarExpress.Schemas.RecurringInterval,
       "trial_interval" => PolarExpress.Schemas.TrialInterval,
       "visibility" => PolarExpress.Schemas.ProductVisibility
     }

@@ -37,6 +37,8 @@ defmodule PolarExpress.EventTypes do
       "subscription.canceled" => PolarExpress.Schemas.Subscription,
       "subscription.created" => PolarExpress.Schemas.Subscription,
       "subscription.past_due" => PolarExpress.Schemas.Subscription,
+      "subscription.paused" => PolarExpress.Schemas.Subscription,
+      "subscription.resumed" => PolarExpress.Schemas.Subscription,
       "subscription.revoked" => PolarExpress.Schemas.Subscription,
       "subscription.uncanceled" => PolarExpress.Schemas.Subscription,
       "subscription.updated" => PolarExpress.Schemas.Subscription
@@ -78,6 +80,8 @@ defmodule PolarExpress.EventTypes do
       "subscription.canceled" => PolarExpress.Events.SubscriptionCanceled,
       "subscription.created" => PolarExpress.Events.SubscriptionCreated,
       "subscription.past_due" => PolarExpress.Events.SubscriptionPastDue,
+      "subscription.paused" => PolarExpress.Events.SubscriptionPaused,
+      "subscription.resumed" => PolarExpress.Events.SubscriptionResumed,
       "subscription.revoked" => PolarExpress.Events.SubscriptionRevoked,
       "subscription.uncanceled" => PolarExpress.Events.SubscriptionUncanceled,
       "subscription.updated" => PolarExpress.Events.SubscriptionUpdated

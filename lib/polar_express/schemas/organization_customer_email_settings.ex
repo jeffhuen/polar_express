@@ -11,7 +11,9 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
   * `subscription_cycled`
   * `subscription_cycled_after_trial`
   * `subscription_past_due`
+  * `subscription_paused`
   * `subscription_renewal_reminder`
+  * `subscription_resumed`
   * `subscription_revoked`
   * `subscription_trial_conversion_reminder`
   * `subscription_uncanceled`
@@ -26,7 +28,9 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
     :subscription_cycled,
     :subscription_cycled_after_trial,
     :subscription_past_due,
+    :subscription_paused,
     :subscription_renewal_reminder,
+    :subscription_resumed,
     :subscription_revoked,
     :subscription_trial_conversion_reminder,
     :subscription_uncanceled,

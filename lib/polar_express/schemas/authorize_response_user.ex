@@ -6,6 +6,8 @@ defmodule PolarExpress.Schemas.AuthorizeResponseUser do
 
   @typedoc """
   * `client`
+  * `organizations`
+  * `requires_single_organization`
   * `scope_display_names`
   * `scopes`
   * `sub` - Nullable.
@@ -13,7 +15,15 @@ defmodule PolarExpress.Schemas.AuthorizeResponseUser do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:client, :scope_display_names, :scopes, :sub, :sub_type]
+  defstruct [
+    :client,
+    :organizations,
+    :requires_single_organization,
+    :scope_display_names,
+    :scopes,
+    :sub,
+    :sub_type
+  ]
 
   @schema_name "AuthorizeResponseUser"
   def schema_name, do: @schema_name
@@ -21,6 +31,7 @@ defmodule PolarExpress.Schemas.AuthorizeResponseUser do
   def __inner_types__ do
     %{
       "client" => PolarExpress.Schemas.OAuth2ClientPublic,
+      "organizations" => PolarExpress.Schemas.AuthorizeOrganization,
       "scopes" => PolarExpress.Schemas.Scope,
       "sub" => PolarExpress.Schemas.AuthorizeUser
     }
