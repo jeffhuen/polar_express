@@ -1,13 +1,14 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.FileServiceTypes do
-  @moduledoc "FileServiceTypes enum. Possible values: `downloadable`, `product_media`, `organization_avatar`."
+  @moduledoc "FileServiceTypes enum. Possible values: `downloadable`, `product_media`, `organization_avatar`, `support_case_attachment`."
 
   @type t :: String.t()
 
   @values [
     "downloadable",
     "product_media",
-    "organization_avatar"
+    "organization_avatar",
+    "support_case_attachment"
   ]
 
   @doc "List of valid enum values."

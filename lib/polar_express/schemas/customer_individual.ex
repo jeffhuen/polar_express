@@ -7,9 +7,11 @@ defmodule PolarExpress.Schemas.CustomerIndividual do
   """
 
   @typedoc """
-  * `avatar_url`
+  * `avatar_url` - Nullable.
   * `billing_address` - Nullable.
+  * `billing_name` - The name that should appear on the customer's invoices. Falls back to the customer name when not explicitly set. Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
+  * `default_payment_method_id` - The ID of the customer's default payment method, if any. Use the payment methods endpoint to retrieve its details. Nullable.
   * `deleted_at` - Timestamp for when the customer was soft deleted. Nullable.
   * `email` - The email address of the customer. This must be unique within the organization.
   * `email_verified` - Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
@@ -28,7 +30,9 @@ defmodule PolarExpress.Schemas.CustomerIndividual do
   defstruct [
     :avatar_url,
     :billing_address,
+    :billing_name,
     :created_at,
+    :default_payment_method_id,
     :deleted_at,
     :email,
     :email_verified,

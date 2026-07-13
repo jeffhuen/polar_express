@@ -13,6 +13,8 @@ defmodule PolarExpress.Resources.Subscriptions do
   * `checkout_id`
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `currency` - The currency of the subscription.
+  * `current_meter_period_end` - The end timestamp of the current meter period, if the product has a meter cycle set. This is when credits next renew.
+  * `current_meter_period_start` - The start timestamp of the current meter period, if the product has a meter cycle set. Metered credits are granted and overage is settled on this cadence.
   * `current_period_end` - The end timestamp of the current billing period. Format: date-time.
   * `current_period_start` - The start timestamp of the current billing period. Format: date-time.
   * `custom_field_data` - Key-value object storing custom field values.
@@ -28,12 +30,16 @@ defmodule PolarExpress.Resources.Subscriptions do
   * `metadata`
   * `meters` - List of meters associated with the subscription.
   * `modified_at` - Last modification timestamp of the object.
+  * `past_due_at` - The timestamp when the subscription entered `past_due` status.
+  * `pause_at_period_end` - Whether the subscription will be paused at the end of the current period.
+  * `paused_at` - The timestamp when the subscription was paused.
   * `pending_update` - Pending subscription update that will be applied at the beginning of the next period. If `null`, there is no pending update.
   * `prices` - List of enabled prices for the subscription.
   * `product`
   * `product_id` - The ID of the subscribed product. Format: uuid4.
   * `recurring_interval` - The interval at which the subscription recurs.
   * `recurring_interval_count` - Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on.
+  * `resumes_at` - The timestamp when a paused subscription is scheduled to automatically resume, if set.
   * `seats` - The number of seats for seat-based subscriptions. None for non-seat subscriptions.
   * `started_at` - The timestamp when the subscription started.
   * `status` - The status of the subscription.
@@ -49,6 +55,8 @@ defmodule PolarExpress.Resources.Subscriptions do
     :checkout_id,
     :created_at,
     :currency,
+    :current_meter_period_end,
+    :current_meter_period_start,
     :current_period_end,
     :current_period_start,
     :custom_field_data,
@@ -64,12 +72,16 @@ defmodule PolarExpress.Resources.Subscriptions do
     :metadata,
     :meters,
     :modified_at,
+    :past_due_at,
+    :pause_at_period_end,
+    :paused_at,
     :pending_update,
     :prices,
     :product,
     :product_id,
     :recurring_interval,
     :recurring_interval_count,
+    :resumes_at,
     :seats,
     :started_at,
     :status,

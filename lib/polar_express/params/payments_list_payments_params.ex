@@ -5,6 +5,7 @@ defmodule PolarExpress.Params.PaymentsListPaymentsParams do
   @typedoc """
   * `checkout_id` - Filter by checkout ID.
   * `customer_email` - Filter by customer email.
+  * `customer_id` - Filter by customer ID.
   * `limit` - Size of a page, defaults to 10. Maximum is 100.
   * `method` - Filter by payment method.
   * `order_id` - Filter by order ID.
@@ -16,6 +17,7 @@ defmodule PolarExpress.Params.PaymentsListPaymentsParams do
   @type t :: %__MODULE__{
           checkout_id: map() | nil,
           customer_email: map() | nil,
+          customer_id: map() | nil,
           limit: integer() | nil,
           method: map() | nil,
           order_id: map() | nil,
@@ -28,6 +30,7 @@ defmodule PolarExpress.Params.PaymentsListPaymentsParams do
   defstruct [
     :checkout_id,
     :customer_email,
+    :customer_id,
     :limit,
     :method,
     :order_id,

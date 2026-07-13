@@ -64,7 +64,7 @@ defmodule PolarExpress.Services.CustomerSeatsService do
   @doc """
   List Seats
 
-  **Scopes**: `customer_seats:write`
+  **Scopes**: `customer_seats:read`
 
   See `PolarExpress.Params.CustomerSeatsListSeatsParams` for parameter details.
   """

@@ -19,17 +19,19 @@ defmodule PolarExpress.Schemas.BenefitMeterCreditUpdate do
   You can store up to **50 key-value pairs**.
   * `properties` - Nullable.
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal. Nullable.
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:description, :metadata, :properties, :type]
+  defstruct [:description, :metadata, :properties, :type, :visibility]
 
   @schema_name "BenefitMeterCreditUpdate"
   def schema_name, do: @schema_name
 
   def __inner_types__ do
     %{
-      "properties" => PolarExpress.Schemas.BenefitMeterCreditCreateProperties
+      "properties" => PolarExpress.Schemas.BenefitMeterCreditCreateProperties,
+      "visibility" => PolarExpress.Schemas.BenefitVisibility
     }
   end
 end

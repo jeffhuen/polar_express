@@ -10,6 +10,7 @@ defmodule PolarExpress.Resources.Files do
   * `checksum_etag`
   * `checksum_sha256_base64`
   * `checksum_sha256_hex`
+  * `created_at` - Format: date-time.
   * `id` - The ID of the object. Format: uuid4.
   * `is_uploaded`
   * `last_modified_at`
@@ -17,11 +18,11 @@ defmodule PolarExpress.Resources.Files do
   * `name`
   * `organization_id` - Format: uuid4.
   * `path`
+  * `public_url`
   * `service`
   * `size`
   * `size_readable`
   * `storage_version`
-  * `upload`
   * `version`
   """
   @type t :: %__MODULE__{}
@@ -30,6 +31,7 @@ defmodule PolarExpress.Resources.Files do
     :checksum_etag,
     :checksum_sha256_base64,
     :checksum_sha256_hex,
+    :created_at,
     :id,
     :is_uploaded,
     :last_modified_at,
@@ -37,11 +39,11 @@ defmodule PolarExpress.Resources.Files do
     :name,
     :organization_id,
     :path,
+    :public_url,
     :service,
     :size,
     :size_readable,
     :storage_version,
-    :upload,
     :version
   ]
 

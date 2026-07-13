@@ -110,7 +110,6 @@ defmodule PolarExpress.Schemas.CheckoutProductsCreate do
           %{
             "custom" => PolarExpress.Schemas.ProductPriceCustomCreate,
             "fixed" => PolarExpress.Schemas.ProductPriceFixedCreate,
-            "free" => PolarExpress.Schemas.ProductPriceFreeCreate,
             "metered_unit" => PolarExpress.Schemas.ProductPriceMeteredUnitCreate,
             "seat_based" => PolarExpress.Schemas.ProductPriceSeatBasedCreate
           }}},

@@ -7,18 +7,12 @@ defmodule PolarExpress.Resources.Members do
   """
 
   @typedoc """
-  * `created_at` - Creation timestamp of the object. Format: date-time.
-  * `customer_id` - The ID of the customer this member belongs to. Format: uuid4.
-  * `email` - The email address of the member.
-  * `external_id` - The ID of the member in your system. This must be unique within the customer.
-  * `id` - The ID of the member. Format: uuid4.
-  * `modified_at` - Last modification timestamp of the object.
-  * `name` - The name of the member.
-  * `role` - The role of the member within the customer.
+  * `items`
+  * `pagination`
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:created_at, :customer_id, :email, :external_id, :id, :modified_at, :name, :role]
+  defstruct [:items, :pagination]
 
   @object_name "members"
   def object_name, do: @object_name

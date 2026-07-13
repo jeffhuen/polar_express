@@ -23,7 +23,6 @@ defmodule PolarExpress.Services.V1 do
     :metrics,
     :oauth2,
     :orders,
-    :organization_access_tokens,
     :organizations,
     :payments,
     :products,
