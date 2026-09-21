@@ -17,6 +17,9 @@ defmodule PolarExpress.Params.SubscriptionsListSubscriptionsParams do
   * `page` - Page number, defaults to 1.
   * `product_id` - Filter by product ID.
   * `sorting` - Sorting criterion. Several criteria can be used simultaneously and will be applied in order. Add a minus sign `-` before the criteria name to sort by descending order.
+  * `started_after` - Only include subscriptions started after this date.
+  * `started_before` - Only include subscriptions started before this date.
+  * `status` - Filter by subscription status.
   """
   @type t :: %__MODULE__{
           active: boolean() | nil,
@@ -32,7 +35,10 @@ defmodule PolarExpress.Params.SubscriptionsListSubscriptionsParams do
           organization_id: map() | nil,
           page: integer() | nil,
           product_id: map() | nil,
-          sorting: [map()] | nil
+          sorting: [map()] | nil,
+          started_after: String.t() | nil,
+          started_before: String.t() | nil,
+          status: map() | nil
         }
 
   defstruct [
@@ -49,6 +55,9 @@ defmodule PolarExpress.Params.SubscriptionsListSubscriptionsParams do
     :organization_id,
     :page,
     :product_id,
-    :sorting
+    :sorting,
+    :started_after,
+    :started_before,
+    :status
   ]
 end

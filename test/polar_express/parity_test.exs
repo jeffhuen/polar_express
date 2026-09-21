@@ -83,44 +83,36 @@ defmodule PolarExpress.ParityTest do
     |> MapSet.new()
   end
 
-  # Normalize JS SDK filenames to match Elixir service names.
-  # JS: `benefitgrants.ts` → "benefitgrants"
-  # JS: `polarbenefitgrants.ts` → "polarbenefitgrants" (customer portal)
-  # Elixir: `benefit_grants_service.ex` → "benefitgrants"
-  # Elixir: `customer_portal/benefit_grants_service.ex` → "polarbenefitgrants"
+  # Normalize TS SDK service paths to match Elixir service names.
+  # TS SDK lives in the Polar monorepo at sdk/typescript/src/<version>/services:
+  # `benefits.ts` → "benefits", `customer_portal/orders.ts` → "polarorders",
+  # `customers/members.ts` → "customers", `oauth2/clients/*.ts` → "oauth2".
+  # Elixir: `benefit_grants_service.ex` → "benefitgrants",
+  # `customer_portal/orders_service.ex` → "polarorders".
   #
-  # Some JS SDK services don't have 1:1 Elixir file equivalents:
-  # - `clients` → covered by `oauth2` service (OAuth client management)
-  # - `customersession` → singular alias, we have `customersessions` (plural)
-  # - `downloadables` → covered by benefit grants
-  # - `organizationaccesstokens` → present in polar-js main, absent from the public OpenAPI spec
-  # - `polar*` customer portal sub-services → consolidated into `customerportal`
-  # - `seats` → covered by `customerseats`
-  # - `wallets` → not in Polar OpenAPI spec (legacy JS SDK artifact)
+  # Non-1:1 mappings:
+  # - TS `customer_portal/customer_meters.ts` serves /v1/customer-portal/meters/,
+  #   generated here as `CustomerPortal.MetersService` ("polarmeters")
   @js_aliases %{
-    "clients" => "oauth2",
-    "customersession" => "customersessions",
-    "downloadables" => "benefitgrants",
-    "membersessions" => "members",
-    "seats" => "customerseats",
-    "wallets" => "customerportal"
+    "polarcustomermeters" => "polarmeters"
   }
 
-  @js_openapi_gaps ~w(organizationaccesstokens)
-
-  # Customer portal sub-services consolidated into customer_portal_service.ex
-  @js_portal_services ~w(polarbenefitgrants polarcustomermeters polarcustomers polarlicensekeys polarmembers polarorders polarorganizations polarsubscriptions)
-
   defp js_service_names do
-    Path.wildcard("priv/polar-js-main/src/sdk/*.ts")
+    Path.wildcard("priv/polar-sdk/sdk/typescript/src/*/services/**/*.ts")
+    |> Enum.reject(&(Path.basename(&1) == "index.ts"))
     |> Enum.map(fn path ->
-      name = path |> Path.basename(".ts") |> String.downcase()
-      Map.get(@js_aliases, name, name)
+      parts = Path.split(path)
+      idx = Enum.find_index(parts, &(&1 == "services"))
+      rest = Enum.drop(parts, idx + 1)
+      name = rest |> List.last() |> Path.basename(".ts") |> String.replace("_", "")
+
+      case rest do
+        ["customer_portal", _] -> Map.get(@js_aliases, "polar" <> name, "polar" <> name)
+        ["customers", _] -> "customers"
+        ["oauth2" | _] -> "oauth2"
+        [_] -> name
+      end
     end)
-    |> Enum.reject(
-      &(&1 in ["polar", "types", "index", "sdk"] or &1 in @js_portal_services or
-          &1 in @js_openapi_gaps)
-    )
     |> MapSet.new()
   end
 

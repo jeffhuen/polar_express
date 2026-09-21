@@ -5,12 +5,14 @@ defmodule PolarExpress.Schemas.OrganizationNotificationSettings do
   """
 
   @typedoc """
+  * `chargeback_prevention`
   * `new_order`
   * `new_subscription`
+  * `subscription_renewal`
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:new_order, :new_subscription]
+  defstruct [:chargeback_prevention, :new_order, :new_subscription, :subscription_renewal]
 
   @schema_name "OrganizationNotificationSettings"
   def schema_name, do: @schema_name

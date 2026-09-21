@@ -84,6 +84,22 @@ defmodule PolarExpress.Generator.Naming do
   end
 
   @doc """
+  Atom literal safe for `defstruct`. Bare when valid, quoted otherwise:
+
+      iex> atom_literal("email")
+      ":email"
+      iex> atom_literal("cf-turnstile-response")
+      ":\\"cf-turnstile-response\\""
+  """
+  def atom_literal(name) do
+    if Regex.match?(~r/\A[a-z_][a-zA-Z0-9_]*[?!]?\z/, name) do
+      ":#{name}"
+    else
+      ":#{inspect(name)}"
+    end
+  end
+
+  @doc """
   Build a namespace parent module name for service aggregation.
 
       iex> namespace_service_module("Billing")

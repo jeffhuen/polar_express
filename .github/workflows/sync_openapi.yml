@@ -69,7 +69,8 @@ jobs:
           commit-message: "chore: sync OpenAPI spec (${{ steps.spec.outputs.date }}, ${{ steps.spec.outputs.hash }})"
           title: "chore: sync OpenAPI spec (${{ steps.spec.outputs.date }})"
           body: |
-            Automated spec sync from `https://api.polar.sh/openapi.json`.
+            Automated spec sync from Polar's versioned OpenAPI specs
+            (`polarsource/polar` `docs/openapi/<version>.openapi.json`, see `scripts/sync_openapi.sh`).
 
             **Spec hash:** `${{ steps.spec.outputs.hash }}`
             **Synced:** ${{ steps.spec.outputs.date }}

@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.OrderBillingReason do
-  @moduledoc "OrderBillingReason enum. Possible values: `purchase`, `subscription_create`, `subscription_cycle`, `subscription_update`."
+  @moduledoc "OrderBillingReason enum. Possible values: `purchase`, `subscription_create`, `subscription_cycle`, `subscription_update`, `subscription_meter_cycle`."
 
   @type t :: String.t()
 
@@ -8,7 +8,8 @@ defmodule PolarExpress.Schemas.OrderBillingReason do
     "purchase",
     "subscription_create",
     "subscription_cycle",
-    "subscription_update"
+    "subscription_update",
+    "subscription_meter_cycle"
   ]
 
   @doc "List of valid enum values."

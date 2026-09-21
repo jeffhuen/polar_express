@@ -6,6 +6,7 @@ defmodule PolarExpress.Schemas.FileCreate do
           PolarExpress.Schemas.DownloadableFileCreate.t()
           | PolarExpress.Schemas.ProductMediaFileCreate.t()
           | PolarExpress.Schemas.OrganizationAvatarFileCreate.t()
+          | PolarExpress.Schemas.SupportCaseAttachmentFileCreate.t()
 
   @schema_name "FileCreate"
   def schema_name, do: @schema_name
@@ -14,7 +15,8 @@ defmodule PolarExpress.Schemas.FileCreate do
     [
       PolarExpress.Schemas.DownloadableFileCreate,
       PolarExpress.Schemas.ProductMediaFileCreate,
-      PolarExpress.Schemas.OrganizationAvatarFileCreate
+      PolarExpress.Schemas.OrganizationAvatarFileCreate,
+      PolarExpress.Schemas.SupportCaseAttachmentFileCreate
     ]
   end
 
@@ -23,7 +25,8 @@ defmodule PolarExpress.Schemas.FileCreate do
      %{
        "downloadable" => PolarExpress.Schemas.DownloadableFileCreate,
        "organization_avatar" => PolarExpress.Schemas.OrganizationAvatarFileCreate,
-       "product_media" => PolarExpress.Schemas.ProductMediaFileCreate
+       "product_media" => PolarExpress.Schemas.ProductMediaFileCreate,
+       "support_case_attachment" => PolarExpress.Schemas.SupportCaseAttachmentFileCreate
      }}
   end
 end

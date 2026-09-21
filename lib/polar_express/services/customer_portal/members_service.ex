@@ -78,7 +78,7 @@ defmodule PolarExpress.Services.CustomerPortal.MembersService do
   @doc """
   Update Member
 
-  Update a member's role.
+  Update a member's name or role.
 
   Only available to owners and billing managers of team customers.
 

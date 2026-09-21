@@ -7,6 +7,7 @@ defmodule PolarExpress.Schemas.CheckoutForbiddenError do
           | PolarExpress.Schemas.NotOpenCheckout.t()
           | PolarExpress.Schemas.PaymentNotReady.t()
           | PolarExpress.Schemas.TrialAlreadyRedeemed.t()
+          | PolarExpress.Schemas.DiscountRedemptionLimitReached.t()
 
   @schema_name "CheckoutForbiddenError"
   def schema_name, do: @schema_name
@@ -16,7 +17,8 @@ defmodule PolarExpress.Schemas.CheckoutForbiddenError do
       PolarExpress.Schemas.AlreadyActiveSubscriptionError,
       PolarExpress.Schemas.NotOpenCheckout,
       PolarExpress.Schemas.PaymentNotReady,
-      PolarExpress.Schemas.TrialAlreadyRedeemed
+      PolarExpress.Schemas.TrialAlreadyRedeemed,
+      PolarExpress.Schemas.DiscountRedemptionLimitReached
     ]
   end
 end

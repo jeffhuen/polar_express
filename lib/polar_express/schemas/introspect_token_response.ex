@@ -11,6 +11,7 @@ defmodule PolarExpress.Schemas.IntrospectTokenResponse do
   * `exp`
   * `iat`
   * `iss`
+  * `organizations`
   * `scope`
   * `sub`
   * `sub_type`
@@ -18,7 +19,19 @@ defmodule PolarExpress.Schemas.IntrospectTokenResponse do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:active, :aud, :client_id, :exp, :iat, :iss, :scope, :sub, :sub_type, :token_type]
+  defstruct [
+    :active,
+    :aud,
+    :client_id,
+    :exp,
+    :iat,
+    :iss,
+    :organizations,
+    :scope,
+    :sub,
+    :sub_type,
+    :token_type
+  ]
 
   @schema_name "IntrospectTokenResponse"
   def schema_name, do: @schema_name

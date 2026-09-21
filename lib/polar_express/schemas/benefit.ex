@@ -10,6 +10,7 @@ defmodule PolarExpress.Schemas.Benefit do
           | PolarExpress.Schemas.BenefitLicenseKeys.t()
           | PolarExpress.Schemas.BenefitMeterCredit.t()
           | PolarExpress.Schemas.BenefitFeatureFlag.t()
+          | PolarExpress.Schemas.BenefitSlackSharedChannel.t()
 
   @schema_name "Benefit"
   def schema_name, do: @schema_name
@@ -22,7 +23,8 @@ defmodule PolarExpress.Schemas.Benefit do
       PolarExpress.Schemas.BenefitDownloadables,
       PolarExpress.Schemas.BenefitLicenseKeys,
       PolarExpress.Schemas.BenefitMeterCredit,
-      PolarExpress.Schemas.BenefitFeatureFlag
+      PolarExpress.Schemas.BenefitFeatureFlag,
+      PolarExpress.Schemas.BenefitSlackSharedChannel
     ]
   end
 
@@ -35,7 +37,8 @@ defmodule PolarExpress.Schemas.Benefit do
        "feature_flag" => PolarExpress.Schemas.BenefitFeatureFlag,
        "github_repository" => PolarExpress.Schemas.BenefitGitHubRepository,
        "license_keys" => PolarExpress.Schemas.BenefitLicenseKeys,
-       "meter_credit" => PolarExpress.Schemas.BenefitMeterCredit
+       "meter_credit" => PolarExpress.Schemas.BenefitMeterCredit,
+       "slack_shared_channel" => PolarExpress.Schemas.BenefitSlackSharedChannel
      }}
   end
 end

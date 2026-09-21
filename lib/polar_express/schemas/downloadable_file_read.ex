@@ -11,6 +11,7 @@ defmodule PolarExpress.Schemas.DownloadableFileRead do
   * `checksum_sha256_base64` - Nullable.
   * `checksum_sha256_hex` - Nullable.
   * `created_at` - Format: date-time.
+  * `flagged_malicious_at` - Nullable.
   * `id` - The ID of the object. Format: uuid4.
   * `is_uploaded`
   * `last_modified_at` - Nullable.
@@ -31,6 +32,7 @@ defmodule PolarExpress.Schemas.DownloadableFileRead do
     :checksum_sha256_base64,
     :checksum_sha256_hex,
     :created_at,
+    :flagged_malicious_at,
     :id,
     :is_uploaded,
     :last_modified_at,
@@ -48,5 +50,5 @@ defmodule PolarExpress.Schemas.DownloadableFileRead do
   @schema_name "DownloadableFileRead"
   def schema_name, do: @schema_name
 
-  def __date_fields__, do: [:created_at, :last_modified_at]
+  def __date_fields__, do: [:created_at, :flagged_malicious_at, :last_modified_at]
 end

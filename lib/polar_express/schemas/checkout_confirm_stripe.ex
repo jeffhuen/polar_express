@@ -19,9 +19,11 @@ defmodule PolarExpress.Schemas.CheckoutConfirmStripe do
   * `discount_code` - Discount code to apply to the checkout. Nullable.
   * `is_business_customer` - Nullable.
   * `locale` - Nullable.
+  * `payment_method_type` - Payment method type selected by the customer in the checkout form, e.g. `card`, `apple_pay` or `upi`. Nullable.
   * `product_id` - ID of the product to checkout. Must be present in the checkout's product list. Nullable.
   * `product_price_id` - ID of the product price to checkout. Must correspond to a price present in the checkout's product list. Nullable. **Deprecated.**
   * `seats` - Number of seats for seat-based pricing. Nullable.
+  * `units` - Number of units for unit-based pricing. Nullable.
   """
   @type t :: %__MODULE__{}
 
@@ -38,9 +40,11 @@ defmodule PolarExpress.Schemas.CheckoutConfirmStripe do
     :discount_code,
     :is_business_customer,
     :locale,
+    :payment_method_type,
     :product_id,
     :product_price_id,
-    :seats
+    :seats,
+    :units
   ]
 
   @schema_name "CheckoutConfirmStripe"

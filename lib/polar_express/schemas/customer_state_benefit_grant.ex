@@ -44,7 +44,8 @@ defmodule PolarExpress.Schemas.CustomerStateBenefitGrant do
            PolarExpress.Schemas.BenefitGrantDownloadablesProperties,
            PolarExpress.Schemas.BenefitGrantLicenseKeysProperties,
            PolarExpress.Schemas.BenefitGrantCustomProperties,
-           PolarExpress.Schemas.BenefitGrantFeatureFlagProperties
+           PolarExpress.Schemas.BenefitGrantFeatureFlagProperties,
+           PolarExpress.Schemas.BenefitGrantSlackSharedChannelProperties
          ]}
     }
   end

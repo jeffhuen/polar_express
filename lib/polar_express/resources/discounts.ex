@@ -18,6 +18,7 @@ defmodule PolarExpress.Resources.Discounts do
   * `ends_at` - Timestamp after which the discount is no longer redeemable.
   * `id` - The ID of the object. Format: uuid4.
   * `max_redemptions` - Maximum number of times the discount can be redeemed.
+  * `max_redemptions_per_customer` - Maximum number of times the discount can be redeemed by a single customer.
   * `metadata`
   * `modified_at` - Last modification timestamp of the object.
   * `name` - Name of the discount. Will be displayed to the customer when the discount is applied.
@@ -41,6 +42,7 @@ defmodule PolarExpress.Resources.Discounts do
     :ends_at,
     :id,
     :max_redemptions,
+    :max_redemptions_per_customer,
     :metadata,
     :modified_at,
     :name,

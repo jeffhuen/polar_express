@@ -44,6 +44,8 @@ defmodule PolarExpress.MixProject do
     [
       # HTTP
       {:finch, "~> 0.21"},
+      # Observability (used directly by PolarExpress.Client spans)
+      {:telemetry, "~> 1.0"},
 
       # Test stub ownership (allows SDK consumers to use PolarExpress.Test)
       {:nimble_ownership, "~> 1.0"},

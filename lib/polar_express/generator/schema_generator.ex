@@ -74,7 +74,7 @@ defmodule PolarExpress.Generator.SchemaGenerator do
     props = resolve_properties(schema, schema_index)
     prop_names = props |> Enum.map(fn {name, _} -> name end) |> Enum.sort()
 
-    struct_fields = Enum.map_join(prop_names, ", ", fn name -> ":#{name}" end)
+    struct_fields = Enum.map_join(prop_names, ", ", &Naming.atom_literal/1)
 
     inner_types_fn = generate_inner_types_fn(props, schema_index)
     date_fields_fn = generate_date_fields_fn(props)
@@ -325,7 +325,7 @@ defmodule PolarExpress.Generator.SchemaGenerator do
     if date_fields == [] do
       ""
     else
-      fields_str = Enum.map_join(date_fields, ", ", &":#{&1}")
+      fields_str = Enum.map_join(date_fields, ", ", &Naming.atom_literal/1)
 
       """
 

@@ -7,19 +7,20 @@ defmodule PolarExpress.Schemas.WebhookSubscriptionUpdatedPayload do
 
   If you want more specific events, you can listen to `subscription.active`, `subscription.canceled`, `subscription.past_due`, and `subscription.revoked`.
 
-  To listen specifically for renewals, you can listen to `order.created` events and check the `billing_reason` field.
+  To listen specifically for renewals, listen to `subscription.cycled`.
 
   **Discord & Slack support:** On cancellation, past due, and revocation. Renewals are skipped.
   """
 
   @typedoc """
+  * `api_version`
   * `data`
   * `timestamp` - Format: date-time.
   * `type`
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:data, :timestamp, :type]
+  defstruct [:api_version, :data, :timestamp, :type]
 
   @schema_name "WebhookSubscriptionUpdatedPayload"
   def schema_name, do: @schema_name

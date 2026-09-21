@@ -3,26 +3,30 @@ defmodule PolarExpress.Schemas.SubscriptionUpdate do
   @moduledoc "SubscriptionUpdate union type."
 
   @type t ::
-          PolarExpress.Schemas.SubscriptionUpdateProduct.t()
-          | PolarExpress.Schemas.SubscriptionUpdateDiscount.t()
-          | PolarExpress.Schemas.SubscriptionUpdateTrial.t()
+          PolarExpress.Schemas.SubscriptionUpdateBase.t()
           | PolarExpress.Schemas.SubscriptionUpdateSeats.t()
+          | PolarExpress.Schemas.SubscriptionUpdateUnits.t()
           | PolarExpress.Schemas.SubscriptionUpdateBillingPeriod.t()
           | PolarExpress.Schemas.SubscriptionCancel.t()
           | PolarExpress.Schemas.SubscriptionRevoke.t()
+          | PolarExpress.Schemas.SubscriptionPause.t()
+          | PolarExpress.Schemas.SubscriptionResume.t()
+          | PolarExpress.Schemas.SubscriptionUpdateClear.t()
 
   @schema_name "SubscriptionUpdate"
   def schema_name, do: @schema_name
 
   def __variants__ do
     [
-      PolarExpress.Schemas.SubscriptionUpdateProduct,
-      PolarExpress.Schemas.SubscriptionUpdateDiscount,
-      PolarExpress.Schemas.SubscriptionUpdateTrial,
+      PolarExpress.Schemas.SubscriptionUpdateBase,
       PolarExpress.Schemas.SubscriptionUpdateSeats,
+      PolarExpress.Schemas.SubscriptionUpdateUnits,
       PolarExpress.Schemas.SubscriptionUpdateBillingPeriod,
       PolarExpress.Schemas.SubscriptionCancel,
-      PolarExpress.Schemas.SubscriptionRevoke
+      PolarExpress.Schemas.SubscriptionRevoke,
+      PolarExpress.Schemas.SubscriptionPause,
+      PolarExpress.Schemas.SubscriptionResume,
+      PolarExpress.Schemas.SubscriptionUpdateClear
     ]
   end
 end

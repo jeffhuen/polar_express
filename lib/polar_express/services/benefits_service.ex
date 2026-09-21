@@ -67,6 +67,26 @@ defmodule PolarExpress.Services.BenefitsService do
   end
 
   @doc """
+  List Benefit Files
+
+  List the downloadable files for a benefit with their download statistics.
+
+  **Scopes**: `benefits:read` `benefits:write`
+
+  See `PolarExpress.Params.BenefitsListBenefitFilesParams` for parameter details.
+  """
+  @spec list_benefit_files(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.ListObject.t()} | {:error, PolarExpress.Error.t()}
+  def list_benefit_files(client, id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :get,
+      "/v1/benefits/#{id}/files",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.BenefitDownloadableFile)
+    )
+  end
+
+  @doc """
   List Benefit Grants
 
   List the individual grants for a benefit.

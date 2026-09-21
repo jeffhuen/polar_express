@@ -207,12 +207,6 @@ defmodule PolarExpress do
   @doc "Get LicenseKeysService module"
   def license_keys, do: PolarExpress.Services.LicenseKeysService
 
-  @doc "Get MembersService module"
-  def members, do: PolarExpress.Services.MembersService
-
-  @doc "Get MemberSessionsService module"
-  def member_sessions, do: PolarExpress.Services.MemberSessionsService
-
   @doc "Get MetersService module"
   def meters, do: PolarExpress.Services.MetersService
 
@@ -224,9 +218,6 @@ defmodule PolarExpress do
 
   @doc "Get OrdersService module"
   def orders, do: PolarExpress.Services.OrdersService
-
-  @doc "Get OrganizationAccessTokensService module"
-  def organization_access_tokens, do: PolarExpress.Services.OrganizationAccessTokensService
 
   @doc "Get OrganizationsService module"
   def organizations, do: PolarExpress.Services.OrganizationsService

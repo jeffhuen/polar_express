@@ -9,13 +9,14 @@ defmodule PolarExpress.Schemas.WebhookProductCreatedPayload do
   """
 
   @typedoc """
+  * `api_version`
   * `data`
   * `timestamp` - Format: date-time.
   * `type`
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:data, :timestamp, :type]
+  defstruct [:api_version, :data, :timestamp, :type]
 
   @schema_name "WebhookProductCreatedPayload"
   def schema_name, do: @schema_name

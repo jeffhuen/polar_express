@@ -20,6 +20,8 @@ defmodule PolarExpress.Schemas.BenefitMeterCredit do
   * `properties`
   * `selectable` - Whether the benefit is selectable when creating a product.
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal.
+  * `visibility_configurable`
   """
   @type t :: %__MODULE__{}
 
@@ -34,7 +36,9 @@ defmodule PolarExpress.Schemas.BenefitMeterCredit do
     :organization_id,
     :properties,
     :selectable,
-    :type
+    :type,
+    :visibility,
+    :visibility_configurable
   ]
 
   @schema_name "BenefitMeterCredit"
@@ -43,7 +47,8 @@ defmodule PolarExpress.Schemas.BenefitMeterCredit do
   def __inner_types__ do
     %{
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
-      "properties" => PolarExpress.Schemas.BenefitMeterCreditProperties
+      "properties" => PolarExpress.Schemas.BenefitMeterCreditProperties,
+      "visibility" => PolarExpress.Schemas.BenefitVisibility
     }
   end
 

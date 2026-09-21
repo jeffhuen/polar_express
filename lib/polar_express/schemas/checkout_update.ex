@@ -52,6 +52,7 @@ defmodule PolarExpress.Schemas.CheckoutUpdate do
   * `success_url` - URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id. Nullable.
   * `trial_interval` - The interval unit for the trial period. Nullable.
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
+  * `units` - Number of units for unit-based pricing. Nullable.
   """
   @type t :: %__MODULE__{}
 
@@ -80,7 +81,8 @@ defmodule PolarExpress.Schemas.CheckoutUpdate do
     :seats,
     :success_url,
     :trial_interval,
-    :trial_interval_count
+    :trial_interval_count,
+    :units
   ]
 
   @schema_name "CheckoutUpdate"

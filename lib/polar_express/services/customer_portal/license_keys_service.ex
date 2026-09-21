@@ -20,14 +20,17 @@ defmodule PolarExpress.Services.CustomerPortal.LicenseKeysService do
   See `PolarExpress.Params.CustomerPortal.LicenseKeysActivateLicenseKeyParams` for parameter details.
   """
   @spec activate_license_key(Client.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.LicenseKeyActivationRead.t()}
+          {:ok, PolarExpress.Schemas.LicenseKeyActivationCreated.t()}
           | {:error, PolarExpress.Error.t()}
   def activate_license_key(client, params \\ %{}, opts \\ []) do
     Client.request(
       client,
       :post,
       "/v1/customer-portal/license-keys/activate",
-      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.LicenseKeyActivationRead)
+      Keyword.merge(opts,
+        params: params,
+        resource: PolarExpress.Schemas.LicenseKeyActivationCreated
+      )
     )
   end
 
@@ -93,6 +96,30 @@ defmodule PolarExpress.Services.CustomerPortal.LicenseKeysService do
       :get,
       "/v1/customer-portal/license-keys/",
       Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.LicenseKeyRead)
+    )
+  end
+
+  @doc """
+  Rotate License Key
+
+  Rotate a license key.
+
+  Generates a new key string for the same license key record. The previous
+  key string immediately stops validating. Status, usage, limits, expiry,
+  and activations are preserved.
+
+  **Scopes**: `customer_portal:write`
+
+  See `PolarExpress.Params.CustomerPortal.LicenseKeysRotateLicenseKeyParams` for parameter details.
+  """
+  @spec rotate_license_key(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.RotatedLicenseKey.t()} | {:error, PolarExpress.Error.t()}
+  def rotate_license_key(client, id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :post,
+      "/v1/customer-portal/license-keys/#{id}/rotate",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.RotatedLicenseKey)
     )
   end
 

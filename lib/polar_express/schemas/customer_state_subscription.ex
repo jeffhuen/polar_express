@@ -23,10 +23,12 @@ defmodule PolarExpress.Schemas.CustomerStateSubscription do
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `product_id` - The ID of the subscribed product. Format: uuid4.
   * `recurring_interval` - The interval at which the subscription recurs.
+  * `seats` - The number of seats for seat-based subscriptions. None for non-seat subscriptions. Nullable.
   * `started_at` - The timestamp when the subscription started. Nullable.
   * `status` - Possible values: `active`, `trialing`.
   * `trial_end` - The end timestamp of the trial period, if any. Nullable.
   * `trial_start` - The start timestamp of the trial period, if any. Nullable.
+  * `units` - The number of units for unit-based subscriptions. None for non-unit subscriptions. Nullable.
   """
   @type t :: %__MODULE__{}
 
@@ -47,10 +49,12 @@ defmodule PolarExpress.Schemas.CustomerStateSubscription do
     :modified_at,
     :product_id,
     :recurring_interval,
+    :seats,
     :started_at,
     :status,
     :trial_end,
-    :trial_start
+    :trial_start,
+    :units
   ]
 
   @schema_name "CustomerStateSubscription"
@@ -60,7 +64,7 @@ defmodule PolarExpress.Schemas.CustomerStateSubscription do
     %{
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "meters" => PolarExpress.Schemas.CustomerStateSubscriptionMeter,
-      "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval
+      "recurring_interval" => PolarExpress.Schemas.RecurringInterval
     }
   end
 

@@ -1,42 +1,44 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.BenefitPublic do
-  @moduledoc """
-  BenefitPublic
-  """
+  @moduledoc "BenefitPublic union type."
 
-  @typedoc """
-  * `created_at` - Creation timestamp of the object. Format: date-time.
-  * `deletable` - Whether the benefit is deletable.
-  * `description` - The description of the benefit.
-  * `id` - The ID of the benefit. Format: uuid4.
-  * `is_deleted` - Whether the benefit is deleted.
-  * `modified_at` - Last modification timestamp of the object. Nullable.
-  * `organization_id` - The ID of the organization owning the benefit. Format: uuid4.
-  * `selectable` - Whether the benefit is selectable when creating a product.
-  * `type` - The type of the benefit.
-  """
-  @type t :: %__MODULE__{}
-
-  defstruct [
-    :created_at,
-    :deletable,
-    :description,
-    :id,
-    :is_deleted,
-    :modified_at,
-    :organization_id,
-    :selectable,
-    :type
-  ]
+  @type t ::
+          PolarExpress.Schemas.BenefitCustomPublic.t()
+          | PolarExpress.Schemas.BenefitDiscordPublic.t()
+          | PolarExpress.Schemas.BenefitGitHubRepositoryPublic.t()
+          | PolarExpress.Schemas.BenefitDownloadablesPublic.t()
+          | PolarExpress.Schemas.BenefitLicenseKeysPublic.t()
+          | PolarExpress.Schemas.BenefitFeatureFlagPublic.t()
+          | PolarExpress.Schemas.BenefitSlackSharedChannelPublic.t()
+          | PolarExpress.Schemas.BenefitMeterCreditPublic.t()
 
   @schema_name "BenefitPublic"
   def schema_name, do: @schema_name
 
-  def __inner_types__ do
-    %{
-      "type" => PolarExpress.Schemas.BenefitType
-    }
+  def __variants__ do
+    [
+      PolarExpress.Schemas.BenefitCustomPublic,
+      PolarExpress.Schemas.BenefitDiscordPublic,
+      PolarExpress.Schemas.BenefitGitHubRepositoryPublic,
+      PolarExpress.Schemas.BenefitDownloadablesPublic,
+      PolarExpress.Schemas.BenefitLicenseKeysPublic,
+      PolarExpress.Schemas.BenefitFeatureFlagPublic,
+      PolarExpress.Schemas.BenefitSlackSharedChannelPublic,
+      PolarExpress.Schemas.BenefitMeterCreditPublic
+    ]
   end
 
-  def __date_fields__, do: [:created_at, :modified_at]
+  def __discriminator__ do
+    {"type",
+     %{
+       "custom" => PolarExpress.Schemas.BenefitCustomPublic,
+       "discord" => PolarExpress.Schemas.BenefitDiscordPublic,
+       "downloadables" => PolarExpress.Schemas.BenefitDownloadablesPublic,
+       "feature_flag" => PolarExpress.Schemas.BenefitFeatureFlagPublic,
+       "github_repository" => PolarExpress.Schemas.BenefitGitHubRepositoryPublic,
+       "license_keys" => PolarExpress.Schemas.BenefitLicenseKeysPublic,
+       "meter_credit" => PolarExpress.Schemas.BenefitMeterCreditPublic,
+       "slack_shared_channel" => PolarExpress.Schemas.BenefitSlackSharedChannelPublic
+     }}
+  end
 end

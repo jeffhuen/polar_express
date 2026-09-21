@@ -86,7 +86,7 @@ defmodule PolarExpress.Generator.ParamsGenerator do
     {fields, nested_modules} = extract_params_fields(schema)
     fields = Enum.sort_by(fields, & &1.name)
 
-    struct_fields = Enum.map_join(fields, ", ", fn f -> ":#{f.name}" end)
+    struct_fields = Enum.map_join(fields, ", ", fn f -> Naming.atom_literal(f.name) end)
 
     type_fields =
       fields
@@ -241,7 +241,7 @@ defmodule PolarExpress.Generator.ParamsGenerator do
 
   defp generate_nested_params(nested, indent) do
     fields = Enum.sort_by(nested.fields, & &1.name)
-    struct_fields = Enum.map_join(fields, ", ", fn f -> ":#{f.name}" end)
+    struct_fields = Enum.map_join(fields, ", ", fn f -> Naming.atom_literal(f.name) end)
 
     type_fields =
       fields

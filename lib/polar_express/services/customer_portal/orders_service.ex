@@ -106,6 +106,24 @@ defmodule PolarExpress.Services.CustomerPortal.OrdersService do
   end
 
   @doc """
+  Get Order Receipt
+
+  Get a presigned URL to download an order's receipt PDF.
+
+  See `PolarExpress.Params.CustomerPortal.OrdersGetOrderReceiptParams` for parameter details.
+  """
+  @spec get_order_receipt(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.CustomerOrderReceipt.t()} | {:error, PolarExpress.Error.t()}
+  def get_order_receipt(client, id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :get,
+      "/v1/customer-portal/orders/#{id}/receipt",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.CustomerOrderReceipt)
+    )
+  end
+
+  @doc """
   List Orders
 
   List orders of the authenticated customer.

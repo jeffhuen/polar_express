@@ -1,18 +1,23 @@
 #!/bin/bash
 set -euo pipefail
 
-# Download the Polar OpenAPI spec
-# Polar uses a single canonical OpenAPI endpoint at https://api.polar.sh/openapi.json
-# No channels or release tags — always the current spec.
+# Download the Polar OpenAPI spec.
+# Polar publishes versioned specs in the monorepo at docs/openapi/<version>.openapi.json
+# (e.g. 2026-04, 2026-10). The old live endpoint https://api.polar.sh/openapi.json
+# is gone (404) and polar-js is archived, so pin a version here.
+#
+# Usage: ./sync_openapi.sh [version]   (default: 2026-10)
 
 SPEC_DIR="priv/openapi"
 SPEC_FILE="$SPEC_DIR/openapi.json"
 
-SPEC_URL="https://api.polar.sh/openapi.json"
+API_VERSION="${1:-2026-10}"
+SPEC_URL="https://raw.githubusercontent.com/polarsource/polar/main/docs/openapi/${API_VERSION}.openapi.json"
 
 mkdir -p "$SPEC_DIR"
 
-echo "Fetching latest Polar OpenAPI spec..."
+echo "Fetching Polar OpenAPI spec..."
+echo "Version: $API_VERSION"
 echo "URL: $SPEC_URL"
 curl -sL --fail "$SPEC_URL" -o "$SPEC_FILE"
 

@@ -17,13 +17,13 @@ defmodule PolarExpress.Services.FilesService do
   See `PolarExpress.Params.FilesCompleteFileUploadParams` for parameter details.
   """
   @spec complete_file_upload(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.DownloadableFileRead.t()} | {:error, PolarExpress.Error.t()}
+          {:ok, PolarExpress.Schemas.FileRead.t()} | {:error, PolarExpress.Error.t()}
   def complete_file_upload(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
       :post,
       "/v1/files/#{id}/uploaded",
-      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.DownloadableFileRead)
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.FileRead)
     )
   end
 
@@ -72,14 +72,13 @@ defmodule PolarExpress.Services.FilesService do
   See `PolarExpress.Params.FilesListFilesParams` for parameter details.
   """
   @spec list_files(Client.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.ListResource_FileRead_.t()}
-          | {:error, PolarExpress.Error.t()}
+          {:ok, PolarExpress.ListObject.t()} | {:error, PolarExpress.Error.t()}
   def list_files(client, params \\ %{}, opts \\ []) do
     Client.request(
       client,
       :get,
       "/v1/files/",
-      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.ListResource_FileRead_)
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.FileRead)
     )
   end
 
@@ -93,13 +92,13 @@ defmodule PolarExpress.Services.FilesService do
   See `PolarExpress.Params.FilesUpdateFileParams` for parameter details.
   """
   @spec update_file(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.DownloadableFileRead.t()} | {:error, PolarExpress.Error.t()}
+          {:ok, PolarExpress.Schemas.FileRead.t()} | {:error, PolarExpress.Error.t()}
   def update_file(client, id, params \\ %{}, opts \\ []) do
     Client.request(
       client,
       :patch,
       "/v1/files/#{id}",
-      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.DownloadableFileRead)
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.FileRead)
     )
   end
 end

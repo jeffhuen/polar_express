@@ -7,6 +7,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointCreate do
   """
 
   @typedoc """
+  * `api_version` - The API version that'll be used in event payloads. Possible values: `2026-04`, `2026-10`.
   * `events` - The events that will trigger the webhook.
   * `format` - The format of the webhook payload.
   * `name` - An optional name for the webhook endpoint to help organize and identify it. Nullable.
@@ -15,7 +16,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointCreate do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:events, :format, :name, :organization_id, :url]
+  defstruct [:api_version, :events, :format, :name, :organization_id, :url]
 
   @schema_name "WebhookEndpointCreate"
   def schema_name, do: @schema_name

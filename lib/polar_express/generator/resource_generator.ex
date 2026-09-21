@@ -25,7 +25,7 @@ defmodule PolarExpress.Generator.ResourceGenerator do
     props = resource.properties
     expandable_set = MapSet.new(resource.expandable_fields)
 
-    struct_fields = Enum.map_join(props, ", ", fn p -> ":#{p.name}" end)
+    struct_fields = Enum.map_join(props, ", ", fn p -> Naming.atom_literal(p.name) end)
 
     expandable_line =
       if resource.expandable_fields != [] do
@@ -109,7 +109,7 @@ defmodule PolarExpress.Generator.ResourceGenerator do
 
   defp generate_inner_type_module(inner, indent) do
     props = Enum.sort_by(inner.properties, & &1.name)
-    struct_fields = Enum.map_join(props, ", ", fn p -> ":#{p.name}" end)
+    struct_fields = Enum.map_join(props, ", ", fn p -> Naming.atom_literal(p.name) end)
 
     nested_blocks = generate_inner_types(inner[:inner_types] || inner.inner_types, indent <> "  ")
 

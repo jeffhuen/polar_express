@@ -5,7 +5,6 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPrice do
   @type t ::
           PolarExpress.Schemas.LegacyRecurringProductPriceFixed.t()
           | PolarExpress.Schemas.LegacyRecurringProductPriceCustom.t()
-          | PolarExpress.Schemas.LegacyRecurringProductPriceFree.t()
 
   @schema_name "LegacyRecurringProductPrice"
   def schema_name, do: @schema_name
@@ -13,8 +12,7 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPrice do
   def __variants__ do
     [
       PolarExpress.Schemas.LegacyRecurringProductPriceFixed,
-      PolarExpress.Schemas.LegacyRecurringProductPriceCustom,
-      PolarExpress.Schemas.LegacyRecurringProductPriceFree
+      PolarExpress.Schemas.LegacyRecurringProductPriceCustom
     ]
   end
 
@@ -22,8 +20,7 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPrice do
     {"amount_type",
      %{
        "custom" => PolarExpress.Schemas.LegacyRecurringProductPriceCustom,
-       "fixed" => PolarExpress.Schemas.LegacyRecurringProductPriceFixed,
-       "free" => PolarExpress.Schemas.LegacyRecurringProductPriceFree
+       "fixed" => PolarExpress.Schemas.LegacyRecurringProductPriceFixed
      }}
   end
 end

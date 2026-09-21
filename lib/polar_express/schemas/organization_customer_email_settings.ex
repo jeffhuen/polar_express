@@ -6,12 +6,15 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
 
   @typedoc """
   * `order_confirmation`
+  * `payment_method_expiration_reminder`
   * `subscription_cancellation`
   * `subscription_confirmation`
   * `subscription_cycled`
   * `subscription_cycled_after_trial`
   * `subscription_past_due`
+  * `subscription_paused`
   * `subscription_renewal_reminder`
+  * `subscription_resumed`
   * `subscription_revoked`
   * `subscription_trial_conversion_reminder`
   * `subscription_uncanceled`
@@ -21,12 +24,15 @@ defmodule PolarExpress.Schemas.OrganizationCustomerEmailSettings do
 
   defstruct [
     :order_confirmation,
+    :payment_method_expiration_reminder,
     :subscription_cancellation,
     :subscription_confirmation,
     :subscription_cycled,
     :subscription_cycled_after_trial,
     :subscription_past_due,
+    :subscription_paused,
     :subscription_renewal_reminder,
+    :subscription_resumed,
     :subscription_revoked,
     :subscription_trial_conversion_reminder,
     :subscription_uncanceled,

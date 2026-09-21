@@ -16,6 +16,8 @@ defmodule PolarExpress.Schemas.BenefitDownloadables do
   * `properties`
   * `selectable` - Whether the benefit is selectable when creating a product.
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal.
+  * `visibility_configurable`
   """
   @type t :: %__MODULE__{}
 
@@ -30,7 +32,9 @@ defmodule PolarExpress.Schemas.BenefitDownloadables do
     :organization_id,
     :properties,
     :selectable,
-    :type
+    :type,
+    :visibility,
+    :visibility_configurable
   ]
 
   @schema_name "BenefitDownloadables"
@@ -39,7 +43,8 @@ defmodule PolarExpress.Schemas.BenefitDownloadables do
   def __inner_types__ do
     %{
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
-      "properties" => PolarExpress.Schemas.BenefitDownloadablesProperties
+      "properties" => PolarExpress.Schemas.BenefitDownloadablesProperties,
+      "visibility" => PolarExpress.Schemas.BenefitVisibility
     }
   end
 

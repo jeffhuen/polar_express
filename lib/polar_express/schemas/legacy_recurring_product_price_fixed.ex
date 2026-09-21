@@ -46,7 +46,7 @@ defmodule PolarExpress.Schemas.LegacyRecurringProductPriceFixed do
 
   def __inner_types__ do
     %{
-      "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
+      "recurring_interval" => PolarExpress.Schemas.RecurringInterval,
       "source" => PolarExpress.Schemas.ProductPriceSource,
       "tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption
     }

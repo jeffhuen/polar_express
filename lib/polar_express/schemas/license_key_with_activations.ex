@@ -17,6 +17,8 @@ defmodule PolarExpress.Schemas.LicenseKeyWithActivations do
   * `last_validated_at` - Nullable.
   * `limit_activations` - Nullable.
   * `limit_usage` - Nullable.
+  * `member` - The seat member holding this key. Set for keys granted through a seat-based product; `null` for keys granted to the customer directly. Nullable.
+  * `member_id` - The ID of the seat member holding this key, if any. Nullable.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `organization_id` - Format: uuid4.
   * `status`
@@ -38,6 +40,8 @@ defmodule PolarExpress.Schemas.LicenseKeyWithActivations do
     :last_validated_at,
     :limit_activations,
     :limit_usage,
+    :member,
+    :member_id,
     :modified_at,
     :organization_id,
     :status,
@@ -52,6 +56,7 @@ defmodule PolarExpress.Schemas.LicenseKeyWithActivations do
     %{
       "activations" => PolarExpress.Schemas.LicenseKeyActivationBase,
       "customer" => PolarExpress.Schemas.LicenseKeyCustomer,
+      "member" => PolarExpress.Schemas.LicenseKeyMember,
       "status" => PolarExpress.Schemas.LicenseKeyStatus
     }
   end

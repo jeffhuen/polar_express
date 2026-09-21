@@ -1,0 +1,55 @@
+# File generated from our OpenAPI spec
+defmodule PolarExpress.Schemas.ProductPriceMeteredTiers do
+  @moduledoc """
+  ProductPriceMeteredTiers
+
+  A metered, usage-based, price for a product, billed from tiers.
+  """
+
+  @typedoc """
+  * `amount_type`
+  * `cap_amount` - The maximum amount in cents that can be charged, regardless of the number of units consumed. Nullable.
+  * `created_at` - Creation timestamp of the object. Format: date-time.
+  * `id` - The ID of the price. Format: uuid4.
+  * `is_archived` - Whether the price is archived and no longer available.
+  * `meter` - The meter associated to the price.
+  * `meter_id` - The ID of the meter associated to the price. Format: uuid4.
+  * `modified_at` - Last modification timestamp of the object. Nullable.
+  * `price_currency` - The currency in which the customer will be charged.
+  * `product_id` - The ID of the product owning the price. Format: uuid4.
+  * `source` - The source of the price . `catalog` is a predefined price, while `ad_hoc` is a price created dynamically on a Checkout session.
+  * `tax_behavior` - The tax behavior of the price. If null, it defaults to the organization's default tax behavior. Nullable.
+  * `tiers` - The pricing tiers based on consumed units.
+  """
+  @type t :: %__MODULE__{}
+
+  defstruct [
+    :amount_type,
+    :cap_amount,
+    :created_at,
+    :id,
+    :is_archived,
+    :meter,
+    :meter_id,
+    :modified_at,
+    :price_currency,
+    :product_id,
+    :source,
+    :tax_behavior,
+    :tiers
+  ]
+
+  @schema_name "ProductPriceMeteredTiers"
+  def schema_name, do: @schema_name
+
+  def __inner_types__ do
+    %{
+      "meter" => PolarExpress.Schemas.ProductPriceMeter,
+      "source" => PolarExpress.Schemas.ProductPriceSource,
+      "tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption,
+      "tiers" => PolarExpress.Schemas.Tiers
+    }
+  end
+
+  def __date_fields__, do: [:created_at, :modified_at]
+end

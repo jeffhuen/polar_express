@@ -5,7 +5,6 @@ defmodule PolarExpress.Schemas.SeatAssign do
   """
 
   @typedoc """
-  * `checkout_id` - Checkout ID. Used to look up subscription or order from the checkout page. Nullable.
   * `customer_id` - Customer ID for the seat assignment Nullable.
   * `email` - Email of the customer to assign the seat to Nullable.
   * `external_customer_id` - External customer ID for the seat assignment Nullable.
@@ -13,13 +12,12 @@ defmodule PolarExpress.Schemas.SeatAssign do
   * `immediate_claim` - If true, the seat will be immediately claimed without sending an invitation email. API-only feature.
   * `member_id` - Member ID for the seat assignment. Nullable.
   * `metadata` - Additional metadata for the seat (max 10 keys, 1KB total) Nullable.
-  * `order_id` - Order ID for one-time purchases. Required if subscription_id and checkout_id are not provided. Nullable.
-  * `subscription_id` - Subscription ID. Required if checkout_id and order_id are not provided. Nullable.
+  * `order_id` - Order ID for one-time purchases. Required if subscription_id is not provided. Nullable.
+  * `subscription_id` - Subscription ID. Required if neither order_id nor checkout_id is provided. Nullable.
   """
   @type t :: %__MODULE__{}
 
   defstruct [
-    :checkout_id,
     :customer_id,
     :email,
     :external_customer_id,

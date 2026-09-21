@@ -39,7 +39,7 @@ polar_express-*.tar
 .idea/
 
 # Reference SDK repos (used for development, not part of this project)
-/priv/polar-js-main/
+/priv/polar-sdk/
 /priv/polar-php-main/
 /priv/stripe-ruby-master/
 

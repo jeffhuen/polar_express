@@ -43,11 +43,14 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
   * `is_payment_setup_required` - Whether the checkout requires setting up a payment method, regardless of the amount, e.g. subscriptions that have first free cycles.
   * `locale` - Nullable.
   * `max_seats` - Maximum number of seats (works with seat-based pricing only) Nullable.
+  * `max_units` - Maximum number of units (works with unit-based pricing only) Nullable.
   * `min_seats` - Minimum number of seats (works with seat-based pricing only) Nullable.
+  * `min_units` - Minimum number of units (works with unit-based pricing only) Nullable.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `net_amount` - Amount in cents, after discounts but before taxes.
   * `organization`
   * `organization_id` - ID of the organization owning the checkout session. Format: uuid4.
+  * `payment_method_type` - Payment method type selected by the customer in the checkout form, e.g. `card`, `apple_pay` or `upi`. Nullable.
   * `payment_processor` - Payment processor used.
   * `payment_processor_metadata`
   * `prices` - Mapping of product IDs to their list of prices. Nullable.
@@ -62,8 +65,10 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
   * `status`
   * `success_url` - URL where the customer will be redirected after a successful payment.
   * `tax_amount` - Sales tax amount in cents. If `null`, it means there is no enough information yet to calculate it. Nullable.
+  * `tax_behavior` - Tax behavior of the checkout. `inclusive` means the price includes tax, `exclusive` means tax is added on top. If `null`, tax is not yet calculated. Nullable.
   * `total_amount` - Amount in cents, after discounts and taxes.
   * `trial_end` - End date and time of the trial period, if any. Nullable.
+  * `units` - Predefined number of units (works with unit-based pricing only) Nullable.
   * `url` - URL where the customer can access the checkout session.
   """
   @type t :: %__MODULE__{}
@@ -102,11 +107,14 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
     :is_payment_setup_required,
     :locale,
     :max_seats,
+    :max_units,
     :min_seats,
+    :min_units,
     :modified_at,
     :net_amount,
     :organization,
     :organization_id,
+    :payment_method_type,
     :payment_processor,
     :payment_processor_metadata,
     :prices,
@@ -121,8 +129,10 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
     :status,
     :success_url,
     :tax_amount,
+    :tax_behavior,
     :total_amount,
     :trial_end,
+    :units,
     :url
   ]
 
@@ -153,7 +163,8 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
       "product_price" =>
         {:union, :variants,
          [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
-      "products" => PolarExpress.Schemas.CheckoutProduct
+      "products" => PolarExpress.Schemas.CheckoutProduct,
+      "tax_behavior" => PolarExpress.Schemas.TaxBehavior
     }
   end
 

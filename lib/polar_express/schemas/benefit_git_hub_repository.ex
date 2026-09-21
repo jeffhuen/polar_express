@@ -20,6 +20,8 @@ defmodule PolarExpress.Schemas.BenefitGitHubRepository do
   * `properties`
   * `selectable` - Whether the benefit is selectable when creating a product.
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal.
+  * `visibility_configurable`
   """
   @type t :: %__MODULE__{}
 
@@ -34,7 +36,9 @@ defmodule PolarExpress.Schemas.BenefitGitHubRepository do
     :organization_id,
     :properties,
     :selectable,
-    :type
+    :type,
+    :visibility,
+    :visibility_configurable
   ]
 
   @schema_name "BenefitGitHubRepository"
@@ -43,7 +47,8 @@ defmodule PolarExpress.Schemas.BenefitGitHubRepository do
   def __inner_types__ do
     %{
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
-      "properties" => PolarExpress.Schemas.BenefitGitHubRepositoryProperties
+      "properties" => PolarExpress.Schemas.BenefitGitHubRepositoryProperties,
+      "visibility" => PolarExpress.Schemas.BenefitVisibility
     }
   end
 

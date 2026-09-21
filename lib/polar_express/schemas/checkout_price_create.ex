@@ -40,6 +40,7 @@ defmodule PolarExpress.Schemas.CheckoutPriceCreate do
   * `is_business_customer` - Whether the customer is a business or an individual. If `true`, the customer will be required to fill their full billing address and billing name.
   * `locale` - Nullable.
   * `max_seats` - Maximum number of seats (works with seat-based pricing only) Nullable.
+  * `max_units` - Maximum number of units (works with unit-based pricing only) Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
 
   The key must be a string with a maximum length of **40 characters**.
@@ -52,6 +53,7 @@ defmodule PolarExpress.Schemas.CheckoutPriceCreate do
 
   You can store up to **50 key-value pairs**.
   * `min_seats` - Minimum number of seats (works with seat-based pricing only) Nullable.
+  * `min_units` - Minimum number of units (works with unit-based pricing only) Nullable.
   * `product_price_id` - ID of the product price to checkout. Format: uuid4.
   * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
   * `return_url` - When set, a back button will be shown in the checkout to return to this URL. Nullable.
@@ -60,6 +62,7 @@ defmodule PolarExpress.Schemas.CheckoutPriceCreate do
   * `success_url` - URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id. Nullable.
   * `trial_interval` - The interval unit for the trial period. Nullable.
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
+  * `units` - Predefined number of units (works with unit-based pricing only) Nullable.
   """
   @type t :: %__MODULE__{}
 
@@ -82,8 +85,10 @@ defmodule PolarExpress.Schemas.CheckoutPriceCreate do
     :is_business_customer,
     :locale,
     :max_seats,
+    :max_units,
     :metadata,
     :min_seats,
+    :min_units,
     :product_price_id,
     :require_billing_address,
     :return_url,
@@ -91,7 +96,8 @@ defmodule PolarExpress.Schemas.CheckoutPriceCreate do
     :subscription_id,
     :success_url,
     :trial_interval,
-    :trial_interval_count
+    :trial_interval_count,
+    :units
   ]
 
   @schema_name "CheckoutPriceCreate"

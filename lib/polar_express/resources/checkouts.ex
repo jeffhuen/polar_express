@@ -41,11 +41,14 @@ defmodule PolarExpress.Resources.Checkouts do
   * `is_payment_setup_required` - Whether the checkout requires setting up a payment method, regardless of the amount, e.g. subscriptions that have first free cycles.
   * `locale`
   * `max_seats` - Maximum number of seats (works with seat-based pricing only)
+  * `max_units` - Maximum number of units (works with unit-based pricing only)
   * `metadata`
   * `min_seats` - Minimum number of seats (works with seat-based pricing only)
+  * `min_units` - Minimum number of units (works with unit-based pricing only)
   * `modified_at` - Last modification timestamp of the object.
   * `net_amount` - Amount in cents, after discounts but before taxes.
   * `organization_id` - ID of the organization owning the checkout session. Format: uuid4.
+  * `payment_method_type` - Payment method type selected by the customer in the checkout form, e.g. `card`, `apple_pay` or `upi`.
   * `payment_processor` - Payment processor used.
   * `payment_processor_metadata`
   * `prices` - Mapping of product IDs to their list of prices.
@@ -67,10 +70,12 @@ defmodule PolarExpress.Resources.Checkouts do
   * `subscription_id`
   * `success_url` - URL where the customer will be redirected after a successful payment.
   * `tax_amount` - Sales tax amount in cents. If `null`, it means there is no enough information yet to calculate it.
+  * `tax_behavior` - Tax behavior of the checkout. `inclusive` means the price includes tax, `exclusive` means tax is added on top. If `null`, tax is not yet calculated.
   * `total_amount` - Amount in cents, after discounts and taxes.
   * `trial_end` - End date and time of the trial period, if any.
   * `trial_interval` - The interval unit for the trial period.
   * `trial_interval_count` - The number of interval units for the trial period.
+  * `units` - Predefined number of units (works with unit-based pricing only)
   * `url` - URL where the customer can access the checkout session.
   """
   @type t :: %__MODULE__{}
@@ -110,11 +115,14 @@ defmodule PolarExpress.Resources.Checkouts do
     :is_payment_setup_required,
     :locale,
     :max_seats,
+    :max_units,
     :metadata,
     :min_seats,
+    :min_units,
     :modified_at,
     :net_amount,
     :organization_id,
+    :payment_method_type,
     :payment_processor,
     :payment_processor_metadata,
     :prices,
@@ -130,10 +138,12 @@ defmodule PolarExpress.Resources.Checkouts do
     :subscription_id,
     :success_url,
     :tax_amount,
+    :tax_behavior,
     :total_amount,
     :trial_end,
     :trial_interval,
     :trial_interval_count,
+    :units,
     :url
   ]
 

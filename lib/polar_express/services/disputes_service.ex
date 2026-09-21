@@ -8,11 +8,34 @@ defmodule PolarExpress.Services.DisputesService do
   alias PolarExpress.Client
 
   @doc """
+  Accept Dispute
+
+  Accept a dispute, conceding the chargeback.
+
+  Closes the dispute with the processor (settling it as `lost`) and records
+  the merchant's decision on the dispute's support case.
+
+  **Scopes**: `disputes:write`
+
+  See `PolarExpress.Params.DisputesAcceptDisputeParams` for parameter details.
+  """
+  @spec accept_dispute(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.Dispute.t()} | {:error, PolarExpress.Error.t()}
+  def accept_dispute(client, id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :post,
+      "/v1/disputes/#{id}/accept",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Dispute)
+    )
+  end
+
+  @doc """
   Get Dispute
 
   Get a dispute by ID.
 
-  **Scopes**: `disputes:read`
+  **Scopes**: `disputes:read` `disputes:write`
 
   See `PolarExpress.Params.DisputesGetDisputeParams` for parameter details.
   """
@@ -32,7 +55,7 @@ defmodule PolarExpress.Services.DisputesService do
 
   List disputes.
 
-  **Scopes**: `disputes:read`
+  **Scopes**: `disputes:read` `disputes:write`
 
   See `PolarExpress.Params.DisputesListDisputesParams` for parameter details.
   """

@@ -10,7 +10,7 @@ defmodule PolarExpress.Schemas.CardPayment do
   * `amount` - The payment amount in cents.
   * `checkout_id` - The ID of the checkout session associated with this payment. Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
-  * `currency` - The payment currency. Currently, only `usd` is supported.
+  * `currency` - The payment currency
   * `decline_message` - Human-readable error message, if the payment was declined. Nullable.
   * `decline_reason` - Error code, if the payment was declined. Nullable.
   * `id` - The ID of the object. Format: uuid4.
@@ -22,6 +22,7 @@ defmodule PolarExpress.Schemas.CardPayment do
   * `processor` - The payment processor.
   * `processor_metadata` - Additional metadata from the payment processor for internal use.
   * `status` - The payment status.
+  * `trigger` - What initiated this payment attempt, e.g. initial purchase, subscription renewal, or an automated dunning retry. Nullable.
   """
   @type t :: %__MODULE__{}
 
@@ -40,7 +41,8 @@ defmodule PolarExpress.Schemas.CardPayment do
     :organization_id,
     :processor,
     :processor_metadata,
-    :status
+    :status,
+    :trigger
   ]
 
   @schema_name "CardPayment"
@@ -50,7 +52,8 @@ defmodule PolarExpress.Schemas.CardPayment do
     %{
       "method_metadata" => PolarExpress.Schemas.CardPaymentMetadata,
       "processor" => PolarExpress.Schemas.PaymentProcessor,
-      "status" => PolarExpress.Schemas.PaymentStatus
+      "status" => PolarExpress.Schemas.PaymentStatus,
+      "trigger" => PolarExpress.Schemas.PaymentTrigger
     }
   end
 

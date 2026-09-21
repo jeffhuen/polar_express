@@ -10,6 +10,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantUpdate do
           | PolarExpress.Schemas.CustomerBenefitGrantCustomUpdate.t()
           | PolarExpress.Schemas.CustomerBenefitGrantMeterCreditUpdate.t()
           | PolarExpress.Schemas.CustomerBenefitGrantFeatureFlagUpdate.t()
+          | PolarExpress.Schemas.CustomerBenefitGrantSlackSharedChannelUpdate.t()
 
   @schema_name "CustomerBenefitGrantUpdate"
   def schema_name, do: @schema_name
@@ -22,7 +23,8 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantUpdate do
       PolarExpress.Schemas.CustomerBenefitGrantLicenseKeysUpdate,
       PolarExpress.Schemas.CustomerBenefitGrantCustomUpdate,
       PolarExpress.Schemas.CustomerBenefitGrantMeterCreditUpdate,
-      PolarExpress.Schemas.CustomerBenefitGrantFeatureFlagUpdate
+      PolarExpress.Schemas.CustomerBenefitGrantFeatureFlagUpdate,
+      PolarExpress.Schemas.CustomerBenefitGrantSlackSharedChannelUpdate
     ]
   end
 
@@ -35,7 +37,8 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantUpdate do
        "feature_flag" => PolarExpress.Schemas.CustomerBenefitGrantFeatureFlagUpdate,
        "github_repository" => PolarExpress.Schemas.CustomerBenefitGrantGitHubRepositoryUpdate,
        "license_keys" => PolarExpress.Schemas.CustomerBenefitGrantLicenseKeysUpdate,
-       "meter_credit" => PolarExpress.Schemas.CustomerBenefitGrantMeterCreditUpdate
+       "meter_credit" => PolarExpress.Schemas.CustomerBenefitGrantMeterCreditUpdate,
+       "slack_shared_channel" => PolarExpress.Schemas.CustomerBenefitGrantSlackSharedChannelUpdate
      }}
   end
 end

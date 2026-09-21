@@ -8,6 +8,30 @@ defmodule PolarExpress.Services.OrdersService do
   alias PolarExpress.Client
 
   @doc """
+  Create Order
+
+  Create a draft order for an off-session charge against a saved payment
+  method. The order is created with `status=draft` and no invoice number;
+  call `POST /v1/orders/{id}/finalize` to attempt the charge.
+
+  The organization must have the `off_session_charges_enabled` feature flag.
+
+  **Scopes**: `orders:write`
+
+  See `PolarExpress.Params.OrdersCreateOrderParams` for parameter details.
+  """
+  @spec create_order(Client.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.Order.t()} | {:error, PolarExpress.Error.t()}
+  def create_order(client, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :post,
+      "/v1/orders/",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Order)
+    )
+  end
+
+  @doc """
   Export Orders
 
   Export orders as a CSV file.
@@ -20,6 +44,32 @@ defmodule PolarExpress.Services.OrdersService do
           {:ok, Client.raw_response()} | {:error, PolarExpress.Error.t()}
   def export_orders(client, params \\ %{}, opts \\ []) do
     Client.raw_request(client, :get, "/v1/orders/export", Keyword.merge(opts, params: params))
+  end
+
+  @doc """
+  Finalize Order
+
+  Finalize a draft order and synchronously attempt an off-session charge.
+
+  On success, the order transitions to `paid` and benefit grants fire
+  before the response returns. On failure (decline, missing payment method,
+  SCA challenge), the order stays in `draft` and a 4xx error is returned.
+
+  The request fails with 412 if the order is not in `draft` status.
+
+  **Scopes**: `orders:write`
+
+  See `PolarExpress.Params.OrdersFinalizeOrderParams` for parameter details.
+  """
+  @spec finalize_order(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.Order.t()} | {:error, PolarExpress.Error.t()}
+  def finalize_order(client, id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :post,
+      "/v1/orders/#{id}/finalize",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Order)
+    )
   end
 
   @doc """
@@ -74,6 +124,26 @@ defmodule PolarExpress.Services.OrdersService do
       :get,
       "/v1/orders/#{id}/invoice",
       Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.OrderInvoice)
+    )
+  end
+
+  @doc """
+  Get Order Receipt
+
+  Get a presigned URL to download an order's receipt PDF.
+
+  **Scopes**: `orders:read`
+
+  See `PolarExpress.Params.OrdersGetOrderReceiptParams` for parameter details.
+  """
+  @spec get_order_receipt(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.OrderReceipt.t()} | {:error, PolarExpress.Error.t()}
+  def get_order_receipt(client, id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :get,
+      "/v1/orders/#{id}/receipt",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.OrderReceipt)
     )
   end
 

@@ -4,6 +4,7 @@ defmodule PolarExpress.Schemas.Payment do
 
   @type t ::
           PolarExpress.Schemas.CardPayment.t()
+          | PolarExpress.Schemas.KrCardPayment.t()
           | PolarExpress.Schemas.GenericPayment.t()
 
   @schema_name "Payment"
@@ -12,6 +13,7 @@ defmodule PolarExpress.Schemas.Payment do
   def __variants__ do
     [
       PolarExpress.Schemas.CardPayment,
+      PolarExpress.Schemas.KrCardPayment,
       PolarExpress.Schemas.GenericPayment
     ]
   end

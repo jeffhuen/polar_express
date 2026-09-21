@@ -13,6 +13,7 @@ defmodule PolarExpress.Schemas.WebhookEvent do
   """
 
   @typedoc """
+  * `api_version` - The API version used in the payload of this event.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `id` - The ID of the object. Format: uuid4.
   * `is_archived` - Whether this event is archived. Archived events can't be redelivered, and the payload is not accessible anymore.
@@ -26,6 +27,7 @@ defmodule PolarExpress.Schemas.WebhookEvent do
   @type t :: %__MODULE__{}
 
   defstruct [
+    :api_version,
     :created_at,
     :id,
     :is_archived,

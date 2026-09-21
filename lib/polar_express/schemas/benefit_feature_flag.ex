@@ -21,6 +21,8 @@ defmodule PolarExpress.Schemas.BenefitFeatureFlag do
   * `properties`
   * `selectable` - Whether the benefit is selectable when creating a product.
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal.
+  * `visibility_configurable`
   """
   @type t :: %__MODULE__{}
 
@@ -35,7 +37,9 @@ defmodule PolarExpress.Schemas.BenefitFeatureFlag do
     :organization_id,
     :properties,
     :selectable,
-    :type
+    :type,
+    :visibility,
+    :visibility_configurable
   ]
 
   @schema_name "BenefitFeatureFlag"
@@ -44,7 +48,8 @@ defmodule PolarExpress.Schemas.BenefitFeatureFlag do
   def __inner_types__ do
     %{
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
-      "properties" => PolarExpress.Schemas.BenefitFeatureFlagProperties
+      "properties" => PolarExpress.Schemas.BenefitFeatureFlagProperties,
+      "visibility" => PolarExpress.Schemas.BenefitVisibility
     }
   end
 

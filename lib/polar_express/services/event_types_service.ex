@@ -32,6 +32,8 @@ defmodule PolarExpress.Services.EventTypesService do
 
   Update an event type's label.
 
+  **Scopes**: `events:write`
+
   See `PolarExpress.Params.EventTypesUpdateEventTypeParams` for parameter details.
   """
   @spec update_event_type(Client.t(), String.t(), map(), keyword()) ::

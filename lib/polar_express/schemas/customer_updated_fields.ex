@@ -6,6 +6,7 @@ defmodule PolarExpress.Schemas.CustomerUpdatedFields do
 
   @typedoc """
   * `billing_address` - Nullable.
+  * `billing_name` - Nullable.
   * `email` - Nullable.
   * `metadata` - Nullable.
   * `name` - Nullable.
@@ -13,7 +14,7 @@ defmodule PolarExpress.Schemas.CustomerUpdatedFields do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:billing_address, :email, :metadata, :name, :tax_id]
+  defstruct [:billing_address, :billing_name, :email, :metadata, :name, :tax_id]
 
   @schema_name "CustomerUpdatedFields"
   def schema_name, do: @schema_name

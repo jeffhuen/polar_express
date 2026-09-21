@@ -3,7 +3,7 @@ defmodule PolarExpress.Schemas.MemberCreate do
   @moduledoc """
   MemberCreate
 
-  Schema for creating a new member.
+  Schema for creating a new member (deprecated; customer in the body).
   """
 
   @typedoc """
@@ -11,7 +11,7 @@ defmodule PolarExpress.Schemas.MemberCreate do
   * `email` - The email address of the member. Format: email.
   * `external_id` - The ID of the member in your system. This must be unique within the customer. Nullable.
   * `name` - Nullable.
-  * `role` - The role of the member within the customer.
+  * `role` - The role of the member within the customer. To assign or transfer ownership, use the member update endpoint. Possible values: `member`, `billing_manager`.
   """
   @type t :: %__MODULE__{}
 
@@ -19,10 +19,4 @@ defmodule PolarExpress.Schemas.MemberCreate do
 
   @schema_name "MemberCreate"
   def schema_name, do: @schema_name
-
-  def __inner_types__ do
-    %{
-      "role" => PolarExpress.Schemas.MemberRole
-    }
-  end
 end

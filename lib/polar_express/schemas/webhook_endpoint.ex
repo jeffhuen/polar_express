@@ -7,6 +7,7 @@ defmodule PolarExpress.Schemas.WebhookEndpoint do
   """
 
   @typedoc """
+  * `api_version` - The API version that'll be used in event payloads.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `enabled` - Whether the webhook endpoint is enabled and will receive events.
   * `events` - The events that will trigger the webhook.
@@ -16,11 +17,13 @@ defmodule PolarExpress.Schemas.WebhookEndpoint do
   * `name` - An optional name for the webhook endpoint to help organize and identify it. Nullable.
   * `organization_id` - The organization ID associated with the webhook endpoint. Format: uuid4.
   * `secret` - The secret used to sign the webhook events.
-  * `url` - The URL where the webhook events will be sent. Format: uri. Max length: 2083.
+  * `url` - The URL where the webhook events will be sent.
+  * `uses_standard_webhook_signature` - Whether Polar signs deliveries to this endpoint with Standard Webhooks. False means Polar's original HMAC over the UTF-8 bytes of the full secret.
   """
   @type t :: %__MODULE__{}
 
   defstruct [
+    :api_version,
     :created_at,
     :enabled,
     :events,
@@ -30,7 +33,8 @@ defmodule PolarExpress.Schemas.WebhookEndpoint do
     :name,
     :organization_id,
     :secret,
-    :url
+    :url,
+    :uses_standard_webhook_signature
   ]
 
   @schema_name "WebhookEndpoint"

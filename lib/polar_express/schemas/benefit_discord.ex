@@ -20,6 +20,8 @@ defmodule PolarExpress.Schemas.BenefitDiscord do
   * `properties`
   * `selectable` - Whether the benefit is selectable when creating a product.
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal.
+  * `visibility_configurable`
   """
   @type t :: %__MODULE__{}
 
@@ -34,7 +36,9 @@ defmodule PolarExpress.Schemas.BenefitDiscord do
     :organization_id,
     :properties,
     :selectable,
-    :type
+    :type,
+    :visibility,
+    :visibility_configurable
   ]
 
   @schema_name "BenefitDiscord"
@@ -43,7 +47,8 @@ defmodule PolarExpress.Schemas.BenefitDiscord do
   def __inner_types__ do
     %{
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
-      "properties" => PolarExpress.Schemas.BenefitDiscordProperties
+      "properties" => PolarExpress.Schemas.BenefitDiscordProperties,
+      "visibility" => PolarExpress.Schemas.BenefitVisibility
     }
   end
 

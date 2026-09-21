@@ -4,6 +4,7 @@ defmodule PolarExpress.Schemas.CustomerPaymentMethod do
 
   @type t ::
           PolarExpress.Schemas.PaymentMethodCard.t()
+          | PolarExpress.Schemas.PaymentMethodKrCard.t()
           | PolarExpress.Schemas.PaymentMethodGeneric.t()
 
   @schema_name "CustomerPaymentMethod"
@@ -12,6 +13,7 @@ defmodule PolarExpress.Schemas.CustomerPaymentMethod do
   def __variants__ do
     [
       PolarExpress.Schemas.PaymentMethodCard,
+      PolarExpress.Schemas.PaymentMethodKrCard,
       PolarExpress.Schemas.PaymentMethodGeneric
     ]
   end

@@ -20,17 +20,19 @@ defmodule PolarExpress.Schemas.BenefitDiscordCreate do
   * `organization_id` - The ID of the organization owning the benefit. **Required unless you use an organization token.** Nullable.
   * `properties`
   * `type`
+  * `visibility` - The visibility of the benefit in the customer portal. Nullable.
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:description, :metadata, :organization_id, :properties, :type]
+  defstruct [:description, :metadata, :organization_id, :properties, :type, :visibility]
 
   @schema_name "BenefitDiscordCreate"
   def schema_name, do: @schema_name
 
   def __inner_types__ do
     %{
-      "properties" => PolarExpress.Schemas.BenefitDiscordCreateProperties
+      "properties" => PolarExpress.Schemas.BenefitDiscordCreateProperties,
+      "visibility" => PolarExpress.Schemas.BenefitVisibility
     }
   end
 end

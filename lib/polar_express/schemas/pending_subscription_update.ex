@@ -13,10 +13,11 @@ defmodule PolarExpress.Schemas.PendingSubscriptionUpdate do
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `product_id` - ID of the new product to apply to the subscription. If `null`, the product won't be changed. Nullable.
   * `seats` - Number of seats to apply to the subscription. If `null`, the number of seats won't be changed. Nullable.
+  * `units` - Number of units to apply to the subscription. If `null`, the number of units won't be changed. Nullable.
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:applies_at, :created_at, :id, :modified_at, :product_id, :seats]
+  defstruct [:applies_at, :created_at, :id, :modified_at, :product_id, :seats, :units]
 
   @schema_name "PendingSubscriptionUpdate"
   def schema_name, do: @schema_name

@@ -7,6 +7,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointUpdate do
   """
 
   @typedoc """
+  * `api_version` - The API version that'll be used in event payloads. Nullable.
   * `enabled` - Whether the webhook endpoint is enabled. Nullable.
   * `events` - Nullable.
   * `format` - Nullable.
@@ -15,7 +16,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointUpdate do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:enabled, :events, :format, :name, :url]
+  defstruct [:api_version, :enabled, :events, :format, :name, :url]
 
   @schema_name "WebhookEndpointUpdate"
   def schema_name, do: @schema_name

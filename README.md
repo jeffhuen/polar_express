@@ -1,15 +1,15 @@
 # PolarExpress
 
-Comprehensive Elixir SDK for the [Polar API](https://docs.polar.sh/api),
-with verified 1:1 feature parity to the official [JavaScript SDK](https://github.com/polarsource/polar-js).
+Comprehensive Elixir SDK for the [Polar API](https://polar.sh/docs/api-reference),
+with verified 1:1 feature parity to the official
+[TypeScript SDK](https://github.com/polarsource/polar/tree/main/sdk/typescript).
 
 > **Note:** This is an community Elixir SDK for Polar. Polar's official SDKs are
 > in TypeScript/JavaScript and Python. This project is generated from the same
-> [OpenAPI spec](https://api.polar.sh/openapi.json) that Polar uses to
-> build their official SDKs, follows the same service architecture, and is
-> structured to match the official
-> [JavaScript SDK](https://github.com/polarsource/polar-js). The goal is an
-> idiomatic Elixir experience with the same API coverage.
+> versioned [OpenAPI spec](https://github.com/polarsource/polar/tree/main/docs/openapi)
+> that Polar uses to build their official SDKs, follows the same service
+> architecture, and is structured to match the official TypeScript SDK.
+> The goal is an idiomatic Elixir experience with the same API coverage.
 
 ### What's Included
 
@@ -18,8 +18,8 @@ auto-paging pagination — all generated from the spec with full documentation.
 The **client layer** handles HTTP execution via Finch with connection pooling,
 automatic retries, request encoding, response deserialization, and telemetry.
 
-Together, the complete Polar API surface is covered: 31 service modules,
-30 typed resource structs, 85 typed params modules, webhook signature
+Together, the complete Polar API surface is covered: 39 service modules,
+38 typed resource structs, 119 typed params modules, webhook signature
 verification, and automatic pagination.
 
 ## Installation
@@ -175,25 +175,26 @@ bash scripts/diff_js.sh
 
 ### Code Generation
 
-The SDK is auto-generated from Polar's [OpenAPI spec](https://api.polar.sh/openapi.json)
-via `mix polar.generate`. The generator produces:
+The SDK is auto-generated from Polar's versioned
+[OpenAPI spec](https://github.com/polarsource/polar/tree/main/docs/openapi)
+via `mix polar_express.generate`. The generator produces:
 
-- **31 service modules** matching the JavaScript SDK layout
-- **30 resource structs** with `@type t` definitions and inner types
-- **85 params modules** with `@typedoc` field annotations
-- **2 registries** (object types and event types)
-- **36 event modules** for typed webhook event handling
+- **39 service modules** matching the TypeScript SDK layout
+- **38 resource structs** with `@type t` definitions and inner types
+- **119 params modules** with `@typedoc` field annotations
+- **1 registry** (event types)
+- **44 event modules** for typed webhook event handling
 
 A small set of [overrides](lib/polar_express/generator/overrides.ex) handle
-cases where the spec's metadata doesn't match the JavaScript SDK's service layout.
+cases where the spec's metadata doesn't match the TypeScript SDK's service layout.
 Each override is documented with a reason and enforced by tests.
 
 ### Parity Testing
 
-JavaScript SDK parity is a hard invariant. CI runs `scripts/diff_js.sh` to verify
+TypeScript SDK parity is a hard invariant. CI runs `scripts/diff_js.sh` to verify
 1:1 service file and endpoint coverage. The test suite includes dedicated
 parity assertions comparing the generated endpoint set against both the OpenAPI
-spec and the JavaScript SDK fixture tree.
+spec and the TypeScript SDK fixture tree.
 
 ## License
 

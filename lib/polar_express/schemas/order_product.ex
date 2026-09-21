@@ -11,6 +11,8 @@ defmodule PolarExpress.Schemas.OrderProduct do
   * `is_archived` - Whether the product is archived and no longer available.
   * `is_recurring` - Whether the product is a subscription.
   * `metadata`
+  * `meter_interval` - The meter cycle of the product, independent of the billing interval. If `None`, metered concerns follow the billing interval. Nullable.
+  * `meter_interval_count` - Number of meter interval units. None when no meter cycle is set. Nullable.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `name` - The name of the product.
   * `organization_id` - The ID of the organization owning the product. Format: uuid4.
@@ -29,6 +31,8 @@ defmodule PolarExpress.Schemas.OrderProduct do
     :is_archived,
     :is_recurring,
     :metadata,
+    :meter_interval,
+    :meter_interval_count,
     :modified_at,
     :name,
     :organization_id,
@@ -45,7 +49,8 @@ defmodule PolarExpress.Schemas.OrderProduct do
   def __inner_types__ do
     %{
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
-      "recurring_interval" => PolarExpress.Schemas.SubscriptionRecurringInterval,
+      "meter_interval" => PolarExpress.Schemas.RecurringInterval,
+      "recurring_interval" => PolarExpress.Schemas.RecurringInterval,
       "trial_interval" => PolarExpress.Schemas.TrialInterval,
       "visibility" => PolarExpress.Schemas.ProductVisibility
     }

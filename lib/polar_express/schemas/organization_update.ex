@@ -12,11 +12,13 @@ defmodule PolarExpress.Schemas.OrganizationUpdate do
   * `default_presentment_currency` - Default presentment currency for the organization Nullable.
   * `default_tax_behavior` - Default tax behavior applied on products. Nullable.
   * `details` - Additional, private, business details Polar needs about active organizations for compliance (KYC). Nullable.
+  * `dispute_settings` - Nullable.
   * `email` - Public support email. Nullable.
+  * `embed_hosts` - Nullable.
   * `feature_settings` - Nullable.
   * `name` - Nullable.
-  * `notification_settings` - Nullable.
   * `socials` - Links to social profiles. Nullable.
+  * `sso_enforced` - Whether members must access this organization through its SSO connection. Turning this on requires an active SSO session for this organization and at least one enabled SSO connection. Nullable.
   * `subscription_settings` - Nullable.
   * `website` - Official website of the organization. Nullable.
   """
@@ -30,11 +32,13 @@ defmodule PolarExpress.Schemas.OrganizationUpdate do
     :default_presentment_currency,
     :default_tax_behavior,
     :details,
+    :dispute_settings,
     :email,
+    :embed_hosts,
     :feature_settings,
     :name,
-    :notification_settings,
     :socials,
+    :sso_enforced,
     :subscription_settings,
     :website
   ]
@@ -49,8 +53,8 @@ defmodule PolarExpress.Schemas.OrganizationUpdate do
       "default_presentment_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "default_tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption,
       "details" => PolarExpress.Schemas.OrganizationDetails,
-      "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettings,
-      "notification_settings" => PolarExpress.Schemas.OrganizationNotificationSettings,
+      "dispute_settings" => PolarExpress.Schemas.OrganizationDisputeSettingsUpdate,
+      "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettingsUpdate,
       "socials" => PolarExpress.Schemas.OrganizationSocialLink,
       "subscription_settings" => PolarExpress.Schemas.OrganizationSubscriptionSettings
     }

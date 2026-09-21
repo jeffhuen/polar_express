@@ -16,6 +16,7 @@ defmodule PolarExpress.Schemas.DiscountUpdate do
   * `duration_in_months` - Nullable.
   * `ends_at` - Optional timestamp after which the discount is no longer redeemable. Nullable.
   * `max_redemptions` - Optional maximum number of times the discount can be redeemed. Nullable.
+  * `max_redemptions_per_customer` - Optional maximum number of times the discount can be redeemed by a single customer. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
 
   The key must be a string with a maximum length of **40 characters**.
@@ -44,6 +45,7 @@ defmodule PolarExpress.Schemas.DiscountUpdate do
     :duration_in_months,
     :ends_at,
     :max_redemptions,
+    :max_redemptions_per_customer,
     :metadata,
     :name,
     :products,
