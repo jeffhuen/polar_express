@@ -26,8 +26,11 @@ echo "Version: $API_VERSION"
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
-git clone --quiet --depth 1 --filter=blob:none --sparse "$REPO" "$TMP_DIR/polar"
+echo "Cloning polarsource/polar (sparse)..."
+git clone --depth 1 --filter=blob:none --sparse "$REPO" "$TMP_DIR/polar"
+echo "Setting sparse checkout..."
 git -C "$TMP_DIR/polar" sparse-checkout set docs/openapi
+echo "Clone OK."
 
 if [ ! -f "$TMP_DIR/polar/$SPEC_PATH" ]; then
   echo "ERROR: $SPEC_PATH not found in polarsource/polar" >&2
@@ -49,8 +52,8 @@ if ! grep -q '"/v1/' "$SPEC_FILE"; then
   exit 1
 fi
 
-# Extract version from spec's info.version field
-SPEC_VERSION=$(grep -o '"version":"[^"]*"' "$SPEC_FILE" | head -1 | cut -d'"' -f4)
+# Extract version from spec's info.version field (tolerates pretty-printed JSON)
+SPEC_VERSION=$(grep -o '"version": *"[^"]*"' "$SPEC_FILE" | head -1 | cut -d'"' -f4)
 if [ -z "$SPEC_VERSION" ]; then
   echo "ERROR: Could not extract version from spec" >&2
   exit 1
