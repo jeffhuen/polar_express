@@ -6,20 +6,35 @@ set -euo pipefail
 # (e.g. 2026-04, 2026-10). The old live endpoint https://api.polar.sh/openapi.json
 # is gone (404) and polar-js is archived, so pin a version here.
 #
+# Fetched via git rather than raw.githubusercontent.com: the latter is not
+# reliably reachable from CI egress, while github.com always is (checkout).
+#
 # Usage: ./sync_openapi.sh [version]   (default: 2026-10)
 
 SPEC_DIR="priv/openapi"
 SPEC_FILE="$SPEC_DIR/openapi.json"
 
 API_VERSION="${1:-2026-10}"
-SPEC_URL="https://raw.githubusercontent.com/polarsource/polar/main/docs/openapi/${API_VERSION}.openapi.json"
+REPO="https://github.com/polarsource/polar.git"
+SPEC_PATH="docs/openapi/${API_VERSION}.openapi.json"
 
 mkdir -p "$SPEC_DIR"
 
 echo "Fetching Polar OpenAPI spec..."
 echo "Version: $API_VERSION"
-echo "URL: $SPEC_URL"
-curl -sL --fail "$SPEC_URL" -o "$SPEC_FILE"
+
+TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$TMP_DIR"' EXIT
+
+git clone --quiet --depth 1 --filter=blob:none --sparse "$REPO" "$TMP_DIR/polar"
+git -C "$TMP_DIR/polar" sparse-checkout set docs/openapi
+
+if [ ! -f "$TMP_DIR/polar/$SPEC_PATH" ]; then
+  echo "ERROR: $SPEC_PATH not found in polarsource/polar" >&2
+  exit 1
+fi
+
+cp "$TMP_DIR/polar/$SPEC_PATH" "$SPEC_FILE"
 
 # Validate: check for openapi and paths
 if ! grep -q '"openapi"' "$SPEC_FILE"; then
