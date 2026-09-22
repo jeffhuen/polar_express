@@ -100,7 +100,7 @@ defmodule PolarExpress.Generator.ParamsGenerator do
             "#{type_str} | nil"
           end
 
-        "        #{f.name}: #{type_str}"
+        "        #{Naming.type_key(f.name)}: #{type_str}"
       end)
 
     nested_blocks =
@@ -246,7 +246,7 @@ defmodule PolarExpress.Generator.ParamsGenerator do
     type_fields =
       fields
       |> Enum.map_join(",\n", fn f ->
-        "#{indent}        #{f.name}: #{params_typespec(f.type)} | nil"
+        "#{indent}        #{Naming.type_key(f.name)}: #{params_typespec(f.type)} | nil"
       end)
 
     typedoc =

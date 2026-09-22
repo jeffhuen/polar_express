@@ -111,6 +111,9 @@ defmodule PolarExpress.ParityTest do
         ["customers", _] -> "customers"
         ["oauth2" | _] -> "oauth2"
         [_] -> name
+        # Unknown depth/shape (e.g. a new upstream subdir): surface the bare
+        # name so the gate reports a parity gap instead of crashing.
+        _ -> name
       end
     end)
     |> MapSet.new()

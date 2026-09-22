@@ -92,12 +92,18 @@ defmodule PolarExpress.Generator.Naming do
       ":\\"cf-turnstile-response\\""
   """
   def atom_literal(name) do
-    if Regex.match?(~r/\A[a-z_][a-zA-Z0-9_]*[?!]?\z/, name) do
-      ":#{name}"
-    else
-      ":#{inspect(name)}"
-    end
+    if bare_atom?(name), do: ":#{name}", else: ":#{inspect(name)}"
   end
+
+  @doc """
+  Map-key literal safe for `@type t :: %__MODULE__{...}`. Bare when valid,
+  double-quoted otherwise (`"cf-turnstile-response": ...`).
+  """
+  def type_key(name) do
+    if bare_atom?(name), do: name, else: inspect(name)
+  end
+
+  defp bare_atom?(name), do: Regex.match?(~r/\A[a-z_][a-zA-Z0-9_]*[?!]?\z/, name)
 
   @doc """
   Build a namespace parent module name for service aggregation.

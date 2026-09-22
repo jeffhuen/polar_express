@@ -100,7 +100,7 @@ defmodule PolarExpress.Generator.OpenAPI do
     class_name = Macro.camelize(sanitized_tag)
     schema_id = "#{class_name}Resource"
 
-    {properties, inner_types} = extract_properties_from_ops(tag_ops, schema_index)
+    {properties, inner_types} = extract_properties_from_ops(tag_ops, schema_index, class_name)
 
     %{
       schema_id: schema_id,
@@ -139,11 +139,47 @@ defmodule PolarExpress.Generator.OpenAPI do
     end
   end
 
-  defp extract_properties_from_ops(ops, schema_index) do
-    schema_refs = collect_schema_refs(ops)
-    preferred_schema = select_preferred_schema(schema_refs)
+  defp extract_properties_from_ops(ops, schema_index, class_name) do
+    # Sorted once here so every positional read below is deterministic:
+    # raw collection order follows map iteration, which varies across OTP.
+    schema_refs =
+      ops |> collect_schema_refs() |> Enum.sort_by(&{String.length(&1), &1})
+
+    preferred_schema = select_preferred_schema(schema_refs, class_name)
 
     resolve_schema_properties(preferred_schema, schema_refs, schema_index)
+  end
+
+  @non_resource_markers [
+    "List",
+    "Resource_",
+    "Search",
+    "Error",
+    "NotFound",
+    "Validation",
+    "HTTP"
+  ]
+
+  defp preferred_candidate?(ref), do: not String.contains?(ref, @non_resource_markers)
+
+  defp select_preferred_schema(schema_refs, class_name) do
+    candidates = Enum.filter(schema_refs, &preferred_candidate?/1)
+    # Prefer the schema named after the resource itself: the shortest-name
+    # heuristic otherwise picks Member over Customer once member endpoints
+    # share the customers tag.
+    singular = String.trim_trailing(class_name, "s")
+    exact = Enum.find(candidates, &(&1 == class_name or &1 == singular))
+
+    cond do
+      exact != nil -> exact
+      candidates != [] -> hd(Enum.sort_by(candidates, &{String.length(&1), &1}))
+      # All candidates filtered (only List wrappers and error schemas left):
+      # prefer the collection shape, never an error schema.
+      true ->
+        Enum.find(schema_refs, &String.contains?(&1, "List")) ||
+          Enum.find(schema_refs, &preferred_candidate?/1) ||
+          List.first(schema_refs)
+    end
   end
 
   defp collect_schema_refs(ops) do
@@ -172,29 +208,6 @@ defmodule PolarExpress.Generator.OpenAPI do
       [ref_to_name(schema["$ref"])]
     else
       []
-    end
-  end
-
-  defp select_preferred_schema(schema_refs) do
-    candidates =
-      Enum.filter(schema_refs, fn ref ->
-        not String.contains?(ref, [
-          "List",
-          "Resource_",
-          "Search",
-          "Error",
-          "NotFound",
-          "Validation",
-          "HTTP"
-        ])
-      end)
-
-    # Tiebreak alphabetically: length ties (e.g. PortalAuthenticatedUser vs
-    # CustomerCustomerSession, both 23 chars) must not fall through to map
-    # iteration order, which varies across OTP versions and flips output.
-    case Enum.sort_by(candidates, &{String.length(&1), &1}) do
-      [] -> List.first(schema_refs)
-      [first | _] -> first
     end
   end
 

@@ -120,7 +120,7 @@ client = PolarExpress.client("pk_test_other_key", max_retries: 5)
 ### SDK
 
 - **Full API coverage** — every endpoint from the Polar OpenAPI spec, with
-  dedicated service modules matching the JavaScript SDK layout
+  dedicated service modules matching the TypeScript SDK layout
 - **Typed resources** — API responses are deserialized into typed Elixir structs
   with `@type t` definitions, full nesting support, and inner types
 - **Typed params** — request parameters have dedicated struct modules with
@@ -183,7 +183,7 @@ via `mix polar_express.generate`. The generator produces:
 - **38 resource structs** with `@type t` definitions and inner types
 - **119 params modules** with `@typedoc` field annotations
 - **1 registry** (event types)
-- **44 event modules** for typed webhook event handling
+- **43 event modules** for typed webhook event handling (42 event types + unknown-event fallback)
 
 A small set of [overrides](lib/polar_express/generator/overrides.ex) handle
 cases where the spec's metadata doesn't match the TypeScript SDK's service layout.

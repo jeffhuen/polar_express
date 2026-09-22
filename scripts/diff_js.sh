@@ -11,7 +11,8 @@ ELIXIR_RESOURCES="lib/polar_express/resources"
 ELIXIR_PARAMS="lib/polar_express/params"
 ELIXIR_EVENTS="lib/polar_express/events"
 
-JS_SERVICES_DIR="$JS_DIR/2026-10/services"
+JS_VERSION="${1:-$(cat priv/polar-sdk/.api-version 2>/dev/null || ls "$JS_DIR" | grep -o '^[0-9-]*' | sort | tail -1)}"
+JS_SERVICES_DIR="$JS_DIR/$JS_VERSION/services"
 
 echo "=== PolarExpress SDK Parity Report ==="
 echo ""

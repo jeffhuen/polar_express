@@ -4,33 +4,36 @@ set -euo pipefail
 # Download the Polar OpenAPI spec.
 # Polar publishes versioned specs in the monorepo at docs/openapi/<version>.openapi.json
 # (e.g. 2026-04, 2026-10). The old live endpoint https://api.polar.sh/openapi.json
-# is gone (404) and polar-js is archived, so pin a version here.
+# is gone (404) and polar-js is archived.
 #
 # Fetched via git rather than raw.githubusercontent.com: the latter is not
 # reliably reachable from CI egress, while github.com always is (checkout).
 #
-# Usage: ./sync_openapi.sh [version]   (default: 2026-10)
+# Usage: ./sync_openapi.sh [version]   (default: latest available upstream)
 
 SPEC_DIR="priv/openapi"
 SPEC_FILE="$SPEC_DIR/openapi.json"
 
-API_VERSION="${1:-2026-10}"
+API_VERSION="${1:-}"
 REPO="https://github.com/polarsource/polar.git"
-SPEC_PATH="docs/openapi/${API_VERSION}.openapi.json"
 
 mkdir -p "$SPEC_DIR"
-
-echo "Fetching Polar OpenAPI spec..."
-echo "Version: $API_VERSION"
 
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
 echo "Cloning polarsource/polar (sparse)..."
 git clone --depth 1 --filter=blob:none --sparse "$REPO" "$TMP_DIR/polar"
-echo "Setting sparse checkout..."
 git -C "$TMP_DIR/polar" sparse-checkout set docs/openapi
-echo "Clone OK."
+
+# No version given: track the latest Polar API version.
+if [ -z "$API_VERSION" ]; then
+  API_VERSION=$(ls "$TMP_DIR/polar/docs/openapi/" | grep -o '^[0-9-]*' | sort | tail -1)
+  echo "No version given, using latest upstream: $API_VERSION"
+fi
+
+SPEC_PATH="docs/openapi/${API_VERSION}.openapi.json"
+echo "Version: $API_VERSION"
 
 if [ ! -f "$TMP_DIR/polar/$SPEC_PATH" ]; then
   echo "ERROR: $SPEC_PATH not found in polarsource/polar" >&2
