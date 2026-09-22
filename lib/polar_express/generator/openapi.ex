@@ -189,7 +189,10 @@ defmodule PolarExpress.Generator.OpenAPI do
         ])
       end)
 
-    case Enum.sort_by(candidates, &String.length/1) do
+    # Tiebreak alphabetically: length ties (e.g. PortalAuthenticatedUser vs
+    # CustomerCustomerSession, both 23 chars) must not fall through to map
+    # iteration order, which varies across OTP versions and flips output.
+    case Enum.sort_by(candidates, &{String.length(&1), &1}) do
       [] -> List.first(schema_refs)
       [first | _] -> first
     end
