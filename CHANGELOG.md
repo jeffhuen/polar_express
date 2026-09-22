@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.2.3] - 2026-09-22
+
+### Changed
+
+- Regenerate the SDK from Polar OpenAPI spec 2026-10: 13 new paths, 5 removed paths, 1063 schemas, 42 webhooks ([0.2.3])
+- Sync the spec from versioned monorepo files. The sync resolves the latest upstream version when you pass no version ([0.2.3])
+- Point parity tooling at the monorepo TypeScript SDK ([0.2.3])
+
+### Fixed
+
+- Quote non-identifier atoms in generated `defstruct` fields and params `@type` keys ([0.2.3])
+- Match each generated resource to the schema with its own name. `Resources.Customers` described a Member ([0.2.3])
+- Order schema selection deterministically across OTP versions ([0.2.3])
+- Declare the `:telemetry` dependency directly ([0.2.3])
+
 ## [0.2.2] - 2026-07-03
 
 ### Fixed
@@ -130,7 +145,7 @@ _Initial release._
 - Add list pagination, raw requests, streaming requests, retries, telemetry, OAuth, webhooks, and test stubs ([`693a87e`])
 - Add Finch-backed HTTP client and RustyJSON-backed JSON decoding ([`693a87e`])
 
-[0.2.2]: https://github.com/jeffhuen/polar_express/compare/0.2.1...HEAD
+[0.2.3]: https://github.com/jeffhuen/polar_express/compare/0.2.2...0.2.3
 [0.2.1]: https://github.com/jeffhuen/polar_express/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/jeffhuen/polar_express/compare/66d43a5...HEAD
 [0.1.6]: https://github.com/jeffhuen/polar_express/commit/7d439c227951918e05277783dc55c7f5ab1b1359
