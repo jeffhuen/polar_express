@@ -1,9 +1,7 @@
 # File generated from our OpenAPI spec
-defmodule PolarExpress.Resources.LicenseKeys do
+defmodule PolarExpress.Schemas.ProductNotDeletable do
   @moduledoc """
-  LicenseKeys
-
-  LicenseKeys API operations.
+  ProductNotDeletable
   """
 
   @typedoc """
@@ -14,6 +12,6 @@ defmodule PolarExpress.Resources.LicenseKeys do
 
   defstruct [:detail, :error]
 
-  @object_name "license_keys"
-  def object_name, do: @object_name
+  @schema_name "ProductNotDeletable"
+  def schema_name, do: @schema_name
 end

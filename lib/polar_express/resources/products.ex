@@ -13,6 +13,7 @@ defmodule PolarExpress.Resources.Products do
   * `description` - The description of the product.
   * `id` - The ID of the object. Format: uuid4.
   * `is_archived` - Whether the product is archived and no longer available.
+  * `is_deletable` - Whether the product can be permanently deleted. Products referenced by an order, subscription, trial or discount cannot be deleted.
   * `is_recurring` - Whether the product is a subscription.
   * `medias` - List of medias associated to the product.
   * `metadata`
@@ -37,6 +38,7 @@ defmodule PolarExpress.Resources.Products do
     :description,
     :id,
     :is_archived,
+    :is_deletable,
     :is_recurring,
     :medias,
     :metadata,
