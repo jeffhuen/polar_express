@@ -5,6 +5,7 @@ defmodule PolarExpress.Schemas.CheckoutForbiddenError do
   @type t ::
           PolarExpress.Schemas.AlreadyActiveSubscriptionError.t()
           | PolarExpress.Schemas.NotOpenCheckout.t()
+          | PolarExpress.Schemas.NotPermitted.t()
           | PolarExpress.Schemas.PaymentNotReady.t()
           | PolarExpress.Schemas.TrialAlreadyRedeemed.t()
           | PolarExpress.Schemas.DiscountRedemptionLimitReached.t()
@@ -16,6 +17,7 @@ defmodule PolarExpress.Schemas.CheckoutForbiddenError do
     [
       PolarExpress.Schemas.AlreadyActiveSubscriptionError,
       PolarExpress.Schemas.NotOpenCheckout,
+      PolarExpress.Schemas.NotPermitted,
       PolarExpress.Schemas.PaymentNotReady,
       PolarExpress.Schemas.TrialAlreadyRedeemed,
       PolarExpress.Schemas.DiscountRedemptionLimitReached
