@@ -7,6 +7,7 @@ defmodule PolarExpress.Schemas.SubscriptionCreateCustomer do
   """
 
   @typedoc """
+  * `currency` - The currency of the subscription. The product must have a free price in this currency. If not set, the organization's default currency is used. Nullable.
   * `customer_id` - The ID of the customer to create the subscription for. Format: uuid4.
   * `metadata` - Key-value object allowing you to store additional information.
 
@@ -23,8 +24,14 @@ defmodule PolarExpress.Schemas.SubscriptionCreateCustomer do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:customer_id, :metadata, :product_id]
+  defstruct [:currency, :customer_id, :metadata, :product_id]
 
   @schema_name "SubscriptionCreateCustomer"
   def schema_name, do: @schema_name
+
+  def __inner_types__ do
+    %{
+      "currency" => PolarExpress.Schemas.PresentmentCurrency
+    }
+  end
 end

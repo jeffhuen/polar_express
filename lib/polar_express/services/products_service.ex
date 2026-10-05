@@ -28,6 +28,24 @@ defmodule PolarExpress.Services.ProductsService do
   end
 
   @doc """
+  Delete Product
+
+  Delete a product.
+
+  Only products without orders, subscriptions, trials or discounts can be deleted.
+  Products that are in use can only be archived.
+
+  **Scopes**: `products:write`
+
+  See `PolarExpress.Params.ProductsDeleteProductParams` for parameter details.
+  """
+  @spec delete_product(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, Client.response_data()} | {:error, PolarExpress.Error.t()}
+  def delete_product(client, id, params \\ %{}, opts \\ []) do
+    Client.request(client, :delete, "/v1/products/#{id}", Keyword.merge(opts, params: params))
+  end
+
+  @doc """
   Get Product
 
   Get a product by ID.
