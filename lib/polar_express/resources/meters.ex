@@ -12,6 +12,7 @@ defmodule PolarExpress.Resources.Meters do
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `custom_label` - The label for the custom unit.
   * `custom_multiplier` - The multiplier to convert from base unit to display scale.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource.
   * `filter` - The filter to apply on events that'll be used to calculate the meter.
   * `id` - The ID of the object. Format: uuid4.
   * `metadata`
@@ -28,6 +29,7 @@ defmodule PolarExpress.Resources.Meters do
     :created_at,
     :custom_label,
     :custom_multiplier,
+    :external_id,
     :filter,
     :id,
     :metadata,

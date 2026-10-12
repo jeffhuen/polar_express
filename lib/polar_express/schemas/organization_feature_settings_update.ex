@@ -11,12 +11,11 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettingsUpdate do
 
   @typedoc """
   * `checkout_localization_enabled` - If this organization has checkout localization enabled
-  * `member_model_enabled` - If this organization has the Member model enabled
   * `overview_metrics` - Ordered list of metric slugs shown on the dashboard overview. Nullable.
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:checkout_localization_enabled, :member_model_enabled, :overview_metrics]
+  defstruct [:checkout_localization_enabled, :overview_metrics]
 
   @schema_name "OrganizationFeatureSettingsUpdate"
   def schema_name, do: @schema_name
