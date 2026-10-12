@@ -7,6 +7,7 @@ defmodule PolarExpress.Schemas.ProductCreateRecurring do
   @typedoc """
   * `attached_custom_fields` - List of custom fields to attach.
   * `description` - The description of the product. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `medias` - List of file IDs. Each one must be on the same organization as the product, of type `product_media` and correctly uploaded. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
 
@@ -35,6 +36,7 @@ defmodule PolarExpress.Schemas.ProductCreateRecurring do
   defstruct [
     :attached_custom_fields,
     :description,
+    :external_id,
     :medias,
     :metadata,
     :meter_interval,
