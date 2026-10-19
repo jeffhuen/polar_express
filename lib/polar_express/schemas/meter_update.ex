@@ -8,6 +8,7 @@ defmodule PolarExpress.Schemas.MeterUpdate do
   * `aggregation` - The aggregation to apply on the filtered events to calculate the meter. Nullable.
   * `custom_label` - The label for the custom unit. Required when unit is 'custom'. Nullable.
   * `custom_multiplier` - The multiplier to convert from base unit to display scale. Required when unit is 'custom'. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `filter` - The filter to apply on events that'll be used to calculate the meter. Nullable.
   * `is_archived` - Whether the meter is archived. Archived meters are no longer used for billing. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
@@ -30,6 +31,7 @@ defmodule PolarExpress.Schemas.MeterUpdate do
     :aggregation,
     :custom_label,
     :custom_multiplier,
+    :external_id,
     :filter,
     :is_archived,
     :metadata,

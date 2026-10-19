@@ -7,13 +7,13 @@ defmodule PolarExpress.Schemas.BenefitDiscordCreateProperties do
   """
 
   @typedoc """
-  * `guild_token`
+  * `guild_id` - The ID of the Discord server.
   * `kick_member` - Whether to kick the member from the Discord server on revocation.
   * `role_id` - The ID of the Discord role to grant.
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:guild_token, :kick_member, :role_id]
+  defstruct [:guild_id, :kick_member, :role_id]
 
   @schema_name "BenefitDiscordCreateProperties"
   def schema_name, do: @schema_name

@@ -20,6 +20,7 @@ defmodule PolarExpress.Schemas.DiscountPercentageCreate do
   For this to work on yearly pricing, you should multiply this by 12.
   For example, to apply the discount for 2 years, set this to 24. Nullable.
   * `ends_at` - Optional timestamp after which the discount is no longer redeemable. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `max_redemptions` - Optional maximum number of times the discount can be redeemed. Nullable.
   * `max_redemptions_per_customer` - Optional maximum number of times the discount can be redeemed by a single customer. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
@@ -47,6 +48,7 @@ defmodule PolarExpress.Schemas.DiscountPercentageCreate do
     :duration,
     :duration_in_months,
     :ends_at,
+    :external_id,
     :max_redemptions,
     :max_redemptions_per_customer,
     :metadata,

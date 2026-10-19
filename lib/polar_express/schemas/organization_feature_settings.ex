@@ -5,13 +5,13 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
   """
 
   @typedoc """
+  * `agentic_payments_enabled` - If this organization accepts payments from AI agents through Stripe shared payment tokens.
   * `checkout_localization_enabled` - If this organization has checkout localization enabled
   * `compass_enabled` - If this organization has the split product navigation (Billing / Compass / Customers) enabled in the dashboard
+  * `config_as_code_enabled` - If this organization can manage its configuration from a declarative config document.
   * `dispute_auto_accept_enabled` - If this organization can set a threshold below which Polar concedes disputes on its behalf. Requires `disputes_enabled`.
   * `disputes_enabled` - If this organization has the disputes dashboard enabled
-  * `frame_ancestors_enforced` - If this organization's checkout tells the browser to refuse framing from any host outside its embed hosts.
   * `issue_funding_enabled` - If this organization has issue funding enabled
-  * `member_model_enabled` - If this organization has the Member model enabled
   * `merchant_migration_enabled` - If this organization can migrate its billing from another provider (e.g. Stripe) to Polar.
   * `meter_cycling_enabled` - If this organization can set a separate meter cycle on recurring products (a meter interval independent of the billing interval).
   * `off_session_charges_enabled` - If this organization can create and finalize draft orders via the API (off-session charges against a saved payment method).
@@ -25,13 +25,13 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
   @type t :: %__MODULE__{}
 
   defstruct [
+    :agentic_payments_enabled,
     :checkout_localization_enabled,
     :compass_enabled,
+    :config_as_code_enabled,
     :dispute_auto_accept_enabled,
     :disputes_enabled,
-    :frame_ancestors_enforced,
     :issue_funding_enabled,
-    :member_model_enabled,
     :merchant_migration_enabled,
     :meter_cycling_enabled,
     :off_session_charges_enabled,

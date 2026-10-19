@@ -10,6 +10,8 @@ defmodule PolarExpress.Services.CustomerSeatsService do
   @doc """
   Assign Seat
 
+  Assign a seat for a subscription or order.
+
   **Scopes**: `customer_seats:write`
 
   See `PolarExpress.Params.CustomerSeatsAssignSeatParams` for parameter details.
@@ -27,6 +29,8 @@ defmodule PolarExpress.Services.CustomerSeatsService do
 
   @doc """
   Claim Seat
+
+  Claim a customer seat with an invitation token.
 
   See `PolarExpress.Params.CustomerSeatsClaimSeatParams` for parameter details.
   """
@@ -48,6 +52,8 @@ defmodule PolarExpress.Services.CustomerSeatsService do
   @doc """
   Get Claim Info
 
+  Get claim information for a customer seat invitation.
+
   See `PolarExpress.Params.CustomerSeatsGetClaimInfoParams` for parameter details.
   """
   @spec get_claim_info(Client.t(), String.t(), map(), keyword()) ::
@@ -63,6 +69,8 @@ defmodule PolarExpress.Services.CustomerSeatsService do
 
   @doc """
   List Seats
+
+  List seats for a subscription or order.
 
   **Scopes**: `customer_seats:read`
 
@@ -82,6 +90,8 @@ defmodule PolarExpress.Services.CustomerSeatsService do
   @doc """
   Resend Invitation
 
+  Resend an invitation for a pending customer seat.
+
   **Scopes**: `customer_seats:write`
 
   See `PolarExpress.Params.CustomerSeatsResendInvitationParams` for parameter details.
@@ -99,6 +109,8 @@ defmodule PolarExpress.Services.CustomerSeatsService do
 
   @doc """
   Revoke Seat
+
+  Revoke a customer seat.
 
   **Scopes**: `customer_seats:write`
 

@@ -68,6 +68,26 @@ defmodule PolarExpress.Services.WebhooksService do
   end
 
   @doc """
+  Get Webhook Endpoint by External ID
+
+  Get a webhook endpoint by external ID.
+
+  **Scopes**: `webhooks:read` `webhooks:write`
+
+  See `PolarExpress.Params.WebhooksGetWebhookEndpointByExternalIdParams` for parameter details.
+  """
+  @spec get_webhook_endpoint_by_external_id(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.WebhookEndpoint.t()} | {:error, PolarExpress.Error.t()}
+  def get_webhook_endpoint_by_external_id(client, external_id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :get,
+      "/v1/webhooks/endpoints/external/#{external_id}",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.WebhookEndpoint)
+    )
+  end
+
+  @doc """
   List Webhook Deliveries
 
   List webhook deliveries.

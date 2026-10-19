@@ -8,6 +8,7 @@ defmodule PolarExpress.Schemas.MeterCreate do
   * `aggregation` - The aggregation to apply on the filtered events to calculate the meter.
   * `custom_label` - The label for the custom unit, e.g. 'request'. Required when unit is 'custom'. Nullable.
   * `custom_multiplier` - The multiplier to convert from the base unit to display scale, e.g. 1000 to display per 1000 units. Defaults to 1 when not provided. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `filter` - The filter to apply on events that'll be used to calculate the meter.
   * `metadata` - Key-value object allowing you to store additional information.
 
@@ -30,6 +31,7 @@ defmodule PolarExpress.Schemas.MeterCreate do
     :aggregation,
     :custom_label,
     :custom_multiplier,
+    :external_id,
     :filter,
     :metadata,
     :name,
