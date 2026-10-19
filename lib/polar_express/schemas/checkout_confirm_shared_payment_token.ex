@@ -1,0 +1,60 @@
+# File generated from our OpenAPI spec
+defmodule PolarExpress.Schemas.CheckoutConfirmSharedPaymentToken do
+  @moduledoc """
+  CheckoutConfirmSharedPaymentToken
+
+  Confirm a checkout session using a Stripe shared payment token granted by an agent.
+
+  Only supported for one-time payments.
+  """
+
+  @typedoc """
+  * `allow_trial` - Disable the trial period for the checkout session. It's mainly useful when the trial is blocked because the customer already redeemed one. Nullable.
+  * `amount` - Nullable.
+  * `custom_field_data` - Key-value object storing custom field values.
+  * `customer_billing_address` - Nullable.
+  * `customer_billing_name` - Nullable.
+  * `customer_email` - Nullable.
+  * `customer_name` - Nullable.
+  * `customer_tax_id` - Nullable.
+  * `discount_code` - Discount code to apply to the checkout. Nullable.
+  * `is_business_customer` - Nullable.
+  * `locale` - Nullable.
+  * `payment_method_type` - Payment method type selected by the customer in the checkout form, e.g. `card`, `apple_pay` or `upi`. Nullable.
+  * `product_id` - ID of the product to checkout. Must be present in the checkout's product list. Nullable.
+  * `product_price_id` - ID of the product price to checkout. Must correspond to a price present in the checkout's product list. Nullable. **Deprecated.**
+  * `seats` - Number of seats for seat-based pricing. Nullable.
+  * `shared_payment_token_id` - ID of the Stripe shared payment token (`spt_...`).
+  * `units` - Number of units for unit-based pricing. Nullable.
+  """
+  @type t :: %__MODULE__{}
+
+  defstruct [
+    :allow_trial,
+    :amount,
+    :custom_field_data,
+    :customer_billing_address,
+    :customer_billing_name,
+    :customer_email,
+    :customer_name,
+    :customer_tax_id,
+    :discount_code,
+    :is_business_customer,
+    :locale,
+    :payment_method_type,
+    :product_id,
+    :product_price_id,
+    :seats,
+    :shared_payment_token_id,
+    :units
+  ]
+
+  @schema_name "CheckoutConfirmSharedPaymentToken"
+  def schema_name, do: @schema_name
+
+  def __inner_types__ do
+    %{
+      "customer_billing_address" => PolarExpress.Schemas.AddressInput
+    }
+  end
+end

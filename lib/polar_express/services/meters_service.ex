@@ -48,6 +48,26 @@ defmodule PolarExpress.Services.MetersService do
   end
 
   @doc """
+  Get Meter by External ID
+
+  Get a meter by external ID.
+
+  **Scopes**: `meters:read` `meters:write`
+
+  See `PolarExpress.Params.MetersGetMeterByExternalIdParams` for parameter details.
+  """
+  @spec get_meter_by_external_id(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.Meter.t()} | {:error, PolarExpress.Error.t()}
+  def get_meter_by_external_id(client, external_id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :get,
+      "/v1/meters/external/#{external_id}",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.Meter)
+    )
+  end
+
+  @doc """
   Get Meter Quantities
 
   Get quantities of a meter over a time period.

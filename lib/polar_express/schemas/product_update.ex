@@ -9,6 +9,7 @@ defmodule PolarExpress.Schemas.ProductUpdate do
   @typedoc """
   * `attached_custom_fields` - Nullable.
   * `description` - The description of the product. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `is_archived` - Whether the product is archived. If `true`, the product won't be available for purchase anymore. Existing customers will still have access to their benefits, and subscriptions will continue normally. Nullable.
   * `medias` - List of file IDs. Each one must be on the same organization as the product, of type `product_media` and correctly uploaded. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
@@ -35,6 +36,7 @@ defmodule PolarExpress.Schemas.ProductUpdate do
   defstruct [
     :attached_custom_fields,
     :description,
+    :external_id,
     :is_archived,
     :medias,
     :metadata,

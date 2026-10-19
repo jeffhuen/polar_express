@@ -15,6 +15,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantDiscord do
   * `id` - The ID of the object. Format: uuid4.
   * `is_granted`
   * `is_revoked`
+  * `member` - Nullable.
   * `member_id` - Nullable.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `order_id` - Nullable.
@@ -35,6 +36,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantDiscord do
     :id,
     :is_granted,
     :is_revoked,
+    :member,
     :member_id,
     :modified_at,
     :order_id,
@@ -51,6 +53,7 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantDiscord do
       "benefit" => PolarExpress.Schemas.BenefitDiscordSubscriber,
       "customer" => PolarExpress.Schemas.CustomerPortalCustomer,
       "error" => PolarExpress.Schemas.BenefitGrantError,
+      "member" => PolarExpress.Schemas.CustomerBenefitGrantMember,
       "properties" => PolarExpress.Schemas.BenefitGrantDiscordProperties
     }
   end
