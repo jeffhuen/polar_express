@@ -13,6 +13,7 @@ defmodule PolarExpress.Schemas.BenefitFeatureFlag do
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `deletable` - Whether the benefit is deletable.
   * `description` - The description of the benefit.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `id` - The ID of the benefit. Format: uuid4.
   * `is_deleted` - Whether the benefit is deleted.
   * `metadata`
@@ -30,6 +31,7 @@ defmodule PolarExpress.Schemas.BenefitFeatureFlag do
     :created_at,
     :deletable,
     :description,
+    :external_id,
     :id,
     :is_deleted,
     :metadata,

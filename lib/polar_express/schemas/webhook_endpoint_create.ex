@@ -7,7 +7,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointCreate do
   """
 
   @typedoc """
-  * `api_version` - The API version that'll be used in event payloads. Possible values: `2026-04`, `2026-10`.
+  * `api_version` - The API version that'll be used in event payloads. Possible values: `2026-04`, `2026-10`, `2027-01`.
   * `events` - The events that will trigger the webhook.
   * `format` - The format of the webhook payload.
   * `name` - An optional name for the webhook endpoint to help organize and identify it. Nullable.

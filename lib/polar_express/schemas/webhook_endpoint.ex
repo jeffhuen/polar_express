@@ -11,6 +11,7 @@ defmodule PolarExpress.Schemas.WebhookEndpoint do
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `enabled` - Whether the webhook endpoint is enabled and will receive events.
   * `events` - The events that will trigger the webhook.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `format` - The format of the webhook payload.
   * `id` - The ID of the object. Format: uuid4.
   * `modified_at` - Last modification timestamp of the object. Nullable.
@@ -27,6 +28,7 @@ defmodule PolarExpress.Schemas.WebhookEndpoint do
     :created_at,
     :enabled,
     :events,
+    :external_id,
     :format,
     :id,
     :modified_at,

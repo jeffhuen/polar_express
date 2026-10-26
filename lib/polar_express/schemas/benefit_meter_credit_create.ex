@@ -8,6 +8,7 @@ defmodule PolarExpress.Schemas.BenefitMeterCreditCreate do
 
   @typedoc """
   * `description` - The description of the benefit. Will be displayed on products having this benefit. Max length: 42.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
 
   The key must be a string with a maximum length of **40 characters**.
@@ -26,7 +27,15 @@ defmodule PolarExpress.Schemas.BenefitMeterCreditCreate do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:description, :metadata, :organization_id, :properties, :type, :visibility]
+  defstruct [
+    :description,
+    :external_id,
+    :metadata,
+    :organization_id,
+    :properties,
+    :type,
+    :visibility
+  ]
 
   @schema_name "BenefitMeterCreditCreate"
   def schema_name, do: @schema_name

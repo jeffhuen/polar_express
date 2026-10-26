@@ -12,6 +12,8 @@ defmodule PolarExpress.Services.CustomersService do
 
   Create a customer.
 
+  Set `external_id` to the customer's ID in your system to look it up by that ID.
+
   **Scopes**: `customers:write`
 
   See `PolarExpress.Params.CustomersCreateCustomerParams` for parameter details.

@@ -1,0 +1,128 @@
+# File generated from our OpenAPI spec
+defmodule PolarExpress.Schemas.CheckoutProductsExternalCreate do
+  @moduledoc """
+  CheckoutProductsExternalCreate
+
+  Create a new checkout session from a list of products,
+  referenced by their external ID.
+  Customers will be able to switch between those products.
+
+  Metadata set on the checkout will be copied
+  to the resulting order and/or subscription.
+  """
+
+  @typedoc """
+  * `allow_discount_codes` - Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
+  * `allow_trial` - Whether to enable the trial period for the checkout session. If `false`, the trial period will be disabled, even if the selected product has a trial configured.
+  * `amount` - Nullable.
+  * `currency` - Nullable.
+  * `custom_field_data` - Key-value object storing custom field values.
+  * `customer_billing_address` - Nullable.
+  * `customer_billing_name` - Nullable.
+  * `customer_email` - Nullable.
+  * `customer_id` - ID of an existing customer in the organization. The customer data will be pre-filled in the checkout form. The resulting order will be linked to this customer. Nullable.
+  * `customer_ip_address` - Nullable.
+  * `customer_metadata` - Key-value object allowing you to store additional information that'll be copied to the created customer.
+
+  The key must be a string with a maximum length of **40 characters**.
+  The value must be either:
+
+  * A string with a maximum length of **500 characters**
+  * An integer
+  * A floating-point number
+  * A boolean
+
+  You can store up to **50 key-value pairs**.
+  * `customer_name` - Nullable.
+  * `customer_tax_id` - Nullable.
+  * `discount_id` - ID of the discount to apply to the checkout. Nullable.
+  * `embed_origin` - If you plan to embed the checkout session, set this to the Origin of the embedding page. It'll allow the Polar iframe to communicate with the parent page. Nullable.
+  * `external_customer_id` - ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set. Nullable.
+  * `external_products` - List of product external IDs available to select at that checkout. The first one will be selected by default.
+  * `is_business_customer` - Whether the customer is a business or an individual. If `true`, the customer will be required to fill their full billing address and billing name.
+  * `locale` - Nullable.
+  * `max_seats` - Maximum number of seats (works with seat-based pricing only) Nullable.
+  * `max_units` - Maximum number of units (works with unit-based pricing only) Nullable.
+  * `metadata` - Key-value object allowing you to store additional information.
+
+  The key must be a string with a maximum length of **40 characters**.
+  The value must be either:
+
+  * A string with a maximum length of **500 characters**
+  * An integer
+  * A floating-point number
+  * A boolean
+
+  You can store up to **50 key-value pairs**.
+  * `min_seats` - Minimum number of seats (works with seat-based pricing only) Nullable.
+  * `min_units` - Minimum number of units (works with unit-based pricing only) Nullable.
+  * `prices` - Optional mapping of product external IDs to a list of ad-hoc prices to create for that product. If not set, catalog prices of the product will be used. Nullable.
+  * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
+  * `return_url` - When set, a back button will be shown in the checkout to return to this URL. Nullable.
+  * `seats` - Predefined number of seats (works with seat-based pricing only) Nullable.
+  * `subscription_id` - ID of a subscription to upgrade. It must be on a free pricing. If checkout is successful, metadata set on this checkout will be copied to the subscription, and existing keys will be overwritten. Nullable.
+  * `success_url` - URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id. Nullable.
+  * `trial_interval` - The interval unit for the trial period. Nullable.
+  * `trial_interval_count` - The number of interval units for the trial period. Nullable.
+  * `units` - Predefined number of units (works with unit-based pricing only) Nullable.
+  """
+  @type t :: %__MODULE__{}
+
+  defstruct [
+    :allow_discount_codes,
+    :allow_trial,
+    :amount,
+    :currency,
+    :custom_field_data,
+    :customer_billing_address,
+    :customer_billing_name,
+    :customer_email,
+    :customer_id,
+    :customer_ip_address,
+    :customer_metadata,
+    :customer_name,
+    :customer_tax_id,
+    :discount_id,
+    :embed_origin,
+    :external_customer_id,
+    :external_products,
+    :is_business_customer,
+    :locale,
+    :max_seats,
+    :max_units,
+    :metadata,
+    :min_seats,
+    :min_units,
+    :prices,
+    :require_billing_address,
+    :return_url,
+    :seats,
+    :subscription_id,
+    :success_url,
+    :trial_interval,
+    :trial_interval_count,
+    :units
+  ]
+
+  @schema_name "CheckoutProductsExternalCreate"
+  def schema_name, do: @schema_name
+
+  def __inner_types__ do
+    %{
+      "currency" => PolarExpress.Schemas.PresentmentCurrency,
+      "customer_billing_address" => PolarExpress.Schemas.AddressInput,
+      "prices" =>
+        {:map_values_list,
+         {:union, :discriminated, "amount_type",
+          %{
+            "custom" => PolarExpress.Schemas.ProductPriceCustomCreate,
+            "fixed" => PolarExpress.Schemas.ProductPriceFixedCreate,
+            "metered_tiers" => PolarExpress.Schemas.ProductPriceMeteredTiersCreate,
+            "metered_unit" => PolarExpress.Schemas.ProductPriceMeteredUnitCreate,
+            "seat_based" => PolarExpress.Schemas.ProductPriceSeatBasedCreate,
+            "unit_based" => PolarExpress.Schemas.ProductPriceUnitBasedCreate
+          }}},
+      "trial_interval" => PolarExpress.Schemas.TrialInterval
+    }
+  end
+end
