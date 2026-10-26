@@ -10,7 +10,7 @@ defmodule PolarExpress.Services.BenefitsService do
   @doc """
   Create Benefit
 
-  Create a benefit.
+  Create a benefit, for example license keys, file downloads or Discord access.
 
   **Scopes**: `benefits:write`
 

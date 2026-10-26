@@ -4,6 +4,7 @@ defmodule PolarExpress.Params.BenefitsListBenefitsParams do
 
   @typedoc """
   * `exclude_id` - Exclude benefits with these IDs.
+  * `external_id` - Filter by benefit external ID.
   * `id` - Filter by benefit IDs.
   * `limit` - Size of a page, defaults to 10. Maximum is 100.
   * `metadata` - Filter by metadata key-value pairs. It uses the `deepObject` style, e.g. `?metadata[key]=value`.
@@ -15,6 +16,7 @@ defmodule PolarExpress.Params.BenefitsListBenefitsParams do
   """
   @type t :: %__MODULE__{
           exclude_id: map() | nil,
+          external_id: map() | nil,
           id: map() | nil,
           limit: integer() | nil,
           metadata: map() | nil,
@@ -27,6 +29,7 @@ defmodule PolarExpress.Params.BenefitsListBenefitsParams do
 
   defstruct [
     :exclude_id,
+    :external_id,
     :id,
     :limit,
     :metadata,

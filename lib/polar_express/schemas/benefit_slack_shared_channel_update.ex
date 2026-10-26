@@ -6,6 +6,7 @@ defmodule PolarExpress.Schemas.BenefitSlackSharedChannelUpdate do
 
   @typedoc """
   * `description` - The description of the benefit. Will be displayed on products having this benefit. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
 
   The key must be a string with a maximum length of **40 characters**.
@@ -22,7 +23,7 @@ defmodule PolarExpress.Schemas.BenefitSlackSharedChannelUpdate do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:description, :metadata, :properties, :type]
+  defstruct [:description, :external_id, :metadata, :properties, :type]
 
   @schema_name "BenefitSlackSharedChannelUpdate"
   def schema_name, do: @schema_name

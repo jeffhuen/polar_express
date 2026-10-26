@@ -11,8 +11,10 @@ defmodule PolarExpress.Schemas.Product do
   * `benefits` - List of benefits granted by the product.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `description` - The description of the product. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `id` - The ID of the object. Format: uuid4.
   * `is_archived` - Whether the product is archived and no longer available.
+  * `is_deletable` - Whether the product can be permanently deleted. Products referenced by an order, subscription, trial or discount cannot be deleted.
   * `is_recurring` - Whether the product is a subscription.
   * `medias` - List of medias associated to the product.
   * `metadata`
@@ -35,8 +37,10 @@ defmodule PolarExpress.Schemas.Product do
     :benefits,
     :created_at,
     :description,
+    :external_id,
     :id,
     :is_archived,
+    :is_deletable,
     :is_recurring,
     :medias,
     :metadata,
