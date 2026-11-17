@@ -1,5 +1,26 @@
 # Changelog
 
+## [Unreleased]
+
+Targets Polar API `2027-01`. Polar releases it as the Current version in the first week of January 2027. Hold the 0.3.0 release until then, because its contract can still change until it is frozen.
+
+### Changed
+
+- **Breaking:** pin and regenerate the SDK from Polar API `2027-01` (`priv/openapi/API_VERSION`)
+- **Breaking:** fixed discounts no longer have `amount` and `currency`. Use `amounts`, a map of currency to amount, on `CheckoutDiscountFixedOnceForeverDuration`, `CheckoutDiscountFixedRepeatDuration`, and the matching `Discount*` schemas
+- **Breaking:** checkout schemas no longer carry `product_price_id`
+- **Breaking:** seat-based pricing renames `seat_tiers` to `tiers` and adds `minimum_units`. `ProductPriceSeatTier`, `ProductPriceSeatTiersInput`, `ProductPriceSeatTiersOutput`, and `SeatTierType` are removed
+- **Breaking:** `member_model_enabled` is removed from `CustomerOrganizationFeatureSettings` and `OrganizationFeatureSettingsUpdate`
+- **Breaking:** remove 18 schema modules: `CheckoutLinkCreate`, `CheckoutLinkCreateProduct`, `CheckoutLinkCreateProductPrice`, `CheckoutPriceCreate`, `CheckoutProductCreate`, `LegacyOrganizationStatus`, `LegacyRecurringProductPrice`, `LegacyRecurringProductPriceCustom`, `LegacyRecurringProductPriceFixed`, `LicenseKeyUser`, `OrderUser`, `OrganizationDetails`, `ProductPriceSeatTier`, `ProductPriceSeatTiersInput`, `ProductPriceSeatTiersOutput`, `ProductPriceType`, `SeatTierType`, `SubscriptionUser`
+
+### Added
+
+- Add `BenefitGrantsService.create_benefit_grant/3`, `update_benefit_grant/4`, and `revoke_benefit_grant/4` for manual benefit grants
+- Add `CustomerMetersService.credit_customer_meter/3` and `reverse_customer_meter_credit/4`
+- Add `MetersService.get_meter_by_external_id/4` and `WebhooksService.get_webhook_endpoint_by_external_id/4`
+- Add 25 schema modules, including `BenefitGrantCreate`, `BenefitGrantUpdate`, `BenefitManuallyGrantedEvent`, `BenefitManuallyRevokedEvent`, `BenefitUnrevokedEvent`, `CheckoutCreate`, and `CheckoutConfirm`
+- Add `event_id` to webhook payload structs
+
 ## [0.2.5] - 2026-11-17
 
 ### Fixed
