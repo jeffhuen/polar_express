@@ -43,9 +43,9 @@ jobs:
       - name: Install dependencies
         run: mix deps.get
 
-      - name: Sync OpenAPI spec
-        run: bash scripts/sync_openapi.sh
-
+      # The committed spec (priv/openapi/openapi.json, pinned by API_VERSION) is
+      # the input. Upstream changes arrive only via the Sync OpenAPI Spec
+      # workflow's PRs, so this job tests the commit, not Polar's moving main.
       - name: Sync JS SDK (for parity)
         run: bash scripts/sync_js.sh
 
@@ -116,11 +116,11 @@ jobs:
       - name: Install dependencies
         run: mix deps.get
 
-      - name: Sync OpenAPI spec (latest)
-        run: bash scripts/sync_openapi.sh
+      - name: Sync OpenAPI spec (latest upstream, Polar's Next)
+        run: bash scripts/sync_openapi.sh latest
 
       - name: Sync JS SDK (for parity)
-        run: bash scripts/sync_js.sh
+        run: bash scripts/sync_js.sh latest
 
       - name: Generate SDK
         run: mix polar_express.generate --clean --stats

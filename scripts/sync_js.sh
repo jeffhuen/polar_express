@@ -6,11 +6,13 @@ set -euo pipefail
 # sdk/typescript/src/<version>/services. Sparse-checkout just that subtree.
 # Used by diff_js.sh and parity tests.
 #
-# Usage: ./sync_js.sh [api-version]   (default: latest available upstream)
+# The version is pinned in priv/openapi/API_VERSION (shared with sync_openapi.sh).
+#
+# Usage: ./sync_js.sh [api-version|latest]   (default: the pinned version)
 
 JS_DIR="priv/polar-sdk"
 REPO="https://github.com/polarsource/polar.git"
-API_VERSION="${1:-}"
+API_VERSION="${1:-$(tr -d '[:space:]' < priv/openapi/API_VERSION)}"
 
 echo "Fetching Polar TypeScript SDK..."
 
@@ -20,10 +22,10 @@ rm -rf "$JS_DIR"
 git clone --depth 1 --filter=blob:none --sparse "$REPO" "$JS_DIR"
 git -C "$JS_DIR" sparse-checkout set sdk/typescript/src
 
-# No version given: track the latest Polar API version.
-if [ -z "$API_VERSION" ]; then
+# "latest": resolve to the highest version published upstream (Polar's Next).
+if [ "$API_VERSION" = "latest" ]; then
   API_VERSION=$(ls "$JS_DIR/sdk/typescript/src/" | grep -o '^[0-9-]*' | sort | tail -1)
-  echo "No version given, using latest upstream: $API_VERSION"
+  echo "Resolved latest upstream: $API_VERSION"
 else
   echo "API version: $API_VERSION"
 fi

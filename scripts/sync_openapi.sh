@@ -3,18 +3,23 @@ set -euo pipefail
 
 # Download the Polar OpenAPI spec.
 # Polar publishes versioned specs in the monorepo at docs/openapi/<version>.openapi.json
-# (e.g. 2026-04, 2026-10). The old live endpoint https://api.polar.sh/openapi.json
+# (e.g. 2026-04, 2026-10, 2027-01). The old live endpoint https://api.polar.sh/openapi.json
 # is gone (404) and polar-js is archived.
 #
 # Fetched via git rather than raw.githubusercontent.com: the latter is not
 # reliably reachable from CI egress, while github.com always is (checkout).
 #
-# Usage: ./sync_openapi.sh [version]   (default: latest available upstream)
+# The version is pinned in priv/openapi/API_VERSION. Polar's newest spec is its
+# in-development "Next" version, which may break at any time, so tracking it
+# is opt-in only.
+#
+# Usage: ./sync_openapi.sh [version|latest]   (default: the pinned version)
 
 SPEC_DIR="priv/openapi"
 SPEC_FILE="$SPEC_DIR/openapi.json"
+VERSION_FILE="$SPEC_DIR/API_VERSION"
 
-API_VERSION="${1:-}"
+API_VERSION="${1:-$(tr -d '[:space:]' < "$VERSION_FILE")}"
 REPO="https://github.com/polarsource/polar.git"
 
 mkdir -p "$SPEC_DIR"
@@ -26,10 +31,10 @@ echo "Cloning polarsource/polar (sparse)..."
 git clone --depth 1 --filter=blob:none --sparse "$REPO" "$TMP_DIR/polar"
 git -C "$TMP_DIR/polar" sparse-checkout set docs/openapi
 
-# No version given: track the latest Polar API version.
-if [ -z "$API_VERSION" ]; then
+# "latest": resolve to the highest version published upstream (Polar's Next).
+if [ "$API_VERSION" = "latest" ]; then
   API_VERSION=$(ls "$TMP_DIR/polar/docs/openapi/" | grep -o '^[0-9-]*' | sort | tail -1)
-  echo "No version given, using latest upstream: $API_VERSION"
+  echo "Resolved latest upstream: $API_VERSION"
 fi
 
 SPEC_PATH="docs/openapi/${API_VERSION}.openapi.json"
@@ -59,6 +64,12 @@ fi
 SPEC_VERSION=$(grep -o '"version": *"[^"]*"' "$SPEC_FILE" | head -1 | cut -d'"' -f4)
 if [ -z "$SPEC_VERSION" ]; then
   echo "ERROR: Could not extract version from spec" >&2
+  exit 1
+fi
+
+if [ "$SPEC_VERSION" != "$API_VERSION" ]; then
+  echo "ERROR: Requested API version $API_VERSION but spec reports $SPEC_VERSION" >&2
+  rm -f "$SPEC_FILE"
   exit 1
 fi
 
