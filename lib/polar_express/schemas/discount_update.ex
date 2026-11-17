@@ -2,8 +2,6 @@
 defmodule PolarExpress.Schemas.DiscountUpdate do
   @moduledoc """
   DiscountUpdate
-
-  Schema to update a discount.
   """
 
   @typedoc """

@@ -12,6 +12,8 @@ defmodule PolarExpress.Services.CustomersService do
 
   Create a customer.
 
+  Set `external_id` to the customer's ID in your system to look it up by that ID.
+
   **Scopes**: `customers:write`
 
   See `PolarExpress.Params.CustomersCreateCustomerParams` for parameter details.
@@ -167,21 +169,6 @@ defmodule PolarExpress.Services.CustomersService do
       "/v1/customers/external/#{external_id}/members/#{member_external_id}",
       Keyword.merge(opts, params: params)
     )
-  end
-
-  @doc """
-  Export Customers
-
-  Export customers as a CSV file.
-
-  **Scopes**: `customers:read` `customers:write`
-
-  See `PolarExpress.Params.CustomersExportCustomersParams` for parameter details.
-  """
-  @spec export_customers(Client.t(), map(), keyword()) ::
-          {:ok, Client.raw_response()} | {:error, PolarExpress.Error.t()}
-  def export_customers(client, params \\ %{}, opts \\ []) do
-    Client.raw_request(client, :get, "/v1/customers/export", Keyword.merge(opts, params: params))
   end
 
   @doc """

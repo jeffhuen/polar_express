@@ -20,7 +20,7 @@ defmodule PolarExpress.Schemas.MeterCreate do
   * A boolean
 
   You can store up to **50 key-value pairs**.
-  * `name` - The name of the meter. Will be shown on customer's invoices and usage.
+  * `name` - The name of the meter. Will be shown on customer's invoices and usage. Max length: 128.
   * `organization_id` - The ID of the organization owning the meter. **Required unless you use an organization token.** Nullable.
   * `unit` - The unit of the meter.
   """

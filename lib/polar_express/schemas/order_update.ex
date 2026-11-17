@@ -7,7 +7,7 @@ defmodule PolarExpress.Schemas.OrderUpdate do
   """
 
   @typedoc """
-  * `billing_address` - The address of the customer that should appear on the invoice. Country and state fields cannot be updated. Nullable.
+  * `billing_address` - The address of the customer that should appear on the invoice. Address fields used for tax calculation cannot be updated. Nullable.
   * `billing_name` - The name of the customer that should appear on the invoice. Nullable.
   """
   @type t :: %__MODULE__{}

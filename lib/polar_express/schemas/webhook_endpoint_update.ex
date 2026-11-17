@@ -23,8 +23,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointUpdate do
 
   def __inner_types__ do
     %{
-      "events" => PolarExpress.Schemas.WebhookEventType,
-      "format" => PolarExpress.Schemas.WebhookFormat
+      "events" => PolarExpress.Schemas.WebhookEventType
     }
   end
 end

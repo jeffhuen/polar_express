@@ -9,7 +9,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointCreate do
   @typedoc """
   * `api_version` - The API version that'll be used in event payloads. Possible values: `2026-04`, `2026-10`.
   * `events` - The events that will trigger the webhook.
-  * `format` - The format of the webhook payload.
+  * `format` - The format of the webhook payload. Possible values: `raw`, `discord`, `slack`.
   * `name` - An optional name for the webhook endpoint to help organize and identify it. Nullable.
   * `organization_id` - The organization ID associated with the webhook endpoint. **Required unless you use an organization token.** Nullable.
   * `url` - The URL where the webhook events will be sent. Format: uri. Max length: 2083.
@@ -23,8 +23,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointCreate do
 
   def __inner_types__ do
     %{
-      "events" => PolarExpress.Schemas.WebhookEventType,
-      "format" => PolarExpress.Schemas.WebhookFormat
+      "events" => PolarExpress.Schemas.WebhookEventType
     }
   end
 end

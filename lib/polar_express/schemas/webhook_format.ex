@@ -1,13 +1,14 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.WebhookFormat do
-  @moduledoc "WebhookFormat enum. Possible values: `raw`, `discord`, `slack`."
+  @moduledoc "WebhookFormat enum. Possible values: `raw`, `discord`, `slack`, `mcp`."
 
   @type t :: String.t()
 
   @values [
     "raw",
     "discord",
-    "slack"
+    "slack",
+    "mcp"
   ]
 
   @doc "List of valid enum values."

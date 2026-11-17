@@ -33,26 +33,6 @@ defmodule PolarExpress.Services.SubscriptionsService do
   end
 
   @doc """
-  Export Subscriptions
-
-  Export subscriptions as a CSV file.
-
-  **Scopes**: `subscriptions:read` `subscriptions:write`
-
-  See `PolarExpress.Params.SubscriptionsExportSubscriptionsParams` for parameter details.
-  """
-  @spec export_subscriptions(Client.t(), map(), keyword()) ::
-          {:ok, Client.raw_response()} | {:error, PolarExpress.Error.t()}
-  def export_subscriptions(client, params \\ %{}, opts \\ []) do
-    Client.raw_request(
-      client,
-      :get,
-      "/v1/subscriptions/export",
-      Keyword.merge(opts, params: params)
-    )
-  end
-
-  @doc """
   Get Subscription
 
   Get a subscription by ID.

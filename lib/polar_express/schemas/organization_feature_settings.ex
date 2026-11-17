@@ -9,7 +9,6 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
   * `compass_enabled` - If this organization has the split product navigation (Billing / Compass / Customers) enabled in the dashboard
   * `dispute_auto_accept_enabled` - If this organization can set a threshold below which Polar concedes disputes on its behalf. Requires `disputes_enabled`.
   * `disputes_enabled` - If this organization has the disputes dashboard enabled
-  * `frame_ancestors_enforced` - If this organization's checkout tells the browser to refuse framing from any host outside its embed hosts.
   * `issue_funding_enabled` - If this organization has issue funding enabled
   * `member_model_enabled` - If this organization has the Member model enabled
   * `merchant_migration_enabled` - If this organization can migrate its billing from another provider (e.g. Stripe) to Polar.
@@ -29,7 +28,6 @@ defmodule PolarExpress.Schemas.OrganizationFeatureSettings do
     :compass_enabled,
     :dispute_auto_accept_enabled,
     :disputes_enabled,
-    :frame_ancestors_enforced,
     :issue_funding_enabled,
     :member_model_enabled,
     :merchant_migration_enabled,

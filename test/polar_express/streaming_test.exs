@@ -2,7 +2,7 @@ defmodule PolarExpress.StreamingTest do
   use ExUnit.Case, async: true
 
   alias PolarExpress.Client
-  alias PolarExpress.Services.CustomersService
+  alias PolarExpress.Services.OrdersService
 
   setup do
     client = PolarExpress.client("pk_test_123")
@@ -63,25 +63,25 @@ defmodule PolarExpress.StreamingTest do
   describe "CSV export services" do
     test "return raw responses instead of JSON-decoding CSV", %{client: client} do
       PolarExpress.Test.stub(fn %{method: :get, url: url} ->
-        assert url =~ "/v1/customers/export"
-        {200, [{"content-type", "text/csv"}], "id,email\ncus_123,jane@example.com\n"}
+        assert url =~ "/v1/orders/export"
+        {200, [{"content-type", "text/csv"}], "id,amount\norder_123,2000\n"}
       end)
 
-      assert {:ok, response} = CustomersService.export_customers(client, %{})
+      assert {:ok, response} = OrdersService.export_orders(client, %{})
 
       assert response.status == 200
-      assert response.body =~ "cus_123"
+      assert response.body =~ "order_123"
       assert response.headers == [{"content-type", "text/csv"}]
     end
 
     test "return API errors for non-2xx export responses", %{client: client} do
       PolarExpress.Test.stub(fn %{method: :get, url: url} ->
-        assert url =~ "/v1/customers/export"
+        assert url =~ "/v1/orders/export"
         {422, [], ~s({"type": "HttpValidationError", "detail": "Invalid filter"})}
       end)
 
       assert {:error, %PolarExpress.Error{} = error} =
-               CustomersService.export_customers(client, %{})
+               OrdersService.export_orders(client, %{})
 
       assert error.type == :validation_error
       assert error.http_status == 422

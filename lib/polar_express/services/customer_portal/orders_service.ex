@@ -8,28 +8,6 @@ defmodule PolarExpress.Services.CustomerPortal.OrdersService do
   alias PolarExpress.Client
 
   @doc """
-  Confirm Retry Payment
-
-  Confirm a retry payment using a Stripe confirmation token.
-
-  See `PolarExpress.Params.CustomerPortal.OrdersConfirmRetryPaymentParams` for parameter details.
-  """
-  @spec confirm_retry_payment(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.CustomerOrderPaymentConfirmation.t()}
-          | {:error, PolarExpress.Error.t()}
-  def confirm_retry_payment(client, id, params \\ %{}, opts \\ []) do
-    Client.request(
-      client,
-      :post,
-      "/v1/customer-portal/orders/#{id}/confirm-payment",
-      Keyword.merge(opts,
-        params: params,
-        resource: PolarExpress.Schemas.CustomerOrderPaymentConfirmation
-      )
-    )
-  end
-
-  @doc """
   Generate Order Invoice
 
   Trigger generation of an order's invoice.
@@ -80,28 +58,6 @@ defmodule PolarExpress.Services.CustomerPortal.OrdersService do
       :get,
       "/v1/customer-portal/orders/#{id}/invoice",
       Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.CustomerOrderInvoice)
-    )
-  end
-
-  @doc """
-  Get Order Payment Status
-
-  Get the current payment status for an order.
-
-  See `PolarExpress.Params.CustomerPortal.OrdersGetOrderPaymentStatusParams` for parameter details.
-  """
-  @spec get_order_payment_status(Client.t(), String.t(), map(), keyword()) ::
-          {:ok, PolarExpress.Schemas.CustomerOrderPaymentStatus.t()}
-          | {:error, PolarExpress.Error.t()}
-  def get_order_payment_status(client, id, params \\ %{}, opts \\ []) do
-    Client.request(
-      client,
-      :get,
-      "/v1/customer-portal/orders/#{id}/payment-status",
-      Keyword.merge(opts,
-        params: params,
-        resource: PolarExpress.Schemas.CustomerOrderPaymentStatus
-      )
     )
   end
 

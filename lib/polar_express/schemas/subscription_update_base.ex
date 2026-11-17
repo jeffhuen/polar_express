@@ -19,7 +19,7 @@ defmodule PolarExpress.Schemas.SubscriptionUpdateBase do
   You can store up to **50 key-value pairs**.
   * `product_id` - Update subscription to another product. Nullable.
   * `proration_behavior` - Determine how to handle the proration billing. If not provided, will use the default organization setting. Nullable.
-  * `trial_end` - Set or extend the trial period of the subscription. If set to `now`, the trial will end immediately. Nullable.
+  * `trial_end` - Set or extend the trial period of the subscription. If set to `now`, the trial will end immediately and the first billing cycle will be charged synchronously. The subscription remains trialing if the payment fails. Nullable.
   """
   @type t :: %__MODULE__{}
 

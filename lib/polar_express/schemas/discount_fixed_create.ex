@@ -2,8 +2,6 @@
 defmodule PolarExpress.Schemas.DiscountFixedCreate do
   @moduledoc """
   DiscountFixedCreate
-
-  Schema to create a fixed amount discount.
   """
 
   @typedoc """

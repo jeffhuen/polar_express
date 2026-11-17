@@ -12,7 +12,6 @@ defmodule PolarExpress.Services.CustomerPortalService do
     :orders,
     :organizations,
     :seats,
-    :subscriptions,
-    :wallets
+    :subscriptions
   ]
 end
