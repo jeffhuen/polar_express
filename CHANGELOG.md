@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.2.4] - 2026-11-17
+
+### Changed
+
+- **Breaking:** regenerate the SDK from the final Polar API `2026-10` spec. Polar's "Align API reference with public endpoints" change removed 12 operations from the published spec, so these functions are removed: `CustomersService.export_customers/3`, `SubscriptionsService.export_subscriptions/3`, `MetricsService.export_metrics/3`, the five metric dashboard functions (list, get, create, update, delete), the customer portal wallets service (list and get), and the customer portal order `confirm_retry_payment` and `get_order_payment_status` calls ([0.2.4])
+- **Breaking:** remove about 350 schema modules that the pruned spec no longer defines, such as payouts, organization review, merchant migration, SSO connections, and Compass. `OrdersService.export_orders/3` stays ([0.2.4])
+- Pin the Polar API version in `priv/openapi/API_VERSION` (`2026-10`). `scripts/sync_openapi.sh` and `scripts/sync_js.sh` read it, and `latest` selects Polar's in-development Next version ([0.2.4])
+- Check that the downloaded spec's `info.version` matches the requested API version ([0.2.4])
+- Run the CI build job against the committed spec instead of the newest upstream spec. Only the preview-drift job, which cannot fail the build, tracks `latest` ([0.2.4])
+
+### Added
+
+- Add `ProductsService.delete_product/4` ([0.2.4])
+- Add `BadRequest`, `CheckoutLocked`, `CustomerBenefitGrantMember`, and `ProductNotDeletable` schemas ([0.2.4])
+
+### Fixed
+
+- Stop the weekly OpenAPI sync from failing on Polar's unreleased `2027-01` spec, which replaces fixed discount `amount` and `currency` with `amounts` ([0.2.4])
+
 ## [0.2.3] - 2026-09-22
 
 ### Changed
@@ -145,6 +164,7 @@ _Initial release._
 - Add list pagination, raw requests, streaming requests, retries, telemetry, OAuth, webhooks, and test stubs ([`693a87e`])
 - Add Finch-backed HTTP client and RustyJSON-backed JSON decoding ([`693a87e`])
 
+[0.2.4]: https://github.com/jeffhuen/polar_express/compare/0.2.3...0.2.4
 [0.2.3]: https://github.com/jeffhuen/polar_express/compare/0.2.2...0.2.3
 [0.2.1]: https://github.com/jeffhuen/polar_express/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/jeffhuen/polar_express/compare/66d43a5...HEAD

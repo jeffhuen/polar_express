@@ -18,8 +18,8 @@ auto-paging pagination — all generated from the spec with full documentation.
 The **client layer** handles HTTP execution via Finch with connection pooling,
 automatic retries, request encoding, response deserialization, and telemetry.
 
-Together, the complete Polar API surface is covered: 39 service modules,
-38 typed resource structs, 119 typed params modules, webhook signature
+Together, the complete Polar API surface is covered: 38 service modules,
+36 typed resource structs, 111 typed params modules, webhook signature
 verification, and automatic pagination.
 
 ## Installation
@@ -46,7 +46,7 @@ Add `polar_express` to your dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:polar_express, "~> 0.1.5"}
+    {:polar_express, "~> 0.2.4"}
   ]
 end
 ```
@@ -160,11 +160,12 @@ client = PolarExpress.client("pk_test_other_key", max_retries: 5)
 ## Development
 
 ```bash
-# Sync the OpenAPI spec
+# Sync the OpenAPI spec. The API version is pinned in priv/openapi/API_VERSION;
+# pass a version (or `latest` for Polar's in-development Next) to override.
 bash scripts/sync_openapi.sh
 
 # Generate the SDK
-mix polar.generate --clean --stats
+mix polar_express.generate --clean --stats
 
 # Verify
 mix compile --warnings-as-errors
@@ -179,9 +180,9 @@ The SDK is auto-generated from Polar's versioned
 [OpenAPI spec](https://github.com/polarsource/polar/tree/main/docs/openapi)
 via `mix polar_express.generate`. The generator produces:
 
-- **39 service modules** matching the TypeScript SDK layout
-- **38 resource structs** with `@type t` definitions and inner types
-- **119 params modules** with `@typedoc` field annotations
+- **38 service modules** matching the TypeScript SDK layout
+- **36 resource structs** with `@type t` definitions and inner types
+- **111 params modules** with `@typedoc` field annotations
 - **1 registry** (event types)
 - **43 event modules** for typed webhook event handling (42 event types + unknown-event fallback)
 
