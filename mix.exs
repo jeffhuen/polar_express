@@ -56,10 +56,10 @@ defmodule PolarExpress.MixProject do
       # Installer
       {:igniter, "~> 0.7", optional: true},
       # Floor req at 0.6.1 for the decompression bomb (GHSA-655f-mp8p-96gv) and
-      # multipart header injection (GHSA-px9f-whj3-246m) fixes. Igniter allows
-      # `req ~> 0.5` (>= 0.5, < 1.0), so no override is needed, and Hex refuses
-      # to publish a package that declares one.
-      {:req, "~> 0.6.1", optional: true},
+      # multipart header injection (GHSA-px9f-whj3-246m) fixes, with no ceiling
+      # below 1.0. Igniter allows `req ~> 0.5` (>= 0.5, < 1.0), so no override is
+      # needed, and Hex refuses to publish a package that declares one.
+      {:req, ">= 0.6.1 and < 1.0.0", optional: true},
 
       # Dev/Test
       {:plug, "~> 1.16", only: :test},
