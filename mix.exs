@@ -55,12 +55,11 @@ defmodule PolarExpress.MixProject do
 
       # Installer
       {:igniter, "~> 0.7", optional: true},
-      # Security override: igniter still pins `req ~> 0.5`, but the req fixes for
-      # the decompression bomb (GHSA-655f-mp8p-96gv) and multipart header injection
-      # (GHSA-px9f-whj3-246m) require req >= 0.6.1. Igniter's only Req usage is a
-      # hex.pm version lookup wrapped in with/rescue, compatible with req 0.6.
-      # Revisit once igniter allows req 0.6+.
-      {:req, "~> 0.6.1", optional: true, override: true},
+      # Floor req at 0.6.1 for the decompression bomb (GHSA-655f-mp8p-96gv) and
+      # multipart header injection (GHSA-px9f-whj3-246m) fixes. Igniter allows
+      # `req ~> 0.5` (>= 0.5, < 1.0), so no override is needed, and Hex refuses
+      # to publish a package that declares one.
+      {:req, "~> 0.6.1", optional: true},
 
       # Dev/Test
       {:plug, "~> 1.16", only: :test},
