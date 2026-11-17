@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.5] - 2026-11-17
+
+### Fixed
+
+- Allow `req` 0.7 and later. 0.2.4 required `req ~> 0.6.1`, which also capped it below 0.7, so an app that uses `req` 0.7 could not resolve 0.2.4. The optional `req` requirement is now `>= 0.6.1 and < 1.0.0`, which keeps the security floor ([0.2.5])
+
 ## [0.2.4] - 2026-11-17
 
 ### Changed
@@ -165,6 +171,7 @@ _Initial release._
 - Add list pagination, raw requests, streaming requests, retries, telemetry, OAuth, webhooks, and test stubs ([`693a87e`])
 - Add Finch-backed HTTP client and RustyJSON-backed JSON decoding ([`693a87e`])
 
+[0.2.5]: https://github.com/jeffhuen/polar_express/compare/0.2.4...0.2.5
 [0.2.4]: https://github.com/jeffhuen/polar_express/compare/0.2.3...0.2.4
 [0.2.3]: https://github.com/jeffhuen/polar_express/compare/0.2.2...0.2.3
 [0.2.1]: https://github.com/jeffhuen/polar_express/compare/0.2.0...0.2.1
