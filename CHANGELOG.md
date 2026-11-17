@@ -18,6 +18,7 @@
 ### Fixed
 
 - Stop the weekly OpenAPI sync from failing on Polar's unreleased `2027-01` spec, which replaces fixed discount `amount` and `currency` with `amounts` ([0.2.4])
+- Require `req ~> 0.6.1` (optional, used by the Igniter installer) for the fixes to the decompression bomb (GHSA-655f-mp8p-96gv) and multipart header injection (GHSA-px9f-whj3-246m) advisories ([0.2.4])
 
 ## [0.2.3] - 2026-09-22
 
