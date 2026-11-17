@@ -357,8 +357,7 @@ defmodule PolarExpress.DeserializerTest do
           "name" => "10% off",
           "type" => "fixed",
           "duration" => "once",
-          "amount" => 500,
-          "currency" => "usd"
+          "amounts" => %{"usd" => 500}
         }
       }
 
@@ -377,8 +376,7 @@ defmodule PolarExpress.DeserializerTest do
           "type" => "fixed",
           "duration" => "repeating",
           "duration_in_months" => 3,
-          "amount" => 500,
-          "currency" => "usd"
+          "amounts" => %{"usd" => 500}
         }
       }
 
@@ -388,7 +386,7 @@ defmodule PolarExpress.DeserializerTest do
       assert %PolarExpress.Schemas.CheckoutDiscountFixedRepeatDuration{} = result.discount
       assert result.discount.id == "disc_1"
       assert result.discount.duration_in_months == 3
-      assert result.discount.amount == 500
+      assert result.discount.amounts == %{"usd" => 500}
     end
 
     test "resolves checkout discount to percentage repeat variant" do

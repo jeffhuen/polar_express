@@ -5,6 +5,7 @@ defmodule PolarExpress.Params.CustomerMetersListCustomerMetersParams do
   @typedoc """
   * `customer_id` - Filter by customer ID.
   * `external_customer_id` - Filter by external customer ID.
+  * `external_meter_id` - Filter by meter external ID.
   * `limit` - Size of a page, defaults to 10. Maximum is 100.
   * `meter_id` - Filter by meter ID.
   * `organization_id` - Filter by organization ID.
@@ -14,6 +15,7 @@ defmodule PolarExpress.Params.CustomerMetersListCustomerMetersParams do
   @type t :: %__MODULE__{
           customer_id: map() | nil,
           external_customer_id: map() | nil,
+          external_meter_id: map() | nil,
           limit: integer() | nil,
           meter_id: map() | nil,
           organization_id: map() | nil,
@@ -24,6 +26,7 @@ defmodule PolarExpress.Params.CustomerMetersListCustomerMetersParams do
   defstruct [
     :customer_id,
     :external_customer_id,
+    :external_meter_id,
     :limit,
     :meter_id,
     :organization_id,

@@ -2,13 +2,13 @@
 defmodule PolarExpress.Schemas.DiscountFixedCreate do
   @moduledoc """
   DiscountFixedCreate
+
+  Schema to create a fixed amount discount.
   """
 
   @typedoc """
-  * `amount` - Nullable. **Deprecated.**
-  * `amounts` - Nullable.
+  * `amounts` - Map of currency to fixed amount to discount from the total. This allows specifying different discount amounts for different currencies.
   * `code` - Code customers can use to apply the discount during checkout. Must be between 3 and 256 characters long and contain only alphanumeric characters.If not provided, the discount can only be applied via the API. Nullable.
-  * `currency` - Nullable. **Deprecated.**
   * `duration` - For subscriptions, determines if the discount should be applied once on the first invoice, forever, or for a certain number of months determined by `duration_in_months`.
   * `duration_in_months` - Number of months the discount should be applied.
 
@@ -17,6 +17,7 @@ defmodule PolarExpress.Schemas.DiscountFixedCreate do
   For this to work on yearly pricing, you should multiply this by 12.
   For example, to apply the discount for 2 years, set this to 24. Nullable.
   * `ends_at` - Optional timestamp after which the discount is no longer redeemable. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. It must start with a letter or digit and contain only letters, digits, `_`, `-`, `.` and `:`. Nullable.
   * `max_redemptions` - Optional maximum number of times the discount can be redeemed. Nullable.
   * `max_redemptions_per_customer` - Optional maximum number of times the discount can be redeemed by a single customer. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
@@ -39,13 +40,12 @@ defmodule PolarExpress.Schemas.DiscountFixedCreate do
   @type t :: %__MODULE__{}
 
   defstruct [
-    :amount,
     :amounts,
     :code,
-    :currency,
     :duration,
     :duration_in_months,
     :ends_at,
+    :external_id,
     :max_redemptions,
     :max_redemptions_per_customer,
     :metadata,
@@ -61,7 +61,6 @@ defmodule PolarExpress.Schemas.DiscountFixedCreate do
 
   def __inner_types__ do
     %{
-      "currency" => PolarExpress.Schemas.PresentmentCurrency,
       "duration" => PolarExpress.Schemas.DiscountDuration
     }
   end

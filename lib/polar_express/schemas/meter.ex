@@ -7,11 +7,14 @@ defmodule PolarExpress.Schemas.Meter do
   @typedoc """
   * `aggregation` - The aggregation to apply on the filtered events to calculate the meter.
   * `archived_at` - Whether the meter is archived and the time it was archived. Nullable.
+  * `catalog_id` - ID of the catalog that introduced this version of the meter. None for meters not managed by declarative config. Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `custom_label` - The label for the custom unit. Nullable.
   * `custom_multiplier` - The multiplier to convert from base unit to display scale. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `filter` - The filter to apply on events that'll be used to calculate the meter.
   * `id` - The ID of the object. Format: uuid4.
+  * `is_current` - Whether this is the current version of the meter.
   * `metadata`
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `name` - The name of the meter. Will be shown on customer's invoices and usage.
@@ -23,11 +26,14 @@ defmodule PolarExpress.Schemas.Meter do
   defstruct [
     :aggregation,
     :archived_at,
+    :catalog_id,
     :created_at,
     :custom_label,
     :custom_multiplier,
+    :external_id,
     :filter,
     :id,
+    :is_current,
     :metadata,
     :modified_at,
     :name,

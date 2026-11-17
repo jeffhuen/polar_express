@@ -9,6 +9,8 @@ defmodule PolarExpress.Schemas.PendingSubscriptionUpdate do
   @typedoc """
   * `applies_at` - The date and time when the subscription update will be applied. Format: date-time.
   * `created_at` - Creation timestamp of the object. Format: date-time.
+  * `discount_id` - ID of the new discount to apply to the subscription. If `null`, the subscription keeps its current discount. Nullable.
+  * `discount_unset` - Whether the subscription's current discount will be removed.
   * `id` - The ID of the object. Format: uuid4.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `product_id` - ID of the new product to apply to the subscription. If `null`, the product won't be changed. Nullable.
@@ -17,7 +19,17 @@ defmodule PolarExpress.Schemas.PendingSubscriptionUpdate do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:applies_at, :created_at, :id, :modified_at, :product_id, :seats, :units]
+  defstruct [
+    :applies_at,
+    :created_at,
+    :discount_id,
+    :discount_unset,
+    :id,
+    :modified_at,
+    :product_id,
+    :seats,
+    :units
+  ]
 
   @schema_name "PendingSubscriptionUpdate"
   def schema_name, do: @schema_name

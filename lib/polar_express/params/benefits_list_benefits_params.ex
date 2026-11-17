@@ -3,7 +3,10 @@ defmodule PolarExpress.Params.BenefitsListBenefitsParams do
   @moduledoc "Parameters for benefits list benefits."
 
   @typedoc """
+  * `catalog_id` - Filter by catalog ID.
+  * `catalog_status` - Filter by catalog status.
   * `exclude_id` - Exclude benefits with these IDs.
+  * `external_id` - Filter by benefit external ID.
   * `id` - Filter by benefit IDs.
   * `limit` - Size of a page, defaults to 10. Maximum is 100.
   * `metadata` - Filter by metadata key-value pairs. It uses the `deepObject` style, e.g. `?metadata[key]=value`.
@@ -14,7 +17,10 @@ defmodule PolarExpress.Params.BenefitsListBenefitsParams do
   * `type` - Filter by benefit type.
   """
   @type t :: %__MODULE__{
+          catalog_id: map() | nil,
+          catalog_status: map() | nil,
           exclude_id: map() | nil,
+          external_id: map() | nil,
           id: map() | nil,
           limit: integer() | nil,
           metadata: map() | nil,
@@ -26,7 +32,10 @@ defmodule PolarExpress.Params.BenefitsListBenefitsParams do
         }
 
   defstruct [
+    :catalog_id,
+    :catalog_status,
     :exclude_id,
+    :external_id,
     :id,
     :limit,
     :metadata,

@@ -4,6 +4,9 @@ defmodule PolarExpress.Params.ProductsListProductsParams do
 
   @typedoc """
   * `benefit_id` - Filter products granting specific benefit.
+  * `catalog_id` - Filter by catalog ID.
+  * `catalog_status` - Filter by catalog status.
+  * `external_id` - Filter by product external ID.
   * `id` - Filter by product ID.
   * `is_archived` - Filter on archived products.
   * `is_recurring` - Filter on recurring products. If `true`, only subscriptions tiers are returned. If `false`, only one-time purchase products are returned.
@@ -17,6 +20,9 @@ defmodule PolarExpress.Params.ProductsListProductsParams do
   """
   @type t :: %__MODULE__{
           benefit_id: map() | nil,
+          catalog_id: map() | nil,
+          catalog_status: map() | nil,
+          external_id: map() | nil,
           id: map() | nil,
           is_archived: boolean() | nil,
           is_recurring: boolean() | nil,
@@ -31,6 +37,9 @@ defmodule PolarExpress.Params.ProductsListProductsParams do
 
   defstruct [
     :benefit_id,
+    :catalog_id,
+    :catalog_status,
+    :external_id,
     :id,
     :is_archived,
     :is_recurring,

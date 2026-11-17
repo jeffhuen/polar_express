@@ -55,7 +55,6 @@ defmodule PolarExpress.Schemas.Checkout do
   * `product` - Product selected to checkout. Nullable.
   * `product_id` - ID of the product to checkout. Nullable.
   * `product_price` - Price of the selected product. Nullable. **Deprecated.**
-  * `product_price_id` - ID of the product price to checkout. Nullable. **Deprecated.**
   * `products` - List of products available to select.
   * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
   * `return_url` - When set, a back button will be shown in the checkout to return to this URL. Nullable.
@@ -129,7 +128,6 @@ defmodule PolarExpress.Schemas.Checkout do
     :product,
     :product_id,
     :product_price,
-    :product_price_id,
     :products,
     :require_billing_address,
     :return_url,
@@ -166,14 +164,9 @@ defmodule PolarExpress.Schemas.Checkout do
          ]},
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "payment_processor" => PolarExpress.Schemas.PaymentProcessor,
-      "prices" =>
-        {:map_values_list,
-         {:union, :variants,
-          [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]}},
+      "prices" => {:map_values_list, PolarExpress.Schemas.ProductPrice},
       "product" => PolarExpress.Schemas.CheckoutProduct,
-      "product_price" =>
-        {:union, :variants,
-         [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
+      "product_price" => PolarExpress.Schemas.ProductPrice,
       "products" => PolarExpress.Schemas.CheckoutProduct,
       "status" => PolarExpress.Schemas.CheckoutStatus,
       "tax_behavior" => PolarExpress.Schemas.TaxBehavior,

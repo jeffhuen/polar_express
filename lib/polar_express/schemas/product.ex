@@ -9,10 +9,13 @@ defmodule PolarExpress.Schemas.Product do
   @typedoc """
   * `attached_custom_fields` - List of custom fields attached to the product.
   * `benefits` - List of benefits granted by the product.
+  * `catalog_id` - ID of the catalog that introduced this version of the product. None for products not managed by declarative config. Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `description` - The description of the product. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `id` - The ID of the object. Format: uuid4.
   * `is_archived` - Whether the product is archived and no longer available.
+  * `is_current` - Whether this is the current version of the product.
   * `is_deletable` - Whether the product can be permanently deleted. Products referenced by an order, subscription, trial or discount cannot be deleted.
   * `is_recurring` - Whether the product is a subscription.
   * `medias` - List of medias associated to the product.
@@ -27,6 +30,7 @@ defmodule PolarExpress.Schemas.Product do
   * `recurring_interval_count` - Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. None for one-time products. Nullable.
   * `trial_interval` - The interval unit for the trial period. Nullable.
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
+  * `trial_payment_setup_required` - Whether customers must provide a payment method to start a trial. If `false`, customers can start a trial without entering payment details.
   * `visibility` - The visibility of the product.
   """
   @type t :: %__MODULE__{}
@@ -34,10 +38,13 @@ defmodule PolarExpress.Schemas.Product do
   defstruct [
     :attached_custom_fields,
     :benefits,
+    :catalog_id,
     :created_at,
     :description,
+    :external_id,
     :id,
     :is_archived,
+    :is_current,
     :is_deletable,
     :is_recurring,
     :medias,
@@ -52,6 +59,7 @@ defmodule PolarExpress.Schemas.Product do
     :recurring_interval_count,
     :trial_interval,
     :trial_interval_count,
+    :trial_payment_setup_required,
     :visibility
   ]
 
@@ -65,9 +73,7 @@ defmodule PolarExpress.Schemas.Product do
       "medias" => PolarExpress.Schemas.ProductMediaFileRead,
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "meter_interval" => PolarExpress.Schemas.RecurringInterval,
-      "prices" =>
-        {:union, :variants,
-         [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
+      "prices" => PolarExpress.Schemas.ProductPrice,
       "recurring_interval" => PolarExpress.Schemas.RecurringInterval,
       "trial_interval" => PolarExpress.Schemas.TrialInterval,
       "visibility" => PolarExpress.Schemas.ProductVisibility

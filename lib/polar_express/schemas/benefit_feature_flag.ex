@@ -10,10 +10,13 @@ defmodule PolarExpress.Schemas.BenefitFeatureFlag do
   """
 
   @typedoc """
+  * `catalog_id` - ID of the catalog that introduced this version of the benefit. None for benefits not managed by declarative config. Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `deletable` - Whether the benefit is deletable.
   * `description` - The description of the benefit.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. Nullable.
   * `id` - The ID of the benefit. Format: uuid4.
+  * `is_current` - Whether this is the current version of the benefit.
   * `is_deleted` - Whether the benefit is deleted.
   * `metadata`
   * `modified_at` - Last modification timestamp of the object. Nullable.
@@ -27,10 +30,13 @@ defmodule PolarExpress.Schemas.BenefitFeatureFlag do
   @type t :: %__MODULE__{}
 
   defstruct [
+    :catalog_id,
     :created_at,
     :deletable,
     :description,
+    :external_id,
     :id,
+    :is_current,
     :is_deleted,
     :metadata,
     :modified_at,

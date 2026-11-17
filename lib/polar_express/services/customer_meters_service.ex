@@ -8,6 +8,30 @@ defmodule PolarExpress.Services.CustomerMetersService do
   alias PolarExpress.Client
 
   @doc """
+  Credit Customer Meter
+
+  Manually grant credits on a customer meter.
+
+  Returns the `meter.credited` event. The customer meter balance is updated
+  before the response is returned, unless the meter is being updated
+  concurrently, in which case it catches up shortly after.
+
+  **Scopes**: `customers:write`
+
+  See `PolarExpress.Params.CustomerMetersCreditCustomerMeterParams` for parameter details.
+  """
+  @spec credit_customer_meter(Client.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.MeterCreditEvent.t()} | {:error, PolarExpress.Error.t()}
+  def credit_customer_meter(client, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :post,
+      "/v1/customer-meters/credits",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.MeterCreditEvent)
+    )
+  end
+
+  @doc """
   Get Customer Meter
 
   Get a customer meter by ID.
@@ -44,6 +68,30 @@ defmodule PolarExpress.Services.CustomerMetersService do
       :get,
       "/v1/customer-meters/",
       Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.CustomerMeter)
+    )
+  end
+
+  @doc """
+  Reverse Customer Meter Credit
+
+  Reverse a manual credit, removing the units the customer hasn't used yet.
+
+  Works once per credit, within 7 days and in the current billing period.
+  Returns a `meter.credited` event with negative units and
+  `parent_id` set to the reversed credit.
+
+  **Scopes**: `customers:write`
+
+  See `PolarExpress.Params.CustomerMetersReverseCustomerMeterCreditParams` for parameter details.
+  """
+  @spec reverse_customer_meter_credit(Client.t(), String.t(), map(), keyword()) ::
+          {:ok, PolarExpress.Schemas.MeterCreditEvent.t()} | {:error, PolarExpress.Error.t()}
+  def reverse_customer_meter_credit(client, id, params \\ %{}, opts \\ []) do
+    Client.request(
+      client,
+      :post,
+      "/v1/customer-meters/credits/#{id}/reverse",
+      Keyword.merge(opts, params: params, resource: PolarExpress.Schemas.MeterCreditEvent)
     )
   end
 end

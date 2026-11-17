@@ -45,7 +45,6 @@ defmodule PolarExpress.Schemas.CheckoutUpdate do
 
   You can store up to **50 key-value pairs**.
   * `product_id` - ID of the product to checkout. Must be present in the checkout's product list. Nullable.
-  * `product_price_id` - ID of the product price to checkout. Must correspond to a price present in the checkout's product list. Nullable. **Deprecated.**
   * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`. Nullable.
   * `return_url` - When set, a back button will be shown in the checkout to return to this URL. Nullable.
   * `seats` - Number of seats for seat-based pricing. Nullable.
@@ -75,7 +74,6 @@ defmodule PolarExpress.Schemas.CheckoutUpdate do
     :locale,
     :metadata,
     :product_id,
-    :product_price_id,
     :require_billing_address,
     :return_url,
     :seats,

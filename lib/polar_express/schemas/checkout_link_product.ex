@@ -60,9 +60,7 @@ defmodule PolarExpress.Schemas.CheckoutLinkProduct do
       "medias" => PolarExpress.Schemas.ProductMediaFileRead,
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "meter_interval" => PolarExpress.Schemas.RecurringInterval,
-      "prices" =>
-        {:union, :variants,
-         [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
+      "prices" => PolarExpress.Schemas.ProductPrice,
       "recurring_interval" => PolarExpress.Schemas.RecurringInterval,
       "trial_interval" => PolarExpress.Schemas.TrialInterval,
       "visibility" => PolarExpress.Schemas.ProductVisibility

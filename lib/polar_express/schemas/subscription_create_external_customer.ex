@@ -7,6 +7,7 @@ defmodule PolarExpress.Schemas.SubscriptionCreateExternalCustomer do
   """
 
   @typedoc """
+  * `currency` - The currency of the subscription. The product must have a free price in this currency or have a trial with no upfront payment setup required. If not set, the organization's default currency is used. Nullable.
   * `external_customer_id` - The ID of the customer in your system to create the subscription for. It must already exist in Polar.
   * `metadata` - Key-value object allowing you to store additional information.
 
@@ -19,12 +20,18 @@ defmodule PolarExpress.Schemas.SubscriptionCreateExternalCustomer do
   * A boolean
 
   You can store up to **50 key-value pairs**.
-  * `product_id` - The ID of the recurring product to subscribe to. Must be a free product, otherwise the customer should go through a checkout flow. Format: uuid4.
+  * `product_id` - The ID of the recurring product to subscribe to. Must be a free product or have a trial with no upfront payment setup required. Otherwise, the customer should go through a checkout flow. Format: uuid4.
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:external_customer_id, :metadata, :product_id]
+  defstruct [:currency, :external_customer_id, :metadata, :product_id]
 
   @schema_name "SubscriptionCreateExternalCustomer"
   def schema_name, do: @schema_name
+
+  def __inner_types__ do
+    %{
+      "currency" => PolarExpress.Schemas.PresentmentCurrency
+    }
+  end
 end

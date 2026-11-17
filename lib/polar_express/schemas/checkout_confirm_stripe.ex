@@ -21,7 +21,6 @@ defmodule PolarExpress.Schemas.CheckoutConfirmStripe do
   * `locale` - Nullable.
   * `payment_method_type` - Payment method type selected by the customer in the checkout form, e.g. `card`, `apple_pay` or `upi`. Nullable.
   * `product_id` - ID of the product to checkout. Must be present in the checkout's product list. Nullable.
-  * `product_price_id` - ID of the product price to checkout. Must correspond to a price present in the checkout's product list. Nullable. **Deprecated.**
   * `seats` - Number of seats for seat-based pricing. Nullable.
   * `units` - Number of units for unit-based pricing. Nullable.
   """
@@ -42,7 +41,6 @@ defmodule PolarExpress.Schemas.CheckoutConfirmStripe do
     :locale,
     :payment_method_type,
     :product_id,
-    :product_price_id,
     :seats,
     :units
   ]

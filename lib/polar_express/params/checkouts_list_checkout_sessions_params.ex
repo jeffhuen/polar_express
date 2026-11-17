@@ -5,6 +5,7 @@ defmodule PolarExpress.Params.CheckoutsListCheckoutSessionsParams do
   @typedoc """
   * `customer_id` - Filter by customer ID.
   * `external_customer_id` - Filter by customer external ID.
+  * `external_product_id` - Filter by product external ID.
   * `limit` - Size of a page, defaults to 10. Maximum is 100.
   * `organization_id` - Filter by organization ID.
   * `page` - Page number, defaults to 1.
@@ -16,6 +17,7 @@ defmodule PolarExpress.Params.CheckoutsListCheckoutSessionsParams do
   @type t :: %__MODULE__{
           customer_id: map() | nil,
           external_customer_id: map() | nil,
+          external_product_id: map() | nil,
           limit: integer() | nil,
           organization_id: map() | nil,
           page: integer() | nil,
@@ -28,6 +30,7 @@ defmodule PolarExpress.Params.CheckoutsListCheckoutSessionsParams do
   defstruct [
     :customer_id,
     :external_customer_id,
+    :external_product_id,
     :limit,
     :organization_id,
     :page,

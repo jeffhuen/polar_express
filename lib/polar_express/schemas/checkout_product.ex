@@ -8,10 +8,12 @@ defmodule PolarExpress.Schemas.CheckoutProduct do
 
   @typedoc """
   * `benefits` - List of benefits granted by the product.
+  * `catalog_id` - ID of the catalog that introduced this version of the product. None for products not managed by declarative config. Nullable.
   * `created_at` - Creation timestamp of the object. Format: date-time.
   * `description` - The description of the product. Nullable.
   * `id` - The ID of the object. Format: uuid4.
   * `is_archived` - Whether the product is archived and no longer available.
+  * `is_current` - Whether this is the current version of the product.
   * `is_recurring` - Whether the product is a subscription.
   * `medias` - List of medias associated to the product.
   * `meter_interval` - The meter cycle of the product, independent of the billing interval. If `None`, metered concerns follow the billing interval. Nullable.
@@ -30,10 +32,12 @@ defmodule PolarExpress.Schemas.CheckoutProduct do
 
   defstruct [
     :benefits,
+    :catalog_id,
     :created_at,
     :description,
     :id,
     :is_archived,
+    :is_current,
     :is_recurring,
     :medias,
     :meter_interval,
@@ -57,9 +61,7 @@ defmodule PolarExpress.Schemas.CheckoutProduct do
       "benefits" => PolarExpress.Schemas.BenefitPublic,
       "medias" => PolarExpress.Schemas.ProductMediaFileRead,
       "meter_interval" => PolarExpress.Schemas.RecurringInterval,
-      "prices" =>
-        {:union, :variants,
-         [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
+      "prices" => PolarExpress.Schemas.ProductPrice,
       "recurring_interval" => PolarExpress.Schemas.RecurringInterval,
       "trial_interval" => PolarExpress.Schemas.TrialInterval,
       "visibility" => PolarExpress.Schemas.ProductVisibility

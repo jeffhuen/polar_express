@@ -8,13 +8,14 @@ defmodule PolarExpress.Schemas.ProductPriceSeatBasedCreate do
 
   @typedoc """
   * `amount_type`
+  * `minimum_units` - The minimum purchasable seat quantity (inclusive). Defaults to 1 when not set. Nullable.
   * `price_currency` - The currency in which the customer will be charged.
-  * `seat_tiers` - Tiered pricing based on seat quantity
   * `tax_behavior` - The tax behavior of the price. If not set, it will default to the organization's default tax behavior. Nullable.
+  * `tiers` - Tiered pricing based on the purchased seat quantity.
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:amount_type, :price_currency, :seat_tiers, :tax_behavior]
+  defstruct [:amount_type, :minimum_units, :price_currency, :tax_behavior, :tiers]
 
   @schema_name "ProductPriceSeatBasedCreate"
   def schema_name, do: @schema_name
@@ -22,8 +23,8 @@ defmodule PolarExpress.Schemas.ProductPriceSeatBasedCreate do
   def __inner_types__ do
     %{
       "price_currency" => PolarExpress.Schemas.PresentmentCurrency,
-      "seat_tiers" => PolarExpress.Schemas.ProductPriceSeatTiersInput,
-      "tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption
+      "tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption,
+      "tiers" => PolarExpress.Schemas.TiersInput
     }
   end
 end

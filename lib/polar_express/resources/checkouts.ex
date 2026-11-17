@@ -55,7 +55,6 @@ defmodule PolarExpress.Resources.Checkouts do
   * `product` - Product selected to checkout.
   * `product_id` - ID of the product to checkout.
   * `product_price` - Price of the selected product. **Deprecated.**
-  * `product_price_id` - ID of the product price to checkout. **Deprecated.**
   * `products` - List of products available to select.
   * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
   * `return_url` - When set, a back button will be shown in the checkout to return to this URL.
@@ -129,7 +128,6 @@ defmodule PolarExpress.Resources.Checkouts do
     :product,
     :product_id,
     :product_price,
-    :product_price_id,
     :products,
     :require_billing_address,
     :return_url,

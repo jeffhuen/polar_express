@@ -7,15 +7,14 @@ defmodule PolarExpress.Resources.Discounts do
   """
 
   @typedoc """
-  * `amount` - **Deprecated.**
   * `amounts` - Map of currency to fixed amount to discount from the total.
   * `basis_points` - Discount percentage in basis points. A basis point is 1/100th of a percent. For example, 1000 basis points equals a 10% discount.
   * `code` - Code customers can use to apply the discount during checkout.
   * `created_at` - Creation timestamp of the object. Format: date-time.
-  * `currency` - **Deprecated.**
   * `duration`
   * `duration_in_months`
   * `ends_at` - Timestamp after which the discount is no longer redeemable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource.
   * `id` - The ID of the object. Format: uuid4.
   * `max_redemptions` - Maximum number of times the discount can be redeemed.
   * `max_redemptions_per_customer` - Maximum number of times the discount can be redeemed by a single customer.
@@ -31,15 +30,14 @@ defmodule PolarExpress.Resources.Discounts do
   @type t :: %__MODULE__{}
 
   defstruct [
-    :amount,
     :amounts,
     :basis_points,
     :code,
     :created_at,
-    :currency,
     :duration,
     :duration_in_months,
     :ends_at,
+    :external_id,
     :id,
     :max_redemptions,
     :max_redemptions_per_customer,

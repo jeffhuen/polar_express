@@ -15,6 +15,8 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantMeterCredit do
   * `id` - The ID of the object. Format: uuid4.
   * `is_granted`
   * `is_revoked`
+  * `manually_granted_at` - When the manual grant was requested, if applicable. Nullable.
+  * `manually_revoked_at` - When this grant was manually revoked, if applicable. Nullable.
   * `member_id` - Nullable.
   * `modified_at` - Last modification timestamp of the object. Nullable.
   * `order_id` - Nullable.
@@ -35,6 +37,8 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantMeterCredit do
     :id,
     :is_granted,
     :is_revoked,
+    :manually_granted_at,
+    :manually_revoked_at,
     :member_id,
     :modified_at,
     :order_id,
@@ -55,5 +59,13 @@ defmodule PolarExpress.Schemas.CustomerBenefitGrantMeterCredit do
     }
   end
 
-  def __date_fields__, do: [:created_at, :granted_at, :modified_at, :revoked_at]
+  def __date_fields__,
+    do: [
+      :created_at,
+      :granted_at,
+      :manually_granted_at,
+      :manually_revoked_at,
+      :modified_at,
+      :revoked_at
+    ]
 end

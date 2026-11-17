@@ -52,7 +52,7 @@ defmodule PolarExpress.Schemas.OrganizationUpdate do
       "customer_portal_settings" => PolarExpress.Schemas.OrganizationCustomerPortalSettings,
       "default_presentment_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "default_tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption,
-      "details" => PolarExpress.Schemas.OrganizationDetails,
+      "details" => PolarExpress.Schemas.OrganizationDetailsInput,
       "dispute_settings" => PolarExpress.Schemas.OrganizationDisputeSettingsUpdate,
       "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettingsUpdate,
       "socials" => PolarExpress.Schemas.OrganizationSocialLink,
