@@ -183,7 +183,7 @@ via `mix polar_express.generate`. The generator produces:
 - **38 service modules** matching the TypeScript SDK layout
 - **36 resource structs** with `@type t` definitions and inner types
 - **111 params modules** with `@typedoc` field annotations
-- **1 registry** (event types)
+- **2 registries** (event types, API version)
 - **43 event modules** for typed webhook event handling (42 event types + unknown-event fallback)
 
 A small set of [overrides](lib/polar_express/generator/overrides.ex) handle

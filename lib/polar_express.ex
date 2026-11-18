@@ -38,9 +38,33 @@ defmodule PolarExpress do
 
     * `:api_key` - Polar API key (required)
     * `:server` - API environment: `:production` or `:sandbox` (default: `:production`)
+    * `:api_version` - Polar API version sent as `Polar-Version`
+      (default: `PolarExpress.ApiVersion.version/0`)
     * `:max_retries` - Maximum retry attempts (default: 2)
     * `:timeout_ms` - Request timeout in ms (default: 30_000)
     * `:finch` - Custom Finch instance name (default: `PolarExpress.Finch`)
+
+  ## API Versioning
+
+  Polar versions its API by date (`YYYY-MM`), and the version applies to
+  requests, responses and webhook payloads. Each PolarExpress release is
+  generated from one version, `PolarExpress.ApiVersion.version/0`, and sends it
+  as the `Polar-Version` header so the typed structs match what the server
+  returns.
+
+  Polar supports each version for about nine months and answers a removed one
+  with `404 Not Found`. Upgrade PolarExpress before the version it targets is
+  removed. See the [Polar versioning docs](https://polar.sh/docs/api-reference/versioning).
+
+  Send another version for every request of a client, or for a single request:
+
+      client = PolarExpress.client("pk_test_...", api_version: "2026-10")
+
+      PolarExpress.Services.ProductsService.list_products(client, %{}, api_version: "2026-10")
+
+  Responses are always cast to the generated version's structs, so another
+  version can add or drop fields. Webhook endpoints are versioned separately:
+  set `api_version` when you create one.
   """
 
   @version Mix.Project.config()[:version]
@@ -49,6 +73,7 @@ defmodule PolarExpress do
           api_key: String.t(),
           server: PolarExpress.Client.server(),
           base_url: String.t(),
+          api_version: String.t(),
           max_retries: non_neg_integer(),
           timeout_ms: pos_integer(),
           finch: atom()

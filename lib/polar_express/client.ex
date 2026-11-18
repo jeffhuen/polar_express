@@ -18,10 +18,13 @@ defmodule PolarExpress.Client do
   @type response_data :: struct() | PolarExpress.ListObject.t() | json_value()
   @type raw_response :: %{status: integer(), headers: list(), body: binary()}
 
+  @default_api_version PolarExpress.ApiVersion.version()
+
   @type t :: %__MODULE__{
           api_key: String.t(),
           server: server(),
           base_url: String.t(),
+          api_version: String.t(),
           max_retries: non_neg_integer(),
           timeout_ms: pos_integer(),
           finch: atom()
@@ -31,6 +34,7 @@ defmodule PolarExpress.Client do
     :api_key,
     server: :production,
     base_url: "https://api.polar.sh",
+    api_version: @default_api_version,
     max_retries: 2,
     timeout_ms: 30_000,
     finch: PolarExpress.Finch
@@ -42,6 +46,8 @@ defmodule PolarExpress.Client do
   ## Options
 
     * `:params` - Request parameters (map)
+    * `:api_version` - Polar API version for this request, sent as the
+      `Polar-Version` header. Overrides the client's `:api_version`.
   """
   @spec request(t(), atom(), String.t(), keyword()) ::
           {:ok, response_data()} | {:error, Error.t()}
@@ -297,9 +303,11 @@ defmodule PolarExpress.Client do
 
   defp build_headers(client, opts) do
     api_key = Keyword.get(opts, :api_key, client.api_key)
+    api_version = Keyword.get(opts, :api_version, client.api_version)
 
     [
       {"authorization", "Bearer #{api_key}"},
+      {"polar-version", api_version},
       {"user-agent", user_agent()},
       {"accept", "application/json"}
     ]

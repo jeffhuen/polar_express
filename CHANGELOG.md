@@ -7,6 +7,7 @@ Targets Polar API `2027-01`. Polar releases it as the Current version in the fir
 ### Changed
 
 - **Breaking:** pin and regenerate the SDK from Polar API `2027-01` (`priv/openapi/API_VERSION`)
+- Send the API version as the `Polar-Version` header on every request. The default is the version the SDK is generated from (`PolarExpress.ApiVersion.version/0`, currently `2027-01`). Earlier releases sent no header and received whatever Polar called Current. Polar supports each version for about nine months and answers a removed one with `404`, so upgrade PolarExpress before the version it targets is removed
 - **Breaking:** fixed discounts no longer have `amount` and `currency`. Use `amounts`, a map of currency to amount, on `CheckoutDiscountFixedOnceForeverDuration`, `CheckoutDiscountFixedRepeatDuration`, and the matching `Discount*` schemas
 - **Breaking:** checkout schemas no longer carry `product_price_id`
 - **Breaking:** seat-based pricing renames `seat_tiers` to `tiers` and adds `minimum_units`. `ProductPriceSeatTier`, `ProductPriceSeatTiersInput`, `ProductPriceSeatTiersOutput`, and `SeatTierType` are removed
@@ -20,6 +21,8 @@ Targets Polar API `2027-01`. Polar releases it as the Current version in the fir
 - Add `MetersService.get_meter_by_external_id/4` and `WebhooksService.get_webhook_endpoint_by_external_id/4`
 - Add 25 schema modules, including `BenefitGrantCreate`, `BenefitGrantUpdate`, `BenefitManuallyGrantedEvent`, `BenefitManuallyRevokedEvent`, `BenefitUnrevokedEvent`, `CheckoutCreate`, and `CheckoutConfirm`
 - Add `event_id` to webhook payload structs
+- Add the `:api_version` option to `PolarExpress.client/2` and to every request, to send a different version than the default
+- Add `PolarExpress.ApiVersion`, generated from the spec's `info.version`. The generator refuses a spec whose version is not `YYYY-MM`
 
 ## [0.2.5] - 2026-11-17
 
