@@ -28,6 +28,7 @@ defmodule PolarExpress.Schemas.CheckoutLinkUpdate do
   * `success_url` - URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id. Nullable.
   * `trial_interval` - The interval unit for the trial period. Nullable.
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
+  * `trial_payment_setup_required` - Whether customers must provide a payment method to start a trial. If `false`, customers can start a trial without entering payment details. If `null`, the product's setting is used. Nullable.
   * `units` - Preconfigured number of units for unit-based pricing. When set, checkout sessions created from this link are locked to this number of units and the customer won't be able to change it. All products on the link must use unit-based pricing and allow this number of units. If the products no longer accommodate this value when the link is opened, it'll be ignored. Nullable.
   """
   @type t :: %__MODULE__{}
@@ -44,6 +45,7 @@ defmodule PolarExpress.Schemas.CheckoutLinkUpdate do
     :success_url,
     :trial_interval,
     :trial_interval_count,
+    :trial_payment_setup_required,
     :units
   ]
 

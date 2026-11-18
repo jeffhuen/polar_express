@@ -32,7 +32,8 @@ defmodule PolarExpress.Schemas.CheckoutOrganization do
 
   def __inner_types__ do
     %{
-      "proration_behavior" => PolarExpress.Schemas.SubscriptionProrationBehavior
+      "proration_behavior" =>
+        {:union, :variants, [PolarExpress.Schemas.SubscriptionProrationBehavior]}
     }
   end
 

@@ -50,7 +50,7 @@ defmodule PolarExpress.Schemas.OrganizationCreate do
       "customer_portal_settings" => PolarExpress.Schemas.OrganizationCustomerPortalSettings,
       "default_presentment_currency" => PolarExpress.Schemas.PresentmentCurrency,
       "default_tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption,
-      "details" => PolarExpress.Schemas.OrganizationDetails,
+      "details" => PolarExpress.Schemas.OrganizationDetailsInput,
       "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettingsUpdate,
       "legal_entity" =>
         {:union, :discriminated, "type",

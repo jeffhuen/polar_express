@@ -2,17 +2,18 @@
 defmodule PolarExpress.Schemas.DiscountUpdate do
   @moduledoc """
   DiscountUpdate
+
+  Schema to update a discount.
   """
 
   @typedoc """
-  * `amount` - Nullable. **Deprecated.**
   * `amounts` - Nullable.
   * `basis_points` - Nullable.
   * `code` - Code customers can use to apply the discount during checkout. Must be between 3 and 256 characters long and contain only alphanumeric characters.If not provided, the discount can only be applied via the API. Nullable.
-  * `currency` - Nullable. **Deprecated.**
   * `duration` - Nullable.
   * `duration_in_months` - Nullable.
   * `ends_at` - Optional timestamp after which the discount is no longer redeemable. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. It must start with a letter or digit and contain only letters, digits, `_`, `-`, `.` and `:`. Nullable.
   * `max_redemptions` - Optional maximum number of times the discount can be redeemed. Nullable.
   * `max_redemptions_per_customer` - Optional maximum number of times the discount can be redeemed by a single customer. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
@@ -34,14 +35,13 @@ defmodule PolarExpress.Schemas.DiscountUpdate do
   @type t :: %__MODULE__{}
 
   defstruct [
-    :amount,
     :amounts,
     :basis_points,
     :code,
-    :currency,
     :duration,
     :duration_in_months,
     :ends_at,
+    :external_id,
     :max_redemptions,
     :max_redemptions_per_customer,
     :metadata,
@@ -56,7 +56,6 @@ defmodule PolarExpress.Schemas.DiscountUpdate do
 
   def __inner_types__ do
     %{
-      "currency" => PolarExpress.Schemas.PresentmentCurrency,
       "duration" => PolarExpress.Schemas.DiscountDuration,
       "type" => PolarExpress.Schemas.DiscountType
     }

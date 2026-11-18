@@ -7,6 +7,7 @@ defmodule PolarExpress.Schemas.ProductCreateRecurring do
   @typedoc """
   * `attached_custom_fields` - List of custom fields to attach.
   * `description` - The description of the product. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. It must start with a letter or digit and contain only letters, digits, `_`, `-`, `.` and `:`. Nullable.
   * `medias` - List of file IDs. Each one must be on the same organization as the product, of type `product_media` and correctly uploaded. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
 
@@ -28,6 +29,7 @@ defmodule PolarExpress.Schemas.ProductCreateRecurring do
   * `recurring_interval_count` - Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on.
   * `trial_interval` - The interval unit for the trial period. Nullable.
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
+  * `trial_payment_setup_required` - Whether customers must provide a payment method to start a trial. If `false`, customers can start a trial without entering payment details.
   * `visibility` - The visibility of the product.
   """
   @type t :: %__MODULE__{}
@@ -35,6 +37,7 @@ defmodule PolarExpress.Schemas.ProductCreateRecurring do
   defstruct [
     :attached_custom_fields,
     :description,
+    :external_id,
     :medias,
     :metadata,
     :meter_interval,
@@ -46,6 +49,7 @@ defmodule PolarExpress.Schemas.ProductCreateRecurring do
     :recurring_interval_count,
     :trial_interval,
     :trial_interval_count,
+    :trial_payment_setup_required,
     :visibility
   ]
 

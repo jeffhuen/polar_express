@@ -39,7 +39,7 @@ defmodule PolarExpress.Schemas.Subscription do
   * `recurring_interval_count` - Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on.
   * `resumes_at` - The timestamp when a paused subscription is scheduled to automatically resume, if set. Nullable.
   * `seats` - The number of seats for seat-based subscriptions. None for non-seat subscriptions. Nullable.
-  * `started_at` - The timestamp when the subscription started. Nullable.
+  * `started_at` - The timestamp when the subscription started. Format: date-time.
   * `status` - The status of the subscription.
   * `trial_end` - The end timestamp of the trial period, if any. Nullable.
   * `trial_start` - The start timestamp of the trial period, if any. Nullable.
@@ -107,9 +107,7 @@ defmodule PolarExpress.Schemas.Subscription do
       "metadata" => PolarExpress.Schemas.MetadataOutputType,
       "meters" => PolarExpress.Schemas.SubscriptionMeter,
       "pending_update" => PolarExpress.Schemas.PendingSubscriptionUpdate,
-      "prices" =>
-        {:union, :variants,
-         [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
+      "prices" => PolarExpress.Schemas.ProductPrice,
       "product" => PolarExpress.Schemas.Product,
       "recurring_interval" => PolarExpress.Schemas.RecurringInterval,
       "status" => PolarExpress.Schemas.SubscriptionStatus

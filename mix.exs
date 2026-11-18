@@ -2,7 +2,7 @@ defmodule PolarExpress.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/jeffhuen/polar_express"
-  @version "0.2.5"
+  @version "0.3.0-dev"
 
   def project do
     [
@@ -101,6 +101,7 @@ defmodule PolarExpress.MixProject do
         "guides/webhooks.md",
         "guides/testing.md",
         "guides/telemetry.md",
+        "guides/upgrading-to-0.3.md",
         "CHANGELOG.md"
       ],
       groups_for_extras: [
@@ -109,7 +110,8 @@ defmodule PolarExpress.MixProject do
           "guides/igniter-installer.md",
           "guides/webhooks.md",
           "guides/testing.md",
-          "guides/telemetry.md"
+          "guides/telemetry.md",
+          "guides/upgrading-to-0.3.md"
         ]
       ],
       groups_for_modules: [

@@ -12,12 +12,13 @@ defmodule PolarExpress.Schemas.WebhookCustomerSeatAssignedPayload do
   @typedoc """
   * `api_version`
   * `data`
+  * `event_id` - The ID of the event. Use it to discard duplicate deliveries. Format: uuid.
   * `timestamp` - Format: date-time.
   * `type`
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:api_version, :data, :timestamp, :type]
+  defstruct [:api_version, :data, :event_id, :timestamp, :type]
 
   @schema_name "WebhookCustomerSeatAssignedPayload"
   def schema_name, do: @schema_name

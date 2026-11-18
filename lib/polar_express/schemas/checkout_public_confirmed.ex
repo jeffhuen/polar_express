@@ -51,13 +51,13 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
   * `organization`
   * `organization_id` - ID of the organization owning the checkout session. Format: uuid4.
   * `payment_method_type` - Payment method type selected by the customer in the checkout form, e.g. `card`, `apple_pay` or `upi`. Nullable.
+  * `payment_method_types` - Payment method types to offer in the payment form.
   * `payment_processor` - Payment processor used.
   * `payment_processor_metadata`
   * `prices` - Mapping of product IDs to their list of prices. Nullable.
   * `product` - Product selected to checkout. Nullable.
   * `product_id` - ID of the product to checkout. Nullable.
   * `product_price` - Price of the selected product. Nullable. **Deprecated.**
-  * `product_price_id` - ID of the product price to checkout. Nullable. **Deprecated.**
   * `products` - List of products available to select.
   * `require_billing_address` - Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
   * `return_url` - When set, a back button will be shown in the checkout to return to this URL. Nullable.
@@ -115,13 +115,13 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
     :organization,
     :organization_id,
     :payment_method_type,
+    :payment_method_types,
     :payment_processor,
     :payment_processor_metadata,
     :prices,
     :product,
     :product_id,
     :product_price,
-    :product_price_id,
     :products,
     :require_billing_address,
     :return_url,
@@ -155,14 +155,9 @@ defmodule PolarExpress.Schemas.CheckoutPublicConfirmed do
          ]},
       "organization" => PolarExpress.Schemas.CheckoutOrganization,
       "payment_processor" => PolarExpress.Schemas.PaymentProcessor,
-      "prices" =>
-        {:map_values_list,
-         {:union, :variants,
-          [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]}},
+      "prices" => {:map_values_list, PolarExpress.Schemas.ProductPrice},
       "product" => PolarExpress.Schemas.CheckoutProduct,
-      "product_price" =>
-        {:union, :variants,
-         [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
+      "product_price" => PolarExpress.Schemas.ProductPrice,
       "products" => PolarExpress.Schemas.CheckoutProduct,
       "tax_behavior" => PolarExpress.Schemas.TaxBehavior
     }

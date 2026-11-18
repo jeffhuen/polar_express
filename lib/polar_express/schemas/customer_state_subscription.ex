@@ -24,7 +24,7 @@ defmodule PolarExpress.Schemas.CustomerStateSubscription do
   * `product_id` - The ID of the subscribed product. Format: uuid4.
   * `recurring_interval` - The interval at which the subscription recurs.
   * `seats` - The number of seats for seat-based subscriptions. None for non-seat subscriptions. Nullable.
-  * `started_at` - The timestamp when the subscription started. Nullable.
+  * `started_at` - The timestamp when the subscription started. Format: date-time.
   * `status` - Possible values: `active`, `trialing`.
   * `trial_end` - The end timestamp of the trial period, if any. Nullable.
   * `trial_start` - The start timestamp of the trial period, if any. Nullable.

@@ -6,6 +6,7 @@ defmodule PolarExpress.Params.MetricsGetMetricsParams do
   * `billing_type` - Filter by billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
   * `customer_id` - Filter by customer ID.
   * `end_date` - End date. Format: date.
+  * `external_product_id` - Filter by product external ID.
   * `interval` - Interval between two timestamps.
   * `metrics` - List of metric slugs to focus on. When provided, only the queries needed for these metrics will be executed, improving performance. If not provided, all metrics are returned.
   * `organization_id` - Filter by organization ID.
@@ -17,6 +18,7 @@ defmodule PolarExpress.Params.MetricsGetMetricsParams do
           billing_type: map() | nil,
           customer_id: map() | nil,
           end_date: String.t(),
+          external_product_id: map() | nil,
           interval: map(),
           metrics: [String.t()] | nil,
           organization_id: map() | nil,
@@ -29,6 +31,7 @@ defmodule PolarExpress.Params.MetricsGetMetricsParams do
     :billing_type,
     :customer_id,
     :end_date,
+    :external_product_id,
     :interval,
     :metrics,
     :organization_id,

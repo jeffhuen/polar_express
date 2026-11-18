@@ -11,6 +11,7 @@ defmodule PolarExpress.Params.SubscriptionsListSubscriptionsParams do
   * `customer_id` - Filter by customer ID.
   * `discount_id` - Filter by discount ID.
   * `external_customer_id` - Filter by customer external ID.
+  * `external_product_id` - Filter by product external ID.
   * `limit` - Size of a page, defaults to 10. Maximum is 100.
   * `metadata` - Filter by metadata key-value pairs. It uses the `deepObject` style, e.g. `?metadata[key]=value`.
   * `organization_id` - Filter by organization ID.
@@ -30,6 +31,7 @@ defmodule PolarExpress.Params.SubscriptionsListSubscriptionsParams do
           customer_id: map() | nil,
           discount_id: map() | nil,
           external_customer_id: map() | nil,
+          external_product_id: map() | nil,
           limit: integer() | nil,
           metadata: map() | nil,
           organization_id: map() | nil,
@@ -50,6 +52,7 @@ defmodule PolarExpress.Params.SubscriptionsListSubscriptionsParams do
     :customer_id,
     :discount_id,
     :external_customer_id,
+    :external_product_id,
     :limit,
     :metadata,
     :organization_id,

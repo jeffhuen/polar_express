@@ -20,8 +20,12 @@ defmodule PolarExpress.Schemas.ValidatedLicenseKey do
   * `member` - The seat member holding this key. Set for keys granted through a seat-based product; `null` for keys granted to the customer directly. Nullable.
   * `member_id` - The ID of the seat member holding this key, if any. Nullable.
   * `modified_at` - Last modification timestamp of the object. Nullable.
+  * `order` - The one-time order granting the license key, if any. Nullable.
+  * `order_id` - The ID of the one-time order granting the license key. Nullable.
   * `organization_id` - Format: uuid4.
   * `status`
+  * `subscription` - The subscription granting the license key, if any. Nullable.
+  * `subscription_id` - The ID of the subscription granting the license key. Nullable.
   * `usage`
   * `validations`
   """
@@ -43,8 +47,12 @@ defmodule PolarExpress.Schemas.ValidatedLicenseKey do
     :member,
     :member_id,
     :modified_at,
+    :order,
+    :order_id,
     :organization_id,
     :status,
+    :subscription,
+    :subscription_id,
     :usage,
     :validations
   ]
@@ -56,7 +64,9 @@ defmodule PolarExpress.Schemas.ValidatedLicenseKey do
     %{
       "activation" => PolarExpress.Schemas.LicenseKeyActivationBase,
       "customer" => PolarExpress.Schemas.LicenseKeyCustomer,
-      "member" => PolarExpress.Schemas.LicenseKeyMember
+      "member" => PolarExpress.Schemas.LicenseKeyMember,
+      "order" => PolarExpress.Schemas.LicenseKeyOrder,
+      "subscription" => PolarExpress.Schemas.LicenseKeySubscription
     }
   end
 

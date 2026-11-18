@@ -58,9 +58,7 @@ defmodule PolarExpress.Schemas.CustomerSubscriptionProduct do
       "medias" => PolarExpress.Schemas.ProductMediaFileRead,
       "meter_interval" => PolarExpress.Schemas.RecurringInterval,
       "organization" => PolarExpress.Schemas.CustomerOrganization,
-      "prices" =>
-        {:union, :variants,
-         [PolarExpress.Schemas.LegacyRecurringProductPrice, PolarExpress.Schemas.ProductPrice]},
+      "prices" => PolarExpress.Schemas.ProductPrice,
       "recurring_interval" => PolarExpress.Schemas.RecurringInterval,
       "trial_interval" => PolarExpress.Schemas.TrialInterval,
       "visibility" => PolarExpress.Schemas.ProductVisibility

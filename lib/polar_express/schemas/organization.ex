@@ -76,7 +76,8 @@ defmodule PolarExpress.Schemas.Organization do
       "default_tax_behavior" => PolarExpress.Schemas.TaxBehaviorOption,
       "dispute_settings" => PolarExpress.Schemas.OrganizationDisputeSettings,
       "feature_settings" => PolarExpress.Schemas.OrganizationFeatureSettings,
-      "proration_behavior" => PolarExpress.Schemas.SubscriptionProrationBehavior,
+      "proration_behavior" =>
+        {:union, :variants, [PolarExpress.Schemas.SubscriptionProrationBehavior]},
       "socials" => PolarExpress.Schemas.OrganizationSocialLink,
       "status" => PolarExpress.Schemas.OrganizationStatus,
       "subscription_settings" => PolarExpress.Schemas.OrganizationSubscriptionSettings

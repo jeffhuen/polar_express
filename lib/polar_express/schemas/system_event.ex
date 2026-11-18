@@ -9,6 +9,9 @@ defmodule PolarExpress.Schemas.SystemEvent do
           | PolarExpress.Schemas.BenefitCycledEvent.t()
           | PolarExpress.Schemas.BenefitUpdatedEvent.t()
           | PolarExpress.Schemas.BenefitRevokedEvent.t()
+          | PolarExpress.Schemas.BenefitManuallyGrantedEvent.t()
+          | PolarExpress.Schemas.BenefitManuallyRevokedEvent.t()
+          | PolarExpress.Schemas.BenefitUnrevokedEvent.t()
           | PolarExpress.Schemas.SubscriptionCreatedEvent.t()
           | PolarExpress.Schemas.SubscriptionUpdatedEvent.t()
           | PolarExpress.Schemas.SubscriptionCycledEvent.t()
@@ -52,6 +55,9 @@ defmodule PolarExpress.Schemas.SystemEvent do
       PolarExpress.Schemas.BenefitCycledEvent,
       PolarExpress.Schemas.BenefitUpdatedEvent,
       PolarExpress.Schemas.BenefitRevokedEvent,
+      PolarExpress.Schemas.BenefitManuallyGrantedEvent,
+      PolarExpress.Schemas.BenefitManuallyRevokedEvent,
+      PolarExpress.Schemas.BenefitUnrevokedEvent,
       PolarExpress.Schemas.SubscriptionCreatedEvent,
       PolarExpress.Schemas.SubscriptionUpdatedEvent,
       PolarExpress.Schemas.SubscriptionCycledEvent,
@@ -97,7 +103,10 @@ defmodule PolarExpress.Schemas.SystemEvent do
        "balance.refund_reversal" => PolarExpress.Schemas.BalanceRefundReversalEvent,
        "benefit.cycled" => PolarExpress.Schemas.BenefitCycledEvent,
        "benefit.granted" => PolarExpress.Schemas.BenefitGrantedEvent,
+       "benefit.manually_granted" => PolarExpress.Schemas.BenefitManuallyGrantedEvent,
+       "benefit.manually_revoked" => PolarExpress.Schemas.BenefitManuallyRevokedEvent,
        "benefit.revoked" => PolarExpress.Schemas.BenefitRevokedEvent,
+       "benefit.unrevoked" => PolarExpress.Schemas.BenefitUnrevokedEvent,
        "benefit.updated" => PolarExpress.Schemas.BenefitUpdatedEvent,
        "checkout.created" => PolarExpress.Schemas.CheckoutCreatedEvent,
        "customer.created" => PolarExpress.Schemas.CustomerCreatedEvent,

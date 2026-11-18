@@ -9,7 +9,7 @@ defmodule PolarExpress.Schemas.OrganizationSubscriptionSettings do
   * `allow_multiple_subscriptions`
   * `benefit_revocation_grace_period`
   * `prevent_trial_abuse`
-  * `proration_behavior` - Possible values: `invoice`, `prorate`, `next_period`.
+  * `proration_behavior`
   """
   @type t :: %__MODULE__{}
 

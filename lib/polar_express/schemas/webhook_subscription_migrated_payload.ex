@@ -15,6 +15,7 @@ defmodule PolarExpress.Schemas.WebhookSubscriptionMigratedPayload do
   @typedoc """
   * `api_version`
   * `data`
+  * `event_id` - The ID of the event. Use it to discard duplicate deliveries. Format: uuid.
   * `provider` - The billing provider the subscription was migrated from.
   * `provider_subscription_id` - The identifier of the subscription on the billing provider.
   * `timestamp` - Format: date-time.
@@ -22,7 +23,15 @@ defmodule PolarExpress.Schemas.WebhookSubscriptionMigratedPayload do
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:api_version, :data, :provider, :provider_subscription_id, :timestamp, :type]
+  defstruct [
+    :api_version,
+    :data,
+    :event_id,
+    :provider,
+    :provider_subscription_id,
+    :timestamp,
+    :type
+  ]
 
   @schema_name "WebhookSubscriptionMigratedPayload"
   def schema_name, do: @schema_name

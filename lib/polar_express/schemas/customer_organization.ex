@@ -38,7 +38,8 @@ defmodule PolarExpress.Schemas.CustomerOrganization do
     %{
       "customer_portal_settings" => PolarExpress.Schemas.OrganizationCustomerPortalSettings,
       "organization_features" => PolarExpress.Schemas.CustomerOrganizationFeatureSettings,
-      "proration_behavior" => PolarExpress.Schemas.SubscriptionProrationBehavior
+      "proration_behavior" =>
+        {:union, :variants, [PolarExpress.Schemas.SubscriptionProrationBehavior]}
     }
   end
 

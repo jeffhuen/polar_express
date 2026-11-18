@@ -9,6 +9,7 @@ defmodule PolarExpress.Schemas.ProductUpdate do
   @typedoc """
   * `attached_custom_fields` - Nullable.
   * `description` - The description of the product. Nullable.
+  * `external_id` - An ID from your own system to reference this resource. It must be unique within the organization for this type of resource. It must start with a letter or digit and contain only letters, digits, `_`, `-`, `.` and `:`. Nullable.
   * `is_archived` - Whether the product is archived. If `true`, the product won't be available for purchase anymore. Existing customers will still have access to their benefits, and subscriptions will continue normally. Nullable.
   * `medias` - List of file IDs. Each one must be on the same organization as the product, of type `product_media` and correctly uploaded. Nullable.
   * `metadata` - Key-value object allowing you to store additional information.
@@ -28,6 +29,7 @@ defmodule PolarExpress.Schemas.ProductUpdate do
   * `recurring_interval_count` - Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. Once set, it can't be changed.** Nullable.
   * `trial_interval` - The interval unit for the trial period. Nullable.
   * `trial_interval_count` - The number of interval units for the trial period. Nullable.
+  * `trial_payment_setup_required` - Whether customers must provide a payment method to start a trial. If `false`, customers can start a trial without entering payment details. Nullable.
   * `visibility` - The visibility of the product. Nullable.
   """
   @type t :: %__MODULE__{}
@@ -35,6 +37,7 @@ defmodule PolarExpress.Schemas.ProductUpdate do
   defstruct [
     :attached_custom_fields,
     :description,
+    :external_id,
     :is_archived,
     :medias,
     :metadata,
@@ -44,6 +47,7 @@ defmodule PolarExpress.Schemas.ProductUpdate do
     :recurring_interval_count,
     :trial_interval,
     :trial_interval_count,
+    :trial_payment_setup_required,
     :visibility
   ]
 

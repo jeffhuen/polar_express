@@ -4,18 +4,24 @@ defmodule PolarExpress.Params.BenefitGrantsListBenefitGrantsParams do
 
   @typedoc """
   * `customer_id` - Filter by customer ID.
+  * `external_benefit_id` - Filter by benefit external ID.
   * `external_customer_id` - Filter by customer external ID.
+  * `external_member_id` - Filter by member external ID.
   * `is_granted` - Filter by granted status. If `true`, only granted benefits will be returned. If `false`, only revoked benefits will be returned.
   * `limit` - Size of a page, defaults to 10. Maximum is 100.
+  * `member_id` - Filter by member ID.
   * `organization_id` - Filter by organization ID.
   * `page` - Page number, defaults to 1.
   * `sorting` - Sorting criterion. Several criteria can be used simultaneously and will be applied in order. Add a minus sign `-` before the criteria name to sort by descending order.
   """
   @type t :: %__MODULE__{
           customer_id: map() | nil,
+          external_benefit_id: map() | nil,
           external_customer_id: map() | nil,
+          external_member_id: map() | nil,
           is_granted: boolean() | nil,
           limit: integer() | nil,
+          member_id: map() | nil,
           organization_id: map() | nil,
           page: integer() | nil,
           sorting: [map()] | nil
@@ -23,9 +29,12 @@ defmodule PolarExpress.Params.BenefitGrantsListBenefitGrantsParams do
 
   defstruct [
     :customer_id,
+    :external_benefit_id,
     :external_customer_id,
+    :external_member_id,
     :is_granted,
     :limit,
+    :member_id,
     :organization_id,
     :page,
     :sorting

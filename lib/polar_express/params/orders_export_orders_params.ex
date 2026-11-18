@@ -6,6 +6,7 @@ defmodule PolarExpress.Params.OrdersExportOrdersParams do
   * `columns` - Columns to include in the CSV, in order. Defaults to email, created_at, product, net_amount, currency, status and invoice_number.
   * `created_after` - Only include orders created after this date. Must include a UTC offset.
   * `created_before` - Only include orders created before this date. Must include a UTC offset.
+  * `external_product_id` - Filter by product external ID.
   * `organization_id` - Filter by organization ID.
   * `product_id` - Filter by product ID.
   * `status` - Filter by order status.
@@ -15,6 +16,7 @@ defmodule PolarExpress.Params.OrdersExportOrdersParams do
           columns: map() | nil,
           created_after: String.t() | nil,
           created_before: String.t() | nil,
+          external_product_id: map() | nil,
           organization_id: map() | nil,
           product_id: map() | nil,
           status: map() | nil,
@@ -25,6 +27,7 @@ defmodule PolarExpress.Params.OrdersExportOrdersParams do
     :columns,
     :created_after,
     :created_before,
+    :external_product_id,
     :organization_id,
     :product_id,
     :status,

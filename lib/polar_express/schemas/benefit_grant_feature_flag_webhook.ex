@@ -15,6 +15,8 @@ defmodule PolarExpress.Schemas.BenefitGrantFeatureFlagWebhook do
   * `id` - The ID of the grant. Format: uuid4.
   * `is_granted` - Whether the benefit is granted.
   * `is_revoked` - Whether the benefit is revoked.
+  * `manually_granted_at` - When the manual grant was requested, if applicable. Nullable.
+  * `manually_revoked_at` - When this grant was manually revoked, if applicable. Nullable.
   * `member` - Nullable.
   * `member_id` - The ID of the member concerned by this grant. Nullable.
   * `modified_at` - Last modification timestamp of the object. Nullable.
@@ -37,6 +39,8 @@ defmodule PolarExpress.Schemas.BenefitGrantFeatureFlagWebhook do
     :id,
     :is_granted,
     :is_revoked,
+    :manually_granted_at,
+    :manually_revoked_at,
     :member,
     :member_id,
     :modified_at,
@@ -61,5 +65,13 @@ defmodule PolarExpress.Schemas.BenefitGrantFeatureFlagWebhook do
     }
   end
 
-  def __date_fields__, do: [:created_at, :granted_at, :modified_at, :revoked_at]
+  def __date_fields__,
+    do: [
+      :created_at,
+      :granted_at,
+      :manually_granted_at,
+      :manually_revoked_at,
+      :modified_at,
+      :revoked_at
+    ]
 end

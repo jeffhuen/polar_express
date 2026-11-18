@@ -6,12 +6,13 @@ defmodule PolarExpress.Schemas.MeterCreditedMetadata do
 
   @typedoc """
   * `meter_id`
+  * `reason` - Possible values: `benefit`, `manual`.
   * `rollover`
   * `units`
   """
   @type t :: %__MODULE__{}
 
-  defstruct [:meter_id, :rollover, :units]
+  defstruct [:meter_id, :reason, :rollover, :units]
 
   @schema_name "MeterCreditedMetadata"
   def schema_name, do: @schema_name

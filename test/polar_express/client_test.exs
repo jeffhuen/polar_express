@@ -541,6 +541,52 @@ defmodule PolarExpress.ClientTest do
     end
   end
 
+  describe "Polar-Version header" do
+    @pin_file Path.expand("../../priv/openapi/API_VERSION", __DIR__)
+
+    # Stubs the transport and returns the polar-version header of the request.
+    defp sent_version(request_fun) do
+      test_pid = self()
+
+      PolarExpress.Test.stub(fn %{headers: headers} ->
+        send(test_pid, {:headers, headers})
+        {200, [], ~s({"ok": true})}
+      end)
+
+      assert {:ok, _} = request_fun.()
+      assert_receive {:headers, headers}
+      {"polar-version", version} = List.keyfind(headers, "polar-version", 0)
+      version
+    end
+
+    test "defaults to the API version the SDK is generated from, which is the pinned one" do
+      client = PolarExpress.client("pk_test_123")
+
+      version = sent_version(fn -> Client.request(client, :get, "/v1/organizations/") end)
+
+      assert version == String.trim(File.read!(@pin_file))
+      assert version == PolarExpress.ApiVersion.version()
+    end
+
+    test "client option replaces the default" do
+      client = PolarExpress.client("pk_test_123", api_version: "2026-10")
+
+      assert sent_version(fn -> Client.request(client, :get, "/v1/organizations/") end) ==
+               "2026-10"
+    end
+
+    test "request option beats the client option through a service call" do
+      client = PolarExpress.client("pk_test_123", api_version: "2026-10")
+
+      version =
+        sent_version(fn ->
+          PolarExpress.Services.OrdersService.export_orders(client, %{}, api_version: "2026-04")
+        end)
+
+      assert version == "2026-04"
+    end
+  end
+
   def handle_telemetry_event(event, measurements, metadata, {pid, ref}) do
     case event do
       [:polar_express, :request, :start] ->
