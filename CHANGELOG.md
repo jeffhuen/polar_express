@@ -2,27 +2,44 @@
 
 ## [Unreleased]
 
-Targets Polar API `2027-01`. Polar releases it as the Current version in the first week of January 2027. Hold the 0.3.0 release until then, because its contract can still change until it is frozen.
+Targets Polar API `2027-01`. Polar makes it the Current version in the first week of January 2027. Hold the 0.3.0 release until then, because Polar can change `2027-01` until it freezes the contract. Read [Upgrade from 0.2 to 0.3](guides/upgrading-to-0.3.md) before you update.
 
 ### Changed
 
-- **Breaking:** pin and regenerate the SDK from Polar API `2027-01` (`priv/openapi/API_VERSION`)
-- Send the API version as the `Polar-Version` header on every request. The default is the version the SDK is generated from (`PolarExpress.ApiVersion.version/0`, currently `2027-01`). Earlier releases sent no header and received whatever Polar called Current. Polar supports each version for about nine months and answers a removed one with `404`, so upgrade PolarExpress before the version it targets is removed
-- **Breaking:** fixed discounts no longer have `amount` and `currency`. Use `amounts`, a map of currency to amount, on `CheckoutDiscountFixedOnceForeverDuration`, `CheckoutDiscountFixedRepeatDuration`, and the matching `Discount*` schemas
-- **Breaking:** checkout schemas no longer carry `product_price_id`
-- **Breaking:** seat-based pricing renames `seat_tiers` to `tiers` and adds `minimum_units`. `ProductPriceSeatTier`, `ProductPriceSeatTiersInput`, `ProductPriceSeatTiersOutput`, and `SeatTierType` are removed
-- **Breaking:** `member_model_enabled` is removed from `CustomerOrganizationFeatureSettings` and `OrganizationFeatureSettingsUpdate`
-- **Breaking:** remove 18 schema modules: `CheckoutLinkCreate`, `CheckoutLinkCreateProduct`, `CheckoutLinkCreateProductPrice`, `CheckoutPriceCreate`, `CheckoutProductCreate`, `LegacyOrganizationStatus`, `LegacyRecurringProductPrice`, `LegacyRecurringProductPriceCustom`, `LegacyRecurringProductPriceFixed`, `LicenseKeyUser`, `OrderUser`, `OrganizationDetails`, `ProductPriceSeatTier`, `ProductPriceSeatTiersInput`, `ProductPriceSeatTiersOutput`, `ProductPriceType`, `SeatTierType`, `SubscriptionUser`
+- Send the API version in the `Polar-Version` header on every request. The default is the version the SDK is generated from, `PolarExpress.ApiVersion.version/0`, which is `2027-01`. Earlier releases sent no header, so Polar used its Current version. Polar supports each version for about nine months and answers a removed version with `404`. Upgrade PolarExpress before the version it targets is removed
+- **Breaking:** generate the SDK from Polar API `2027-01`. `priv/openapi/API_VERSION` pins the version
+- **Breaking:** replace `amount` and `currency` with `amounts` on fixed discounts. `amounts` maps a currency code to an amount. This affects `CheckoutDiscountFixedOnceForeverDuration`, `CheckoutDiscountFixedRepeatDuration`, `DiscountFixedCreate`, `DiscountFixedOnceForeverDuration`, `DiscountFixedOnceForeverDurationBase`, `DiscountFixedRepeatDuration`, `DiscountFixedRepeatDurationBase`, `DiscountUpdate`, and `Resources.Discounts`
+- **Breaking:** replace `seat_tiers` with `tiers` on `ProductPriceSeatBased` and `ProductPriceSeatBasedCreate`. A tier has `bound` and `unit_amount` where it had `min_seats`, `max_seats`, and `price_per_seat`
+- **Breaking:** remove `product_price_id` from `Checkout`, `CheckoutConfirmStripe`, `CheckoutPublic`, `CheckoutPublicConfirmed`, `CheckoutUpdate`, `CheckoutUpdatePublic`, and `Resources.Checkouts`
+- **Breaking:** remove `LegacyRecurringProductPrice` from the `prices` of `Checkout`, `CheckoutLinkProduct`, `CheckoutProduct`, and `CheckoutPublic`. These lists hold only `ProductPrice` variants
+- **Breaking:** create checkout links with `products` only. The spec no longer has the `product_id` and `product_price_id` forms
+- **Breaking:** use `OrganizationDetailsInput` for `details` in `OrganizationCreate` and `OrganizationUpdate`. It drops `about`, `customer_acquisition`, `future_annual_revenue`, `intended_use`, and `previous_annual_revenue`
+- **Breaking:** remove `member_model_enabled` from `CustomerOrganizationFeatureSettings`, `OrganizationFeatureSettings`, and `OrganizationFeatureSettingsUpdate`. Remove `compass_enabled` and `meter_cycling_enabled` from `OrganizationFeatureSettings`
+- **Breaking:** make `Resources.BenefitGrants` describe one benefit grant. It had `items` and `pagination`
+- **Breaking:** remove 18 schema modules: `CheckoutLinkCreate`, `CheckoutLinkCreateProduct`, `CheckoutLinkCreateProductPrice`, `CheckoutPriceCreate`, `CheckoutProductCreate`, `LegacyOrganizationStatus`, `LegacyRecurringProductPrice`, `LegacyRecurringProductPriceCustom`, `LegacyRecurringProductPriceFixed`, `LicenseKeyUser`, `OrderUser`, `OrganizationDetails`, `ProductPriceSeatTier`, `ProductPriceSeatTiersInput`, `ProductPriceSeatTiersOutput`, `ProductPriceType`, `SeatTierType`, `SubscriptionUser`. The 0.2.5 spec referenced `CheckoutPriceCreate`, `CheckoutProductCreate`, `LegacyOrganizationStatus`, `LicenseKeyUser`, `OrderUser`, `ProductPriceType`, and `SubscriptionUser` from no endpoint or schema
 
 ### Added
 
 - Add `BenefitGrantsService.create_benefit_grant/3`, `update_benefit_grant/4`, and `revoke_benefit_grant/4` for manual benefit grants
 - Add `CustomerMetersService.credit_customer_meter/3` and `reverse_customer_meter_credit/4`
 - Add `MetersService.get_meter_by_external_id/4` and `WebhooksService.get_webhook_endpoint_by_external_id/4`
-- Add 25 schema modules, including `BenefitGrantCreate`, `BenefitGrantUpdate`, `BenefitManuallyGrantedEvent`, `BenefitManuallyRevokedEvent`, `BenefitUnrevokedEvent`, `CheckoutCreate`, and `CheckoutConfirm`
-- Add `event_id` to webhook payload structs
-- Add the `:api_version` option to `PolarExpress.client/2` and to every request, to send a different version than the default
-- Add `PolarExpress.ApiVersion`, generated from the spec's `info.version`. The generator refuses a spec whose version is not `YYYY-MM`
+- Add `CheckoutProductsExternalCreate`, so a checkout can use `external_products` in place of `products`
+- Add list filters. Benefits, meters, and products take `external_id`, `catalog_id`, and `catalog_status`. Checkout sessions, orders (list and export), subscriptions, and metrics take `external_product_id`. Benefit grants take `external_benefit_id`, `external_member_id`, and `member_id`. Customer meters take `external_meter_id`, discounts take `external_id`, and webhook endpoints take `format`
+- Add `PolarExpress.ApiVersion` and the `:api_version` option on `PolarExpress.client/2` and on every request. The generator rejects a spec whose `info.version` is not `YYYY-MM`
+- Add fields to existing structs:
+  - `external_id` on 43 structs and `event_id` on the 42 webhook payload structs
+  - `manually_granted_at` and `manually_revoked_at` on 17 benefit grant structs
+  - `catalog_id` and `is_current` on 12 structs
+  - `trial_payment_setup_required` on 6 checkout link and product structs
+  - `payment_method_types` on `CheckoutPublic` and `CheckoutPublicConfirmed`
+  - `order`, `order_id`, `subscription`, and `subscription_id` on `GrantedLicenseKey` and `ValidatedLicenseKey`
+  - `currency` on `SubscriptionCreateCustomer` and `SubscriptionCreateExternalCustomer`
+  - `minimum_units` on `ProductPriceSeatBased` and `ProductPriceSeatBasedCreate`, and `maximum_units` on `ProductPriceSeatBased`
+  - `discount_id` and `discount_unset` on `PendingSubscriptionUpdate`
+  - `reason` on `MeterCreditedMetadata`
+  - `config_as_code_enabled`, `reducer_billing_enabled`, and `staged_events_ingest_enabled` on `OrganizationFeatureSettings`
+  - `exclude_free_products`, `new_trial`, and `subscription_cancellation` on `OrganizationNotificationSettings`
+- Add 25 schema modules: `AlreadyActiveSubscription`, `AmbiguousExternalMeterID`, `AmbiguousExternalWebhookEndpointID`, `BenefitGrantAlreadyExists`, `BenefitGrantCreate`, `BenefitGrantCreateExternal`, `BenefitGrantUpdate`, `BenefitManuallyGrantedEvent`, `BenefitManuallyRevokedEvent`, `BenefitUnrevokedEvent`, `CatalogStatus`, `CheckoutConfirm`, `CheckoutConfirmSharedPaymentToken`, `CheckoutCreate`, `CheckoutPaymentError`, `CheckoutProductsExternalCreate`, `CustomerMeterCreditExternalIDConflict`, `CustomerMeterCreditNotReversible`, `CustomerMeterCreditsExternalIDCreate`, `CustomerMeterCreditsIDCreate`, `LicenseKeyOrder`, `LicenseKeySubscription`, `OrganizationDetailsInput`, `SSORequiresVerifiedDomain`, and `SharedPaymentTokenError`
 
 ## [0.2.5] - 2026-11-17
 

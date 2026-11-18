@@ -156,6 +156,7 @@ client = PolarExpress.client("pk_test_other_key", max_retries: 5)
 - [Webhooks](guides/webhooks.md) — signature verification, WebhookPlug setup, typed event modules
 - [Testing](guides/testing.md) — process-scoped HTTP stubs with `async: true` support
 - [Telemetry](guides/telemetry.md) — request lifecycle events, logging, metrics
+- [Upgrade from 0.2 to 0.3](guides/upgrading-to-0.3.md), the changes to make for Polar API `2027-01`
 
 ## Development
 
