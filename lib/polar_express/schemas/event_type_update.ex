@@ -6,7 +6,7 @@ defmodule PolarExpress.Schemas.EventTypeUpdate do
 
   @typedoc """
   * `label` - The label for the event type. Max length: 128.
-  * `label_property_selector` - Property path to extract dynamic label from event metadata (e.g., 'subject' or 'metadata.subject'). Nullable.
+  * `label_property_selector` - Property path to extract a dynamic label from event metadata (e.g., 'subject' or 'metadata.subject'). Set to `null` to clear it. Nullable.
   """
   @type t :: %__MODULE__{}
 

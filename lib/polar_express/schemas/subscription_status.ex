@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec
 defmodule PolarExpress.Schemas.SubscriptionStatus do
-  @moduledoc "SubscriptionStatus enum. Possible values: `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `canceled`, `unpaid`, `paused`."
+  @moduledoc "SubscriptionStatus enum. Possible values: `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `canceled`, `unpaid`, `paused`, `trial_ended`."
 
   @type t :: String.t()
 
@@ -12,7 +12,8 @@ defmodule PolarExpress.Schemas.SubscriptionStatus do
     "past_due",
     "canceled",
     "unpaid",
-    "paused"
+    "paused",
+    "trial_ended"
   ]
 
   @doc "List of valid enum values."
