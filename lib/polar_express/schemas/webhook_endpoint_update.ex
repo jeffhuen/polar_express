@@ -11,7 +11,7 @@ defmodule PolarExpress.Schemas.WebhookEndpointUpdate do
   * `enabled` - Whether the webhook endpoint is enabled. Nullable.
   * `events` - Nullable.
   * `format` - Nullable.
-  * `name` - An optional name for the webhook endpoint to help organize and identify it. Nullable.
+  * `name` - An optional name for the webhook endpoint. Set to `null` to clear it. Nullable.
   * `url` - Nullable.
   """
   @type t :: %__MODULE__{}
